@@ -96,10 +96,14 @@ const buscarDenominacionReferencia = (refer) =>{
 }
 
 const showAssig = () =>{
+  const divSpinner = document.createElement('div')
   fetch('../api/spinner.php')
   .then(fn => fn.text())
   .then(req => {
-    $('cesiones').innerHTML = `${req}`
+    divSpinner.innerHTML = req
+    divSpinner.className = 'spinner-center'
+    $('contacts-items').append(divSpinner)
+    $('cesiones').className = 'filter'
   })
   $('descRef').innerHTML = ""
   $('clientName').innerHTML = ""
@@ -113,6 +117,8 @@ const showAssig = () =>{
   })
   .then(response => response.text())
   .then(response => {
+    $('contacts-items').removeChild(divSpinner)
+    $('cesiones').classList.remove('filter')
     const clearRowsMark = (li,text) =>{
       const codeClient = li.childNodes[1].childNodes[5].textContent
       const id = li.childNodes[25].id

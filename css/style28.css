@@ -1120,6 +1120,14 @@ input[type="color"]::-webkit-color-swatch {
     animation: spin 1s linear infinite;
 }
 
+.spinner-center{
+    display: block;
+    position: absolute;
+    top: calc(70vh / 2);
+    z-index: 9999;
+    margin-left: calc(50% - 154px);
+}
+
 #result .spinner {
     margin-top: calc((75vh / 2) - 25px);
 }
