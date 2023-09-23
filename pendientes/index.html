@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link rel="stylesheet" href="../css/pendientes1.css?1"> 
+    <title>PPCR (Placa de Piezas y Componentes de Recambio)</title>
+</head>
+<body>
+    <div class="header">
+        <img src="../img/Logo-PPCR-2022.png" alt="PPCR">
+    </div>
+    <div class="cuadro">
+        <h2>Listado de pedidos pendientes PPCR España</h2>
+        <span>
+            <a href="" target="_blank"><img src="../img/download_FILL0_wght400_GRAD0_opsz48.png" alt="descargar">Descargar último fichero</a>
+        </span>
+    </a>
+    <div id="msg" class="error"></div>
+    <script>
+        document.getElementsByTagName('a')[0].addEventListener('click',(e)=>{
+            e.preventDefault();
+            fetch('updateDownloadFile.php')
+            window.open(`DATOS PENDIENTES PPCR.xlsx?${parseInt(Math.random()*100000)}`, '_blank');
+        })
+    </script>
+</body>
+</html>

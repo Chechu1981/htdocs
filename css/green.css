@@ -1,0 +1,10 @@
+:root{
+    --main-font-color: #0B5345;
+    --second-bg-color: #14ad8fc7;
+    --search-line: #6e6e6e7a;
+    --cards-border-color: #b3f5ea;
+    --cards-active-color: #91eb48;
+    --bg-body-color: #fff;
+    --bg-font-color: #000;
+    --invert-img-filter: invert(0);
+}

@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600&display=swap");
+
+body{
+    font-family: Encode Sans Condensed, sans-serif;
+}
+
+.header img{
+    object-fit: none;
+}
+
+.header{
+    margin-top: calc(90vh - 53vh);
+    text-align: center;
+}
+
+.cuadro{
+    width: 80%;
+    background-color: rgb(62, 143, 190);
+    align-items: center;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 21px;
+    border-radius: 8px;
+}
+
+.cuadro form{
+    margin: 10px;
+    display: grid;
+    grid-template-columns: 32% 50%;
+    align-items: center;
+}
+
+.cuadro input{
+    margin:10px;
+}
+.top input{
+    display: block;
+    margin: 4px 0;
+    padding: 6px;
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid rgb(117, 115, 115);
+    cursor: text;
+    color: rgb(62, 143, 190);
+}
+
+.top{
+    position: absolute;
+    top: 29px;
+    right: 19px;
+}
+
+.top img{
+    width: 39px;
+    border: 2px solid #0000006e;
+    border-radius: 8px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.top form{
+    display: none;
+    position: absolute;
+    top: -17px;
+    right: 54px;
+    background-color: white;
+    padding: 24px 13px;
+    border: 2px solid black;
+    border-radius: 8px;
+    box-shadow: 0 0 9px 3px black;
+}
+
+input[type="password"]{
+    -webkit-text-security: circle;
+}
+
+.top input:focus-visible{
+    background-color: transparent;
+    outline: none;
+    border-bottom: 2px solid black;
+}
+
+.top label{
+    display: block;
+    transform: translateY(-35px);
+    cursor: text;
+    font-size: large;
+    color: rgb(62, 143, 190);
+    transition: .3s
+}
+
+.top input:nth-child(5){
+    border: 2px solid rgb(117, 115,115);
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: azure;
+    margin: auto;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    padding: 5px 15px;
+    color: grey;
+}
+
+.top input:nth-child(5):active{
+    transform: translate(1px, 1px) !important;
+}
+
+.top input:focus-visible + label{
+    transform: translateY(-64px);
+}
+
+.hide{
+    transform: translateY(-64px) !important;
+}
+
+.show{
+    display: block!important;
+    transition: 2s;
+}
+
+span{
+    background-color: cornsilk;
+    padding: 10px;
+    margin-top: 20px;
+    border: 2px solid black;
+    border-radius: 8px;
+}
+
+a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+span:hover{
+    opacity: .8;
+}
+
+.error{
+    color: #890a0a;
+    font-weight: 700;
+    position: initial;
+    margin-top: 100px;
+    text-align: right;
+    float: right;
+}
+
+.table-result:first-child{
+    background-color: #890a0a;
+    color: white;
+}
+
+.table-result:nth-child(even){
+    background-color: #32cec6;
+}
+
+.table-result:nth-child(odd){
+    background-color: #1c9791;
+}
+
+.table-result,
+.list-header{
+    margin: 0;
+    list-style: none;
+    display: grid;
+    flex-direction: row;
+    grid-template-columns: 7% 7% 8% 5% 17% 6% 7% 11% 9% 10%;
+}
+
+.list-header{
+    background-color: #114b48;
+    color: white;
+    position: sticky;
+    top: 22px;
+}
+
+.table-result:hover{
+    background-color: azure;
+}
+
+#items{
+    width: 100%;;
+}
+
+#items h3{
+    margin: 10px 0;
+    text-align: center;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0;
+    background-color: #3e8fbe;
+}
+
+.filter{
+    filter: blur(6px);
+    pointer-events: none;
+}
+
+.alert-conatiner{
+    position: fixed;
+    width: 300px;
+    height: 150px;
+    color: black;
+    background-color: #84adea;
+    z-index: 9999999999;
+    top: 33%;
+    margin-left: calc(50% - 150px);
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px black;
+    border: 2px solid black;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert-conatiner div:nth-child(odd){
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.alert-conatiner div:nth-child(even){
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+button{
+    background-color: var(--cards-border-color);
+    color: var(--main-font-color);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--cards-active-color);
+    cursor: pointer;
+    box-shadow: 2px 2px var(--bg-font-color);
+}
+
+button:hover{
+    background-color: var(--bg-body-color);
+    color: var(--bg-font-color);
+    box-shadow: 2px 2px var(--bg-font-color);
+}
+
+button:active{
+    box-shadow: none !important;
+    transform: translate(1px, 1px);
+}
