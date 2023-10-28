@@ -1,20 +1,23 @@
 document.getElementsByTagName('form')[0].addEventListener('submit',e=>{
+  const file = document.getElementsByTagName('form')[0].childNodes[1].files[0]
   e.preventDefault()
-  document.getElementsByTagName('input')[2].disabled = true
-  document.getElementsByTagName('div')[7].childNodes[1].innerHTML = `<span class="spinner"></span>`
-  e.target.appendChild(document.createElement('div'))
-  const file = e.target.childNodes[1].files[0]
-  const data = new FormData()
-  data.append('file',file)
-  fetch('../api/updatePending.php',{
-    method: 'POST',
-    body: data
-  })
-  .then(item => item.text())
-  .then(items => {
-    document.getElementsByTagName('div')[8].childNodes[1].innerHTML = `${items}`
-    document.getElementsByTagName('input')[2].disabled = false
-  })
+  if(file != undefined){
+    document.getElementsByTagName('input')[2].disabled = true
+    document.getElementsByTagName('input')[2].style.backgroundColor = "grey"
+    document.getElementsByTagName('div')[7].innerHTML = `<span class="spinner"></span>`
+    const data = new FormData()
+    data.append('file',file)
+    fetch('../api/updatePending.php',{
+      method: 'POST',
+      body: data
+    })
+    .then(item => item.text())
+    .then(items => {
+      document.getElementsByTagName('div')[7].innerHTML = `<h1>${items}</h1>`
+      document.getElementsByTagName('input')[2].disabled = false
+      document.getElementsByTagName('input')[2].style.backgroundColor = "var(--cards-border-color)"
+    })
+  }
 })
 
 dropContainer.ondragover = dropContainer.ondragenter = function(evt) {

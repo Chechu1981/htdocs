@@ -37,7 +37,7 @@ const searchItems = (e) =>{
     let optionTxt0 = "Todas"
     let select1 = document.createElement('option')
     select1.value = 0
-    let optionTxt1 = "0: PRINCIPAL"
+    let optionTxt1 = "D. principal: 0"
     select1.appendChild(document.createTextNode(optionTxt1))
     envio.appendChild(select0)
     envio.appendChild(select1)
@@ -46,7 +46,7 @@ const searchItems = (e) =>{
     items.map(item =>{     
       let select = document.createElement('option')
       select.value = `${item.envio}`
-      let optionTxt = `${item.envio}: ${item.denvio}` 
+      let optionTxt = `Dirección: ${item.envio}` 
       select.appendChild(document.createTextNode(optionTxt))
       envio.appendChild(select)
     })
@@ -97,7 +97,7 @@ document.getElementsByTagName('form')[1].addEventListener('submit', e =>{
   data.append('cliente',cliente)
   data.append('ref',referencia)
   data.append('envio',envio)
-  fetch('./api/getPending.php',{
+  fetch('../api/getPending.php',{
     method: 'POST',
     body: data
   })

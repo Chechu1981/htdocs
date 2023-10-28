@@ -103,7 +103,7 @@ const copyAndCheck = (e) =>{
       else
         result.getElementsByTagName('ul')[i].style = ""
     }
-    e.target.parentNode.style = "color: #2de376; font-weight: 800;"
+    e.target.parentNode.style = "color: #2de376;"
     const idData = new FormData()
     idData.append('id', e.target.id)
     idData.append('referencia', refer)

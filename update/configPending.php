@@ -18,10 +18,12 @@
             </div>
             <form style="text-align: center">
                 <input type="file" name="pending" id="pending" style="display:none">
-                <input type="submit" value="Actualizar" style="font-size: xx-large;margin:10px">
+                <button id="downloads">Ver descargas</button>
+                <input type="submit" value="Actualizar" style="margin:10px;font-family: nunito, arial;background-color: var(--cards-border-color);color: var(--main-font-color);padding: 10px;border-radius: 8px;border: 1px solid var(--cards-active-color);cursor: pointer;box-shadow: 2px 2px var(--bg-font-color);">
             </form>
         </div>
-        <button id="downloads">Ver descargas</button>
+        <div style="text-align: center;height: 16vh;"></div>
+        
     </div>
     <?php include('../helper/footer.php'); ?>
 </body>
