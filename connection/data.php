@@ -144,7 +144,8 @@ class Contacts
     }
 
     public function getRepereHTML($ref){
-        $sql = "SELECT DISTINCT * FROM `repere` WHERE `Referencia_fabricación` = '".$ref."'";
+        $ref = ltrim($ref,"0");
+        $sql = "SELECT DISTINCT * FROM `repere` WHERE REPLACE(LTRIM(REPLACE(`Referencia_fabricación`,'0',' ')),' ','0') = '".$ref."'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
