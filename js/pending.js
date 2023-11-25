@@ -11,7 +11,7 @@ for (var i = 0; i < inputs.length; i++) {
   })
 }
 
-document.getElementsByTagName('form')[1].addEventListener('keyup', e => {
+document.getElementsByTagName('form')[0].addEventListener('keyup', e => {
   e.target.style = ""
   if(e.target.value != '')
    e.target.style = "border-width: 0px 0px 2px 0px;border-color: rgb(14, 14, 97);"
@@ -27,8 +27,8 @@ const searchItems = (e) =>{
   })
   .then(response => response.json())
   .then(items => {
-    let oldEnvio = document.getElementsByTagName('input')[4]
-    if(document.getElementsByTagName('input')[4].id != 'envio')
+    let oldEnvio = document.getElementsByTagName('input')[1]
+    if(document.getElementsByTagName('input')[1].id != 'envio')
       oldEnvio = document.getElementsByTagName('select')[1]
     const envio = document.createElement('select')
     envio.id = 'envio'
@@ -50,11 +50,11 @@ const searchItems = (e) =>{
       select.appendChild(document.createTextNode(optionTxt))
       envio.appendChild(select)
     })
-    document.getElementsByTagName('form')[1].replaceChild(envio, oldEnvio)
+    document.getElementsByTagName('form')[0].replaceChild(envio, oldEnvio)
   })
 }
 
-document.getElementsByTagName('form')[1].childNodes[13].addEventListener('keyup', e =>{
+document.getElementsByTagName('form')[0].childNodes[13].addEventListener('keyup', e =>{
   searchItems(e.target.parentNode)
 })
 
@@ -62,7 +62,7 @@ $('placa').addEventListener('change',(e) => {
   searchItems(e.target.parentNode)
 })
 
-document.getElementsByTagName('form')[1].addEventListener('submit', e =>{
+document.getElementsByTagName('form')[0].addEventListener('submit', e =>{
   e.preventDefault()
   document.getElementById('items').innerHTML = 
     `<div class="lds-ring">
@@ -103,7 +103,7 @@ document.getElementsByTagName('form')[1].addEventListener('submit', e =>{
   })
   .then(e => e.text())
   .then(item =>{
-    document.getElementsByTagName('span')[0] != undefined ? document.getElementsByTagName('span')[0].remove() : null
+    document.getElementsByTagName('span')[1] != undefined ? document.getElementsByTagName('span')[1].remove() : null
     if(item.includes('No hay coincidencias')){
       document.getElementById('items').innerHTML = `<div class="empty">NO SE HAN ENCONTRADO COINCIDENCIAS</div>`
     }
@@ -119,9 +119,7 @@ document.getElementsByTagName('form')[1].addEventListener('submit', e =>{
         const file = document.getElementById('items').childNodes[0].id
         window.open(`../csv/${file}.csv`)
       }
-      btnCsv.style.marginLeft = '10px'
-      btnCsv.style.display = 'inline-block'
-      btnCsv.style.cursor = 'pointer'
+      btnCsv.className = 'csv-file'
       btnCsv.title = "Descargar fichero CSV"
       document.getElementsByClassName('cuadro')[0].childNodes[1].append(btnCsv)
     }

@@ -22,6 +22,10 @@ body{
     background-blend-mode: soft-light;
 }
 
+i{
+    font-size: small;
+}
+
 .header img{
     object-fit: none;
 }
@@ -31,8 +35,21 @@ body{
     text-align: center;
 }
 
-.logo img{
+.logo{
     width: 130px;
+}
+
+.link{
+    border: 2px solid #2a3e86;
+    padding: 8px;
+    border-radius: 20px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.link span{
+    margin-left: 10px;
 }
 
 .cuadro{
@@ -193,7 +210,13 @@ a{
     text-decoration: none;
 }
 
-span:hover{
+.csv-file{
+    margin-left: 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.csv-file:hover{
     filter: invert(1) brightness(1.5);
 }
 
@@ -342,7 +365,7 @@ button:active,
 }
 
 footer{
-    margin: 2% 0;
+    margin: 2% 0 0 0;
     width: 100%;
     text-align: center;
     bottom: 0;
@@ -353,6 +376,13 @@ footer div{
     border-bottom: 2px solid #2A3E86;
     padding-bottom: 1%;
     color: #2A3E86;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer div a:hover{
+    opacity: .6;
 }
 
 /* SPINNER */

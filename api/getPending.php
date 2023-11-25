@@ -4,6 +4,16 @@ $fileCsvName = md5(date("U"));
 $fp = fopen('../csv/'.$fileCsvName.'.csv', 'w');
 $list = array(['Fecha Pedido','Referencia','Cantidad','Descripcion','Fiabilidad','N reclamacion','VIN','Comentario','Fentrega','Cuenta']);
 $charsetClear = array("'",'"',"#","-");
+$NPLACAS = array(
+    "027130L"=>"PALMA",
+    "027135M"=>"BARCELONA",
+    "027120K"=>"GRANADA",
+    "027015L"=>"MADRID",
+    "027066M"=>"VALENCIA",
+    "027110G"=>"SEVILLA",
+    "027115E"=>"VIGO", 
+    "027125R"=>"ZARAGOZA",
+);
 
 $contacts = new Contacts();
 $htmlList = '<ul class="list-header">
@@ -29,6 +39,13 @@ if(count($rows) > 0){
     $contador = 1;
     foreach ($rows as $row) {
         $ncliente = explode('-',$row[2]);
+        $fentrega = $row[12];
+        $placaCesion = '';
+        if(str_contains($row[14],'SPD')){
+            $fentrega = "CESIÓN";
+            $placaNum = explode('SPD ',$row[14]);
+            $placaCesion = $NPLACAS[$placaNum[1]];
+        }
         if($cliente == "")
             $cliente = $row[3];
             array_push($list,['fecha_Pedido'=>$row[1],
@@ -39,7 +56,7 @@ if(count($rows) > 0){
             'nreclamacion'=>$row[8],
             'vin'=>$row[9],
             'comentario'=>$row[13],
-            'fentrega'=>$row[12],
+            'fentrega'=>$fentrega,
             'cuenta'=>@$ncliente[1]]
         );
         if($row[10] == 0)
@@ -54,7 +71,7 @@ if(count($rows) > 0){
             <li title="Nº reclamación: ">'.$row[8] .'</li>
             <li title="VIN: ">'.$row[9] .'</li>
             <li title="Comentario: " class="small-coment">'.$row[13] .'</li>
-            <li title="Fecha entrega: ">'.$row[12] .'</li>
+            <li title="Fecha entrega: ">'.$fentrega .'</li>
             <li title="D. envío: ">'.@$ncliente[1] .'</li>
             </ul>';
     }

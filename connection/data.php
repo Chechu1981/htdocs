@@ -26,7 +26,8 @@ class Contacts
         $data = file_get_contents($src.'/json/sesiones.json');
         $usr = json_decode($data, true);
         $user = false;
-        for($i = 0; $i < sizeof($usr); $i++){
+        for($i = 0; $i < count($usr); $i++){
+            //echo $usr[$i]['hash']."<p>" . $sessid;
             if($usr[$i]['hash'] == $sessid)
                 $user = strtoupper($usr[$i]['nombre']);
         }
@@ -599,7 +600,7 @@ class Contacts
             sleep(1);
             $batchSize = 3000;
             foreach (array_chunk($items, $batchSize) as $row) {
-                $sql = "INSERT INTO `pendientes`(`fecha`, `cuenta`, `nombre`, `referencia`, `designacion`, `fiabilidad`, `placa`, `aviso`, `vin`, `cantidad`, `npedido`, `fentrega`, `comentario`) VALUES ";
+                $sql = "INSERT INTO `pendientes`(`fecha`, `cuenta`, `nombre`, `referencia`, `designacion`, `fiabilidad`, `placa`, `aviso`, `vin`, `cantidad`, `npedido`, `fentrega`, `comentario`, `cesion`) VALUES ";
                 foreach ($row as $rows) {
                     $fecha = $rows["fecha"];
                     $cuenta = $rows["cuenta"];
@@ -614,7 +615,8 @@ class Contacts
                     $npedido = $rows["npedido"];
                     $fentrega = $rows["fentrega"];
                     $comentario = $rows["comentario"];
-                    $sql .= "('$fecha','$cuenta','$nombre','$referencia','$designacion','$fiabilidad','$placa','$aviso','$vin','$cantidad','$npedido','$fentrega','$comentario'),";
+                    $cesion = $rows["cesion"];
+                    $sql .= "('$fecha','$cuenta','$nombre','$referencia','$designacion','$fiabilidad','$placa','$aviso','$vin','$cantidad','$npedido','$fentrega','$comentario','$cesion'),";
                 }
                 $sql = substr($sql, 0, -1) . ";";
                 $query = $this->db->prepare($sql);
@@ -632,14 +634,21 @@ class Contacts
     public function getPending($placa, $cliente, $referencia,$envio){
         $sqlreferencia = "";
         $sqlcuenta = "";
+        if($cliente == '1000')
+            $cliente = "2195'
+                OR SUBSTRING_INDEX(pendientes.cuenta,'-',1) LIKE '11412'  
+                OR SUBSTRING_INDEX(pendientes.cuenta,'-',1) LIKE '86417' 
+                OR SUBSTRING_INDEX(pendientes.cuenta,'-',1) LIKE '44813' 
+                OR SUBSTRING_INDEX(pendientes.cuenta,'-',1) LIKE '112636";
+
         if($envio > 0)
-            $sqlcuenta = "AND SUBSTRING_INDEX(pendientes.cuenta,'-',1) LIKE '$cliente' AND SUBSTRING_INDEX(pendientes.cuenta,'-',-1) LIKE '$envio'";
+            $sqlcuenta = "AND (SUBSTRING_INDEX(pendientes.cuenta,'-',1) LIKE '$cliente') AND SUBSTRING_INDEX(pendientes.cuenta,'-',-1) LIKE '$envio'";
         
         if($envio == 0)
-            $sqlcuenta = "AND SUBSTRING_INDEX(pendientes.cuenta,'-',-1) LIKE '$cliente'";
+            $sqlcuenta = "AND (SUBSTRING_INDEX(pendientes.cuenta,'-',-1) LIKE '$cliente')";
         
         if($envio == '')
-            $sqlcuenta = "AND SUBSTRING_INDEX(pendientes.cuenta,'-',1) LIKE '$cliente'";
+            $sqlcuenta = "AND (SUBSTRING_INDEX(pendientes.cuenta,'-',1) LIKE '$cliente')";
         
         if($referencia != "")
             $sqlreferencia = "AND pendientes.referencia LIKE '$referencia'";
@@ -910,12 +919,12 @@ class Contacts
 
   public function updatePrices($items){
     $proveedor = $items[1]["proveedor"];
-    $ctipo = $item[1]["ctipo"];
+    $ctipo = $items[1]["ctipo"];
     try{
-        $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE `ctipo` != '$ctipo' AND `proveedor` != '$proveedor'");
-        if($proveedor == "FI" || $proveedor == "JE")
+        $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE (`ctipo` != 'FI' OR `ctipo` != 'JE') AND `proveedor` = 'ALD'");
+        if($ctipo == "FI" || $ctipo == "JE")
             $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE `ctipo` = 'FI' OR `ctipo` = 'JE'");
-        if($ctipo == "AUT")
+        if($proveedor == "AUT")
             $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE `proveedor` = '$proveedor'");
         $queryClear->execute();
         sleep(1);
@@ -939,6 +948,8 @@ class Contacts
             $query = $this->db->prepare($sql);
             $query->execute();
         }
+        $queryDelete = $this->db->prepare("DELETE FROM `tarifa` WHERE `referencia` = '000000000000000000';");
+        $queryDelete->execute();
         return "¡¡ Tarifa actualizada !!";
     }catch(Exception $e){
         return $e;

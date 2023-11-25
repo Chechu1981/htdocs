@@ -40,7 +40,8 @@ while(($data = fgetcsv($handle, 0,";")) !== FALSE ){
     'cantidad' => $data[8],
     'npedido' => $data[19],
     'fentrega' => $data[9],
-    'comentario' => $data[5]]);
+    'comentario' => $data[5],
+    'cesion' => $data[22]]);
 }
 
 $query = $contacts->updatePending($madrid);
