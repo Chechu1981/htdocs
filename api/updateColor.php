@@ -10,7 +10,7 @@ $l = $_POST['l'];
 $cssFile = ":root{
   --main-font-color: hsl($h, $s%, $l%);
   --second-bg-color: hsl($h, ".($s - 30)."%, ".($l + 25)."%);
-  --search-line: hsla($h, ".($s - 14)."%,".($l + 15)."%, 0.478);
+  --search-line: hsla($h, ".($s - 14)."%,".($l + 35)."%, 1);
   --cards-border-color: hsl($h, ".($s + 20)."%, ".($l + 50)."%);
   --cards-active-color: hsl($h, ".($s + 23)."%, ".($l + 27)."%);
   --bg-body-color: hsl($h, ".($s - 57)."%, ".($l + 67)."%);

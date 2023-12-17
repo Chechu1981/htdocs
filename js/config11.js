@@ -60,7 +60,7 @@ if(typeof(href) != "object"){
           const colorL = Math.round(color.l * 100)
           document.documentElement.style.setProperty('--main-font-color',`hsl(${colorH},${colorS}%,${colorL}%)`)
           document.documentElement.style.setProperty('--second-bg-color',`hsl(${colorH},${colorS - 30}%,${colorL + 25}%)`)
-          document.documentElement.style.setProperty('--search-line',`hsla(${colorH},${colorS - 14}%,${colorL + 15}%,0.478)`)
+          document.documentElement.style.setProperty('--search-line',`hsla(${colorH},${colorS - 14}%,${colorL + 35}%,1)`)
           document.documentElement.style.setProperty('--cards-border-color',`hsl(${colorH},${colorS + 20}%,${colorL + 50}%)`)
           document.documentElement.style.setProperty('--cards-active-color',`hsl(${colorH},${colorS + 23}%,${colorL + 27}%)`)
           document.documentElement.style.setProperty('--bg-body-color',`hsl(${colorH},${colorS - 57}%,${colorL + 67}%)`)

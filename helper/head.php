@@ -1,7 +1,8 @@
 <?php
 $src = ".";
-!strstr("$uri",'home') == '/home.php' ? $src = ".." : '';
-strpos($uri,'center') > 0 ? $src = "../.." : '';
+!strstr("$uri",'home') == '/home.php' ? $src = ".." : '.';
+strpos($uri,'center') > 0 ? $src = "../.." : '.';
+strpos($uri,'assigns') > 0 ? $src = "../.." : '.';
 
 include_once $src . '/connection/data.php';
 $contacts = new Contacts();
@@ -20,7 +21,11 @@ $scripts = (object)[
   'CESIONES1' => "/js/cesiones202312.js?1234",
   'CESIONES' => "/js/cesiones19.js",
   'CESIONESTEST' => "/js/cesionestest.js",
-  'CESIONESADV' => "/js/cesionesADV.js?129",
+  'CESIONESADV' => "/js/cesionesADV.js?130",
+  'BUSCAR' => "/../js/buscarCesiones.js?101",
+  'READY' => "/../js/readyCesiones.js?101",
+  'STATUS' => "/../js/statusCesiones.js?101",
+  'FINISH' => "/../js/finishCesiones.js?102",
   'CESIONESADV_TEST' => "/js/cesionesADV_test.js?125",
   'LIBRETA' => "/js/libreta13.js",
   'contact' => "/js/contact2.js",
@@ -62,7 +67,7 @@ $user = $contacts->getUserBySessid($_GET['id']);
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?php echo $src . '/img/icons8-herramientas-del-administrador-96.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1238" defer content="1">
+<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1240" defer content="1">
 <link rel="stylesheet" href="<?php echo $src; ?>/css/150027.css" defer content="1">
 <link rel="stylesheet" href="<?php echo $src . $css[$user]; ?>" defer content="0">
 <script type="text/javascript" src="<?php echo $src; ?>/js/script20.js" defer content='no-cache'></script>

@@ -1,5 +1,10 @@
+<?php 
+  $src = "../";
+  if(isset($_POST['subfolder']))
+    $src = "../..";
+?>
 <div class="lds-ring">
-  <img width="75px" src="../img/Logo-PPCR-2022.png" alt="PPCR">
+  <img width="75px" src="<?php echo $src ?>/img/Logo-PPCR-2022.png" alt="PPCR">
   <div></div>
   <div></div>
   <div></div>

@@ -1,5 +1,4 @@
 const cesiones = (origen, destino,nfm) =>{
-  $('newTitle').classList.add('copy')
   $('newTitle').innerText = `${origen}>${destino}`
   let cesion = null
   origen != destino ? cesion = origen + '' + destino:''
@@ -12,7 +11,10 @@ const cesiones = (origen, destino,nfm) =>{
     if(numDest == "6254-1" || numDest == "78713-1"){
       $('pclient').classList.add('important')
       alerta = "Preguntar"
-    }else{
+    }/*else if(origen == "VIGO"){
+      $('pclient').classList.add('important')
+      alerta = "Preguntar"
+    }*/else{
       $('pclient').classList.remove('important')
       alerta = ""
     }
@@ -94,6 +96,15 @@ const buscarDenominacionReferencia = (refer) =>{
 }
 
 const showAssig = () =>{
+  const divSpinner = document.createElement('div')
+  fetch('../api/spinner.php')
+  .then(fn => fn.text())
+  .then(req => {
+    divSpinner.innerHTML = req
+    divSpinner.className = 'spinner-center'
+    $('contacts-items').append(divSpinner)
+    $('cesiones').className = 'filter'
+  })
   $('descRef').innerHTML = ""
   $('clientName').innerHTML = ""
   const data = new FormData()
@@ -106,12 +117,30 @@ const showAssig = () =>{
   })
   .then(response => response.text())
   .then(response => {
+    $('contacts-items').removeChild(divSpinner)
+    $('cesiones').classList.remove('filter')
+    const clearRowsMark = (li,text) =>{
+      const codeClient = li.childNodes[1].childNodes[5].textContent
+      const id = li.childNodes[25].id
+      const filas = $('cesiones').getElementsByTagName('ul')
+      copyClipboard(text)
+      for(let i=1; i<filas.length; i++){
+        const codeClientLi = filas[i].childNodes[1].childNodes[5].textContent
+        const idLi = filas[i].childNodes[25].id
+        filas[i].classList.remove('marcado')
+        filas[i].classList.remove('equal')
+        codeClientLi == codeClient && idLi != id ? filas[i].classList.add('equal') : ''
+      }
+      li.classList.add('marcado')
+    }
+    $('cesiones').style = ''
     $('cesiones').innerHTML = response
     for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
-      let id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon = ''
+      let li, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon = ''
+      li = $('cesiones').childNodes[i]
       id = $(`cesiones`).childNodes[i].childNodes[25].id
-      origen = $('cesiones').childNodes[i].childNodes[1].childNodes[1].textContent
-      destino = $('cesiones').childNodes[i].childNodes[1].childNodes[3].textContent
+      origen = $('cesiones').childNodes[i].childNodes[1].childNodes[1]
+      destino = $('cesiones').childNodes[i].childNodes[1].childNodes[3]
       cliente = $('cesiones').childNodes[i].childNodes[5]
       refCliente = $('cesiones').childNodes[i].childNodes[1]
       comentario = $('cesiones').childNodes[i].childNodes[9]
@@ -126,20 +155,32 @@ const showAssig = () =>{
       btnSendMail = $(`cesiones`).childNodes[i].childNodes[27]
       btnEliminar = $(`cesiones`).childNodes[i].childNodes[25]
 
-      if(disgon != null){
+      if(disgon != null)
         disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
-      }
       if($('cesiones').childNodes[i].localName == 'ul' && $('cesiones').childNodes[i].localName != undefined)
-        pedido.addEventListener('keyup', e => refreshInputs(e,id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
-      nfm.addEventListener('change', () => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
-      fragil.addEventListener('change', () => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
-      tratado.addEventListener('keyup', () => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
-      referencia.addEventListener('click', () => copyClipboard(referencia.firstChild.textContent.replaceAll(' ','')))
-      comentario.addEventListener('click', () => copyClipboard(comentario.textContent))
-      btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen, destino, referencia.firstChild.textContent.replaceAll(' ',''), `Cliente: ${cliente.textContent}`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value))
+        pedido.addEventListener('keyup', e => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
+
+      nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
+      fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
+      tratado.addEventListener('keyup', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
+      referencia.addEventListener('click', () => {clearRowsMark(li,referencia.childNodes[0].textContent.replaceAll(' ',''))})
+      comentario.addEventListener('click', () => {clearRowsMark(li,comentario.textContent)})
+      cliente.addEventListener('click', () => {
+        let fragilTxt = ''
+        fragil.checked ? fragilTxt = '..~** ¡¡MATERIAL FRÁGIL!! **~.. Por favor, en lo posible, reforzar embalaje. Gracias; ' : ''
+        clearRowsMark(li,`Cesión ${origen.textContent}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
+      })
+      refCliente.addEventListener('click', () => {clearRowsMark(li,`Cliente: ${cliente.childNodes[0].textContent}`)})
+      origen.addEventListener('click', () => {
+        origen.classList.toggle('active-city-press')
+        updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+      })
+      destino.addEventListener('click', () => {
+        destino.classList.toggle('active-city-press')
+        updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+      })
+      btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value))
       btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ','')))
-      cliente.addEventListener('click', () => copyClipboard(`Cliente: ${cliente.textContent}`))
-      refCliente.addEventListener('click', () => copyClipboard(`${origen}>${destino}`))
     }
   })
 }
@@ -154,56 +195,62 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
   dataName.append('tratado',tratado)
   dataName.append('envio', true)
   dataName.append('disgon', disgon)
-    fetch('../api/isSend.php',{
-      method: 'POST',
-      body: dataName
-    })
-    .then((isSend)=>isSend.text())
-    .then(enviado => 
-      {if(enviado){
-        customAlert("Esta cesión ya está enviada")
-        $(`send${id}`).parentNode.remove()
-        return true
-      }
-      if(confirm(`¿Enviar Correo?`)){
-        fetch('../api/updateAssignADV2023.php', {
+  dataName.append('origenBtn', '1')
+  dataName.append('destinoBtn', '1')
+  dataName.append('origen', origen)
+  dataName.append('destino', destino)
+  dataName.append('destinoC', `${destino}C`)
+  dataName.append('origenF', `${origen}F`)
+  fetch('../api/isSend.php',{
+    method: 'POST',
+    body: dataName
+  })
+  .then((isSend)=>isSend.text())
+  .then(enviado => {
+    if(enviado){
+      customAlert("Esta cesión ya está enviada")
+      $(`send${id}`).parentNode.remove()
+      return true
+    }
+    if(confirm(`¿Enviar Correo?`)){
+      fetch('../api/updateAssignADV2023.php', {
+        method: 'POST',
+        body:dataName
+      })
+      .then((item) => item.text())
+      .then((item) => {
+        fetch('../api/getBccMails.php',{
           method: 'POST',
-          body:dataName
+          body: dataName
         })
-        .then((item) => item.text())
-        .then((item) => {
-          fetch('../api/getBccMails.php',{
-            method: 'POST',
-            body: dataName
-          })
-          .then(response => response.json())
-          .then(res => {
-            console.log(res)
-            let destinoFragil = ''
-            if($('frag').checked){
-              destinoFragil = res['fragil']
-            }
-            createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'])
-            $(`send${id}`).parentNode.remove()
-          })
+        .then(response => response.json())
+        .then(res => {
+          console.log(res)
+          let destinoFragil = ''
+          if($('frag').checked){
+            destinoFragil = res['fragil']
+          }
+          createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],disgon)
+          $(`send${id}`).parentNode.remove()
+          const bubble = $('contacts').childNodes[3].childNodes[1].childNodes[1].childNodes[1]
+          bubble != undefined ? bubble.innerText = parseInt(bubble.innerText) - 1 : ''
         })
-      }
-    })
+      })
+    }
+  })
 }
 
-const refreshInputs = (e,id,nfm,fragil,pedido,tratado,destino,disgonChk) => {
-  const origen = e.target.parentNode.parentNode.childNodes[1].childNodes[1].innerHTML
+const refreshInputs = (id,nfm,fragil,pedido,tratado,origen,destino) => {
   let cesion = null
-  let code = e.target.parentNode.parentNode.childNodes[1].childNodes[5]
+  let code = $(id).parentNode.childNodes[1].childNodes[5]
   origen != destino ? cesion = origen + '' + destino:''
-  e.target.checked ? cesion += 'NM' :''
+  nfm ? cesion += 'NM' :''
   fetch('../json/cesionesCliente.json')
   .then(response => response.json())
   .then(response => {
-    const numDest = response[cesion]
-    numDest != undefined ? code.innerText = response[cesion] : code.innerText = ""
+    response[cesion] != undefined ? code.innerHTML = response[cesion] : code.innerHTML = ""
   })
-  updateChkbx(id,nfm,fragil,pedido,tratado,destino,disgonChk)
+  updateChkbx(id,nfm,fragil,pedido,tratado,destino)
 }
 
 const copyClipboard = (copiar) =>{
@@ -211,8 +258,10 @@ const copyClipboard = (copiar) =>{
   notify(`${copiar} copiado!`)
 }
 
-const updateChkbx = (id,nfm,fragil,pedido,tratado, destino) => {
+const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   const disgon = $(id).parentNode.childNodes[21].firstChild == null ? false : $(id).parentNode.childNodes[21].firstChild.checked
+  const origenBtn = $(id).parentNode.childNodes[1].childNodes[1].className.includes('press') ? '1':'0'
+  const destinoBtn = $(id).parentNode.childNodes[1].childNodes[3].className.includes('press') ? '1':'0'
   const data = new FormData()
   data.append('id', id)
   data.append('nfm',nfm)
@@ -221,6 +270,8 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado, destino) => {
   data.append('tratado',tratado)
   data.append('envio', false)
   data.append('disgon', disgon)
+  data.append('origenBtn', origenBtn)
+  data.append('destinoBtn', destinoBtn)
   fetch('../api/updateAssignADV2023.php',{
     method: 'POST',
     body: data
@@ -230,7 +281,7 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado, destino) => {
     const chkDisgon = document.createElement('input')
     chkDisgon.setAttribute('type', 'checkbox')
     chkDisgon.addEventListener('change', () => {
-      updateChkbx(id,nfm,fragil,pedido,tratado, destino, chkDisgon.checked)
+      updateChkbx(id,nfm,fragil,pedido,tratado, destino)
     })
     disgonLi.appendChild(chkDisgon)
   }
@@ -238,49 +289,42 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado, destino) => {
     disgonLi.firstChild.remove()
 }
 
-const createMail = (cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,mailOrigen,mailDestino,bcc) =>{
-  let mailFragil = ''
-  let mailTarget = ''
+const createMail = (cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,mailOrigen,mailDestino,bcc,disgon) =>{
+  let mailTarget, asuntoDisgon = ''
+  let strDisgon = ``
+  let mailFragil = encodeURIComponent(``)
+  let strNfm = 'La entrada en Geode debe ser realizada como entrada esperada 103 y no con el 109. '
   let strCantidad = 'la referencia'
-  
   if(cantidad > 1){
-    strCantidad = `${cantidad} referencias de la `
+    strCantidad = `${cantidad} unidades de la referencia`
   }
-  
   if(fragil){
     mailFragil = encodeURIComponent(`
-    ****‼️ ATENCIÓN ‼️****
+    *******__‼️ ATENCIÓN ‼️__*******
     ******************************
     **⚠️⚠️ MATERIAL FRÁGIL ⚠️⚠️**
     ******************************
     
     `)
   }
+  if(disgon){
+    asuntoDisgon = `DISGON`
+    strDisgon = `🚚🚩🚩ATENCIÓN RECOGE DISGON O LOGISTICA🚩🚩🚚`
+  }
+  if(nfm)
+    strNfm = `La entrada en Geode debe ser realizada como entrada 109. PIEZA SIN SOLUCIÓN DE REEMPLAZO.   `
 
   const fecha = new Date()
-  const mailSub = `CESION ${origen} -> ${destino}`
-  const mailSaludo = fecha.getHours() > 14 ? "Buenas tardes: %0A" : "Buenos días: %0A"
-  const mailBody = encodeURI(`Va a llegar de la placa de ${origen} a ${destino} ${strCantidad} ${referencia} para la cuenta ${cliente}. 
-  La entrada en Geode debe ser realizada como entrada esperada 103 y no con el 109. 
-    Saludos.`)
-  const mailBodyNfm = encodeURI(`Va a llegar de la placa de ${origen} a ${destino} ${strCantidad} ${referencia} para la cuenta ${cliente}.
-  La entrada en Geode debe ser realizada como entrada 109. PIEZA SIN SOLUCIÓN DE REEMPLAZO.   
-  Saludos.`)
-  !nfm ? mailTarget = mailBody : mailTarget = mailBodyNfm
-  const data = new FormData();
-  data.append('mailDestino',mailDestino)
-  data.append('mailFragil',mailFragil)
-  data.append('mailSaludo',mailSaludo)
-  data.append('pedido',pedido)
-  data.append('destinoFragil',destinoFragil)
-  data.append('mailOrigen',mailOrigen)
-  data.append('mailSub',mailSub)
-  data.append('cc',bcc)
-  data.append('mailTarget',mailTarget)
-
-  window.open(`mailto:${destinoFragil};${mailDestino};${mailOrigen}?subject=${mailSub}&cc=${bcc}&body=${mailFragil}${mailSaludo + mailTarget}`)  
+  const mailSub = `CESION ${asuntoDisgon} ${origen} -> ${destino}`
+  const mailSaludo = fecha.getHours() > 14 ? `${mailFragil}Buenas tardes: ` : `${mailFragil}Buenos días: `
+  mailTarget = encodeURIComponent(`
+Va a llegar de la placa de ${origen} a ${destino} ${strCantidad} ${referencia} para la cuenta ${cliente}.
+${strNfm}
+${strDisgon}
+Saludos.`)
+  
+  window.open(`mailto:${destinoFragil};${mailDestino};${mailOrigen}?subject=${mailSub}&cc=${bcc}&body=${mailSaludo + mailTarget}`)  
 }
-
 const eliminarLinea = (id,referencia) =>{
   const dataName = new FormData()
   dataName.append('id',id)
@@ -305,7 +349,11 @@ const eliminarLinea = (id,referencia) =>{
       body: data
     })
     .then(e => e.text())
-    .then($(id).parentNode.remove())
+    .then(()=>{
+      $(id).parentNode.remove()
+      const bubble = $('contacts').childNodes[3].childNodes[1].childNodes[1].childNodes[1]
+      bubble != undefined ?  bubble.innerText = parseInt(bubble.innerText) - 1 : ''
+    })
   })
 }
 
@@ -368,8 +416,10 @@ $$('form')[0].addEventListener('submit',(e)=>{
   .then(res =>{
     if(res == 'ok'){
       showAssig()
+      const bubble = $('contacts').childNodes[3].childNodes[1].childNodes[1].childNodes[1]
       $('newTitle').innerHTML = "Nueva cesión"
       $('pclient').innerHTML = ""
+      bubble != undefined ?  bubble.innerText = parseInt(bubble.innerText) + 1 : $('contacts').childNodes[3].childNodes[1].childNodes[1].innerHTML = 'Nueva <span class="round">1</span>'
       e.target.reset()
     }
   })
@@ -434,10 +484,13 @@ botones.buscar.addEventListener('click',() => {
           const rows = $('cesiones').getElementsByTagName('ul')
           for(let i = 1;i < rows.length;i++) {
             const id = rows[i].id
-            const referencia = rows[i].childNodes[7].innerHTML.trim()
+            const referencia = rows[i].childNodes[7]
+            referencia.addEventListener('click',e =>{
+              copyClipboard(e.target.textContent.replaceAll(' ',''))
+            })
             const data = new FormData
             data.append('id', id)
-            data.append('referencia', referencia)
+            data.append('referencia', referencia.innerHTML.replaceAll(' ',''))
             fetch('../api/getDescRefer.php',{
               method: 'POST',
               body: data
@@ -482,10 +535,13 @@ botones.recibidas.addEventListener('click', () =>{
     const rows = $('cesiones').getElementsByTagName('ul')
     for(let i = 1;i < rows.length;i++) {
       const id = rows[i].id
-      const referencia = rows[i].childNodes[7].innerHTML
+      const referencia = rows[i].childNodes[7]
       const data = new FormData
+      referencia.addEventListener('click',e =>{
+        copyClipboard(e.target.textContent.replaceAll(' ',''))
+      })
       data.append('id', id)
-      data.append('referencia', referencia)
+      data.append('referencia', referencia.textContent.replaceAll(' ',''))
       fetch('../api/getDescRefer.php',{
         method: 'POST',
         body: data
@@ -501,6 +557,25 @@ botones.recibidas.addEventListener('click', () =>{
 botones.pendientes.addEventListener('click', () =>{
   clearSelect()
   assignOnTrak('date')
+})
+
+$('contacts-items').addEventListener('click',e =>{
+  if(e.target.parentNode.title.includes('recibida')){
+    let enCurso = document.getElementsByClassName('subButtons')[0].childNodes[1].childNodes[5].childNodes[1]
+    if(confirm("Se ha recibido esta cesion?") == true){
+      const data = new FormData()
+      data.append('id',e.target.id)
+      fetch('../api/updateAssig.php',{
+        method: 'POST',
+        body: data
+      })
+      .then(response => response.text())
+      .then(() => {
+        e.target.parentNode.parentNode.style.display = 'none'
+        enCurso.innerHTML = parseInt(enCurso.innerText) - 1
+      })
+    }
+  }
 })
 
 const assignOnTrak = (sort) =>{
@@ -534,10 +609,17 @@ const assignOnTrak = (sort) =>{
     const rows = $('cesiones').getElementsByTagName('ul')
     for(let i = 1;i < rows.length;i++) {
       const id = rows[i].id
-      const referencia = rows[i].childNodes[7].innerHTML
+      const referencia = rows[i].childNodes[7]
       const data = new FormData
+      referencia.addEventListener('click',e =>{
+        const filas = $('cesiones').getElementsByTagName('ul')
+        for(let i=0;i<filas.length;i++)
+          filas[i].classList.remove('marcado')
+        e.target.parentNode.classList.add('marcado')
+        copyClipboard(e.target.textContent.replaceAll(' ',''))
+      })
       data.append('id', id)
-      data.append('referencia', referencia)
+      data.append('referencia', referencia.innerHTML)
       fetch('../api/getDescRefer.php',{
         method: 'POST',
         body: data
@@ -583,7 +665,7 @@ botones.estadistica.addEventListener('click', (e) =>{
         datasets: []
       }
       if(res[e.target.value][1].length > 0){
-        let sum = res[e.target.value][1].slice(-20).reduce((previous, current) => parseInt(current) + parseInt(previous));
+        let sum = res[e.target.value][1].slice(0,20).reduce((previous, current) => parseInt(current) + parseInt(previous));
         avg = Math.round((sum / res[e.target.value][1].slice(-20).length) * 100)/100;
       }
 
@@ -651,8 +733,8 @@ botones.estadistica.addEventListener('click', (e) =>{
     $('contacts').appendChild(input)
 
     
-    let sum = res[usuario][1].slice(-20).reduce((previous, current) => parseInt(current) + parseInt(previous));
-    let avg = Math.round((sum / res[usuario][1].slice(-20).length) * 100)/100;
+    let sum = res[usuario][1].slice(0,20).reduce((previous, current) => parseInt(current) + parseInt(previous));
+    let avg = Math.round((sum / res[usuario][1].slice(0,20).length) * 100)/100;
     data.labels = res[usuario][2]
     data.datasets.push({
       label: "Media: " + avg,
@@ -688,56 +770,11 @@ botones.estadistica.addEventListener('click', (e) =>{
   })
 })
 
-document.addEventListener('keyup',(e)=>{
+/* Se colorea los fondos de los input cuando hay algo escrito */
+$$('form')[0].addEventListener('keyup',(e)=>{
   if(!$$('form')[0].childNodes[1] == false && !$$('form')[0].childNodes[1].className != 'form-group'){
     for (var element = 0;element < $$('form')[0].length;element++){
       $$('form')[0][element].value != '' ? $$('form')[0][element].classList.add('fondo') : $$('form')[0][element].classList.remove('fondo')
     }
   }
 })
-
-$('newTitle').addEventListener('click', e =>{
-  if($('newTitle').innerText == 'Nueva cesión')
-    return false
-  let seleccion = document.createRange();
-  seleccion.selectNodeContents($('newTitle'))
-  window.getSelection().removeAllRanges()
-  window.getSelection().addRange(seleccion)
-  var res = document.execCommand('copy')
-  window.getSelection().removeRange(seleccion)
-  $('newTitle').style.fontWeight = 600
-  notify(`${seleccion} copiado!`)
-})
-
-/* SmtpJS.com - v3.0.0 */
-var Email = { 
-  send: function (a) { 
-    return new Promise(function (n, e) { 
-      a.nocache = Math.floor(1e6 * Math.random() + 1), 
-      a.Action = "Send"; 
-      var t = JSON.stringify(a); 
-      Email.ajaxPost("https://smtpjs.com/v3/smtpjs.aspx?", t, function (e) { n(e) }) 
-    }) 
-  }, 
-  ajaxPost: function (e, n, t) { 
-    var a = Email.createCORSRequest("POST", e); 
-    a.setRequestHeader("Content-type", "application/x-www-form-urlencoded"), 
-    a.onload = function () { 
-      var e = a.responseText; 
-      null != t && t(e) 
-    }, 
-    a.send(n) 
-  }, 
-  ajax: function (e, n) { 
-    var t = Email.createCORSRequest("GET", e); 
-    t.onload = function () { 
-      var e = t.responseText; 
-      null != n && n(e) 
-    }, 
-    t.send() 
-  }, 
-  createCORSRequest: function (e, n) { 
-    var t = new XMLHttpRequest; 
-     return "withCredentials" in t ? t.open(e, n, !0) : "undefined" != typeof XDomainRequest ? (t = new XDomainRequest).open(e, n) : t = null, t 
-    } 
-  };

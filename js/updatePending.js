@@ -48,3 +48,7 @@ dropContainer.ondrop = function(evt) {
 
   evt.preventDefault()
 }
+
+document.getElementById('downloads').addEventListener('click',()=>{
+  window.open("../api/getSelectsClientPending.php","Clientes que descargan el fichero de pendientes","menubar=no, scrollbars=no, width=1000, height=900")
+})

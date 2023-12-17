@@ -2,7 +2,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <?php include_once('../helper/head.php'); ?>
+  <?php 
+  include_once('../helper/head.php'); 
+  $contacts = new Contacts();
+  $nuevas = $contacts->getAssigCountNew($contacts->getUserBySessid($_GET['id']))[0][0];
+  if($nuevas > 0)
+    $nuevas = "<span class='round'>".$nuevas."</span>";
+  else
+    $nuevas = "";
+
+  $enCurso = $contacts->getAssigCount($contacts->getUserBySessid($_GET['id']))[0][0];
+  if($enCurso > 0)
+    $enCurso = "<span class='round'>".$enCurso."</span>";
+  else
+    $enCurso = "";
+  ?>
 </head>
 <body>
   <div id="menu">
@@ -12,30 +26,11 @@
     <div id="contacts" class="contacts">
       <h1>Cesiones</h1>
       <section class="subButtons">
-        <ul>
-          <li title="Nueva Cesión">Nueva
-            <?php
-              $contacts = new Contacts();
-              $nuevas = $contacts->getAssigCountNew($contacts->getUserBySessid($_GET['id']))[0][0];
-              if($nuevas > 0){ ?>
-                <span class="round">
-                  <?php echo $nuevas; ?>
-                </span> 
-            <?php } ?>
-          </li>
-          <li title="Buscar cesiones">Buscar</li>
-          <li title="Cesiones pendientes de recibir">En curso
-          <?php
-            $enCurso = $contacts->getAssigCount($contacts->getUserBySessid($_GET['id']))[0][0];
-            if($enCurso > 0){ ?>
-              <span class="round">
-                <?php echo $enCurso; ?>
-              </span> 
-            <?php } ?>
-          </li>
-          <li title="Cesiones recibidas por el cliente">Hechas</li>
-          <li title="Gráficos estadísticos">Estadística</li>
-        </ul>
+        <button id="new" class="active"><?php echo $nuevas; ?> Nuevas Cesiones</button>
+        <button id="find">Buscar</button>
+        <button id="ready"><?php echo $enCurso; ?> En curso</button>
+        <button id="finish">Hechas</button>
+        <button id="status">Estadística</button>
       </section>
     </div>
     <section class="assig-cpy" id="newTitle">Nueva cesión</section>

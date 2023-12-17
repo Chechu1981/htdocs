@@ -84,7 +84,7 @@ const openDialog = id =>{
         <li>Provincia: <b>${client.provincia}</b></li>
         <li>CP: <b>${client.cp}</b></li>
         <li>Teléfono: <b class="copy">${client.telefono}</b></li>
-        <li>E-mail: <b class="copy">${client.email}</b></li>
+        <li>E-mail: <b class="copy">${client.email.toLowerCase()}</b></li>
         <li>Tipo: <b>${client.tipo}</b></li>
         <li>Comercial: <b>${client.comercial}</b></li>
       </ul>

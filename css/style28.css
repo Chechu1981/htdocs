@@ -14,11 +14,22 @@ body{
     font-family: nunito, arial; 
     letter-spacing: .01em;
     font-size: .6em;
-    background-color: var(--bg-body-color);
     background-image: url(../img/Logo-PPCR-2022.png);
     background-repeat: no-repeat;
     background-position: center;
     background-blend-mode: soft-light;
+}
+
+body::after{
+    content: "";
+    background: var(--bg-body-color);
+    opacity: 0.9;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1; 
 }
 
 iframe{
@@ -192,6 +203,7 @@ select, input{
 
 #menu ul li:hover > ul{
     display: block;
+    width: max-content;
 }
 
 #menu ul li ul{
@@ -723,6 +735,7 @@ input[type="color"]::-webkit-color-swatch {
 
 #contacts-items ul,
 #route-items ul,
+#cesiones ul,
 .pass-items ul,
 .pass-items #complete ul,
 #center-list-items ul{
@@ -819,6 +832,7 @@ input[type="color"]::-webkit-color-swatch {
 
 #route-items ul:nth-child(even),
 #contacts-items ul:nth-child(even),
+#cesiones ul:nth-child(even),
 .pass-items ul:nth-child(even),
 .pass-items #complete ul:nth-child(even),
 #center-list-items ul:nth-child(even){
@@ -828,6 +842,7 @@ input[type="color"]::-webkit-color-swatch {
 
 #route-items ul:nth-child(odd),
 #contacts-items ul:nth-child(odd),
+#cesiones ul:nth-child(odd),
 .pass-items ul:nth-child(odd),
 .pass-items #complete ul:nth-child(odd),
 #center-list-items ul:nth-child(odd){
@@ -837,6 +852,7 @@ input[type="color"]::-webkit-color-swatch {
 
 #route-items ul:hover,
 #contacts-items ul:hover,
+#cesiones ul:hover,
 .pass-items ul:hover,
 .pass-items #complete ul:hover,
 #center-list-items ul:hover{
@@ -874,6 +890,7 @@ input[type="color"]::-webkit-color-swatch {
 
 #contacts-items li,
 #route-items li,
+#cesiones li,
 .pass-items li,
 .pass-items #complete li,
 #center-list-items li{
@@ -1170,8 +1187,8 @@ input[type="color"]::-webkit-color-swatch {
     transition: .2s;
 }
 
-.subButtons li:hover{
-    filter: brightness(1.5);
+.subButtons button{
+    margin-right: 10px;
 }
 
 .round{
@@ -1181,9 +1198,10 @@ input[type="color"]::-webkit-color-swatch {
   width: 12px;
   padding: 3px;
   border: 1px solid var(--bg-font-color);
-  float: right;
+  float: left;
   font-size: x-small;
   height: 12px;
+  margin-right:10px;
 }
 
 .change{
@@ -1234,7 +1252,7 @@ input[type="color"]::-webkit-color-swatch {
 
 .active{
     background-color: var(--main-font-color);
-    color: var(--bg-body-color) !important;
+    color: var(--bg-body-color);
 }
 
 .important{
@@ -1522,11 +1540,11 @@ margin: 0 10px;
     width: 100%;
     padding: 5px;
 }
-
+/*
 .csv-files section:nth-child(odd){
-  /*height: 70vh;*/
+  height: 70vh;
 }
-
+*/
 .csv-files .priority{
   font-weight: 800;
 }
@@ -1546,9 +1564,19 @@ margin: 0 10px;
     animation: rotar .3s;
 }
 
+.btn-inmov-180{
+    transform: rotate(270deg);
+    animation: rotar180 .3s;
+}
+
 @keyframes rotar {
     0% {transform: rotate(0deg)}
     100% {transform: rotate(180deg)}
+}
+
+@keyframes rotar180 {
+    0% {transform: rotate(0deg)}
+    100% {transform: rotate(270deg)}
 }
 
 .btn-inmov-normal{
@@ -1942,4 +1970,57 @@ margin: 0 10px;
 
 .ipList li{
   margin: 0 10px;
+}
+
+.head li{
+    font-weight: bold;
+}
+
+.bodyContent{
+    display: grid;
+    grid-template-columns: 179px 794px;
+}
+
+.listPendig{
+    display: flex;
+    justify-content: flex-start;
+    text-align: center;
+    font-size: small;
+}
+
+.listPendig th{
+    background-color: #6a6a6a;
+    position: sticky;
+    top: 0px;
+}
+
+.listPendig td{
+    padding: 2px;
+}
+
+.listPendigActive{
+    background-color: chartreuse !important;
+    color: black !important;
+}
+
+.listPendig tr:nth-child(odd){
+    background-color: #516dbb;
+    color: rgb(255, 255, 255);
+}
+
+.listPendig tr:nth-child(even){
+    background-color:rgb(198, 198, 198);
+    color:#0d0d72;
+}
+
+.toolTip{
+    display:none;
+    position: absolute;
+    background-color: antiquewhite;
+    padding: 8px;
+    margin-top: 48px;
+    margin-left: 157px;
+    border-radius: 8px;
+    box-shadow: 1px 1px black;
+    opacity: .9;
 }

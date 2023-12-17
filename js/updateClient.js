@@ -2,7 +2,6 @@ document.getElementsByTagName('form')[0].addEventListener('submit',e=>{
   e.preventDefault()
   document.getElementsByTagName('input')[2].disabled = true
   document.getElementsByTagName('div')[7].childNodes[1].innerHTML = `<span class="spinner"></span>`
-  e.target.appendChild(document.createElement('div'))
   const file = e.target.childNodes[1].files[0]
   const data = new FormData()
   data.append('file',file)

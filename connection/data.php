@@ -23,6 +23,7 @@ class Contacts
         $src = ".";
         !strstr("$uri",'home') == '/home.php' ? $src = ".." : '';
         strpos($uri,'center') > 0 ? $src = "../.." : '';
+        strpos($uri,'assigns') > 0 ? $src = "../.." : '';
         $data = file_get_contents($src.'/json/sesiones.json');
         $usr = json_decode($data, true);
         $user = false;
@@ -334,7 +335,28 @@ class Contacts
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND `usuario` = '$usr' OR `usuario` LIKE '' ORDER BY `origen`, `destino` DESC ";
         elseif($all == 'new')
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND `usuario` = '$usr' OR `usuario` LIKE '' ORDER BY `origen`, `destino` DESC ";
-            $query = $this->db->prepare($sql);
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function newSelectPending($ip,$placa,$cliente,$referencia,$envio,$nombre){
+        $sql = "INSERT INTO `statusPending` (`ip`,`plate`,`NumClient`,`ref`,`dirClient`,`date`,`free1`) 
+        VALUES ('$ip','$placa','$cliente','$referencia','$envio',CURRENT_TIMESTAMP(),'$nombre')";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
+
+    public function selectsClientPending($day){
+        $sql = "SELECT *,CONCAT(YEAR(`date`),MONTH(`date`),LPAD(DAY(`date`),2,'0')) AS 'dateNum' FROM `statusPending` WHERE CONCAT(YEAR(`date`),MONTH(`date`),LPAD(DAY(`date`),2,'0')) LIKE '$day'  ORDER BY `id` DESC;";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function selectsClientPendingGroupDay(){
+        $sql = "SELECT CONCAT(LPAD(DAY(`date`),2,'0'),'/',MONTH(`date`),'/',YEAR(`date`)),COUNT(*),CONCAT(YEAR(`date`),MONTH(`date`),LPAD(DAY(`date`),2,'0')) AS `num` FROM `statusPending` GROUP BY `num` ORDER BY `id` DESC;";
+        $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }

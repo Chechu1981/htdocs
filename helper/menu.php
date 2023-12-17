@@ -3,6 +3,7 @@ $uri = $_SERVER['PHP_SELF'];
 $src = ".";
 !strstr("$uri",'home') == '/home.php' ? $src = ".." : '';
 strpos($uri,'center') > 0 ? $src = "../.." : '';
+strpos($uri,'assigns') > 0 ? $src = "../.." : '';
 $id = $_GET['id'];
 ?>
 <picture class="head-img">
@@ -10,42 +11,41 @@ $id = $_GET['id'];
 </picture>
 <nav id="menu-items">
     <ul>
-    <li><a href="<?php echo $src.'/home.php?id='.$id; ?>" >Inicio</a></li>
-    <li><a href="<?php echo $src.'/src/routeTest.php?id='.$id; ?>">Rutas</a></li>
-    <li><a href="<?php echo $src.'/src/libreta.php?id='.$id; ?>">Libreta</a></li>
-    <li style="width: 44px;"><a href="<?php echo $src.'/src/cesiones1.php?id='.$id ?>">Cesiones</a>
-    <ul>
-    <li><a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>">Cesiones_ADV</a></li>
-    </ul>
-    </li>    
-    <li><a href="<?php echo $src.'/src/inmovilizados.php?id='.$id ?>">Inmovilizados</a>
-      <ul>
-        <li><a href="<?php echo $src.'/src/inmStatus.php?id='.$id ?>">Datos</a></li>
-      </ul>
-    </li>
-    <li><a href="<?php echo $src.'/src/centros.php?id='.$id ?>">Centros</a>
-        <ul>
-        <li><a href="<?php echo $src.'/src/center/central.php?id='.$id ?>">Central</a></li>
-        <li><a href="<?php echo $src.'/src/center/madrid.php?id='.$id ?>">Madrid</a></li>
-        <li><a href="<?php echo $src.'/src/center/sevilla.php?id='.$id ?>">Sevilla</a></li>
-        <li><a href="<?php echo $src.'/src/center/vigo.php?id='.$id ?>">Vigo</a></li>
-        <li><a href="<?php echo $src.'/src/center/granada.php?id='.$id ?>">Granada</a></li>
-        <li><a href="<?php echo $src.'/src/center/zaragoza.php?id='.$id ?>">Zaragoza</a></li>
-        <li><a href="<?php echo $src.'/src/center/palma.php?id='.$id ?>">Palma</a></li>
-        <li><a href="<?php echo $src.'/src/center/paterna.php?id='.$id ?>">Paterna</a></li>
-        <li><a href="<?php echo $src.'/src/center/barcelona.php?id='.$id ?>">Barcelona</a></li>
-        </ul>
-    </li>
-    <!--<li><a href="<?php echo $src.'/src/tyres.php?brand=tyres&id='.$id ?>">Neumáticos</a>
-        <ul>
-            <li><a href="<?php echo $src.'/src/tyres.php?brand=Michelin&id='.$id ?>">Michelin</a></li>
-            <li><a href="<?php echo $src.'/src/tyres.php?brand=Continental&id='.$id ?>" >Continental</a></li>
-            <li><a href="<?php echo $src.'/src/tyres.php?brand=Pirelli&id='.$id ?>" >Pirelli</a></li>
-            <li><a href="<?php echo $src.'/src/tyres.php?brand=Hankook&id='.$id ?>" >Hankook</a></li>
-            <li><a href="<?php echo $src.'/src/tyres.php?brand=Firestone&id='.$id ?>" >Firestone</a></li>
-            <li><a href="<?php echo $src.'/src/tyres.php?brand=Dunlop&id='.$id ?>" >Dunlop</a></li>
-        </ul>
-    </li>-->
+        <li><a href="<?php echo $src.'/home.php?id='.$id; ?>" >Inicio</a></li>
+        <li><a href="<?php echo $src.'/src/routeTest.php?id='.$id; ?>">Rutas</a></li>
+        <li><a href="<?php echo $src.'/src/libreta.php?id='.$id; ?>">Libreta</a></li>
+        <li style="width: 44px;">
+            <a href="<?php echo $src.'/src/cesiones1.php?id='.$id ?>">Cesiones</a>
+            <ul>
+                <li><a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>">Cesiones_ADV</a></li>
+                <li><a href="<?php echo $src.'/src/assigns/buscar.php?id='.$id ?>">Buscar</a></li>
+                <li><a href="<?php echo $src.'/src/assigns/ready.php?id='.$id ?>">En curso</a></li>
+                <li><a href="<?php echo $src.'/src/assigns/finish.php?id='.$id ?>">Finalizadas</a></li>
+                <li><a href="<?php echo $src.'/src/assigns/status.php?id='.$id ?>">Estadísticas</a></li>
+            </ul>
+        </li>    
+        <li>
+            <a href="<?php echo $src.'/src/inmovilizados.php?id='.$id ?>">Inmovilizados</a>
+            <ul>
+                <li>
+                    <a href="<?php echo $src.'/src/inmStatus.php?id='.$id ?>">Datos</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="<?php echo $src.'/src/centros.php?id='.$id ?>">Centros</a>
+            <ul>
+                <li><a href="<?php echo $src.'/src/center/central.php?id='.$id ?>">Central</a></li>
+                <li><a href="<?php echo $src.'/src/center/madrid.php?id='.$id ?>">Madrid</a></li>
+                <li><a href="<?php echo $src.'/src/center/sevilla.php?id='.$id ?>">Sevilla</a></li>
+                <li><a href="<?php echo $src.'/src/center/vigo.php?id='.$id ?>">Vigo</a></li>
+                <li><a href="<?php echo $src.'/src/center/granada.php?id='.$id ?>">Granada</a></li>
+                <li><a href="<?php echo $src.'/src/center/zaragoza.php?id='.$id ?>">Zaragoza</a></li>
+                <li><a href="<?php echo $src.'/src/center/palma.php?id='.$id ?>">Palma</a></li>
+                <li><a href="<?php echo $src.'/src/center/paterna.php?id='.$id ?>">Paterna</a></li>
+                <li><a href="<?php echo $src.'/src/center/barcelona.php?id='.$id ?>">Barcelona</a></li>
+            </ul>
+        </li>
     </ul>
 </nav>
 <div class="form-control">

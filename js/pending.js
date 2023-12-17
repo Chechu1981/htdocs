@@ -122,6 +122,17 @@ document.getElementsByTagName('form')[0].addEventListener('submit', e =>{
       btnCsv.className = 'csv-file'
       btnCsv.title = "Descargar fichero CSV"
       document.getElementsByClassName('cuadro')[0].childNodes[1].append(btnCsv)
+
+      // Anoto la consulta
+      const dataClient = new FormData()
+      dataClient.append('cliente',cliente)
+      dataClient.append('placa',placa)      
+      dataClient.append('referencia',referencia)
+      dataClient.append('envio',envio)
+      fetch('../api/newSelectPending.php',{
+        method: 'POST',
+        body: dataClient
+      })
     }
   })
 })
