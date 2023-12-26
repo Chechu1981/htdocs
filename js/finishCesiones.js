@@ -20,8 +20,8 @@ document.getElementById('status').addEventListener('click',()=>{
   document.location = `./status.php?id=${id}`
 })
 
-
 window.addEventListener('load',()=>{
+  let info
   const uriData = new FormData()
   uriData.append('subfolder',id)
   fetch('../../api/spinner.php',{
@@ -43,10 +43,25 @@ window.addEventListener('load',()=>{
   .then(rows =>{
     section.innerHTML = rows
     const refCopy = document.getElementsByClassName('copy')
-    for(let i = 0; i < refCopy.length;i++)
+    for(let i = 0; i < refCopy.length;i++){
+      refCopy[i].addEventListener('mouseover', e =>{
+        const ref = e.target.textContent.replaceAll(' ','')
+        const datos = new FormData()
+        datos.append('referencia',ref)
+        fetch('../../api/getDescRefer.php',{
+          method:"POST",
+          body: datos
+        })
+        .then(item => item.text())
+        .then(desc => {
+          info = new notifyStatic(desc.replace("<p>","\n"))
+          info.showText
+        })
+      })
       refCopy[i].addEventListener('click',e =>{
         copyClipboard(e.target.textContent.replaceAll(' ',''))
-    })
+      })
+    }
   })
 })
 

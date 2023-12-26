@@ -18,6 +18,7 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     background-blend-mode: soft-light;
+    margin: 0px;
 }
 
 body::after{
@@ -114,6 +115,7 @@ select, input{
     top: 0;
     background-color: var(--bg-body-color);
     z-index: 9;
+    margin: 0px;
 }
 
 #menu img{
@@ -372,6 +374,8 @@ select, input{
     grid-gap: 5px;
     font-size: medium;
     align-items: center;
+    overflow-y: scroll;
+    height: 450px;
 }
 
 .note-body input{
@@ -674,7 +678,8 @@ input[type="color"]::-webkit-color-swatch {
     position: sticky;
     background-color: var(--bg-body-color);
     z-index: 3;
-    top: 69px;
+    top: 76px;
+    height: 70px;
     padding-top: 8px;
     padding-bottom: 8px;
 }
@@ -909,7 +914,6 @@ input[type="color"]::-webkit-color-swatch {
 #center-list-items li img{
   margin-bottom: 5px;
   cursor: pointer;
-  filter: brightness(0.5);
   border-radius: 8px;
   transition: .2s;
 }
@@ -924,10 +928,13 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .iconBrand{
-  filter: brightness(1)!important;
   cursor: initial !important;
   box-shadow: none!important;
   width: 53px;
+}
+
+.openFile:hover img{
+    filter: brightness(.5) !important;
 }
 
 #contacts-items li input,
@@ -968,6 +975,12 @@ input[type="color"]::-webkit-color-swatch {
 .copy:hover{
     color: var(--cards-border-color);
     text-shadow: hsl(0deg 0% 0%) 2px 2px 4px
+}
+
+.info:hover{
+    color: var(--cards-border-color);
+    text-shadow: hsl(0deg 0% 0%) 2px 2px 4px;
+    cursor: context-menu;
 }
 
 .check{
@@ -1050,7 +1063,7 @@ input[type="color"]::-webkit-color-swatch {
 
 .heading{
     position: sticky !important;
-    top: 126px;
+    top: 162px;
     background-color: var(--bg-body-color) !important;
     border-bottom: 2px solid var(--main-font-color);
     border-radius: 0  !important;
@@ -1288,7 +1301,7 @@ input[type="color"]::-webkit-color-swatch {
     color: var(--bg-body-color);
     background-color: var(--main-font-color);
     z-index: 9999999999;
-    top: 33%;
+    top: calc(100vh /5);
     margin-left: calc(50% - 150px);
     border-radius: 8px;
     box-shadow: 0px 0px 10px black;
@@ -1623,20 +1636,17 @@ margin: 0 10px;
     }
 }
 
-#complete{
+#complete,
+#completeRef{
     background-color: var(--second-bg-color);
     color: var(--bg-font-color);
-    height: auto;
+    height: 75vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .csv-files section:last-child{
     height: auto;
-}
-
-#complete{
-    height: 75vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
 }
 
 .completa{
@@ -1659,6 +1669,15 @@ margin: 0 10px;
     border-radius: 8px;
     height: 72vh;
     margin: 10px -4px;
+}
+
+.arrow-ref{
+    height: calc(72vh / 2);
+    align-items: center;
+}
+
+.arrow-slider-active{
+    background-color: #ddda21 !important;
 }
 
 .arrow-slider-inverter img{
@@ -1685,7 +1704,17 @@ margin: 0 10px;
     100%{grid-template-columns: 25% 0.5% 70% 0%;}
 }
 
-#result{
+#resultRef ul,
+#completeRef ul{
+    list-style: none;
+    display: grid;
+    grid-template-columns: 3% 12% 8% 6% 15% 56%;
+    font-size: large;
+    margin-left: -25px;
+}
+
+#result,
+#resultRef{
     height: 75vh;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -1706,21 +1735,27 @@ margin: 0 10px;
 }
 
 #result h2,
-#complete h2{
+#resultRef h2,
+#complete h2,
+#completeRef h2{
     text-align: center;
     border-bottom: 1PX solid;
     top: 0;
     position: sticky;
     background-color: var(--main-font-color);
+    color: var(--bg-body-color);
 }
 
 #result h3,
-#complete h3{
+#resultRef h3,
+#complete h3,
+#completeRef h3{
     text-align: center;
     font-size: 2.5em;
 }
 
-#result .heading{
+#result .heading,
+#resultRef .heading{
     top:0px;
 }
 
@@ -2014,12 +2049,15 @@ margin: 0 10px;
 }
 
 .toolTip{
-    display:none;
-    position: absolute;
-    background-color: antiquewhite;
+    visibility:hidden;
+    position:absolute;
+    text-shadow: none;
+    color: var(--bg-font-color);
+    position: fixed;
+    background-color: var(--cards-border-color);
     padding: 8px;
-    margin-top: 48px;
-    margin-left: 157px;
+    /*margin-top: 48px;
+    margin-left: 157px;*/
     border-radius: 8px;
     box-shadow: 1px 1px black;
     opacity: .9;

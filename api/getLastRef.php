@@ -14,10 +14,13 @@ $placas = array(
 
 
 foreach($placas as $key){
+    $oldFile = '';
+    if(count($contacts->getLastShortRefFile($key[2],'')) > 0)
+      $oldFile = $contacts->getLastShortRefFile($key[2],'')[0]['libre'];
     ?>
     <div class="btn-inmov">
       <button id="<?php echo $key[2]; ?>">
-      <?php echo $key[0] . " - " . $contacts->getLastFile($key[2],'')[0]['libre']; ?>
+      <?php echo $key[0] . " - " . $oldFile; ?>
       </button>
       <img alt="🔽" src="../img/expand_more_FILL0_wght400_GRAD0_opsz48.png" class="btn-inmov-normal">
       <div class="carrusel-off"></div>

@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
               $('search-line').childNodes[5].childNodes[1].childNodes[i].selected = true
             }
           }
-        }else if(window.location.pathname.includes('cesiones')){
+        }else if(window.location.pathname.includes('cesionesADV')){
           for(let i = 0; i < $$('form')[0][1].options.length; i++){
             let centro = $('menu').childNodes[1].childNodes[1].innerText
             if($('menu').childNodes[1].childNodes[1].innerText.toUpperCase() == 'GALICIA')
@@ -165,6 +165,24 @@ const notify = (text) => {
   setTimeout(() => {
     notif.remove()
   }, 1800)
+}
+
+class notifyStatic {
+  constructor(text){
+    this.notif = document.createElement('div')
+    this.texto = document.createTextNode(text)
+  }
+  setTexto(text){
+    document.getElementsByClassName('copy-container')[0].childNodes[1] = text
+  }
+  get showText(){
+    this.notif.classList.add('copy-container')
+    this.notif.appendChild(this.texto)
+    document.body.appendChild(this.notif)
+  }
+  get eliminar(){
+    this.notif.remove()
+  }
 }
 
 const customConfirm = (text,action) => {

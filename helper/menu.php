@@ -28,6 +28,9 @@ $id = $_GET['id'];
             <a href="<?php echo $src.'/src/inmovilizados.php?id='.$id ?>">Inmovilizados</a>
             <ul>
                 <li>
+                    <a href="<?php echo $src.'/src/referenciados.php?id='.$id ?>">Referenciados</a>
+                </li>
+                <li>
                     <a href="<?php echo $src.'/src/inmStatus.php?id='.$id ?>">Datos</a>
                 </li>
             </ul>

@@ -748,6 +748,47 @@ class Contacts
         }
     }
 
+    public function updateInmovilmentRef($items){
+        try{
+            $placaDelete = $items[1]['placa'];
+            $queryClear = $this->db->prepare("DELETE FROM `referenciados` WHERE `placa` = '$placaDelete'");
+            $queryClear->execute();
+            sleep(1);
+            $batchSize = 3000;
+            foreach (array_chunk($items, $batchSize) as $row) {
+                $sql = "INSERT INTO `referenciados`(`fecha`, `cuenta`, `nombre`, `referencia`, `designacion`, `fiabilidad`, `placa`, `aviso`, `vin`, `cantidad`, `npedido`, `prioridad`, `libre`,`reemplazamiento`,`marcado`, `marca`, `comentario`, `sap`) VALUES ";
+                foreach ($row as $rows) {
+                    $fecha = $rows["fecha"];
+                    $cuenta = $rows["cuenta"];
+                    $nombre = str_replace("'","`",$rows["nombre"]);
+                    $referencia = $rows["referencia"];
+                    $designacion = str_replace("'","`",$rows["designacion"]);
+                    $fiabilidad = $rows["fiabilidad"];
+                    $placa = $rows["placa"];
+                    $aviso = $rows["aviso"];
+                    $vin = $rows["vin"];
+                    $cantidad = $rows["cantidad"];
+                    $npedido = $rows["npedido"];
+                    $fentrega = $rows["fentrega"];
+                    $prioridad = $rows["prioridad"];
+                    $fecha_act = $rows["fecha_act"];
+                    $reemplazamiento = $rows["reemplazamiento"];
+                    $marcado = $rows["marcado"];
+                    $marca = $rows["marca"];
+                    $comentario = $rows['comentario'];
+                    $sap = $rows['sap'];
+                    $sql .= "('$fecha','$cuenta','$nombre','$referencia','$designacion','$fiabilidad','$placa','$aviso','$vin','$cantidad','$npedido','$prioridad','$fecha_act','$reemplazamiento','$marcado', '$marca', '$comentario', '$sap'),";
+                }
+                $sql = substr($sql, 0, -1) . ";";
+                $query = $this->db->prepare($sql);
+                $query->execute();
+            }
+            return "ok";
+        }catch(Exception $e){
+            return $e;
+        }
+    }
+
     public function updatePriorityInmov($id,$priority,$name){
       $sql = "UPDATE `inmovilizados` SET `prioridad`='$priority', `marcado`='$name' WHERE `id`='$id'";
       $query = $this->db->prepare($sql);
@@ -760,6 +801,16 @@ class Contacts
         if($ref != '')
             $referencia = "AND `referencia` = '$ref'";
         $sql = "SELECT * FROM `inmovilizados` WHERE `placa` = '$placa' ".$referencia." ORDER BY `referencia`, STR_TO_DATE(`fecha`,'%d/%m/%Y'),`npedido`, `prioridad`";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getLastRefFile($placa, $ref){
+        $referencia = '';
+        if($ref != '')
+            $referencia = "AND `referencia` = '$ref'";
+        $sql = "SELECT * FROM `referenciados` WHERE `placa` = '$placa' ".$referencia." ORDER BY `referencia`, STR_TO_DATE(`fecha`,'%d/%m/%Y'),`npedido`, `prioridad`";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -802,6 +853,84 @@ class Contacts
         }
     }
 
+    public function updateShortRef($items,$placaGet){
+        try{
+            $queryClear = $this->db->prepare("DELETE FROM `shortref` WHERE `placa` = '$placaGet'");
+            $queryClear->execute();
+            sleep(1);
+            $batchSize = 3000;
+            foreach (array_chunk($items, $batchSize) as $row) {
+                $sql = "INSERT INTO `shortref`(`fecha`, `cuenta`, `nombre`, `referencia`, `designacion`, `fiabilidad`, `placa`, `aviso`, `vin`, `cantidad`, `npedido`, `prioridad`, `libre`, `reemplazamiento`, `marca`, `comentario`, `sap`) VALUES ";
+                foreach ($row as $rows) {
+                    $fecha = $rows["fecha"];
+                    $cuenta = $rows["cuenta"];
+                    $nombre = str_replace("'","`",$rows["nombre"]);
+                    $referencia = $rows["referencia"];
+                    $designacion = str_replace("'","`",$rows["designacion"]);
+                    $fiabilidad = $rows["fiabilidad"];
+                    $placa = $rows["placa"];
+                    $aviso = $rows["aviso"];
+                    $vin = $rows["vin"];
+                    $cantidad = $rows["cantidad"];
+                    $npedido = $rows["npedido"];
+                    $fentrega = $rows["fentrega"];
+                    $prioridad = $rows["prioridad"];
+                    $fecha_act = $rows["fecha_act"];
+                    $reemplazamiento = $rows["reemplazamiento"];
+                    $marca = $rows["marca"];
+                    $comentario = $rows['comentario'];
+                    $sap = $rows['sap'];
+                    $sql .= "('$fecha','$cuenta','$nombre','$referencia','$designacion','$fiabilidad','$placa','$aviso','$vin','$cantidad','$npedido','$prioridad','$fecha_act','$reemplazamiento','$marca', '$comentario', '$sap'),";
+                }
+                $sql = substr($sql, 0, -1) . ";";
+                $query = $this->db->prepare($sql);
+                $query->execute();
+            }
+            return "ok";
+        }catch(Exception $e){
+            return $e;
+        }
+    }
+
+    public function updateFilterList($items,$placaGet){
+        try{
+            $queryClear = $this->db->prepare("DELETE FROM `filterlist` WHERE `placa` = '$placaGet'");
+            $queryClear->execute();
+            sleep(1);
+            $batchSize = 3000;
+            foreach (array_chunk($items, $batchSize) as $row) {
+                $sql = "INSERT INTO `filterlist`(`fecha`, `cuenta`, `nombre`, `referencia`, `designacion`, `fiabilidad`, `placa`, `aviso`, `vin`, `cantidad`, `npedido`, `prioridad`, `libre`, `reemplazamiento`, `marca`, `comentario`, `sap`) VALUES ";
+                foreach ($row as $rows) {
+                    $fecha = $rows["fecha"];
+                    $cuenta = $rows["cuenta"];
+                    $nombre = str_replace("'","`",$rows["nombre"]);
+                    $referencia = $rows["referencia"];
+                    $designacion = str_replace("'","`",$rows["designacion"]);
+                    $fiabilidad = $rows["fiabilidad"];
+                    $placa = $rows["placa"];
+                    $aviso = $rows["aviso"];
+                    $vin = $rows["vin"];
+                    $cantidad = $rows["cantidad"];
+                    $npedido = $rows["npedido"];
+                    $fentrega = $rows["fentrega"];
+                    $prioridad = $rows["prioridad"];
+                    $fecha_act = $rows["fecha_act"];
+                    $reemplazamiento = $rows["reemplazamiento"];
+                    $marca = $rows["marca"];
+                    $comentario = $rows['comentario'];
+                    $sap = $rows['sap'];
+                    $sql .= "('$fecha','$cuenta','$nombre','$referencia','$designacion','$fiabilidad','$placa','$aviso','$vin','$cantidad','$npedido','$prioridad','$fecha_act','$reemplazamiento','$marca', '$comentario', '$sap'),";
+                }
+                $sql = substr($sql, 0, -1) . ";";
+                $query = $this->db->prepare($sql);
+                $query->execute();
+            }
+            return "ok";
+        }catch(Exception $e){
+            return $e;
+        }
+    }
+
     public function getLastShortFile($placa){
       $sql = "SELECT * FROM `shortInmv` WHERE `placa` = '$placa' ORDER BY `referencia`, STR_TO_DATE(`fecha`,'%d/%m/%Y'),`npedido`, `prioridad`";
       $query = $this->db->prepare($sql);
@@ -809,8 +938,29 @@ class Contacts
       return $query->fetchAll();
     }
 
+    public function getLastShortRefFile($placa){
+    $sql = "SELECT * FROM `shortref` WHERE `placa` = '$placa' ORDER BY `referencia`, STR_TO_DATE(`fecha`,'%d/%m/%Y'),`npedido`, `prioridad`";
+      $query = $this->db->prepare($sql);
+      $query->execute();
+      return $query->fetchAll();
+    }
+
+    public function getFilterList($placa){
+        $sql = "SELECT * FROM `filterlist` WHERE `placa` = '$placa' ORDER BY `referencia`, STR_TO_DATE(`fecha`,'%d/%m/%Y'),`npedido`, `prioridad`";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+        }
+
     public function updateShortFile($id){
       $sql = "UPDATE `shortInmv` SET `marcado` = 'SI' WHERE `id` = $id";
+      $query = $this->db->prepare($sql);
+      $query->execute();
+      return "ok";
+    }
+
+    public function updateShortRefFile($id){
+      $sql = "UPDATE `filterlist` SET `marcado` = 'SI' WHERE `id` = $id";
       $query = $this->db->prepare($sql);
       $query->execute();
       return "ok";
@@ -997,5 +1147,23 @@ class Contacts
     $query = $this->db->prepare($sql);
     $query->execute();
     return $query->fetchAll();
+  }
+
+  public function getPalabrasClave(){
+    $sql = "SELECT * FROM `palabrasclave`";
+    $query = $this->db->prepare($sql);
+    $query->execute();
+    return $query->fetchAll();
+  }
+
+  public function updateClavesRef($clave){
+    $queryClear = $this->db->prepare("DELETE FROM `palabrasclave`");
+    $queryClear->execute();
+    sleep(1);
+    foreach($clave as $frase){
+        $sql = "INSERT INTO `palabrasclave` (`clave`) VALUES ('$frase')";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
   }
 }

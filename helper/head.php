@@ -35,6 +35,7 @@ $scripts = (object)[
   'ROUTE' => "/js/route.js",
   'ROUTETEST' => "/js/routeTest.js",
   'INMOVILIZADOS' => "/js/vi18.js?1237",
+  'REFERENCIADOS' => "/js/referenciados.js?1002",
   'INMSTATUS' => "/js/inmStat.js",
   'CONFIGROUTES' => "/js/cfgRutas2.js",
   'CONFIGREPERE' => "/js/formRepere.js",
@@ -67,7 +68,7 @@ $user = $contacts->getUserBySessid($_GET['id']);
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?php echo $src . '/img/icons8-herramientas-del-administrador-96.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1240" defer content="1">
+<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1242" defer content="1">
 <link rel="stylesheet" href="<?php echo $src; ?>/css/150027.css" defer content="1">
 <link rel="stylesheet" href="<?php echo $src . $css[$user]; ?>" defer content="0">
 <script type="text/javascript" src="<?php echo $src; ?>/js/script20.js" defer content='no-cache'></script>

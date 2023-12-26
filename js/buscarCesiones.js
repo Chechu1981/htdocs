@@ -35,7 +35,7 @@ document.getElementById('search-ref').addEventListener('submit',e=>{
   .then(fn => fn.text())
   .then(req => section.innerHTML = req)
   const section = document.getElementById('cesiones')
-  const ref = document.getElementById('refAssig').value
+  const ref = document.getElementById('refAssig').value.replaceAll(' ','')
   const data = new FormData()
   data.append('id',ref)
   data.append('session',id)
