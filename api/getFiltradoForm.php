@@ -5,7 +5,7 @@ $palabrasClave = $consulta->getPalabrasClave();
 ?>
 <form action="">
 <?php  
-for($i = 0; $i < 10; $i++) {
+for($i = 0; $i < 20; $i++) {
     echo $i + 1;
     list($palabra, $id) = array("","");
     if(isset($palabrasClave[$i][1])){

@@ -11,7 +11,11 @@ const cesiones = (origen, destino,nfm) =>{
     if(numDest == "6254-1" || numDest == "78713-1"){
       $('pclient').classList.add('important')
       alerta = "Preguntar"
-    }/*else if(origen == "VIGO"){
+    }else if(origen == 'PALMA'){
+      $('pclient').classList.add('important')
+      alerta = "Portes"
+    }  
+    /*else if(origen == "VIGO"){
       $('pclient').classList.add('important')
       alerta = "Preguntar"
     }*/else{
@@ -100,7 +104,21 @@ const buscarDenominacionReferencia = (refer) =>{
     body: data
   })
   .then(res => res.text())
-  .then((res) => $('descRef').innerHTML = res)
+  .then((res) => {
+    $('descRef').innerHTML = res
+    if($('origen').value == 'PALMA' || $('destino').value == 'PALMA'){
+      let portes = '50€'
+      const pvp = parseFloat(res.split('PVP: ')[1].split('€')[0].replaceAll(',','.'))
+      if(pvp < 150)
+        portes = '40€'
+      else if(pvp > 400)
+        portes = '55€'
+      if($('coment').value != '')
+        $('coment').value += ` \n¡¡OJO!! ${portes} de portes.`
+      else
+        $('coment').value += `¡¡OJO!! ${portes} de portes.`
+    }
+  })
 }
 
 const showAssig = () =>{
@@ -240,7 +258,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
           }
           createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],disgon)
           $(`send${id}`).parentNode.remove()
-          const bubble = $('contacts').childNodes[3].childNodes[1].childNodes[1].childNodes[1]
+          const bubble = $('contacts').childNodes[3].childNodes[1].childNodes[0]
           bubble != undefined ? bubble.innerText = parseInt(bubble.innerText) - 1 : ''
         })
       })
