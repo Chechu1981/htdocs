@@ -3,6 +3,33 @@ include_once '../connection/data.php';
 $contacts = new Contacts();
 $user = $contacts->getUserBySessid($_POST['session']);
 
+function getCliente($cliente,$placa){
+    $contacts = new Contacts();
+    $rows = $contacts->getClientNameByPlate(explode('-',$cliente)[0],substr($placa,0,3));
+
+    if(count($rows) > 0)
+        return $rows[0][6];
+    else
+        return '';
+}
+  
+function getDescRef($referencia){
+    $descripcion = 'Desconocido';
+    $contacts = new Contacts();
+    $rows = $contacts->getRefer($referencia);
+
+    if(sizeof($rows) > 0){
+        foreach ($rows as $row) { 
+            $descripcion = trim($rows[0][2],'000');
+        }
+    }
+
+    return $descripcion;
+}
+
+$NombreCliente = getCliente($_POST['cliente'],$_POST['destino']);
+$Designacion = getDescRef($_POST['ref']);
+
 $items = [
     $_POST['origen'],
     $_POST['destino'],
@@ -16,7 +43,9 @@ $items = [
     $_POST['nfm'],
     $user,
     $_POST['pedido'],
-    @$_POST['disgon']
+    @$_POST['disgon'],
+    $Designacion,
+    $NombreCliente
 ];
 
 $rows = $contacts->newAssigADV2023($items);

@@ -6,30 +6,6 @@ $user = $contacts->getUserBySessid($_POST['session']);
 
 $rows = $contacts->getAssigPending($_POST['id'],$user);
 
-function getCliente($cliente,$placa){
-  $contacts = new Contacts();
-  $rows = $contacts->getClientNameByPlate(explode('-',$cliente)[0],substr($placa,0,3));
-
-  if(count($rows) > 0)
-      return $rows[0][6];
-  else
-    return '';
-}
-
-function getDescRef($referencia){
-  $descripcion = 'Desconocido';
-  $contacts = new Contacts();
-  $rows = $contacts->getRefer($referencia);
-
-  if(sizeof($rows) > 0){
-      foreach ($rows as $row) { 
-          $descripcion = trim($rows[0][2],'000');
-      }
-  }
-
-  return $descripcion;
-}
-
 function formatRef($referencia){
   $contacts = new Contacts();
   return $contacts->formatRef($referencia);
@@ -61,26 +37,28 @@ if($_POST['id'] != 'new')
   $agent_head = "<li>Agente</li>";
 
 $lists = "<ul class='heading assignPendingAdv'>
-        <li><span>".$imgOrigen."</span> > <span>".$imgDestino."</span></li>
-        <li>Cliente</li>
-        <li>Comentario</li>
-        <li>Referencia</li>
-        <li>Cantidad</li>
-        <li>Pedido</li>
-        <li>NFM</li>
-        <li>Frágil</li>
-        <li>D</li>
-        <li>Tratado</li>
-        <li>Eliminar</li>
-        <li>Enviar</li>
-        ".$agent_head."
-        </ul>"; 
+            <li><span>".$imgOrigen."</span><span>".$imgDestino."</span></li>
+            <li>Cliente</li>
+            <li>Comentario</li>
+            <li>Referencia</li>
+            <li>Cantidad</li>
+            <li>Pedido</li>
+            <li>NFM</li>
+            <li>Frágil</li>
+            <li>D</li>
+            <li>Tratado</li>
+            <li>Eliminar</li>
+            <li>Enviar</li>
+            ".$agent_head."
+            <li></li>
+          </ul>"; 
 
 if(sizeof($rows) > 0){
+  $contador = 1;
   foreach ($rows as $row) {
-    $designRefer = getDescRef($row[4]);
+    $designRefer = $row[19];
     $formatref = formatRef($row[4]);
-    $clientName = getCliente($row[3],$row[2]);
+    $clientName = $row[20];
     $important = "";
     if($_POST['id']!= 'new') 
       $agent = '<li title="Agente">'.$row[10].'</li>';
@@ -115,9 +93,9 @@ if(sizeof($rows) > 0){
       $important = 'important';
     }
     $lists .= '
-    <ul class="assignPendingAdv">
+    <ul class="assignPendingAdv" title="'.$contador++.'">
       <li title="Copiar: Origen > Destino" class="">
-        <span class="active-city '.$btnOrigenPress.'">'.$row[1].'</span> > <span class="active-city '.$btnDestinoPress.'">'.$row[2].'</span>
+        <span class="active-city '.$btnOrigenPress.'">'.$row[1].'</span><span class="active-city '.$btnDestinoPress.'">'.$row[2].'</span>
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$codgClient[$row[1].$row[2].$nfm].'</span>
       </li>
       <li title="Destino: " style="display:none">'.$row[2].'</li>
@@ -125,7 +103,7 @@ if(sizeof($rows) > 0){
       <li title="Ref. Cliente: " style="display:none">'.$row[12].'</li>
       <li title="Comentario: " class="copy">'.$row[11].'</li>
       <li title="Referencia: '.$row[4].'" class="copy" style="font-size: medium;display:flex;flex-direction:column">'.$formatref.'<span style="font-size:9px;text-align:center;line-height: 7px;">'.$designRefer.'</span></li>
-      <li title="Cantidad: ">'.$row[5].'</li>
+      <li title="Cantidad: " class="storage">'.$row[5].'</li>
       <li title="Pedido: "><input type="text" value="'.$row[7].'"></input></li>
       <li title="NFM: "><input type="checkbox" '.$nfmChecked.'></input></li>
       <li title="Frágil: "><input type="checkbox" '.$fragChecked.'></input></li>

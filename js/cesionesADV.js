@@ -107,10 +107,10 @@ const buscarDenominacionReferencia = (refer) =>{
   .then((res) => {
     $('descRef').innerHTML = res
     if($('origen').value == 'PALMA' || $('destino').value == 'PALMA'){
-      let portes = '50€'
+      let portes = '40€'
       const pvp = parseFloat(res.split('PVP: ')[1].split('€')[0].replaceAll(',','.'))
       if(pvp < 150)
-        portes = '40€'
+        portes = '30€'
       else if(pvp > 400)
         portes = '55€'
       if($('coment').value != '')
@@ -162,11 +162,11 @@ const showAssig = () =>{
     $('cesiones').style = ''
     $('cesiones').innerHTML = response
     for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
-      let li, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon = ''
+      let li, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar = ''
       li = $('cesiones').childNodes[i]
       id = $(`cesiones`).childNodes[i].childNodes[25].id
       origen = $('cesiones').childNodes[i].childNodes[1].childNodes[1]
-      destino = $('cesiones').childNodes[i].childNodes[1].childNodes[3]
+      destino = $('cesiones').childNodes[i].childNodes[1].childNodes[2]
       cliente = $('cesiones').childNodes[i].childNodes[5]
       refCliente = $('cesiones').childNodes[i].childNodes[1]
       comentario = $('cesiones').childNodes[i].childNodes[9]
@@ -268,7 +268,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
 
 const refreshInputs = (id,nfm,fragil,pedido,tratado,origen,destino) => {
   let cesion = null
-  let code = $(id).parentNode.childNodes[1].childNodes[5]
+  let code = $(id).parentNode.childNodes[1].childNodes[4]
   origen != destino ? cesion = origen + '' + destino:''
   nfm ? cesion += 'NM' :''
   fetch('../json/cesionesCliente.json')
@@ -287,7 +287,7 @@ const copyClipboard = (copiar) =>{
 const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   const disgon = $(id).parentNode.childNodes[21].firstChild == null ? false : $(id).parentNode.childNodes[21].firstChild.checked
   const origenBtn = $(id).parentNode.childNodes[1].childNodes[1].className.includes('press') ? '1':'0'
-  const destinoBtn = $(id).parentNode.childNodes[1].childNodes[3].className.includes('press') ? '1':'0'
+  const destinoBtn = $(id).parentNode.childNodes[1].childNodes[2].className.includes('press') ? '1':'0'
   const data = new FormData()
   data.append('id', id)
   data.append('nfm',nfm)
@@ -389,8 +389,6 @@ const updateAssig = (id,values) => {
 
 $$('form')[0].addEventListener('submit',(e)=>{
   $('pclient').classList.remove('important')
-  $('descRef').innerHTML = ""
-  $('clientName').innerHTML = ""
   e.preventDefault()
   const origen = $('origen').value
   const destino = $('destino').value

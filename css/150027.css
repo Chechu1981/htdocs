@@ -102,12 +102,12 @@
     }
 
     #cesiones .assignPendingAdv{
-      grid-template-columns: 13% 12% 15% 17% 6% 8% 4% 4% 5% 7% 6% 1%;
+      grid-template-columns: 1% 13% 12% 15% 17% 6% 8% 4% 4% 5% 7% 6% 1%;
       padding-inline-start: 0;
     }
 
     #cesiones ul li:first-child {
-      grid-template-columns: 47% 4% 47%;
+      grid-template-columns: 47% 47%;
     }
 
     #cesiones ul li:first-child span{

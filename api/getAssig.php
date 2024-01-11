@@ -65,9 +65,9 @@ if(sizeof($rows) > 0){
     foreach ($rows as $row) { 
       $formatref = formatRef($row[4]);
       //$clientName = getCliente($row[3],$row[2]);
-      $clientName = '';
+      $clientName = $row[20];
       //$designacion = getDesignacion($row[4]);
-      $designacion = "";
+      $designacion = $row[19];
       if($_POST['id']!= 'new') {
           $agent = '<li title="Agente">'.$row[10].'</li>';
       }
@@ -85,7 +85,7 @@ if(sizeof($rows) > 0){
         <li title="Origen: " style="display:block">'.$row[1].'</li>
         <li title="Destino: ">'.$row[2].'</li>
         <li title="Cliente: " class="tableLegend">'.$row[3].'<legend class="legend">' .$clientName.'</legend></li>
-        <li title="Referencia: '.$row[4].'" class="copy">'.$formatref.'</li>
+        <li class="copy">'.$formatref.'<span class="toolTip"></span></li>
         <li title="Denominación: ">'.$designacion.'</li>
         <li title="Cantidad: ">'.$row[5].'</li>
         <li title="NFM: ">'.$nfm.'</li>

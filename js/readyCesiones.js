@@ -44,6 +44,11 @@ window.addEventListener('load',()=>{
     const refCopy = document.getElementsByClassName('copy')
     for(let i = 0; i < refCopy.length;i++)
       refCopy[i].addEventListener('click',e =>{
+        listRows = $('cesiones').getElementsByTagName('ul')
+        for(let j = 0; j < listRows.length ; j++)
+          listRows[j].style = ''
+        e.target.parentNode.style.color = 'royalblue'
+        e.target.parentNode.style.backgroundColor = 'aquamarine'
         copyClipboard(e.target.textContent.replaceAll(' ',''))
     })
     const btnTik = cesiones.getElementsByTagName('img')
@@ -59,7 +64,7 @@ window.addEventListener('load',()=>{
             })
             .then(response => response.text())
             .then(() => {
-              e.target.parentNode.parentNode.style.display = 'none'
+              e.target.parentNode.parentNode.remove()
               ready.firstChild.innerText = parseInt(ready.firstChild.innerText) - 1
             })
           }

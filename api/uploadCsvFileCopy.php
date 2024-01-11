@@ -164,7 +164,7 @@ if($mismaPlaca){
       <li>' . $newShortFile[$index]["cuenta"] . '</li>
       <li>' . $newShortFile[$index]["nombre"] . '</li>
       <li title="'.$newShortFile[$index]["marca"].'">' . $newShortFile[$index]["npedido"] . '</li>
-      <li class="copy" title="' . $newShortFile[$index]["referencia"] . '" id="'.$newShortFile[$index]["id"].'">' . $contacts->formatRef($newShortFile[$index]["referencia"]) . $alerta . '</li>
+      <li class="copy" title="' . $newShortFile[$index]["referencia"] . '" id="'.$newShortFile[$index]["id"].'">' . $alerta . $contacts->formatRef($newShortFile[$index]["referencia"]) . '</li>
       <li>' . $newShortFile[$index]["designacion"] . '</li>
       <li>' . $newShortFile[$index]["cantidad"] . '</li>
       <li class="priority">' . $newShortFile[$index]["prioridad"] . '</li>
