@@ -799,7 +799,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #cesiones .assignPendingAdv{
-  grid-template-columns: 9% 8% 15% 14% 7% 6% 4% 3% 3% 10% 5% 2%;
+  grid-template-columns: 1% 9% 8% 15% 14% 7% 6% 4% 3% 3% 10% 5% 2%;
 }
 
 #cesiones .tableLegend{
@@ -810,6 +810,10 @@ input[type="color"]::-webkit-color-swatch {
 #cesiones .legend{
   font-size: xx-small;
   text-align: center;
+}
+
+#cesiones .storage{
+    font-size: large;
 }
 
 .send{
@@ -823,7 +827,7 @@ input[type="color"]::-webkit-color-swatch {
 
 #cesiones ul li:first-child{
   display: grid;
-  grid-template-columns: 46% 4% 50%;
+  grid-template-columns: 46% 50%;
   text-align: center;
   cursor: pointer;
   justify-items: center;
@@ -853,6 +857,13 @@ input[type="color"]::-webkit-color-swatch {
 #center-list-items ul:nth-child(odd){
     background-color: var(--search-line);
     color: var(--main-font-color);
+}
+
+#cesiones ul::before{
+    content: attr(title);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #route-items ul:hover,

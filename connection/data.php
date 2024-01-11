@@ -265,9 +265,9 @@ class Contacts
            $fragil = 1;
         }
         $sql = "INSERT INTO `cesiones`
-            (`origen`, `destino`, `cliente`, `refClient`, `comentario`, `ref`, `pvp`, `cantidad`, `fragil`, `usuario`, `pedido`, `recibido`, `envio`, `nfm`, `disgon`) 
+            (`origen`, `destino`, `cliente`, `refClient`, `comentario`, `ref`, `pvp`, `cantidad`, `fragil`, `usuario`, `pedido`, `recibido`, `envio`, `nfm`, `disgon`, `designacion`, `nombreCliente`) 
             VALUES
-            ('$items[0]','$items[1]','$items[2]','$items[3]','$items[4]','$items[5]','$items[6]', '$items[7]' , $items[8], '$items[10]', '$items[11]', '0000-00-00', '0000-00-00 00:00:00', $items[9], $items[12])";
+            ('$items[0]','$items[1]','$items[2]','$items[3]','$items[4]','$items[5]','$items[6]', '$items[7]' , $items[8], '$items[10]', '$items[11]', '0000-00-00', '0000-00-00 00:00:00', $items[9], $items[12], '$items[13]', '$items[14]')";
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';
@@ -1166,4 +1166,18 @@ class Contacts
         $query->execute();
     }
   }
+
+    public function getTest(){
+        $sql = "SELECT * FROM `tester` WHERE `id` = '1'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function newTest($texto){
+        $sql = "UPDATE `tester` SET `textarea` = '$texto' WHERE `id` = '1'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
 }
+
