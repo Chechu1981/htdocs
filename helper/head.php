@@ -20,7 +20,7 @@ $scripts = (object)[
   'CENTROS' => "/js/center3.js",
   'CESIONES1' => "/js/cesiones202312.js?1234",
   'CESIONES' => "/js/cesiones19.js",
-  'CESIONESTEST' => "/js/cesionestest.js",
+  'CESIONESALL' => "/js/cesionesAll.js?1001",
   'CESIONESADV' => "/js/cesionesADV.js?136",
   'BUSCAR' => "/../js/buscarCesiones.js?101",
   'READY' => "/../js/readyCesiones.js?101",
@@ -68,7 +68,7 @@ $user = $contacts->getUserBySessid($_GET['id']);
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?php echo $src . '/img/icons8-herramientas-del-administrador-96.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1245" defer content="1">
+<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1246" defer content="1">
 <link rel="stylesheet" href="<?php echo $src; ?>/css/150027.css?1000" defer content="1">
 <link rel="stylesheet" href="<?php echo $src . $css[$user]; ?>" defer content="0">
 <script type="text/javascript" src="<?php echo $src; ?>/js/script20.js" defer content='no-cache'></script>

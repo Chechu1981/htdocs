@@ -314,10 +314,12 @@ class Contacts
     }
 
     public function getAssigCountNew($usr){
-      $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND`usuario` = '$usr'";
-      $query = $this->db->prepare($sql);
-      $query->execute();
-      return $query->fetchAll();
+        $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND`usuario` = '$usr'";
+        if($usr == 'all')
+            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00'";        
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
     }
 
     public function getAssigPending($all, $usr){
@@ -331,10 +333,12 @@ class Contacts
         `usuario` = '$usr' OR `usuario` LIKE ''
         ORDER BY `destino`, `origen` DESC 
         LIMIT 100";
-        if($all == 'all')
+        if ($all == 'all')
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND `usuario` = '$usr' OR `usuario` LIKE '' ORDER BY `origen`, `destino` DESC ";
-        elseif($all == 'new')
+        elseif ($all == 'new' AND $usr != 'all')
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND `usuario` = '$usr' OR `usuario` LIKE '' ORDER BY `origen`, `destino` DESC ";
+        elseif ($all == 'new' AND $usr = 'all')
+            $sql = "SELECT * FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' ORDER BY `origen`, `destino` DESC ";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -385,6 +389,17 @@ class Contacts
             $sql = "UPDATE `cesiones` SET `pvp` = '$pvp', `pedido` = '$pedido', `fragil` = $value, `envio` = '$fecha' WHERE `id` LIKE '$id'";
         else
             $sql = "UPDATE `cesiones` SET `pvp` = '$pvp', `pedido` = '$pedido', `fragil` = $value WHERE `id` LIKE $id";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return 'ok';
+    }
+
+    public function updateAssigADVall($id,$fragil,$envio,$nfm,$pedido,$tratado,$origenBtn,$destinoBtn,$disgon){
+        $fecha = date("Y-m-d H:i:s");
+        if($envio == 'true')
+            $sql = "UPDATE `cesiones` SET `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `envio` = '$fecha', `emisor` = $origenBtn, `receptor` = $destinoBtn, `pedido` = '$pedido', `tratado` = '$tratado' WHERE `id` LIKE '$id'";
+        else
+            $sql = "UPDATE `cesiones` SET `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `pedido` = '$pedido', `emisor` = $origenBtn, `receptor` = $destinoBtn, `tratado` = '$tratado' WHERE `id` LIKE '$id'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';

@@ -196,7 +196,7 @@ const showAssig = () =>{
       for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
         let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar = ''
         ul = $('cesiones').childNodes[i]
-        id = ul.childNodes[25].id
+        id = ul.childNodes[24].id
         origen = ul.childNodes[1].childNodes[1]
         destino = ul.childNodes[1].childNodes[2]
         cliente = ul.childNodes[5]
@@ -208,24 +208,24 @@ const showAssig = () =>{
         fragil = ul.childNodes[19].firstChild
         disgon = ul.childNodes[21].firstChild
         pvp = ul.childNodes[11].childNodes[1].textContent
-        tratado = ul.childNodes[23].firstChild
+        tratado = ul.childNodes[23]
         nfm = ul.childNodes[17].firstChild
-        btnSendMail = ul.childNodes[27]
-        btnEliminar = ul.childNodes[25]
+        btnSendMail = ul.childNodes[26]
+        btnEliminar = ul.childNodes[24]
   
         if(disgon != null)
-          disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
+          disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value, destino))
         if(ul.localName == 'ul' && ul.localName != undefined){
           pedido.addEventListener('focus', ()=>{stopUpdates()})
-          pedido.addEventListener('keyup', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent)})
+          pedido.addEventListener('keyup', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent)})
           pedido.addEventListener('blur', () =>iniciar())
-          tratado.addEventListener('keyup', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent)})
+          tratado.addEventListener('change', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent)})
           tratado.addEventListener('focus', ()=>{stopUpdates()})
           tratado.addEventListener('blur', () => iniciar())
         }
         
-        nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
-        fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
+        nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent))
+        fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent))
         referencia.addEventListener('click', () => {clearRowsMark(ul,referencia.childNodes[0].textContent.replaceAll(' ',''))})
         comentario.addEventListener('click', () => {clearRowsMark(ul,comentario.textContent)})
         cliente.addEventListener('click', () => {
@@ -236,13 +236,13 @@ const showAssig = () =>{
         refCliente.addEventListener('click', () => {clearRowsMark(ul,`Cliente: ${cliente.childNodes[0].textContent}`)})
         origen.addEventListener('click', () => {
           origen.classList.toggle('active-city-press')
-          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,destino.textContent)
         })
         destino.addEventListener('click', () => {
           destino.classList.toggle('active-city-press')
-          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,destino.textContent)
         })
-        btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value))
+        btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.childNodes[1].value))
         btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ','')))
       }
       if(lineaMarcada > 0){
@@ -339,7 +339,7 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   data.append('disgon', disgon)
   data.append('origenBtn', origenBtn)
   data.append('destinoBtn', destinoBtn)
-  fetch('../api/updateAssignADV2023.php',{
+  fetch('../api/updateAssignADVall.php',{
     method: 'POST',
     body: data
   })
@@ -490,6 +490,28 @@ $$('form')[0].addEventListener('submit',(e)=>{
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
     }
   })
+})
+
+const id = window.location.search.split('?id=')[1]
+
+document.getElementById('new').addEventListener('click',()=>{
+  document.location.reload()
+})
+
+document.getElementById('find').addEventListener('click',()=>{
+  document.location = `./assigns/buscar.php?id=${id}`
+})
+
+document.getElementById('ready').addEventListener('click',()=>{
+  document.location = `./assigns/ready.php?id=${id}`
+})
+
+document.getElementById('finish').addEventListener('click',()=>{
+  document.location = `./assigns/finish.php?id=${id}`
+})
+
+document.getElementById('status').addEventListener('click',()=>{
+  document.location = `./assigns/status.php?id=${id}`
 })
 
 /* Se colorea los fondos de los input cuando hay algo escrito */

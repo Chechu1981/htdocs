@@ -15,9 +15,9 @@ $id = $_GET['id'];
         <li><a href="<?php echo $src.'/src/routeTest.php?id='.$id; ?>">Rutas</a></li>
         <li><a href="<?php echo $src.'/src/libreta.php?id='.$id; ?>">Libreta</a></li>
         <li style="width: 44px;">
-            <a href="<?php echo $src.'/src/cesiones1.php?id='.$id ?>">Cesiones</a>
+            <a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>">Cesiones</a></a>
             <ul>
-                <li><a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>">Cesiones_ADV</a></li>
+                <li><a href="<?php echo $src.'/src/cesionesAll.php?id='.$id ?>">Todas</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/buscar.php?id='.$id ?>">Buscar</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/ready.php?id='.$id ?>">En curso</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/finish.php?id='.$id ?>">Finalizadas</a></li>

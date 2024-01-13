@@ -799,7 +799,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #cesiones .assignPendingAdv{
-  grid-template-columns: 1% 9% 8% 15% 14% 7% 6% 4% 3% 3% 10% 5% 2%;
+  grid-template-columns: 1% 9% 8% 15% 14% 7% 6% 4% 3% 3% 10% 5% 2% 8%;
 }
 
 #cesiones .tableLegend{
@@ -859,7 +859,7 @@ input[type="color"]::-webkit-color-swatch {
     color: var(--main-font-color);
 }
 
-#cesiones ul::before{
+.assignPendingAdv::before {
     content: attr(title);
     display: flex;
     justify-content: center;
@@ -1360,6 +1360,14 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: 8px;
     border: 2px solid var(--main-font-color);
     color: var(--main-font-color);
+}
+
+.form-group input[type="submit"]{
+    cursor: pointer;
+}
+
+.form-group input[type="submit"]:hover{
+    filter: brightness(0.6);
 }
 
 .active-city{
