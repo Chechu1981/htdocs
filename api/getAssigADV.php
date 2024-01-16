@@ -2,9 +2,9 @@
 include_once '../connection/data.php';
 $contacts = new Contacts();
 
-$user = $contacts->getUserBySessid($_POST['session']);
+$user = $contacts->getUserBySessid($_POST['id']);
 
-$rows = $contacts->getAssigPending($_POST['id'],$user);
+$rows = $contacts->getAssigPending($_POST['id'],$user[0][5]);
 
 $dataCliente = file_get_contents("../json/cesionesCliente.json");
 $codgClient = json_decode($dataCliente, true);

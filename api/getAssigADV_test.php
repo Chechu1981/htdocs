@@ -4,7 +4,7 @@ $contacts = new Contacts();
 
 $user = $contacts->getUserBySessid($_POST['session']);
 
-$rows = $contacts->getAssigPending($_POST['id'],$user);
+$rows = $contacts->getAssigPending($_POST['id'],$user[0][1]);
 
 function formatRef($referencia){
   $contacts = new Contacts();

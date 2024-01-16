@@ -125,34 +125,36 @@ let titulo = (title) => document.getElementsByClassName('head-img')[0].childNode
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  fetch(ruta[window.location.pathname.split('/').length] + 'json/sesiones.json')
-  .then(response => response.json())
+  const id = window.location.search.split('id=')[1]
+  const data = new FormData()
+  data.append('id', id)
+  fetch(`${ruta[window.location.pathname.split('/').length]}/api/getUserById.php`,{
+    method: 'POST',
+    body: data
+  })
+  .then(response => response.text())
   .then(res => {
-    const id = window.location.search.split('id=')[1]
-    res.map(ids =>{
-      if(ids.hash == id){
-        titulo(ids.nombre)
-        if(window.location.pathname.includes('home')){
-          const options = $('search-line').childNodes[5].childNodes[1].childNodes
-          for(let i=0; i<options.length; i++){
-            let usuario = ids.nombre.toUpperCase()
-            ids.nombre.toUpperCase() == 'GALICIA' ? usuario = 'VIGO' : null
-            if(options[i].value == usuario){
-              $('search-line').childNodes[5].childNodes[1].childNodes[i].selected = true
-            }
-          }
-        }else if(window.location.pathname.includes('cesionesADV')){
-          for(let i = 0; i < $$('form')[0][1].options.length; i++){
-            let centro = $('menu').childNodes[1].childNodes[1].innerText
-            if($('menu').childNodes[1].childNodes[1].innerText.toUpperCase() == 'GALICIA')
-              centro = 'VIGO'
-          
-            if($$('form')[0][1].options[i].value == centro)
-              $$('form')[0][1].options[i].selected = true;
-          }
+    $('menu').childNodes[1].childNodes[1].innerText = res.toUpperCase()
+
+    if(window.location.pathname.includes('home')){
+      const options = $('search-line').childNodes[5].childNodes[1].childNodes
+      for(let i=0; i<options.length; i++){
+        let usuario = res.toUpperCase()
+        res.toUpperCase() == 'GALICIA' ? usuario = 'VIGO' : null
+        if(options[i].value == usuario){
+          $('search-line').childNodes[5].childNodes[1].childNodes[i].selected = true
         }
       }
-    })
+    }else if(window.location.pathname.includes('cesionesADV')){
+      for(let i = 0; i < $$('form')[0][1].options.length; i++){
+        let centro = $('menu').childNodes[1].childNodes[1].innerText
+        if($('menu').childNodes[1].childNodes[1].innerText.toUpperCase() == 'GALICIA')
+          centro = 'VIGO'
+      
+        if($$('form')[0][1].options[i].value == centro)
+          $$('form')[0][1].options[i].selected = true;
+      }
+    }
   })
 })
 

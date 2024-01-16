@@ -4,7 +4,7 @@ $contacts = new Contacts();
 
 $user = $contacts->getUserBySessid($_POST['session']);
 
-$rows = $contacts->getAssig($_POST['id'],$user,@$_POST['sort']);
+$rows = $contacts->getAssig($_POST['id'],$user[0][1],@$_POST['sort']);
 
 function getCliente($cliente,$placa){
   $contacts = new Contacts();

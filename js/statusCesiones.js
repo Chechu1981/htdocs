@@ -4,6 +4,10 @@ document.getElementById('new').addEventListener('click',()=>{
   document.location = `../cesionesADV.php?id=${id}`
 })
 
+document.getElementById('all').addEventListener('click',()=>{
+  document.location = `../cesionesAll.php?id=${id}`
+})
+
 document.getElementById('find').addEventListener('click',()=>{
   document.location = `./buscar.php?id=${id}`
 })
@@ -41,7 +45,7 @@ window.addEventListener('load',()=>{
   .then((e) => e.json())
   .then((res) => {
     const input = document.createElement('select')
-    input.style = "width: 150px;border: 2px solid var(--main-font-color);border-radius: 8px;font-size: 2em; text-transform: uppercase;"
+    input.style = "width: 150px;border: 2px solid var(--main-font-color);border-radius: 8px;font-size: 2em; text-transform: uppercase;height: fit-content;"
     input.addEventListener("change",(e)=>{
       if(window.graph){
         window.graph.clear()

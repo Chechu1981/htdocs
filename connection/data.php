@@ -11,6 +11,17 @@ class Contacts
     }
 
     public function getUser($usr, $psw){
+        $hash = md5(strtotime("now"));
+        $sqlUpdate = "UPDATE `usuarios` SET `hash` = '$hash' WHERE nombre LIKE '$usr' AND clave LIKE '$psw'";
+        $query = $this->db->prepare($sqlUpdate);
+        $query->execute();
+        $sql = "SELECT DISTINCT * FROM `usuarios` WHERE nombre LIKE '$usr' AND clave LIKE '$psw'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getUserBBDD($id){
         $sql = "SELECT DISTINCT * FROM `usuarios` WHERE nombre LIKE '$usr' AND clave LIKE '$psw'";
         $query = $this->db->prepare($sql);
         $query->execute();
@@ -18,21 +29,10 @@ class Contacts
     }
 
     public function getUserBySessid($sessid){
-        $uri = $_SERVER['PHP_SELF'];
-        $page = strtoupper(substr(explode("/",$uri)[count(explode("/",$uri))-1],0,-4));
-        $src = ".";
-        !strstr("$uri",'home') == '/home.php' ? $src = ".." : '';
-        strpos($uri,'center') > 0 ? $src = "../.." : '';
-        strpos($uri,'assigns') > 0 ? $src = "../.." : '';
-        $data = file_get_contents($src.'/json/sesiones.json');
-        $usr = json_decode($data, true);
-        $user = false;
-        for($i = 0; $i < count($usr); $i++){
-            //echo $usr[$i]['hash']."<p>" . $sessid;
-            if($usr[$i]['hash'] == $sessid)
-                $user = strtoupper($usr[$i]['nombre']);
-        }
-        return $user;
+        $sql = "SELECT DISTINCT * FROM `usuarios` WHERE hash LIKE '$sessid'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
     }
 
     public function getAllUsers(){

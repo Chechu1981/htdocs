@@ -4,6 +4,10 @@ document.getElementById('new').addEventListener('click',()=>{
   document.location = `../cesionesADV.php?id=${id}`
 })
 
+document.getElementById('all').addEventListener('click',()=>{
+  document.location = `../cesionesAll.php?id=${id}`
+})
+
 document.getElementById('find').addEventListener('click',()=>{
   document.location = `./buscar.php?id=${id}`
 })

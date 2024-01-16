@@ -20,13 +20,13 @@ $scripts = (object)[
   'CENTROS' => "/js/center3.js",
   'CESIONES1' => "/js/cesiones202312.js?1234",
   'CESIONES' => "/js/cesiones19.js",
-  'CESIONESALL' => "/js/cesionesAll.js?1001",
-  'CESIONESADV' => "/js/cesionesADV.js?136",
-  'BUSCAR' => "/../js/buscarCesiones.js?101",
-  'READY' => "/../js/readyCesiones.js?101",
-  'STATUS' => "/../js/statusCesiones.js?101",
+  'CESIONESALL' => "/js/cesionesAll.js?1004",
+  'CESIONESADV' => "/js/cesionesADV.js?139",
+  'BUSCAR' => "/../js/buscarCesiones.js?102",
+  'READY' => "/../js/readyCesiones.js?102",
+  'STATUS' => "/../js/statusCesiones.js?102",
   'FINISH' => "/../js/finishCesiones.js?103",
-  'CESIONESADV_TEST' => "/js/cesionesADV_test.js?125",
+  'CESIONESADV_TEST' => "/js/cesionesADV_test.js?126",
   'LIBRETA' => "/js/libreta13.js",
   'contact' => "/js/contact2.js",
   'form' => "/js/form1.js",
@@ -59,8 +59,8 @@ foreach($usr as $userTheme){
 $uri = $_SERVER['PHP_SELF'];
 $page = strtoupper(substr(explode("/",$uri)[count(explode("/",$uri))-1],0,-4));
 
-$user = $contacts->getUserBySessid($_GET['id']);
-
+$userBdd = $contacts->getUserBySessid($_GET['id'] ?? 0);
+$user = strtoupper($userBdd[0][1]);
 ?>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -71,6 +71,6 @@ $user = $contacts->getUserBySessid($_GET['id']);
 <link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1246" defer content="1">
 <link rel="stylesheet" href="<?php echo $src; ?>/css/150027.css?1000" defer content="1">
 <link rel="stylesheet" href="<?php echo $src . $css[$user]; ?>" defer content="0">
-<script type="text/javascript" src="<?php echo $src; ?>/js/script20.js" defer content='no-cache'></script>
+<script type="text/javascript" src="<?php echo $src; ?>/js/script20.js?1000" defer content='no-cache'></script>
 <script type="text/javascript" src="<?php echo $src . $scripts->$page; ?>" defer content="0"></script>
 <title>Chechu - <?php echo $page; ?></title>

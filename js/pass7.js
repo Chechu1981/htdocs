@@ -4,24 +4,15 @@ const buscar = (e) => {
   let data = new FormData();
   data.append('search', e)
   data.append('tipo', $('placa').value)
-  fetch(ruta[window.location.pathname.split('/').length] + 'json/sesiones.json')
-  .then(response => response.json())
-  .then(res => {
-    const id = window.location.search.split('id=')[1]
-    res.map(ids =>{
-      if(ids.hash == id){
-        data.append('usuario', ids.nombre)
-        fetch('./api/getPass.php',{
-          method: 'POST',
-          body: data})
-        .then(response => response.text())
-        .then(response => {
-          $('center-items-pass').classList.remove('bottons')
-          $('center-items-pass').classList.add('pass-items')
-          $('center-items-pass').innerHTML = response
-        })
-      }
-    })
+  data.append('usuario', $('placa').value)
+  fetch('./api/getPass.php',{
+    method: 'POST',
+    body: data})
+  .then(response => response.text())
+  .then(response => {
+    $('center-items-pass').classList.remove('bottons')
+    $('center-items-pass').classList.add('pass-items')
+    $('center-items-pass').innerHTML = response
   })
 }
 

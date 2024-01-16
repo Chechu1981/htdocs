@@ -168,6 +168,39 @@ const markLines = (ul) =>{
   ul.classList.add('marcado')
 }
 
+const updateBubble = (operador) =>{
+  const bubble = $('contacts').childNodes[3].childNodes[1].childNodes[0]
+  const bubbleAll = $('contacts').childNodes[3].childNodes[3].childNodes[0]
+  const bubbleReady = $('contacts').childNodes[3].childNodes[7].childNodes[0]
+  if(operador == '-'){
+    bubble != undefined ? bubble.innerText = parseInt(bubble.innerText) - 1 : ''
+    bubbleAll != undefined ? bubbleAll.innerText = parseInt(bubbleAll.innerText) - 1 : ''
+    bubbleReady != undefined ? bubbleReady.innerText = parseInt(bubbleReady.innerText) - 1 : ''
+  }else{
+    bubble != undefined ? bubble.innerText = parseInt(bubble.innerText) + 1 : ''
+    bubbleAll != undefined ? bubbleAll.innerText = parseInt(bubbleAll.innerText) + 1 : ''
+    bubbleReady != undefined ? bubbleReady.innerText = parseInt(bubbleReady.innerText) + 1 : ''
+  }
+}
+
+const disabledForm = () =>{
+  const formInputs = $('contacts-items').getElementsByTagName('form')[0].getElementsByTagName('input')
+  const formSelects = $('contacts-items').getElementsByTagName('form')[0].getElementsByTagName('select')
+  for(let i = 0; i < formInputs.length; i++)
+    formInputs[i].disabled = true
+  for(let i = 0; i < formSelects.length; i++)
+    formSelects[i].disabled = true
+}
+
+const enabledForm = () =>{
+  const formInputs = $('contacts-items').getElementsByTagName('form')[0].getElementsByTagName('input')
+  const formSelects = $('contacts-items').getElementsByTagName('form')[0].getElementsByTagName('select')
+  for(let i = 0; i < formInputs.length; i++)
+    formInputs[i].disabled = false
+  for(let i = 0; i < formSelects.length; i++)
+    formSelects[i].disabled = false
+}
+
 const showAssig = () =>{
   const data = new FormData()
   data.append('id','new')
@@ -299,8 +332,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
           }
           createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],disgon)
           $(`send${id}`).parentNode.remove()
-          const bubble = $('contacts').childNodes[3].childNodes[1].childNodes[0]
-          bubble != undefined ? bubble.innerText = parseInt(bubble.innerText) - 1 : ''
+          updateBubble('-')
         })
       })
     }
@@ -417,14 +449,18 @@ const eliminarLinea = (id,referencia) =>{
     .then(e => e.text())
     .then(()=>{
       $(id).parentNode.remove()
-      const bubble = document.getElementById('new').firstChild
-      bubble != undefined ?  bubble.innerText = parseInt(bubble.innerText) - 1 : ''
+      updateBubble('-')
     })
   })
 }
 
 const updateAssig = (id,values) => {
   console.log(id + ': ' + values)
+}
+
+const limpiarSpinner = () =>{
+  $('contacts-items').getElementsByClassName('spinner-center')[0].remove()
+  $('cesiones').classList.remove('filter')
 }
 
 $$('form')[0].addEventListener('submit',(e)=>{
@@ -442,23 +478,38 @@ $$('form')[0].addEventListener('submit',(e)=>{
   const nfm = $('nfm').checked
   if(origen === destino){
     customAlert('El destino y el origen debe ser diferente')
+    document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
     return false
   }
   if(cliente === ''){
     customAlert('Debes rellenar el cliente')
+    document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
     $('client').focus()
     return false
   }
   else if(ref === ''){
     customAlert('Debes rellenar la referencia')
+    document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
     $('ref').focus()
     return false
   }
   else if(cantidad === ''){
     customAlert('Debes rellenar la cantidad')
+    document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
     $('units').focus()
     return false
   }
+  e.target.disabled = true
+  const divSpinner = document.createElement('div')
+  fetch('../api/spinner.php')
+  .then(fn => fn.text())
+  .then(req => {
+    divSpinner.innerHTML = req
+    divSpinner.className = 'spinner-center'
+    $('contacts-items').append(divSpinner)
+    $('cesiones').className = 'filter'
+  })
+  disabledForm()
   let disgonStatus = false
   const data = new FormData() 
   data.append('origen',origen)
@@ -482,10 +533,11 @@ $$('form')[0].addEventListener('submit',(e)=>{
   .then(response => response.text())
   .then(res =>{
     if(res == 'ok'){
-      const bubble = document.getElementById('new')
+      limpiarSpinner()
       $('newTitle').innerHTML = "Nueva cesión"
       $('pclient').innerHTML = ""
-      bubble.firstChild.nextSibling != null ? bubble.firstChild.innerText = parseInt(bubble.firstChild.innerText) + 1 : bubble.innerHTML = ' Nuevas Cesiones <span class="round">1</span>'
+      enabledForm()
+      updateBubble('+')
       e.target.reset()
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
     }
@@ -495,6 +547,10 @@ $$('form')[0].addEventListener('submit',(e)=>{
 const id = window.location.search.split('?id=')[1]
 
 document.getElementById('new').addEventListener('click',()=>{
+  document.location = `./cesionesADV.php?id=${id}`
+})
+
+document.getElementById('all').addEventListener('click',()=>{
   document.location.reload()
 })
 

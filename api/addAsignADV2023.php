@@ -1,7 +1,12 @@
 <?php
 include_once '../connection/data.php';
 $contacts = new Contacts();
-$user = $contacts->getUserBySessid($_POST['session']);
+$userFilds = $contacts->getUserBySessid($_POST['session']);
+$user = $userFilds[0][1];
+$puesto = $userFilds[0][4];
+$tratado = "";
+if($puesto == 'ADV')
+    $tratado = strtoupper($user);
 
 function getCliente($cliente,$placa){
     $contacts = new Contacts();
@@ -20,7 +25,7 @@ function getDescRef($referencia){
 
     if(sizeof($rows) > 0){
         foreach ($rows as $row) { 
-            $descripcion = trim($rows[0][2],'000');
+            $descripcion = trim($rows[0][2],'000') . " (" . str_replace('.',',',$rows[0][4])."€)";
         }
     }
 
@@ -45,7 +50,8 @@ $items = [
     $_POST['pedido'],
     @$_POST['disgon'],
     $Designacion,
-    $NombreCliente
+    $NombreCliente,
+    $tratado
 ];
 
 $rows = $contacts->newAssigADV2023($items);

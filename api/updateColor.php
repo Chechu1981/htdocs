@@ -1,7 +1,8 @@
 <?php
 include_once '../connection/data.php';
 $contacts = new Contacts();
-$usr = $contacts->getUserBySessid($_POST['userId']);
+$userFilds = $contacts->getUserBySessid($_POST['userId']);
+$usr = $userFilds[0][1];
 
 $h = $_POST['h'];
 $s = $_POST['s'];
