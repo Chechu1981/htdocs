@@ -18,7 +18,7 @@ function getCliente($cliente,$placa){
 
 function formatRef($referencia){
   $contacts = new Contacts();
-  return $contacts->formatRef($referencia);
+  return $contacts->formatRef(trim($referencia," "));
 }
 
 function getDesignacion($referencia){

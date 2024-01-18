@@ -375,7 +375,6 @@ select, input{
     font-size: medium;
     align-items: center;
     overflow-y: scroll;
-    height: 450px;
 }
 
 .note-body input{
@@ -527,9 +526,9 @@ select, input{
 
 .search-line{
     display: flex;
+    align-items: center;
     border: 1px solid #6e6e6e7a;
     border-radius: 50px;
-    align-items: center;
     transition: .2s;
     margin: 10px 0;
 }
@@ -710,6 +709,19 @@ input[type="color"]::-webkit-color-swatch {
 
 #cesiones{
     text-transform: uppercase;
+}
+
+#cesiones h1{
+    text-align: center;
+    margin-top: calc(100vh - 50%);
+    letter-spacing: normal;
+    animation: noAssigns 5s infinite ease-in-out;
+}
+
+@keyframes noAssigns {
+    0%{letter-spacing: normal;}
+    50%{letter-spacing: 10px;}
+    100%{letter-spacing: normal;}
 }
 
 .marcado{

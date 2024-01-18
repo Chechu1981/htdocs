@@ -10,7 +10,7 @@ $allUsers = $contacts->getAllUsers();
 
 function formatRef($referencia){
   $contacts = new Contacts();
-  return $contacts->formatRef($referencia);
+  return $contacts->formatRef(trim($referencia," "));
 }
 
 $dataCliente = file_get_contents("../json/cesionesCliente.json");

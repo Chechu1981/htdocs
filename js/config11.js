@@ -23,7 +23,7 @@ if(typeof(href) != "object"){
     "negro": "black"
   }
 
-  src = ruta[window.location.pathname.split('/').length]
+  const src = ruta[window.location.pathname.split('/').length]
 
   $('config').addEventListener('click', e => {
     if(e.target.id == "save"){

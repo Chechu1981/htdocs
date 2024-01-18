@@ -56,7 +56,7 @@ const modal = (params,title) =>{
 }
 
 $('notes').addEventListener('click',(e) => {
-  src = ruta[window.location.pathname.split('/').length] + 'api/getNotes.php'
+  let src = ruta[window.location.pathname.split('/').length] + 'api/getNotes.php'
   fetch(src)
   .then((response) => response.text())
   .then((notes) => {
@@ -65,7 +65,7 @@ $('notes').addEventListener('click',(e) => {
 })
 
 $('calc').addEventListener('click',(e) => {
-  src = ruta[window.location.pathname.split('/').length] + 'api/calc.php'
+  let src = ruta[window.location.pathname.split('/').length] + 'api/calc.php'
   fetch(src)
   .then((response) => response.text())
   .then((notes) => {

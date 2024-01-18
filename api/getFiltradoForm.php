@@ -3,7 +3,7 @@ include_once '../connection/data.php';
 $consulta = new Contacts();
 $palabrasClave = $consulta->getPalabrasClave();
 ?>
-<form action="">
+<form action="" style="height: 450px;">
 <?php  
 for($i = 0; $i < 20; $i++) {
     echo $i + 1;

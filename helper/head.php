@@ -68,9 +68,9 @@ $user = strtoupper($userBdd[0][1]);
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?php echo $src . '/img/icons8-herramientas-del-administrador-96.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1246" defer content="1">
+<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1249" defer content="1">
 <link rel="stylesheet" href="<?php echo $src; ?>/css/150027.css?1000" defer content="1">
 <link rel="stylesheet" href="<?php echo $src . $css[$user]; ?>" defer content="0">
-<script type="text/javascript" src="<?php echo $src; ?>/js/script20.js?1000" defer content='no-cache'></script>
+<script type="text/javascript" src="<?php echo $src; ?>/js/script20.js?1001" defer content='no-cache'></script>
 <script type="text/javascript" src="<?php echo $src . $scripts->$page; ?>" defer content="0"></script>
 <title>Chechu - <?php echo $page; ?></title>

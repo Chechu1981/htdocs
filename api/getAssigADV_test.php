@@ -8,7 +8,7 @@ $rows = $contacts->getAssigPending($_POST['id'],$user[0][1]);
 
 function formatRef($referencia){
   $contacts = new Contacts();
-  return $contacts->formatRef($referencia);
+  return $contacts->formatRef(trim($referencia," "));
 }
 
 $dataCliente = file_get_contents("../json/cesionesCliente.json");
@@ -36,7 +36,10 @@ $agent_head = '';
 if($_POST['id'] != 'new')
   $agent_head = "<li>Agente</li>";
 
-$lists = "<ul class='heading assignPendingAdv'>
+ $lists = "<h1>No hay cesiones</h1>";
+
+if(sizeof($rows) > 0){
+  $lists = "<ul class='heading assignPendingAdv'>
             <li><span>".$imgOrigen."</span><span>".$imgDestino."</span></li>
             <li>Cliente</li>
             <li>Comentario</li>
@@ -51,9 +54,7 @@ $lists = "<ul class='heading assignPendingAdv'>
             <li>Enviar</li>
             ".$agent_head."
             <li></li>
-          </ul>"; 
-
-if(sizeof($rows) > 0){
+          </ul>";
   $contador = 1;
   foreach ($rows as $row) {
     $designRefer = $row[19];
