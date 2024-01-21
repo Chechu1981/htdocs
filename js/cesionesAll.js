@@ -464,7 +464,6 @@ const limpiarSpinner = () =>{
 }
 
 $$('form')[0].addEventListener('submit',(e)=>{
-  notificacion("Hola Mundo", "Esto es una prueba")
   document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = true
   $('pclient').classList.remove('important')
   $('descRef').innerHTML = ""
