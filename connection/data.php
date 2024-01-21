@@ -237,9 +237,9 @@ class Contacts
 
     public function newAssig($items){
         $sql = "INSERT INTO `cesiones`
-            (`origen`, `destino`, `cliente`, `ref`, `pvp`, `pedido`, `envio`, `recibido`, `cantidad`, `usuario`,`comentario`, `refClient`, `fragil`) 
+            (`origen`, `destino`, `cliente`, `ref`, `pvp`, `pedido`, `envio`, `recibido`, `cantidad`, `usuario`,`comentario`, `refClient`, `fragil`, `tratado`) 
             VALUES
-            ('$items[0]','$items[1]','$items[2]','$items[3]','$items[4]','$items[5]','$items[6]','0000-00-00',$items[7], '$items[8]', '$items[9]','',FALSE)";
+            ('$items[0]','$items[1]','$items[2]','$items[3]','$items[4]','$items[5]','$items[6]','0000-00-00',$items[7], '$items[8]', '$items[9]','',FALSE, '$items[10]')";
         $query = $this->db->prepare($sql);
         $query->execute();
         return "ok";
@@ -251,9 +251,9 @@ class Contacts
            $fragil = 1;
         }
         $sql = "INSERT INTO `cesiones`
-            (`origen`, `destino`, `cliente`, `refClient`, `comentario`, `ref`, `pvp`, `cantidad`, `fragil`, `usuario`, `pedido`, `recibido`, `envio`) 
+            (`origen`, `destino`, `cliente`, `refClient`, `comentario`, `ref`, `pvp`, `cantidad`, `fragil`, `usuario`, `pedido`, `recibido`, `envio`, `tratado`) 
             VALUES
-            ('$items[0]','$items[1]','$items[2]','$items[3]','$items[4]','$items[5]','$items[6]', '$items[7]' , $fragil, '$items[9]', '', '0000-00-00', '0000-00-00 00:00:00')";
+            ('$items[0]','$items[1]','$items[2]','$items[3]','$items[4]','$items[5]','$items[6]', '$items[7]' , $fragil, '$items[9]', '', '0000-00-00', '0000-00-00 00:00:00', '$items[10]')";
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';
@@ -265,9 +265,9 @@ class Contacts
            $fragil = 1;
         }
         $sql = "INSERT INTO `cesiones`
-            (`origen`, `destino`, `cliente`, `refClient`, `comentario`, `ref`, `pvp`, `cantidad`, `fragil`, `usuario`, `pedido`, `recibido`, `envio`, `nfm`, `disgon`, `designacion`, `nombreCliente`) 
+            (`origen`, `destino`, `cliente`, `refClient`, `comentario`, `ref`, `pvp`, `cantidad`, `fragil`, `usuario`, `pedido`, `recibido`, `envio`, `nfm`, `disgon`, `designacion`, `nombreCliente`, `tratado`) 
             VALUES
-            ('$items[0]','$items[1]','$items[2]','$items[3]','$items[4]','$items[5]','$items[6]', '$items[7]' , $items[8], '$items[10]', '$items[11]', '0000-00-00', '0000-00-00 00:00:00', $items[9], $items[12], '$items[13]', '$items[14]')";
+            ('$items[0]','$items[1]','$items[2]','$items[3]','$items[4]','$items[5]','$items[6]', '$items[7]' , $items[8], '$items[10]', '$items[11]', '0000-00-00', '0000-00-00 00:00:00', $items[9], $items[12], '$items[13]', '$items[14]', '$items[15]')";
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';
@@ -314,7 +314,7 @@ class Contacts
     }
 
     public function getAssigCountNew($usr){
-        $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND`usuario` = '$usr'";
+        $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         if($usr == 'all')
             $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00'";        
         $query = $this->db->prepare($sql);
@@ -330,13 +330,13 @@ class Contacts
         `cliente` LIKE '%$all%'OR
         `comentario` LIKE '%$all%' AND
         `pedido` = '' AND
-        `usuario` = '$usr' OR `usuario` LIKE ''
+        (`usuario` = '$usr' OR `usuario` LIKE '' OR `tratado` = '$usr')
         ORDER BY `destino`, `origen` DESC 
         LIMIT 100";
         if ($all == 'all')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND `usuario` = '$usr' OR `usuario` LIKE '' ORDER BY `origen`, `destino` DESC ";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND (`usuario` = '$usr' OR `usuario` LIKE '' OR `tratado` = '$usr') ORDER BY `origen`, `destino` DESC ";
         elseif ($all == 'new' AND $usr != 'all')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND `usuario` = '$usr' OR `usuario` LIKE '' ORDER BY `origen`, `destino` DESC ";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND (`usuario` = '$usr' OR `usuario` LIKE '' OR `tratado` = '$usr') ORDER BY `origen`, `destino` DESC ";
         elseif ($all == 'new' AND $usr = 'all')
             $sql = "SELECT * FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' ORDER BY `origen`, `destino` DESC ";
         $query = $this->db->prepare($sql);
@@ -420,7 +420,6 @@ class Contacts
             $sql = "UPDATE `cesiones` SET `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `pedido` = '$pedido', `emisor` = $origenBtn, `receptor` = $destinoBtn, `tratado` = '$tratado' WHERE `id` LIKE '$id'";
         $query = $this->db->prepare($sql);
         $query->execute();
-        return $sql;
     }
 
     public function getNotes(){

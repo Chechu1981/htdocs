@@ -267,3 +267,25 @@ const formatRef = (ref)=>{
     return ref;
   }
 }
+
+/* Notificaciones */
+function checkNotificationPromise() {
+  try {
+    Notification.requestPermission().then();
+  } catch (e) {
+    return false;
+  }
+
+  return true;
+}
+
+const notificacion = (titulo, texto) => {
+  const ifNotif = checkNotificationPromise() 
+  icon = '../img/AC.jpg'
+  if(ifNotif){
+    const notif = new Notification(titulo,{
+      body: texto,
+      icon: icon
+    })
+  }
+}

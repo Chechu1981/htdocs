@@ -44,6 +44,8 @@ function createOptons($user){
   $optionsList = '<option value="" selected ></option>';
   global $allUsers;
   for($i = 0; $i < count($allUsers); $i++){
+    if($allUsers[$i][4] != 'ADV')
+    continue;
     if($user == strtoupper($allUsers[$i][1]))
       $optionsList .= '<option value="'.strtoupper($allUsers[$i][1]).'" selected >'.strtoupper($allUsers[$i][1]).'</option>';
     else
@@ -133,6 +135,7 @@ if(sizeof($rows) > 0){
         <select name="agente" id="agente">
         '.$opctions.'
         </select>
+      </li>
       <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
       <li title="enviar" class="send" id="send'.$row[0].'">📩</li>
       <li>'.$usuario.'</li>

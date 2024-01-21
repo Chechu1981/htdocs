@@ -6,6 +6,8 @@ $user = $contacts->getUserBySessid($_POST['session']);
 
 $rows = $contacts->getAssigPending($_POST['id'],$user[0][1]);
 
+$allUsers = $contacts->getAllUsers();
+
 function formatRef($referencia){
   $contacts = new Contacts();
   return $contacts->formatRef(trim($referencia," "));
@@ -33,10 +35,25 @@ if($_POST['sort'] == 'destino')
 $agent = '';
 $agent_head = '';
 
+function createOptons($user){
+  $optionsList = '<option value="" selected ></option>';
+  global $allUsers;
+  for($i = 0; $i < count($allUsers); $i++){
+    if($allUsers[$i][4] != 'ADV')
+    continue;
+    if($user == strtoupper($allUsers[$i][1]))
+      $optionsList .= '<option value="'.strtoupper($allUsers[$i][1]).'" selected >'.strtoupper($allUsers[$i][1]).'</option>';
+    else
+      $optionsList .= '<option value="'.strtoupper($allUsers[$i][1]).'">'.strtoupper($allUsers[$i][1]).'</option>';
+  }
+  return $optionsList;
+}
+
 if($_POST['id'] != 'new')
   $agent_head = "<li>Agente</li>";
 
- $lists = "<h1>No hay cesiones</h1>";
+$lists = "<h1>No hay cesiones</h1>";
+
 
 if(sizeof($rows) > 0){
   $lists = "<ul class='heading assignPendingAdv'>
@@ -58,6 +75,7 @@ if(sizeof($rows) > 0){
   $contador = 1;
   foreach ($rows as $row) {
     $designRefer = $row[19];
+    $agente = $row[17];
     $formatref = formatRef($row[4]);
     $clientName = $row[20];
     $important = "";
@@ -72,6 +90,7 @@ if(sizeof($rows) > 0){
     $disgon = '';
     $btnDestinoPress = '';
     $btnOrigenPress = '';
+    $options = createOptons($agente);
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
     if(($_POST['id']) != 'new')
       $li = '<li title="Envío: ">'.$fechaR[2].'/'.$fechaR[1].'/'.$fechaR[0].'</li>';
@@ -109,7 +128,11 @@ if(sizeof($rows) > 0){
       <li title="NFM: "><input type="checkbox" '.$nfmChecked.'></input></li>
       <li title="Frágil: "><input type="checkbox" '.$fragChecked.'></input></li>
       <li title="Disgon: ">'.$disgon.'</li>
-      <li title="agente"><input type="text" value="'.$row[17].'"></li>
+      <li title="agente">
+        <select name="agente" id="agente">
+        '.$options.'
+        </select>
+      </li>
       <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
       <li title="enviar" class="send" id="send'.$row[0].'">📩</li>
     </ul>';

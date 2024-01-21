@@ -229,7 +229,7 @@ const showAssig = () =>{
       for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
         let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar = ''
         ul = $('cesiones').childNodes[i]
-        id = ul.childNodes[24].id
+        id = ul.childNodes[25].id
         origen = ul.childNodes[1].childNodes[1]
         destino = ul.childNodes[1].childNodes[2]
         cliente = ul.childNodes[5]
@@ -464,6 +464,7 @@ const limpiarSpinner = () =>{
 }
 
 $$('form')[0].addEventListener('submit',(e)=>{
+  notificacion("Hola Mundo", "Esto es una prueba")
   document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = true
   $('pclient').classList.remove('important')
   $('descRef').innerHTML = ""

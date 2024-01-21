@@ -162,44 +162,44 @@ const showAssig = () =>{
     $('cesiones').style = ''
     $('cesiones').innerHTML = response
     for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
-      let li, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar = ''
-      li = $('cesiones').childNodes[i]
-      id = $(`cesiones`).childNodes[i].childNodes[25].id
-      origen = $('cesiones').childNodes[i].childNodes[1].childNodes[1]
-      destino = $('cesiones').childNodes[i].childNodes[1].childNodes[2]
-      cliente = $('cesiones').childNodes[i].childNodes[5]
-      refCliente = $('cesiones').childNodes[i].childNodes[1]
-      comentario = $('cesiones').childNodes[i].childNodes[9]
-      referencia = $('cesiones').childNodes[i].childNodes[11]
-      cantidad = $('cesiones').childNodes[i].childNodes[13].textContent
-      pedido = $('cesiones').childNodes[i].childNodes[15].firstChild
-      fragil = $('cesiones').childNodes[i].childNodes[19].firstChild
-      disgon = $('cesiones').childNodes[i].childNodes[21].firstChild
-      pvp = $(`cesiones`).childNodes[i].childNodes[11].childNodes[1].textContent
-      tratado = $(`cesiones`).childNodes[i].childNodes[23].firstChild
-      nfm = $(`cesiones`).childNodes[i].childNodes[17].firstChild
-      btnSendMail = $(`cesiones`).childNodes[i].childNodes[27]
-      btnEliminar = $(`cesiones`).childNodes[i].childNodes[25]
+      let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar = ''
+        ul = $('cesiones').childNodes[i]
+        id = ul.childNodes[25].id
+        origen = ul.childNodes[1].childNodes[1]
+        destino = ul.childNodes[1].childNodes[2]
+        cliente = ul.childNodes[5]
+        refCliente = ul.childNodes[1]
+        comentario = ul.childNodes[9]
+        referencia = ul.childNodes[11]
+        cantidad = ul.childNodes[13].textContent
+        pedido = ul.childNodes[15].firstChild
+        fragil = ul.childNodes[19].firstChild
+        disgon = ul.childNodes[21].firstChild
+        pvp = ul.childNodes[11].childNodes[1].textContent
+        tratado = ul.childNodes[23]
+        nfm = ul.childNodes[17].firstChild
+        btnSendMail = ul.childNodes[27]
+        btnEliminar = ul.childNodes[25]
 
       if(disgon != null)
-        disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
+        disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value, destino))
       if($('cesiones').childNodes[i].localName == 'ul' && $('cesiones').childNodes[i].localName != undefined)
-        pedido.addEventListener('keyup', e => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
+        pedido.addEventListener('keyup', e => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent))
 
-      nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
-      fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
-      tratado.addEventListener('keyup', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
-      referencia.addEventListener('click', () => {clearRowsMark(li,referencia.childNodes[0].textContent.replaceAll(' ',''))})
-      comentario.addEventListener('click', () => {clearRowsMark(li,comentario.textContent)})
+      nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent))
+      fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent))
+      tratado.addEventListener('change', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent)})
+      referencia.addEventListener('click', () => {clearRowsMark(ul,referencia.childNodes[0].textContent.replaceAll(' ',''))})
+      comentario.addEventListener('click', () => {clearRowsMark(ul,comentario.textContent)})
       cliente.addEventListener('click', () => {
         let fragilTxt = ''
         fragil.checked ? fragilTxt = '..~** ¡¡MATERIAL FRÁGIL!! **~.. Por favor, en lo posible, reforzar embalaje. Gracias; ' : ''
-        clearRowsMark(li,`Cesión ${origen.textContent}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
+        clearRowsMark(ul,`Cesión ${origen.textContent}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
       })
-      refCliente.addEventListener('click', () => {clearRowsMark(li,`Cliente: ${cliente.childNodes[0].textContent}`)})
+      refCliente.addEventListener('click', () => {clearRowsMark(ul,`Cliente: ${cliente.childNodes[0].textContent}`)})
       origen.addEventListener('click', () => {
         origen.classList.toggle('active-city-press')
-        updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+        updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,destino.textContent)
       })
       destino.addEventListener('click', () => {
         destino.classList.toggle('active-city-press')
