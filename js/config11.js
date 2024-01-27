@@ -13,6 +13,7 @@ if(typeof(href) != "object"){
   "tarifa": "update/updatePrice.php",
   "pending": "update/configPending.php",
   "clientes": "update/configClient.php",
+  "usuarios": "helper/formNewUser.php",
   "repere": "update/configRepere.php"
   }
 
@@ -79,9 +80,19 @@ if(typeof(href) != "object"){
             body: data
           })
           .then(e => e.text())
-          .then(e => window.location.reload(true))
+          .then(e => {
+            const data = new FormData();
+            data.append('nameTheme', $('menu').childNodes[1].childNodes[1].innerText)
+            fetch(src + 'api/updateColorTheme.php',{
+              method: 'POST',
+              body: data
+            })
+            window.location.reload(true)
+          })
         })
       }else if(e.target.title == 'pending' || e.target.title == 'rutas' || e.target.title == 'repere' || e.target.title == 'soc' || e.target.title == 'clientes' || e.target.title == 'tarifa'){
+        window.location.href = src + href[e.target.title] + window.location.search
+      }else if(e.target.title == 'usuarios' || e.target.title == 'rutas' || e.target.title == 'repere' || e.target.title == 'soc' || e.target.title == 'clientes' || e.target.title == 'tarifa'){
         window.location.href = src + href[e.target.title] + window.location.search
       }else{
         data.append('title',e.target.innerHTML)

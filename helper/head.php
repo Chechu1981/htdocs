@@ -20,13 +20,13 @@ $scripts = (object)[
   'CENTROS' => "/js/center3.js",
   'CESIONES1' => "/js/cesiones202312.js?1234",
   'CESIONES' => "/js/cesiones19.js",
-  'CESIONESALL' => "/js/cesionesAll.js?1005",
+  'CESIONESALL' => "/js/cesionesAll.js?1007",
   'CESIONESADV' => "/js/cesionesADV.js?141",
   'BUSCAR' => "/../js/buscarCesiones.js?102",
   'READY' => "/../js/readyCesiones.js?102",
   'STATUS' => "/../js/statusCesiones.js?102",
   'FINISH' => "/../js/finishCesiones.js?103",
-  'CESIONESADV_TEST' => "/js/cesionesADV_test.js?126",
+  'CESIONESADV_TEST' => "/js/cesionesADV_test.js?127",
   'LIBRETA' => "/js/libreta13.js",
   'contact' => "/js/contact2.js",
   'form' => "/js/form1.js",
@@ -46,31 +46,32 @@ $scripts = (object)[
   'INDEX' => "/js/test.js",
   'TXTTOXLS' => "/js/txtToXls.js",
   'CONFIGCLIENT' => "/js/updateClient.js",
-  'CONFIGPENDING' => "/js/updatePending.js?112"
+  'CONFIGPENDING' => "/js/updatePending.js?112",
+  'FORMNEWUSER' => "/../js/formNewUser.js"
 ];
 
 $usr = $contacts->getAllUsers();
 
 $css = array();
 foreach($usr as $userTheme){
-  $css[strtoupper($userTheme['nombre'])] = "/css/".strtolower($userTheme['nombre']).".css";
+  $css[strtoupper($userTheme['theme'])] = "/css/".strtolower($userTheme['theme']).".css";
 }
 
 $uri = $_SERVER['PHP_SELF'];
 $page = strtoupper(substr(explode("/",$uri)[count(explode("/",$uri))-1],0,-4));
 
 $userBdd = $contacts->getUserBySessid($_GET['id'] ?? 0);
-$user = strtoupper($userBdd[0][1]);
+$user = strtoupper($userBdd[0][3]);
 ?>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
-<link rel="icon" href="<?php echo $src . '/img/icons8-herramientas-del-administrador-96.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1251" defer content="1">
-<link rel="stylesheet" href="<?php echo $src; ?>/css/150027.css?1001" defer content="1">
+<link rel="icon" href="<?php echo $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
+<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1252" defer content="1">
+<link rel="stylesheet" href="<?php echo $src; ?>/css/150027.css?1002" defer content="1">
 <link rel="stylesheet" href="<?php echo $src . $css[$user]; ?>" defer content="0">
-<script type="text/javascript" src="<?php echo $src; ?>/js/script20.js?1002" defer content='no-cache'></script>
+<script type="text/javascript" src="<?php echo $src; ?>/js/script20.js?1004" defer content='no-cache'></script>
 <script type="text/javascript" src="<?php echo $src . $scripts->$page; ?>" defer content="0"></script>
 <title>Chechu - <?php echo $page; ?></title>

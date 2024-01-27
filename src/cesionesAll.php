@@ -8,7 +8,7 @@
   $hash = $contacts->getUserBySessid($_GET['id'])[0][5];
   $usuario = $contacts->getUserBySessid($_GET['id'])[0][1];
   $nuevas = $contacts->getAssigCountNew($usuario)[0][0];
-  $allAssigns = "<span class='round'>" . $contacts->getAssigCountNew('all')[0][0] . "</span>";
+  $allAdvAssigns = "<span class='round'>" . $contacts->getAssigCountNew('all')[0][0] . "</span>";
   if($nuevas > 0)
     $nuevas = "<span class='round'>".$nuevas."</span>";
   else
@@ -30,7 +30,7 @@
       <h1>Cesiones - todas</h1>
       <section class="subButtons">
         <button id="new"><?php echo $nuevas; ?> Nuevas Cesiones</button>
-        <button id="all" class="active"><?php echo $allAssigns; ?> Todas</button>
+        <button id="all" class="active"><?php echo $allAdvAssigns; ?> Todas</button>
         <button id="find">Buscar</button>
         <button id="ready"><?php echo $enCurso; ?> En curso</button>
         <button id="finish">Hechas</button>

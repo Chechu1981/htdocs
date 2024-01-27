@@ -111,7 +111,7 @@ $('menu').childNodes[7].addEventListener('click',(e) => {
       modal(res,"Configuración")
       const newScript = document.createElement('script')
       newScript.type = 'text/javascript'
-      newScript.src = '../../js/config11.js'
+      newScript.src = '../../js/config11.js?1000'
       $('contacts').append(newScript)
     })
   }
@@ -132,23 +132,31 @@ document.addEventListener('DOMContentLoaded', () => {
     method: 'POST',
     body: data
   })
-  .then(response => response.text())
+  .then(response => response.json())
   .then(res => {
-    $('menu').childNodes[1].childNodes[1].innerText = res.toUpperCase()
-
+    $('menu').childNodes[1].childNodes[1].innerText = res.nombre.toUpperCase()
+    let puesto = res.puesto.toUpperCase()
     if(window.location.pathname.includes('home')){
       const options = $('search-line').childNodes[5].childNodes[1].childNodes
       for(let i=0; i<options.length; i++){
-        let usuario = res.toUpperCase()
-        res.toUpperCase() == 'GALICIA' ? usuario = 'VIGO' : null
-        if(options[i].value == usuario){
+        puesto == 'GALICIA' ? puesto = 'VIGO' : null
+        if(options[i].value == puesto){
           $('search-line').childNodes[5].childNodes[1].childNodes[i].selected = true
         }
       }
     }else if(window.location.pathname.includes('cesionesADV')){
       for(let i = 0; i < $$('form')[0][1].options.length; i++){
-        let centro = $('menu').childNodes[1].childNodes[1].innerText
-        if($('menu').childNodes[1].childNodes[1].innerText.toUpperCase() == 'GALICIA')
+        let centro = puesto
+        if(puesto == 'GALICIA')
+          centro = 'VIGO'
+      
+        if($$('form')[0][1].options[i].value == centro)
+          $$('form')[0][1].options[i].selected = true;
+      }
+    }else if(window.location.pathname.includes('cesionesAll')){
+      for(let i = 0; i < $$('form')[0][1].options.length; i++){
+        let centro = puesto
+        if(puesto == 'GALICIA')
           centro = 'VIGO'
       
         if($$('form')[0][1].options[i].value == centro)
@@ -281,7 +289,7 @@ function checkNotificationPromise() {
 
 const notificacion = (titulo, texto) => {
   const ifNotif = checkNotificationPromise() 
-  icon = '../img/AC.jpg'
+  icon = '../img/icons8-coche-64.png'
   if(ifNotif){
     const notif = new Notification(titulo,{
       body: texto,
@@ -289,3 +297,41 @@ const notificacion = (titulo, texto) => {
     })
   }
 }
+
+const newAssigns = setInterval(() => {
+  const dataUser = new FormData()
+  dataUser.append('id',window.location.href.split('?id=')[1])
+  fetch(ruta[window.location.pathname.split('/').length] + "./api/getUserById.php",{
+    method: 'POST',
+    body: dataUser
+  })
+  .then((id) => id.json())
+  .then((user) =>{
+    if(user.puesto != "ADV")
+      return null
+    const data = new FormData()
+    data.append('usuario',user.nombre)
+    fetch(ruta[window.location.pathname.split('/').length] + "./api/getCountAssigns.php",{
+      method: 'POST',
+      body: data
+    })
+    .then(item => item.text())
+    .then(valor => {
+      const actual = $('cesionesActivas').childNodes[1].title
+      if(parseInt(valor) > parseInt(actual)){
+        const dataAssign = new FormData()
+        dataAssign.append('usr',user)
+        fetch(ruta[window.location.pathname.split('/').length] + "./api/getAssigLast.php",{
+          method: 'POST',
+          body: dataAssign
+        })
+        .then(ass => ass.json())
+        .then(cesion =>{
+          notificacion(`Nueva cesión de ${cesion.usuario}.`,
+          `referencia: ${cesion.ref} de ${cesion.origen} a ${cesion.destino}`)
+          $('cesionesActivas').childNodes[1].title = `${valor}`
+        })
+      }
+    })
+  })
+},10000)

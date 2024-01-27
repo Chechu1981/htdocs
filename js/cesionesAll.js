@@ -227,7 +227,7 @@ const showAssig = () =>{
       $('cesiones').style = ''
       $('cesiones').innerHTML = response
       for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
-        let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar = ''
+        let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar, puesto = ''
         ul = $('cesiones').childNodes[i]
         id = ul.childNodes[25].id
         origen = ul.childNodes[1].childNodes[1]
@@ -243,8 +243,9 @@ const showAssig = () =>{
         pvp = ul.childNodes[11].childNodes[1].textContent
         tratado = ul.childNodes[23]
         nfm = ul.childNodes[17].firstChild
-        btnSendMail = ul.childNodes[26]
-        btnEliminar = ul.childNodes[24]
+        btnSendMail = ul.childNodes[27]
+        btnEliminar = ul.childNodes[25]
+        puesto = ul.childNodes[29].childNodes[2].nodeValue.replaceAll('(','').replaceAll(')','')
   
         if(disgon != null)
           disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value, destino))
@@ -276,7 +277,7 @@ const showAssig = () =>{
           updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,destino.textContent)
         })
         btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.childNodes[1].value))
-        btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ','')))
+        btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ','')),puesto)
       }
       if(lineaMarcada > 0){
         markLines($('cesiones').getElementsByTagName('ul')[lineaMarcada])
@@ -424,7 +425,7 @@ Saludos.`)
   
   window.open(`mailto:${destinoFragil};${mailDestino};${mailOrigen}?subject=${mailSub}&cc=${bcc}&body=${mailSaludo + mailTarget}`)  
 }
-const eliminarLinea = (id,referencia) =>{
+const eliminarLinea = (id,referencia,puesto) =>{
   const dataName = new FormData()
   dataName.append('id',id)
   fetch('../api/isSend.php',{
@@ -439,9 +440,10 @@ const eliminarLinea = (id,referencia) =>{
     }
     const confirmacion = confirm(`¿Quieres eliminar la referencia ${referencia}?`)
     if(!confirmacion) 
-      return true
+    return true
     const data = new FormData()
     data.append('id',id)
+    data.append('puesto',puesto)
     fetch('../api/deleteAssignADV.php', {
       method: 'POST',
       body: data

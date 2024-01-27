@@ -1,9 +1,14 @@
 <?php
+
 $uri = $_SERVER['PHP_SELF'];
 $src = ".";
 !strstr("$uri",'home') == '/home.php' ? $src = ".." : '';
 strpos($uri,'center') > 0 ? $src = "../.." : '';
 strpos($uri,'assigns') > 0 ? $src = "../.." : '';
+include_once $src . '/connection/data.php';
+$contacts = new Contacts();
+$rows = $contacts->getUserBySessid($_GET['id']);
+$allAssigns = $contacts->getAssigCountNew($rows[0][5])[0][0];
 $id = $_GET['id'];
 ?>
 <picture class="head-img">
@@ -14,8 +19,8 @@ $id = $_GET['id'];
         <li><a href="<?php echo $src.'/home.php?id='.$id; ?>" >Inicio</a></li>
         <li><a href="<?php echo $src.'/src/routeTest.php?id='.$id; ?>">Rutas</a></li>
         <li><a href="<?php echo $src.'/src/libreta.php?id='.$id; ?>">Libreta</a></li>
-        <li style="width: 44px;">
-            <a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>">Cesiones</a></a>
+        <li style="width: 44px;" id="cesionesActivas">
+            <a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>" title="<?php echo $allAssigns; ?>">Cesiones</a></a>
             <ul>
                 <li><a href="<?php echo $src.'/src/cesionesAll.php?id='.$id ?>">Todas</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/buscar.php?id='.$id ?>">Buscar</a></li>

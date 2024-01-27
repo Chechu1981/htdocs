@@ -355,7 +355,8 @@ select, input{
 
 .note-body,
 .note-body a,
-.note-body input{
+.note-body input,
+.note-body select{
   color: var(--bg-body-color);
   font-size: 1.2em;
   margin: 5px;
@@ -377,11 +378,13 @@ select, input{
     overflow-y: scroll;
 }
 
-.note-body input{
+.note-body input,
+.note-body select{
   color: var(--main-font-color);
 }
 
-.note-body input[type="submit"]{
+.note-body input[type="submit"],
+.note-body select{
     display: inline-table;
     color: var(--main-font-color);
 }
@@ -618,7 +621,7 @@ select, input{
 .cards{
     padding: 14px;
     width: 150px;
-    height: 50px;
+    height: 40px;
     background-color:var(--main-font-color);
     border-radius: 8px;
     text-align: center;

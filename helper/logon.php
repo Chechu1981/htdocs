@@ -12,13 +12,16 @@ strpos($uri,'test') > 0 ? $src = ".." : '';
 
 include_once($src.'/helper/head.php'); 
 $contacts = new Contacts();
+
+if($_GET['id'] == '')
+  header('Location: ../../../index.html');
+
 $userBdd = $contacts->getUserBySessid($_GET['id']);
-$usr= $userBdd;
 
 $usrOk = false;
 
-for($i = 0; $i < count($usr); $i++){
-    if($usr[0][5] == $_GET['id'])
+for($i = 0; $i < count($userBdd); $i++){
+    if($userBdd[0][5] == $_GET['id'])
       $usrOk = true;
 }
 
