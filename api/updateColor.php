@@ -19,7 +19,7 @@ $cssFile = ":root{
   --invert-img-filter: invert(0);
   }";
 
-$fh = fopen('../css/'.strtolower($usr).'.css', 'w') or die ('Ocurrió un error');
+$fh = fopen('../css/'.strtolower(str_replace(" ","_",$usr)).'.css', 'w') or die ('Ocurrió un error');
 $texto = fgets($fh);
 fseek($fh, 0 , SEEK_END);
 fwrite($fh,$cssFile) or die ("No se puede escribir el archivo");

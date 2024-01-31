@@ -8,11 +8,17 @@
   $hash = $contacts->getUserBySessid($_GET['id'])[0][5];
   $usuario = $contacts->getUserBySessid($_GET['id'])[0][1];
   $nuevas = $contacts->getAssigCountNew($usuario)[0][0];
-  $allAdvAssigns = "<span class='round'>" . $contacts->getAssigCountNew('all')[0][0] . "</span>";
+  $allAdvAssigns = $contacts->getAssigCountNew('all')[0][0];
+  
   if($nuevas > 0)
     $nuevas = "<span class='round'>".$nuevas."</span>";
   else
     $nuevas = "";
+
+  if($allAdvAssigns > 0)
+    $allAdvAssigns = "<span class='round'>".$allAdvAssigns."</span>";
+  else
+    $allAdvAssigns = "";
 
   $enCurso = $contacts->getAssigCount($usuario)[0][0];
   if($enCurso > 0)

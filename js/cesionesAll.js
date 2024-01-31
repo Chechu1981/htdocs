@@ -241,25 +241,24 @@ const showAssig = () =>{
         fragil = ul.childNodes[19].firstChild
         disgon = ul.childNodes[21].firstChild
         pvp = ul.childNodes[11].childNodes[1].textContent
-        tratado = ul.childNodes[23]
+        tratado = $(`agente${id}`)
         nfm = ul.childNodes[17].firstChild
         btnSendMail = ul.childNodes[27]
         btnEliminar = ul.childNodes[25]
         puesto = ul.childNodes[29].childNodes[2].nodeValue.replaceAll('(','').replaceAll(')','')
-  
         if(disgon != null)
-          disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value, destino))
+          disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
         if(ul.localName == 'ul' && ul.localName != undefined){
           pedido.addEventListener('focus', ()=>{stopUpdates()})
-          pedido.addEventListener('keyup', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent)})
+          pedido.addEventListener('keyup', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent)})
           pedido.addEventListener('blur', () =>iniciar())
-          tratado.addEventListener('change', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent)})
+          tratado.addEventListener('change', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent)})
           tratado.addEventListener('focus', ()=>{stopUpdates()})
           tratado.addEventListener('blur', () => iniciar())
         }
         
-        nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent))
-        fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent))
+        nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
+        fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
         referencia.addEventListener('click', () => {clearRowsMark(ul,referencia.childNodes[0].textContent.replaceAll(' ',''))})
         comentario.addEventListener('click', () => {clearRowsMark(ul,comentario.textContent)})
         cliente.addEventListener('click', () => {
@@ -270,14 +269,14 @@ const showAssig = () =>{
         refCliente.addEventListener('click', () => {clearRowsMark(ul,`Cliente: ${cliente.childNodes[0].textContent}`)})
         origen.addEventListener('click', () => {
           origen.classList.toggle('active-city-press')
-          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,destino.textContent)
+          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
         })
         destino.addEventListener('click', () => {
           destino.classList.toggle('active-city-press')
-          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,destino.textContent)
+          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
         })
         btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.childNodes[1].value))
-        btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ','')),puesto)
+        btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
       }
       if(lineaMarcada > 0){
         markLines($('cesiones').getElementsByTagName('ul')[lineaMarcada])
@@ -439,8 +438,9 @@ const eliminarLinea = (id,referencia,puesto) =>{
       return true
     }
     const confirmacion = confirm(`¿Quieres eliminar la referencia ${referencia}?`)
-    if(!confirmacion) 
-    return true
+    if(!confirmacion)
+      return true
+    
     const data = new FormData()
     data.append('id',id)
     data.append('puesto',puesto)

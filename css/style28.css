@@ -836,7 +836,7 @@ input[type="color"]::-webkit-color-swatch {
   cursor: pointer;
 }
 
-.send:hover{
+.send span:hover{
   filter: invert(1);
 }
 
@@ -1586,6 +1586,15 @@ margin: 0 10px;
 .csv-files section button{
     width: 100%;
     padding: 5px;
+}
+
+.history{
+    cursor: pointer;
+}
+
+.history:hover{
+    color:var(--bg-font-color);
+    font-weight: bold;
 }
 /*
 .csv-files section:nth-child(odd){

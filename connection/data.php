@@ -294,11 +294,13 @@ class Contacts
         return 'ok';
     }
 
-    public function deleteAssigADV($item){
-        $sql = "DELETE FROM `cesiones` WHERE `id` LIKE $item";
+    public function deleteAssigADV($item,$puesto){
+        $sql = "DELETE FROM `cesiones` WHERE `id` LIKE $item AND (`tratado` LIKE '$puesto' OR `usuario` LIKE '$puesto')";
+        if($puesto == 'ADV')
+            $sql = "DELETE FROM `cesiones` WHERE `id` LIKE $item";
         $query = $this->db->prepare($sql);
         $query->execute();
-        return "¡¡Eliminado!!";
+        return $sql;
     }
 
     public function getAssig($all,$usr,$sort){
@@ -315,12 +317,12 @@ class Contacts
         `cliente` LIKE '%$all%'OR
         `comentario` LIKE '%$all%'OR
         `pedido` LIKE '%$all%' AND
-        `usuario` = '$usr'";
+        (`usuario` = '$usr' OR `tratado` = '$usr')";
 
         if($all == 'all')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `usuario` = '$usr'";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         elseif($all == 'new')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `usuario` = '$usr'";            
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";            
         $sql .= $order;
         $query = $this->db->prepare($sql);
         $query->execute();
@@ -1169,9 +1171,16 @@ class Contacts
         return $e;
     }
   }
-
+  
   public function getRefer($referencia){
     $sql = "SELECT * FROM `tarifa` WHERE REPLACE(LTRIM(REPLACE(`referencia`,'0',' ')),' ','0') = '$referencia' OR (CHAR_LENGTH(`referencia`) < 7 AND `referencia` = '$referencia')";
+    $query = $this->db->prepare($sql);
+    $query->execute();
+    return $query->fetchAll();
+  }
+
+  public function getDto($codDto){
+    $sql = "SELECT * FROM `dto_compra` WHERE `codDto` = '$codDto' AND `t_pedido` LIKE 'VOR'";
     $query = $this->db->prepare($sql);
     $query->execute();
     return $query->fetchAll();

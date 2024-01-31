@@ -1,11 +1,14 @@
 const id = window.location.search.split('?id=')[1]
+const btnAll = document.getElementById('all') ?? 0
+
+if(btnAll){
+  btnAll.addEventListener('click',()=>{
+    document.location = `../cesionesAll.php?id=${id}`
+  })
+}
 
 document.getElementById('new').addEventListener('click',()=>{
   document.location = `../cesionesADV.php?id=${id}`
-})
-
-document.getElementById('all').addEventListener('click',()=>{
-  document.location = `../cesionesAll.php?id=${id}`
 })
 
 document.getElementById('find').addEventListener('click',()=>{

@@ -58,7 +58,7 @@ for($i = 0;$i < sizeof($oldFile);$i++){
     <li class="copy '.$marcado.'" title="'.$oldFile[$i]["referencia"].'" id="'.$oldFile[$i]['id'].'">'.$contacts->formatRef($oldFile[$i]["referencia"]).$alerta.'</li>
     <li>'.$oldFile[$i]["designacion"].'</li>
     <li>'.$oldFile[$i]["cantidad"].'</li>
-    <li>'.$oldFile[$i]["prioridad"].'</li>
+    <li title="history" class="history">'.$oldFile[$i]["prioridad"].'</li>
   </ul>';
 }
 

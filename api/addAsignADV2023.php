@@ -51,7 +51,8 @@ $items = [
     @$_POST['disgon'],
     $Designacion,
     $NombreCliente,
-    $tratado
+    $tratado,
+    $puesto
 ];
 
 $rows = $contacts->newAssigADV2023($items);

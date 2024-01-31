@@ -122,6 +122,7 @@ menu.childNodes[9].addEventListener('click',() => {
 })
 
 let titulo = (title) => document.getElementsByClassName('head-img')[0].childNodes[1].innerText = title.toUpperCase()
+let user = ''
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -134,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   .then(response => response.json())
   .then(res => {
+    user = res
     $('menu').childNodes[1].childNodes[1].innerText = res.nombre.toUpperCase()
     let puesto = res.puesto.toUpperCase()
     if(window.location.pathname.includes('home')){
@@ -301,37 +303,35 @@ const notificacion = (titulo, texto) => {
 const newAssigns = setInterval(() => {
   const dataUser = new FormData()
   dataUser.append('id',window.location.href.split('?id=')[1])
-  fetch(ruta[window.location.pathname.split('/').length] + "./api/getUserById.php",{
+  if(user.puesto != "ADV")
+    return null
+  const data = new FormData()
+  data.append('usuario','all')
+  fetch(ruta[window.location.pathname.split('/').length] + "./api/getCountAssigns.php",{
     method: 'POST',
-    body: dataUser
+    body: data
   })
-  .then((id) => id.json())
-  .then((user) =>{
-    if(user.puesto != "ADV")
-      return null
-    const data = new FormData()
-    data.append('usuario',user.nombre)
-    fetch(ruta[window.location.pathname.split('/').length] + "./api/getCountAssigns.php",{
-      method: 'POST',
-      body: data
-    })
-    .then(item => item.text())
-    .then(valor => {
-      const actual = $('cesionesActivas').childNodes[1].title
-      if(parseInt(valor) > parseInt(actual)){
-        const dataAssign = new FormData()
-        dataAssign.append('usr',user)
-        fetch(ruta[window.location.pathname.split('/').length] + "./api/getAssigLast.php",{
-          method: 'POST',
-          body: dataAssign
-        })
-        .then(ass => ass.json())
-        .then(cesion =>{
-          notificacion(`Nueva cesión de ${cesion.usuario}.`,
+  .then(item => item.text())
+  .then(valor => {
+    const actual = $('cesionesActivas').childNodes[1].title
+    if(parseInt(valor) != parseInt(actual)){
+      $('cesionesActivas').childNodes[1].title = `${valor}`
+      const dataAssign = new FormData()
+      dataAssign.append('usr',user.nombre)
+      fetch(ruta[window.location.pathname.split('/').length] + "./api/getAssigLast.php",{
+        method: 'POST',
+        body: dataAssign
+      })
+      .then(ass => ass.json())
+      .then(cesion =>{
+        if(cesion.puesto !== undefined){
+          notificacion(`Nueva cesión de ${cesion.puesto}.`,
           `referencia: ${cesion.ref} de ${cesion.origen} a ${cesion.destino}`)
-          $('cesionesActivas').childNodes[1].title = `${valor}`
-        })
-      }
-    })
+          const path = window.location.pathname
+          if(path.includes('cesiones') || path.includes('assigns'))
+            console.log("Entra!")
+        }
+      })
+    }
   })
 },10000)

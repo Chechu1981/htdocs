@@ -3,6 +3,7 @@ include_once '../connection/data.php';
 $contacts = new Contacts();
 
 $user = $contacts->getUserBySessid($_POST['session']);
+$puesto = $user[0][4];
 
 $rows = $contacts->getAssigPending($_POST['id'],$user[0][1]);
 
@@ -19,10 +20,13 @@ $data = file_get_contents("../json/cesiones.json");
 $codg = json_decode($data, true);
 $agent = '';
 $agent_head = '';
+$liEnviar = '';
 if($_POST['id'] != 'new') {
     $agent_head = "<li>Agente</li>";
 }
-
+if($puesto == 'ADV'){
+  $liEnviar = "<li>Enviar</li>";
+}
 $imgOrigen  = "Origen<img alt='arrow' src='../img/sort_both.png' id='sortOrigen'/>";
 $imgDestino = "Destino<img alt='arrow' src='../img/sort_both.png' id='sortDestino'/>";
 $imgDate = "<li>Envío<img alt='arrow' src='../img/sort_both.png' id='sortEnvio'/></li>";
@@ -67,9 +71,9 @@ if(sizeof($rows) > 0){
             <li>Frágil</li>
             <li>D</li>
             <li>Tratado</li>
-            <li>Eliminar</li>
-            <li>Enviar</li>
-            ".$agent_head."
+            <li>Eliminar</li>"
+            .$liEnviar
+            .$agent_head."
             <li></li>
           </ul>";
   $contador = 1;
@@ -90,16 +94,23 @@ if(sizeof($rows) > 0){
     $disgon = '';
     $btnDestinoPress = '';
     $btnOrigenPress = '';
+    $envioDisgon = '';
+    $btnEnviar = '';
     $options = createOptons($agente);
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
+    if($puesto == 'ADV'){
+      $btnEnviar = '<li class="send" ><span title="Enviar Cesión" id="send'.$row[0].'">📩</span><span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>';
+    }
     if(($_POST['id']) != 'new')
       $li = '<li title="Envío: ">'.$fechaR[2].'/'.$fechaR[1].'/'.$fechaR[0].'</li>';
     if($row[13] == 1)
       $fragChecked = 'checked="checked"';
-    if($row[2] == 'VIGO' && $row[13] == 1){
+    if($row[13] == 1){
       $disgon = '<input type="checkbox" ></input>';
-      if($row[18] == 1)
-      $disgon = '<input type="checkbox" checked="checked"></input>';
+      if($row[18] == 1){
+        $disgon = '<input type="checkbox" checked="checked"></input>';
+        $envioDisgon = "🚚";
+      }
     }
     if($row[15]== 1)
       $btnOrigenPress = 'active-city-press';
@@ -124,17 +135,17 @@ if(sizeof($rows) > 0){
       <li title="Comentario: " class="copy">'.$row[11].'</li>
       <li title="Referencia: '.$row[4].'" class="copy" style="font-size: medium;display:flex;flex-direction:column">'.$formatref.'<span style="font-size:9px;text-align:center;line-height: 7px;">'.$designRefer.'</span></li>
       <li title="Cantidad: " class="storage">'.$row[5].'</li>
-      <li title="Pedido: "><input type="text" value="'.$row[7].'"></input></li>
-      <li title="NFM: "><input type="checkbox" '.$nfmChecked.'></input></li>
-      <li title="Frágil: "><input type="checkbox" '.$fragChecked.'></input></li>
+      <li title="Pedido: "><input type="text" value="'.$row[7].'" name="pedido"></input></li>
+      <li title="NFM: "><input type="checkbox" '.$nfmChecked.' name="nfm"></input></li>
+      <li title="Frágil: "><input type="checkbox" '.$fragChecked.' name="fragil"></input></li>
       <li title="Disgon: ">'.$disgon.'</li>
       <li title="agente">
-        <select name="agente" id="agente">
+        <select name="agente" id="agente'.$row[0].'">
         '.$options.'
         </select>
       </li>
       <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
-      <li title="enviar" class="send" id="send'.$row[0].'">📩</li>
+      '.$btnEnviar.'
     </ul>';
   }
 }

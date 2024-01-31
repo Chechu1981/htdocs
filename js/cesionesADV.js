@@ -69,9 +69,9 @@ const disgon = (esDisgon) =>{
   dsgDiv.appendChild(dsgLabel)
   dsgDiv.appendChild(dsgButton)
   const destino = $('destino').value
-  if(esDisgon && destino == 'VIGO')
+  if(esDisgon && $('disgonBox') == null)
     document.getElementsByClassName('form-group')[0].childNodes[15].appendChild(dsgDiv)
-  else if($('disgonBox'))
+  else if(!esDisgon && $('disgonBox'))
     $('disgonDiv').remove()
 }
 
@@ -176,19 +176,20 @@ const showAssig = () =>{
         fragil = ul.childNodes[19].firstChild
         disgon = ul.childNodes[21].firstChild
         pvp = ul.childNodes[11].childNodes[1].textContent
-        tratado = ul.childNodes[23]
+        tratado = $(`agente${id}`)
         nfm = ul.childNodes[17].firstChild
-        btnSendMail = ul.childNodes[27]
+        btnSendMail = ul.childNodes[27] != undefined ? ul.childNodes[27].childNodes[0] : null
+        btnSendMailDisgon = ul.childNodes[27] != undefined ? ul.childNodes[27].childNodes[1] : null
         btnEliminar = ul.childNodes[25]
 
       if(disgon != null)
-        disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value, destino))
+        disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
       if($('cesiones').childNodes[i].localName == 'ul' && $('cesiones').childNodes[i].localName != undefined)
-        pedido.addEventListener('keyup', e => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent))
+        pedido.addEventListener('keyup', e => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
 
-      nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent))
-      fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent))
-      tratado.addEventListener('change', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,origen.textContent,destino.textContent)})
+      nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
+      fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
+      tratado.addEventListener('change', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent)})
       referencia.addEventListener('click', () => {clearRowsMark(ul,referencia.childNodes[0].textContent.replaceAll(' ',''))})
       comentario.addEventListener('click', () => {clearRowsMark(ul,comentario.textContent)})
       cliente.addEventListener('click', () => {
@@ -197,21 +198,31 @@ const showAssig = () =>{
         clearRowsMark(ul,`Cesión ${origen.textContent}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
       })
       refCliente.addEventListener('click', () => {clearRowsMark(ul,`Cliente: ${cliente.childNodes[0].textContent}`)})
-      origen.addEventListener('click', () => {
-        origen.classList.toggle('active-city-press')
-        updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.childNodes[1].value,destino.textContent)
-      })
-      destino.addEventListener('click', () => {
-        destino.classList.toggle('active-city-press')
-        updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
-      })
-      btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value))
-      btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ','')))
+      
+      if(user.puesto == 'ADV'){
+        origen.addEventListener('click', () => {
+          origen.classList.toggle('active-city-press')
+          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+        })
+        destino.addEventListener('click', () => {
+          destino.classList.toggle('active-city-press')
+          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+        })
+      }
+      if(btnSendMail != null){
+        btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, id))
+        btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id))
+      }
+      btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
     }
   })
 }
 
 const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, id, cantidad, nfm, tratado) =>{
+  if($(`disgon${id}`).innerHTML == "🚚"){
+    customAlert("Debes enviar primero el correo a Disgón")
+    return false
+  }
   const dataName = new FormData()
   const disgon = $(id).parentNode.childNodes[21].firstChild == null ? false : $(id).parentNode.childNodes[21].firstChild.checked
   dataName.append('id', id)
@@ -251,13 +262,12 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
         })
         .then(response => response.json())
         .then(res => {
-          console.log(res)
           let destinoFragil = ''
-          if($('frag').checked){
+          if(fragil){
             destinoFragil = res['fragil']
           }
           createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],disgon)
-          $(`send${id}`).parentNode.remove()
+          $(`send${id}`).parentNode.parentNode.remove()
           updateBubble('-')
         })
       })
@@ -317,7 +327,8 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
     body: data
   })
   const disgonLi = $(`${id}`).parentNode.childNodes[21]
-  if(fragil && destino == 'VIGO' && disgonLi.firstChild == undefined) {
+  const disgonSend = $(`${id}`).parentNode.childNodes[27] != undefined ? $(`${id}`).parentNode.childNodes[27].childNodes[1]: null
+  if(fragil && disgonLi.firstChild == undefined) {
     const chkDisgon = document.createElement('input')
     chkDisgon.setAttribute('type', 'checkbox')
     chkDisgon.addEventListener('change', () => {
@@ -325,8 +336,16 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
     })
     disgonLi.appendChild(chkDisgon)
   }
-  if(!fragil && disgonLi.firstChild != null)
-    disgonLi.firstChild.remove()
+  if(disgonSend != null){
+    if(fragil && disgonLi.childNodes[0].checked)
+      disgonSend.innerText = '🚚'
+    else if(fragil && !disgonLi.childNodes[0].checked)
+      disgonSend.innerText = ''
+    if(!fragil && disgonLi.firstChild != null){
+      disgonLi.firstChild.remove()
+      disgonSend.innerHTML = ''
+    }
+  }
 }
 
 const createMail = (cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,mailOrigen,mailDestino,bcc,disgon) =>{
@@ -355,17 +374,67 @@ const createMail = (cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil
     strNfm = `La entrada en Geode debe ser realizada como entrada 109. PIEZA SIN SOLUCIÓN DE REEMPLAZO.   `
 
   const fecha = new Date()
-  const mailSub = `CESION ${asuntoDisgon} ${origen} -> ${destino}`
+  const mailSub = `${asuntoDisgon} CESION ${origen} -> ${destino}`
   const mailSaludo = fecha.getHours() > 14 ? `${mailFragil}Buenas tardes: ` : `${mailFragil}Buenos días: `
   mailTarget = encodeURIComponent(`
 Va a llegar de la placa de ${origen} a ${destino} ${strCantidad} ${referencia} para la cuenta ${cliente}.
 ${strNfm}
 ${strDisgon}
 Saludos.`)
-  
+
   window.open(`mailto:${destinoFragil};${mailDestino};${mailOrigen}?subject=${mailSub}&cc=${bcc}&body=${mailSaludo + mailTarget}`)  
 }
-const eliminarLinea = (id,referencia) =>{
+
+const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
+  $(`disgon${id}`).innerHTML = "..."
+  const direcciones = {
+    MADRID: 'Carretera de Seseña a Esquivias, Km 0,8 - 45224 Seseña Nuevo (Toledo)',
+    VALENCIA: 'Carrer dels Bombers, 20 - 46980 PATERNA - VALENCIA',
+    VIGO: 'Avenida de Citroën, 3 y 5, Naves 05/09 Zona Franca de Vigo 36210 VIGO (PONTEVEDRA)',
+    BARCELONA: 'Calle D, nº 41 - Polig. Ind. Zona Franca - 08040 BARCELONA',
+    ZARAGOZA: 'C/ Río de Janeiro, 3 Polígono Industrial Centrovia 50198 - La Muela - ZARAGOZA',
+    GRANADA: 'Polígono Industrial Huerta Ardila - Ctra. A-92 Km 6 - 18320 SANTA FE - GRANADA',
+    SEVILLA: 'Parque Logístico de Carmona - MANZANA B, NAVE 1.Autovía A-4 Km. 521    41410 Carmona - Sevilla',
+    PALMA:'Avda. 16 de Julio, 5 - 07009 SON CASTELLO- PALMA DE MALLORCA'
+  }
+
+  const hora = new Date().getHours()
+  let saludo = `Buenos días`
+  if(hora > 14)
+    saludo = `Buenas tardes`
+
+  const datos = new FormData()
+  datos.append('search',referencia)
+  fetch('../api/getRefer.php',{
+    method: 'POST',
+    body: datos
+  })
+  .then(item => item.json())
+  .then(result => {
+    const descRef = result.denominacion
+    const dirOrigen = direcciones[origen]
+    const dirDestino = direcciones[destino]
+    const importe = Math.ceil(result.pvp * ((100 - result.dtoNum) / 100))
+    const asunto = "RECOGIDA PPCR - DISGON"
+    const mail = encodeURIComponent(`${saludo}:
+    Necesitamos recoger la referencia ${result.referencia} cantidad ${cantidad} ${descRef} en PPCR ${origen}
+    ${dirOrigen}
+    
+    Para enviarlo a PPCR ${destino}
+    ${dirDestino}
+  
+    ENVÍO ASEGURADO EN    ${importe}€
+    
+    
+    Saludos.`)
+    if(confirm(`¿Enviar Correo a Disgón?`)){
+      window.open(`mailto:pedidos@disgon.com; info@disgon.com; julio@disgon.com; carlosalberto.fernandez@stellantis.com?subject=${asunto}&body=${mail}`)
+      $(`disgon${id}`).innerHTML = ""
+    }
+  })
+}
+
+const eliminarLinea = (id,referencia,tratado) =>{
   const dataName = new FormData()
   dataName.append('id',id)
   fetch('../api/isSend.php',{
@@ -379,19 +448,34 @@ const eliminarLinea = (id,referencia) =>{
       showAssig()
       return true
     }
-    const confirmacion = confirm(`¿Quieres eliminar la referencia ${referencia}?`)
-    if(!confirmacion) 
-      return true
-    const data = new FormData()
-    data.append('id',id)
-    fetch('../api/deleteAssignADV.php', {
+    fetch('../api/isInProgress.php',{
       method: 'POST',
-      body: data
+      body: dataName
     })
-    .then(e => e.text())
-    .then(()=>{
-      $(id).parentNode.remove()
-      updateBubble('-')
+    .then(response => response.json())
+    .then(consulta =>{
+      const origenActivo = parseInt(consulta.emisor)
+      const destinoActivo = parseInt(consulta.receptor)
+      if(origenActivo || destinoActivo){
+        customAlert("Ya está en curso. Habla con ADv si quieres eliminar.")
+        showAssig()
+        return true
+      }
+      const confirmacion = confirm(`¿Quieres eliminar la referencia ${referencia}?`)
+      if(!confirmacion) 
+        return true
+      const data = new FormData()
+      data.append('id',id)
+      data.append('puesto',tratado)
+      fetch('../api/deleteAssignADV.php', {
+        method: 'POST',
+        body: data
+      })
+      .then(e => e.text())
+      .then(()=>{
+        $(id).parentNode.remove()
+        updateBubble('-')
+      })
     })
   })
 }
@@ -494,6 +578,8 @@ $$('form')[0].addEventListener('submit',(e)=>{
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
       updateBubble('+')
       e.target.reset()
+      if($('disgonBox'))
+        $('disgonDiv').remove()
     }
   })
 })
@@ -501,13 +587,16 @@ $$('form')[0].addEventListener('submit',(e)=>{
 showAssig()
 
 const id = window.location.search.split('?id=')[1]
+const btnAll = document.getElementById('all') ?? 0
+
+if(btnAll){
+  btnAll.addEventListener('click',()=>{
+    document.location = `./cesionesAll.php?id=${id}`
+  })
+}
 
 document.getElementById('new').addEventListener('click',()=>{
   document.location.reload()
-})
-
-document.getElementById('all').addEventListener('click',()=>{
-  document.location = `./cesionesAll.php?id=${id}`
 })
 
 document.getElementById('find').addEventListener('click',()=>{

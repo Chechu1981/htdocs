@@ -4,7 +4,12 @@ $contacts = new Contacts();
 
 $user = $contacts->getUserBySessid($_POST['session']);
 
-$rows = $contacts->getAssig($_POST['id'],$user[0][1],@$_POST['sort']);
+$usuario = $user[0][4];
+
+if($usuario == 'ADV')
+  $usuario = $user[0][1];
+
+$rows = $contacts->getAssig($_POST['id'],$usuario,@$_POST['sort']);
 
 function getCliente($cliente,$placa){
   $contacts = new Contacts();
@@ -43,9 +48,6 @@ if(@$_POST['sort'] == 'date')
     $imgDate = "<li>Envío<img alt='arrow' src='../../img/sort_desc.png' id='sortEnvio'/></li>";
 
 $agent = '';
-$agent_head = '';
-if($_POST['id'] != 'new')
-    $agent_head = "<li>Agente</li>";
 
 $lists = "<ul class='heading'>"
         .$imgOrigen.$imgDestino."
@@ -58,7 +60,7 @@ $lists = "<ul class='heading'>"
         <li>Comentario</li>".
         $imgDate."
         <li>Recibido</li>
-        ".$agent_head."
+        <li>Agente</li>
         </ul>"; 
 
 if(sizeof($rows) > 0){
@@ -92,7 +94,7 @@ if(sizeof($rows) > 0){
         <li title="Pedido: ">'.$row[7].'</li>
         <li title="Comentario: ">'.$row[11].'</li>
         <li title="Envío: ">'.$fechaD[2].'/'.$fechaD[1].'/'.$fechaD[0].' '.$fecha[1].'</li>
-        '.$li.$agent.'
+        '.$li.'<li title="'.$row[21].'">'.$row[10].'</li>
       </ul>';
     }
 }else{
