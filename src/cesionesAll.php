@@ -1,31 +1,7 @@
-<?php include('../helper/logon.php'); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <?php 
-  include_once('../helper/head.php'); 
-  $contacts = new Contacts();
-  $hash = $contacts->getUserBySessid($_GET['id'])[0][5];
-  $usuario = $contacts->getUserBySessid($_GET['id'])[0][1];
-  $nuevas = $contacts->getAssigCountNew($usuario)[0][0];
-  $allAdvAssigns = $contacts->getAssigCountNew('all')[0][0];
-  
-  if($nuevas > 0)
-    $nuevas = "<span class='round'>".$nuevas."</span>";
-  else
-    $nuevas = "";
-
-  if($allAdvAssigns > 0)
-    $allAdvAssigns = "<span class='round'>".$allAdvAssigns."</span>";
-  else
-    $allAdvAssigns = "";
-
-  $enCurso = $contacts->getAssigCount($usuario)[0][0];
-  if($enCurso > 0)
-    $enCurso = "<span class='round'>".$enCurso."</span>";
-  else
-    $enCurso = "";
-  ?>
+  <?php include('../helper/logon.php'); ?>
 </head>
 <body>
   <div id="menu">
@@ -33,15 +9,7 @@
   </div>
   <div class="search-table">
     <div id="contacts" class="contacts">
-      <h1>Cesiones - todas</h1>
-      <section class="subButtons">
-        <button id="new"><?php echo $nuevas; ?> Nuevas Cesiones</button>
-        <button id="all" class="active"><?php echo $allAdvAssigns; ?> Todas</button>
-        <button id="find">Buscar</button>
-        <button id="ready"><?php echo $enCurso; ?> En curso</button>
-        <button id="finish">Hechas</button>
-        <button id="status">Estadística</button>
-      </section>
+      <?php include_once '../helper/menuCesiones.php'; ?>
     </div>
     <section class="assig-cpy" id="newTitle">Nueva cesión</section>
     <div id="contacts-items">

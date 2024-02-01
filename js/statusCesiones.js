@@ -48,6 +48,7 @@ window.addEventListener('load',()=>{
   .then((e) => e.json())
   .then((res) => {
     const input = document.createElement('select')
+    input.name = "Users"
     input.style = "width: 150px;border: 2px solid var(--main-font-color);border-radius: 8px;font-size: 2em; text-transform: uppercase;height: fit-content;"
     input.addEventListener("change",(e)=>{
       if(window.graph){

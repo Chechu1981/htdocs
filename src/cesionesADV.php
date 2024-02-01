@@ -1,7 +1,7 @@
-<?php include('./../helper/logon.php'); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <?php include('./../helper/logon.php'); ?>
 </head>
 <body>
   <div id="menu">
@@ -46,6 +46,7 @@
                 <input type="text" name="cliente" id="client">
                 <div id="clientName" class="clientNameAssign"></div>
               </section>
+              
               <section>
                 <label for="pedido">Pedido</label>
                 <input type="text" name="pedido" id="pedido"></input>

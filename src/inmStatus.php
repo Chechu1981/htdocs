@@ -1,4 +1,4 @@
-<?php include('./../helper/logon.php'); 
+<?php 
 $botones = array(
   'TODOS',
   'BALEARES',
@@ -13,7 +13,7 @@ $botones = array(
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <?php include_once('../helper/head.php'); ?>
+  <?php include('./../helper/logon.php'); ?>
 </head>
 <body>
   <div id="menu">
