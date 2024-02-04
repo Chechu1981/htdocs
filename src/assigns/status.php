@@ -9,6 +9,7 @@
   </div>
   <div class="search-table">
     <div id="contacts" class="contacts">
+      <h1>Cesiones - Estadística</h1>
       <?php include_once '../../helper/menuCesiones.php'; ?>
     </div>
     <div id="cesiones"></div>

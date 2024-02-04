@@ -9,6 +9,7 @@
   </div>
   <div class="search-table">
     <div id="contacts" class="contacts">
+    <h1>Cesiones - Buscar</h1>
       <?php include_once '../../helper/menuCesiones.php'; ?>
     </div>
     <div id="search-line" class="nPass search-line search-focused">
@@ -19,7 +20,7 @@
         </span>
         <div class="textbox" id="search-box">
           <form id="search-ref">
-            <input type="search" id="refAssig" placeholder="Buscar referencia" style="margin-top: 9px;">
+            <input type="search" id="refAssig" placeholder="Buscar referencia">
           </form>
         </div>
       </div>

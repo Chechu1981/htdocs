@@ -81,11 +81,33 @@ $('frag').addEventListener('change', e =>{
 
 const buscarCliente = (placa,cliente) => {
   const data = new FormData()
+  const section = $('envio').parentNode
   data.append('search',cliente != '' ? cliente : null)
   data.append('placa', placa.toUpperCase())
   fetch('../api/getClientName.php',{method: 'POST', body:data})
-  .then(respose => respose.text())
-  .then((res) => $('clientName').innerHTML = res)
+  .then(respose => respose.json())
+  .then((res) => {
+    if(res[0].cliente == undefined){
+      $('clientName').innerHTML = 'desconocido'
+      $('envio').remove()
+      const inputEnvio = document.createElement('input')
+      inputEnvio.setAttribute('id','envio')
+      section.appendChild(inputEnvio)
+    }else{
+      $('clientName').innerHTML = res[0].cliente
+      const selected = document.createElement('select')
+      selected.setAttribute('id', 'envio')
+      selected.appendChild(document.createElement('option'))
+      res.map(element => {
+        const option = document.createElement('option')
+        option.value = element.envio
+        option.text = `${element.envio}: ${element.denvio}(${element.poblacion})`
+        selected.appendChild(option)
+      });
+      $('envio').remove()
+      section.appendChild(selected)
+    }
+  })
 }
 
 $('client').addEventListener('blur',(e)=>{
@@ -211,7 +233,8 @@ const showAssig = () =>{
       }
       if(btnSendMail != null){
         btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, id))
-        btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id))
+        if(btnSendMailDisgon != null)
+          btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id))
       }
       btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
     }
@@ -336,7 +359,7 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
     })
     disgonLi.appendChild(chkDisgon)
   }
-  if(disgonSend != null){
+  if(disgonSend != null && user.puesto == 'ADV'){
     if(fragil && disgonLi.childNodes[0].checked)
       disgonSend.innerText = '🚚'
     else if(fragil && !disgonLi.childNodes[0].checked)
@@ -386,7 +409,7 @@ Saludos.`)
 }
 
 const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
-  $(`disgon${id}`).innerHTML = "..."
+  $(`disgon${id}`).innerHTML = "✅"
   const direcciones = {
     MADRID: 'Carretera de Seseña a Esquivias, Km 0,8 - 45224 Seseña Nuevo (Toledo)',
     VALENCIA: 'Carrer dels Bombers, 20 - 46980 PATERNA - VALENCIA',
@@ -457,7 +480,7 @@ const eliminarLinea = (id,referencia,tratado) =>{
       const origenActivo = parseInt(consulta.emisor)
       const destinoActivo = parseInt(consulta.receptor)
       if(origenActivo || destinoActivo){
-        customAlert("Ya está en curso. Habla con ADv si quieres eliminar.")
+        customAlert("Ya está en curso. Habla con ADV si quieres eliminar.")
         showAssig()
         return true
       }
@@ -508,6 +531,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   e.preventDefault()
   const origen = $('origen').value
   const destino = $('destino').value
+  const envio = $('envio').value
   const cliente = $('client').value
   const pedido = $('pedido').value
   const ref = $('ref').value
@@ -522,6 +546,12 @@ $$('form')[0].addEventListener('submit',(e)=>{
     customAlert('Debes rellenar el cliente')
     document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
     $('client').focus()
+    return false
+  }
+  if(envio === ''){
+    customAlert('La dirección de envio no puede estar vacía')
+    document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
+    $('envio').focus()
     return false
   }
   else if(ref === ''){
@@ -550,7 +580,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   const data = new FormData() 
   data.append('origen',origen)
   data.append('destino',destino)
-  data.append('cliente',cliente)
+  data.append('cliente',`${cliente}-${envio}`)
   data.append('refClient','')
   data.append('comentario',$('coment').value)
   data.append('ref',ref)
@@ -578,6 +608,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
       updateBubble('+')
       e.target.reset()
+      $('destino').value = user.puesto
       if($('disgonBox'))
         $('disgonDiv').remove()
     }

@@ -1,8 +1,7 @@
-<?php include('./../helper/logon.php'); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <?php include_once('../helper/head.php'); ?>
+    <?php include('./../helper/logon.php'); ?>
 </head>
 <body>
     <div id="menu">
@@ -28,8 +27,3 @@
     <?php include('../helper/footer.php'); ?>
 </body>
 </html>
-<script>
-  document.getElementById('downloads').addEventListener('click',()=>{
-    window.open("../api/getIpClient.php","Clientes que descargan el fichero de pendientes","menubar=no, scrollbars=no, width=1000, height=900")
-  })
-</script>

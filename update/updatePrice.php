@@ -1,8 +1,7 @@
-<?php include('./../helper/logon.php'); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <?php include_once('../helper/head.php'); ?>
+    <?php include('./../helper/logon.php'); ?>
 </head>
 <body>
     <div id="menu">
@@ -20,6 +19,7 @@
                 <input type="file" name="pending" id="pending" style="display:none">
                 <input type="submit" value="Actualizar" style="font-size: xx-large;margin:10px">
             </form>
+            <div></div>
         </div>
     </div>
     <?php include('../helper/footer.php'); ?>

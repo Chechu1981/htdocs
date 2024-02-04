@@ -9,6 +9,7 @@
   </div>
   <div class="search-table">
     <div id="contacts" class="contacts">
+    <h1>Cesiones</h1>
       <?php include_once '../helper/menuCesiones.php'; ?>
     </div>
     <section class="assig-cpy" id="newTitle">Nueva cesión</section>
@@ -46,7 +47,10 @@
                 <input type="text" name="cliente" id="client">
                 <div id="clientName" class="clientNameAssign"></div>
               </section>
-              
+              <section>
+                <label for="pedido">*Envío</label>
+                <input type="text" name="envio" id="envio"></input>
+              </section>
               <section>
                 <label for="pedido">Pedido</label>
                 <input type="text" name="pedido" id="pedido"></input>

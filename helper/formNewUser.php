@@ -1,13 +1,13 @@
-<?php 
-include('./../helper/logon.php');
-include_once '../connection/data.php';
-$contacts = new Contacts();
-//$rows = $contacts->newUser();
-?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <?php include_once('../helper/head.php'); ?>
+  <?php 
+  include('./../helper/logon.php');
+  include_once '../connection/data.php';
+  $contacts = new Contacts();
+  //$rows = $contacts->newUser();
+  ?>
 </head>
 <body>
   <div id="menu">
@@ -19,9 +19,11 @@ $contacts = new Contacts();
     </div>
     <div class="note-body">
         <form action="" method="post" title="update">
-            <label>NOMBRE DE USUARIO</label>
-                <input type="username" id="nombre" placeholder="Nombre" value="">
-            <label>PUESTO</label>
+            <label for="nombre">NOMBRE DE USUARIO</label>
+              <input type="username" id="nombre" placeholder="Nombre de usuario" value="">
+            <label for="email">CORREO ELECTRÓNICO</label>
+              <input type="email" id="email" placeholder="Correo electrónico" value="" autocomplete="off">
+            <label for="puesto">PUESTO</label>
                 <select name="puesto" id="puesto">
                     <option value="ADV">ADV</option>
                     <option value="MADRID">MADRID</option>
@@ -35,11 +37,11 @@ $contacts = new Contacts();
                     <option value="DESBORDE">DESBORDE</option>
                     <option value="PLATAFORMAS">PLATAFORMAS</option>
                 </select>
-            <label>CONTRASEÑA</label>
-                <input type="password" id="pass1" placeholder="Contraseña" value="" autocomplete="">
-            <label>REPETIR CONTRASEÑA</label>
-                <input type="password" id="pass2" placeholder="Repetir contraseña" value="" autocomplete="">
-            <label></label><input type="submit" value="Crear">
+            <label for="pass1">CONTRASEÑA</label>
+              <input type="password" id="pass1" placeholder="Contraseña" value="" autocomplete="off">
+            <label for="pass2">REPETIR CONTRASEÑA</label>
+              <input type="password" id="pass2" placeholder="Repetir contraseña" value="" autocomplete="off">
+            <label for="btnform"></label><input type="submit" value="Crear" id="btnform">
         </form>
     </div>
   </div>

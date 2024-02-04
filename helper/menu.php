@@ -8,8 +8,13 @@ strpos($uri,'assigns') > 0 ? $src = "../.." : '';
 include_once $src . '/connection/data.php';
 $contacts = new Contacts();
 $rows = $contacts->getUserBySessid($_GET['id']);
-$allAssigns = $contacts->getAssigCountNew($rows[0][5])[0][0];
+$puesto = $rows[0][4];
+$usuario = $rows[0][1];
 $id = $_GET['id'];
+$menuTodas = '';
+if($puesto == 'ADV')
+    $menuTodas = '<li><a href="'.$src.'/src/cesionesAll.php?id='.$id.'">Todas</a></li>';
+$allAssigns = $contacts->getAssigCountNew($usuario, $puesto,'all')[0][0];
 ?>
 <picture class="head-img">
     <section>Agenda</section>
@@ -22,7 +27,7 @@ $id = $_GET['id'];
         <li style="width: 44px;" id="cesionesActivas">
             <a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>" title="<?php echo $allAssigns; ?>">Cesiones</a></a>
             <ul>
-                <li><a href="<?php echo $src.'/src/cesionesAll.php?id='.$id ?>">Todas</a></li>
+                <?php echo $menuTodas; ?>
                 <li><a href="<?php echo $src.'/src/assigns/buscar.php?id='.$id ?>">Buscar</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/ready.php?id='.$id ?>">En curso</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/finish.php?id='.$id ?>">Finalizadas</a></li>

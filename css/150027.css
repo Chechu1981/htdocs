@@ -31,9 +31,9 @@
     .form-group select, .form-group input, .form-group textarea {
         display: block;
         margin-top: 25px;
-        width: 89px;
+        width: 84px;
         text-align: center;
-        font-size: medium;
+        font-size: small;
         border-radius: 8px;
         border: 2px solid var(--main-font-color);
         color: var(--main-font-color);
@@ -41,6 +41,10 @@
 
     .form-group label {
         font-size: medium;
+    }
+
+    .form-group section #envio{
+        width: 30px;
     }
 
     .arrow-right {
@@ -86,7 +90,7 @@
 
     #contacts{
         top: 48px;
-        grid-template-columns: 18% 68% 6%;
+        grid-template-columns: 21% 65% 14%;
     }
 
     .heading{
@@ -102,7 +106,7 @@
     }
 
     #cesiones .assignPendingAdv{
-      grid-template-columns: 1% 13% 12% 11% 14% 6% 8% 4% 4% 4% 9% 6% 3% 5%;
+      grid-template-columns: 1% 13% 12% 15% 17% 6% 8% 4% 4% 5% 7% 6% 1%;
       padding-inline-start: 0;
     }
 

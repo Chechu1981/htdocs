@@ -306,7 +306,9 @@ const newAssigns = setInterval(() => {
   if(user.puesto != "ADV")
     return null
   const data = new FormData()
-  data.append('usuario','all')
+  data.append('usuario',user.nombre)
+  data.append('puesto',user.puesto)
+  data.append('status','all')
   fetch(ruta[window.location.pathname.split('/').length] + "./api/getCountAssigns.php",{
     method: 'POST',
     body: data

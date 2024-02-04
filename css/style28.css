@@ -7,7 +7,7 @@
 }
 
 html *{
-    scrollbar-width: none;
+    scrollbar-width: thin;
 }
 
 body{
@@ -735,20 +735,6 @@ input[type="color"]::-webkit-color-swatch {
   color: rgb(126, 126, 9) !important;
 }
 
-.form-group section{
-    display: grid;
-    grid-gap: 0 4%;
-    justify-content: center;
-    justify-items: center;
-}
-
-.form-group section #clientName,
-.form-group section #descRef{
-    margin-top: 81px;
-    font-size: small;
-    width: 150px;
-}
-
 #contacts-items a{
     color: var(--main-font-color);
 }
@@ -814,7 +800,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #cesiones .assignPendingAdv{
-  grid-template-columns: 1% 9% 8% 15% 14% 7% 6% 4% 3% 3% 10% 5% 2% 8%;
+  grid-template-columns: 1% 9% 8% 15% 14% 7% 6% 4% 3% 3% 10% 5% 2% 8% 1%;
 }
 
 #cesiones .tableLegend{
@@ -1357,9 +1343,27 @@ input[type="color"]::-webkit-color-swatch {
 .form-group{
     text-align: center;
     display: grid;
-    grid-template-columns: 24% 12% 13% 13% 11% 10% 6% 7% 11%;
+    grid-template-columns: 19% 9% 5% 10% 11% 12% 10% 6% 7% 11%;
     justify-content: space-around;
     align-items: flex-start;
+}
+
+.form-group section{
+    display: grid;
+    grid-gap: 0 4%;
+    justify-content: center;
+    justify-items: center;
+}
+
+.form-group section #clientName,
+.form-group section #descRef{
+    margin-top: 81px;
+    font-size: small;
+    width: 150px;
+}
+
+.form-group section #envio{
+    width: 54px;
 }
 
 #cesiones ul>li input[type="checkbox"],
