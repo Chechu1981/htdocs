@@ -42,6 +42,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getMailByUsername($userName){
+        $sql = "SELECT DISTINCT `mail` FROM `usuarios` WHERE `nombre` = '$userName'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function getAllUsers(){
         $sql = "SELECT DISTINCT * FROM `usuarios` ORDER BY `nombre` ASC";
         $query = $this->db->prepare($sql);
@@ -49,16 +56,14 @@ class Contacts
         return $query->fetchAll();
     }
 
-    public function addNewUser($user,$pass,$puesto){
-        $sql = "INSERT INTO `usuarios` (`nombre`, `clave`, `puesto`,`theme`) VALUES ('$user', '$pass', '$puesto','blue')";
+    public function addNewUser($user,$pass,$puesto,$email){
+        $sql = "INSERT INTO `usuarios` (`nombre`, `clave`, `puesto`,`theme`,`mail`) VALUES ('$user', '$pass', '$puesto','blue','$email')";
         $query = $this->db->prepare($sql);
         $query->execute();
-        echo $sql;
     }
 
     public function updateColorTheme($user){
         $sql = "UPDATE `usuarios` SET `theme` = '$user' WHERE `nombre` = '$user'";
-        echo $sql;
         $query = $this->db->prepare($sql);
         $query->execute();
     }
@@ -286,9 +291,45 @@ class Contacts
            $fragil = 1;
         }
         $sql = "INSERT INTO `cesiones`
-            (`origen`, `destino`, `cliente`, `refClient`, `comentario`, `ref`, `pvp`, `cantidad`, `fragil`, `usuario`, `pedido`, `recibido`, `envio`, `nfm`, `disgon`, `designacion`, `nombreCliente`, `tratado`, `puesto`) 
+            (`origen`, 
+            `destino`, 
+            `cliente`, 
+            `refClient`, 
+            `comentario`, 
+            `ref`, 
+            `pvp`, 
+            `cantidad`, 
+            `fragil`, 
+            `usuario`, 
+            `pedido`, 
+            `recibido`, 
+            `envio`, 
+            `nfm`, 
+            `disgon`, 
+            `designacion`, 
+            `nombreCliente`, 
+            `tratado`, 
+            `puesto`) 
             VALUES
-            ('$items[0]','$items[1]','$items[2]','$items[3]','$items[4]','$items[5]','$items[6]', '$items[7]' , $items[8], '$items[10]', '$items[11]', '0000-00-00', '0000-00-00 00:00:00', $items[9], $items[12], '$items[13]', '$items[14]', '$items[15]', '$items[16]')";
+            ('$items[0]',
+            '$items[1]',
+            '$items[2]',
+            '$items[3]',
+            '$items[4]',
+            '$items[5]',
+            '$items[6]', 
+            '$items[7]' , 
+            $items[8], 
+            '$items[10]', 
+            '$items[11]', 
+            '0000-00-00', 
+            '0000-00-00 00:00:00', 
+            $items[9], 
+            $items[12], 
+            '$items[13]', 
+            '$items[14]', 
+            '$items[15]', 
+            '$items[16]')";
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';
@@ -317,12 +358,12 @@ class Contacts
         `cliente` LIKE '%$all%'OR
         `comentario` LIKE '%$all%'OR
         `pedido` LIKE '%$all%' AND
-        (`usuario` = '$usr' OR `tratado` = '$usr')";
+        (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";
 
         if($all == 'all')
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         elseif($all == 'new')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";            
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";            
         $sql .= $order;
         $query = $this->db->prepare($sql);
         $query->execute();
@@ -330,16 +371,22 @@ class Contacts
     }
 
     public function getAssigCount($usr){
-      $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `usuario` = '$usr'";
+      $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` NOT LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `puesto` = '$usr')";
       $query = $this->db->prepare($sql);
       $query->execute();
       return $query->fetchAll();
     }
 
-    public function getAssigCountNew($usr){
-        $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
-        if($usr == 'all')
-            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00'";        
+    public function getAssigCountNew($usr,$puesto,$state){
+        $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND `usuario` = '$usr'";
+        if($puesto == 'ADV')
+            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
+        if($state == 'ready')
+            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `puesto` = '$puesto')";
+        if($state == 'all')
+            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00'";
+        if($state == 'ready' AND $puesto == 'ADV')
+            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -353,13 +400,13 @@ class Contacts
         `cliente` LIKE '%$all%'OR
         `comentario` LIKE '%$all%' AND
         `pedido` = '' AND
-        (`usuario` = '$usr' OR `usuario` LIKE '' OR `tratado` = '$usr')
+        (`usuario` = '$usr' OR `tratado` = '$usr')
         ORDER BY `destino`, `origen` DESC 
         LIMIT 100";
         if ($all == 'all')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND (`usuario` = '$usr' OR `usuario` LIKE '' OR `tratado` = '$usr') ORDER BY `origen`, `destino` DESC ";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND (`usuario` = '$usr' OR `tratado` = '$usr') ORDER BY `origen`, `destino` DESC ";
         elseif ($all == 'new' AND $usr != 'all')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND (`usuario` = '$usr' OR `usuario` LIKE '' OR `tratado` = '$usr') ORDER BY `origen`, `destino` DESC ";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND (`usuario` = '$usr' OR `tratado` = '$usr') ORDER BY `origen`, `destino` DESC ";
         elseif ($all == 'new' AND $usr = 'all')
             $sql = "SELECT * FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' ORDER BY `origen`, `destino` DESC ";
         $query = $this->db->prepare($sql);
@@ -433,6 +480,18 @@ class Contacts
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';
+    }
+
+    public function enviarDisgon($id){
+        $sql = "UPDATE `cesiones` SET `envioDisgon` = true WHERE `id` LIKE '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
+
+    public function updateRechazo($id,$switch,$texto){
+        $sql = "UPDATE `cesiones` SET `rechazado` = $switch, `motivo` = '$texto' WHERE `id` LIKE '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
     }
 
     public function is_send($id){
@@ -1090,7 +1149,7 @@ class Contacts
   }
 
   public function getClientNameByPlate($cuenta,$placa){
-      $sql = "SELECT * FROM `clientes` WHERE `placa` = '$placa' AND `cuenta` = '$cuenta'";
+      $sql = "SELECT * FROM `clientes` WHERE `placa` = '$placa' AND `cuenta` = '$cuenta' ORDER BY LPAD(`envio`,2,'0') ASC";
       $query = $this->db->prepare($sql);
       $query->execute();
       return $query->fetchAll();

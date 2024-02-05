@@ -4,12 +4,12 @@ $contacts = new Contacts();
 
 $user = $contacts->getUserBySessid($_POST['session']);
 
-$usuario = $user[0][4];
+$puesto = $user[0][4];
 
-if($usuario == 'ADV')
-  $usuario = $user[0][1];
+if($puesto == 'ADV')
+  $puesto = $user[0][1];
 
-$rows = $contacts->getAssig($_POST['id'],$usuario,@$_POST['sort']);
+$rows = $contacts->getAssig($_POST['id'],$puesto,@$_POST['sort']);
 
 function getCliente($cliente,$placa){
   $contacts = new Contacts();

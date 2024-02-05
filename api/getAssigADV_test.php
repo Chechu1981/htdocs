@@ -96,10 +96,12 @@ if(sizeof($rows) > 0){
     $btnOrigenPress = '';
     $envioDisgon = '';
     $btnEnviar = '';
+    $rechazado = '';
+    $rechazadoStyle = '';
     $options = createOptons($agente);
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
     if($puesto == 'ADV'){
-      $btnEnviar = '<li class="send" ><span title="Enviar Cesión" id="send'.$row[0].'">📩</span><span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>';
+      $btnEnviar = '<span title="Enviar Cesión" id="send'.$row[0].'">📩</span>';
     }
     if(($_POST['id']) != 'new')
       $li = '<li title="Envío: ">'.$fechaR[2].'/'.$fechaR[1].'/'.$fechaR[0].'</li>';
@@ -107,10 +109,17 @@ if(sizeof($rows) > 0){
       $fragChecked = 'checked="checked"';
     if($row[13] == 1){
       $disgon = '<input type="checkbox" ></input>';
-      if($row[18] == 1){
+      if($row[18] == 1)
         $disgon = '<input type="checkbox" checked="checked"></input>';
-        $envioDisgon = "🚚";
+      if($row[18] == 1 && $puesto == 'ADV'){
+        $envioDisgon = '🚚';
+        if($row[22] == 1)
+          $envioDisgon = "✅";
       }
+    }
+    if($row[23] == 1){
+      $rechazado = "🚫";
+      $rechazadoStyle = 'background-color:red';
     }
     if($row[15]== 1)
       $btnOrigenPress = 'active-city-press';
@@ -124,7 +133,7 @@ if(sizeof($rows) > 0){
       $important = 'important';
     }
     $lists .= '
-    <ul class="assignPendingAdv" title="'.$contador++.'">
+    <ul class="assignPendingAdv" title="'.$contador++.'" style="'.$rechazadoStyle.'">
       <li title="Copiar: Origen > Destino" class="">
         <span class="active-city '.$btnOrigenPress.'">'.$row[1].'</span><span class="active-city '.$btnDestinoPress.'">'.$row[2].'</span>
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$codgClient[$row[1].$row[2].$nfm].'</span>
@@ -143,9 +152,9 @@ if(sizeof($rows) > 0){
         <select name="agente" id="agente'.$row[0].'">
         '.$options.'
         </select>
-      </li>
-      <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
-      '.$btnEnviar.'
+        </li>
+        <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"><span title="'.$row[24].'">'.$rechazado.'</span></li>
+        <li class="send" >'.$btnEnviar.'<span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
     </ul>';
   }
 }

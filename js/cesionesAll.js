@@ -41,17 +41,20 @@ const cesiones = (origen, destino,nfm) =>{
   .then(response => {
     const numDest = response[cesion]
     let alerta = ""
+    const date = new Date()
     if(numDest == "6254-1" || numDest == "78713-1"){
       $('pclient').classList.add('important')
       alerta = "Preguntar"
     }else if(origen == 'PALMA'){
       $('pclient').classList.add('important')
       alerta = "Portes"
-    }  
-    /*else if(origen == "VIGO"){
+    }else if(destino == "VIGO" && date.getDate() >= 7){
       $('pclient').classList.add('important')
-      alerta = "Preguntar"
-    }*/else{
+      alerta = "Denegado"
+    }else if(origen == "VIGO" && date.getDate() >= 9){
+      $('pclient').classList.add('important')
+      alerta = "Denegado"
+    }else{
       $('pclient').classList.remove('important')
       alerta = ""
     }
@@ -222,7 +225,7 @@ const enabledForm = () =>{
     formInputs[i].disabled = false
   for(let i = 0; i < formSelects.length; i++)
     formSelects[i].disabled = false
-}
+} 
 
 const showAssig = () =>{
   const data = new FormData()
@@ -250,7 +253,7 @@ const showAssig = () =>{
       $('cesiones').style = ''
       $('cesiones').innerHTML = response
       for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
-        let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar, puesto, btnSendMailDisgon, rechazo, email = ''
+        let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar, puesto, btnSendMailDisgon, rechazo, usuario = ''
         ul = $('cesiones').childNodes[i]
         id = ul.childNodes[25].id
         origen = ul.childNodes[1].childNodes[1]
@@ -270,7 +273,7 @@ const showAssig = () =>{
         btnEliminar = ul.childNodes[25]
         btnSendMailDisgon = $(`disgon${id}`)
         rechazo = $(`rechazo${id}`)
-        email = user.mail
+        usuario = ul.childNodes[29].childNodes[0].data
         puesto = ul.childNodes[29].childNodes[2].nodeValue.replaceAll('(','').replaceAll(')','')
         if(disgon != null)
           disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
@@ -282,24 +285,48 @@ const showAssig = () =>{
           tratado.addEventListener('focus', ()=>{stopUpdates()})
           tratado.addEventListener('blur', () => iniciar())
         }
-        rechazo.addEventListener('click', () =>{
+        rechazo.addEventListener('click', ()=>{
           const data = new FormData()
           data.append('id',id)
           data.append('switch',true)
-          fetch('../api/updateRechazo.php',{
+          data.append('usuario',usuario)
+          fetch('../helper/formRechazo.php',{
             method: 'POST',
             body: data
           })
-          const rechazar = confirm(`Rechazar la cesión de ${origen.textContent} -> ${destino.textContent}`)
-          if(rechazar){
-            const fecha = new Date()
-            const mailSaludo = fecha.getHours() > 14 ? `Buenas tardes: ` : `Buenos días: `
-            const mailTarget = encodeURIComponent(`
-            Se rechaza la cesión por 
-            
-            Un saludo ${user.nombre}`)
-            window.open(`mailto:${email}?subject=Cesión de la ${referencia.childNodes[0].textContent.replaceAll(' ','')} rechazada&body=${mailSaludo + mailTarget}`)
-          }
+          .then((inp) => inp.text())
+          .then(items => {
+            modal(items,`Rechazar la cesión de ${origen.textContent} -> ${destino.textContent}`)
+            const texto = document.getElementById("texto")
+            const enviar = document.getElementById("enviar")
+            const cancelar = document.getElementById("cancelar")
+            cancelar.addEventListener("click", () => {
+              $('close').click()
+            })
+            enviar.addEventListener("click", () => {
+              data.append('texto',`(${user.nombre}) ${texto.value}`)
+              const fecha = new Date()
+              const mailSaludo = fecha.getHours() > 14 ? `Buenas tardes: ` : `Buenos días: `
+              const mailTarget = encodeURIComponent(`
+              ${texto.value}
+              
+              
+              Un saludo ${user.nombre}`)
+              fetch('../api/getEmailByUsername.php',{
+                method: 'POST',
+                body: data
+              })
+              .then(usrAll => usrAll.json())
+              .then(usrSend => {
+                window.open(`mailto:${usrSend.mail}?subject=Cesión de la ${referencia.childNodes[0].textContent.replaceAll(' ','')} rechazada&body=${mailSaludo + mailTarget}`)
+              })
+              fetch('../api/updateRechazo.php',{
+                method: 'POST',
+                body: data
+              })
+              $('close').click()
+            })
+          })
         })
         nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
         fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
@@ -325,9 +352,8 @@ const showAssig = () =>{
             btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id))
         }
         btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
-      }
-      if(lineaMarcada > 0){
-        markLines($('cesiones').getElementsByTagName('ul')[lineaMarcada])
+        if(lineaMarcada > 0)
+          markLines($('cesiones').getElementsByTagName('ul')[lineaMarcada])
       }
     }
   })
@@ -493,7 +519,7 @@ const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
     method: 'POST',
     body: data
   })
-  $(`disgon${id}`).innerHTML = "✅"
+  $(`disgon${id}`).className = "wait"
   const direcciones = {
     MADRID: 'Carretera de Seseña a Esquivias, Km 0,8 - 45224 Seseña Nuevo (Toledo)',
     VALENCIA: 'Carrer dels Bombers, 20 - 46980 PATERNA - VALENCIA',
@@ -518,6 +544,8 @@ const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
   })
   .then(item => item.json())
   .then(result => {
+    $(`disgon${id}`).className = ""
+    $(`disgon${id}`).innerHTML = "✅"
     const descRef = result.denominacion
     const dirOrigen = direcciones[origen]
     const dirDestino = direcciones[destino]

@@ -71,6 +71,7 @@ if(sizeof($rows) > 0){
             ".$agent_head."
             <li>usuario</li>
             <li></li>
+            <li></li>
           </ul>"; 
   $contador = 1;
   foreach ($rows as $row) {
@@ -93,6 +94,7 @@ if(sizeof($rows) > 0){
     $envioDisgon = '';
     $btnDestinoPress = '';
     $btnOrigenPress = '';
+    $rechazado = '❌';
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
     if(($_POST['id']) != 'new')
       $li = '<li title="Envío: ">'.$fechaR[2].'/'.$fechaR[1].'/'.$fechaR[0].'</li>';
@@ -103,7 +105,13 @@ if(sizeof($rows) > 0){
       if($row[18] == 1){
         $disgon = '<input type="checkbox" checked="checked"></input>';
         $envioDisgon = "🚚";
+        if($row[22] == 1){
+          $envioDisgon = "✅";
+        }
       }
+    }
+    if($row[23] == 1){
+      $rechazado = "🚫";
     }
     if($row[15]== 1)
       $btnOrigenPress = 'active-city-press';
@@ -140,9 +148,10 @@ if(sizeof($rows) > 0){
         '.$opctions.'
         </select>
       </li>
-      <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
+      <li title="Eliminar: '.$row[4].'" class="send" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
       <li class="send" ><span title="Enviar Cesión" id="send'.$row[0].'">📩</span><span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
       <li>'.$usuario.'<br>('.$puesto.')</li>
+      <li class="send"><span id="rechazo'.$row[0].'" title="'.$row[24].'">'.$rechazado.'</span></li>
     </ul>';
   }
 }

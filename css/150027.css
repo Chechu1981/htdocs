@@ -90,7 +90,7 @@
 
     #contacts{
         top: 48px;
-        grid-template-columns: 21% 65% 14%;
+        grid-template-columns: 21% 67% 11%;
     }
 
     .heading{
@@ -106,7 +106,7 @@
     }
 
     #cesiones .assignPendingAdv{
-      grid-template-columns: 1% 13% 12% 15% 17% 6% 8% 4% 4% 5% 7% 6% 1%;
+      grid-template-columns: 1% 13% 12% 10% 14% 4% 8% 4% 4% 4% 9% 4% 3% 8% 1%;
       padding-inline-start: 0;
     }
 

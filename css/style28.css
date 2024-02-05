@@ -1239,6 +1239,15 @@ input[type="color"]::-webkit-color-swatch {
     100%{ transform: translateY(-500px);}
 } 
 
+.wait{
+    animation: rotation360 .3s linear infinite;
+}
+
+@keyframes rotation360{
+    0%{ transform: rotate(0deg);}
+    100%{ transform: rotate(360deg);}
+}
+
 /*tyres styles*/
 
 #tyres-items{

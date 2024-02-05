@@ -8,17 +8,20 @@ const cesiones = (origen, destino,nfm) =>{
   .then(response => {
     const numDest = response[cesion]
     let alerta = ""
+    const date = new Date()
     if(numDest == "6254-1" || numDest == "78713-1"){
       $('pclient').classList.add('important')
       alerta = "Preguntar"
     }else if(origen == 'PALMA'){
       $('pclient').classList.add('important')
       alerta = "Portes"
-    }  
-    /*else if(origen == "VIGO"){
+    }else if(destino == "VIGO" && date.getDate() >= 6){
       $('pclient').classList.add('important')
-      alerta = "Preguntar"
-    }*/else{
+      alerta = "Denegado"
+    }else if(origen == "VIGO" && date.getDate() >= 9){
+      $('pclient').classList.add('important')
+      alerta = "Denegado"
+    }else{
       $('pclient').classList.remove('important')
       alerta = ""
     }
@@ -409,7 +412,7 @@ Saludos.`)
 }
 
 const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
-  $(`disgon${id}`).innerHTML = "✅"
+  $(`disgon${id}`).className = "wait"
   const direcciones = {
     MADRID: 'Carretera de Seseña a Esquivias, Km 0,8 - 45224 Seseña Nuevo (Toledo)',
     VALENCIA: 'Carrer dels Bombers, 20 - 46980 PATERNA - VALENCIA',
@@ -434,6 +437,8 @@ const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
   })
   .then(item => item.json())
   .then(result => {
+    $(`disgon${id}`).innerHTML = "✅"
+    $(`disgon${id}`).className = ""
     const descRef = result.denominacion
     const dirOrigen = direcciones[origen]
     const dirDestino = direcciones[destino]

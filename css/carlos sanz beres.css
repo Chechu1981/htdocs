@@ -1,0 +1,10 @@
+:root{
+  --main-font-color: hsl(220.125, 78.43137254901961%, 40%);
+  --second-bg-color: hsl(220.125, 48.43137254902%, 65%);
+  --search-line: hsla(220.125, 64.43137254902%,75%, 1);
+  --cards-border-color: hsl(220.125, 98.43137254902%, 90%);
+  --cards-active-color: hsl(220.125, 101.43137254902%, 67%);
+  --bg-body-color: hsl(220.125, 21.43137254902%, 107%);
+  --bg-font-color: hsl(220.125, 79.43137254902%, 18%);
+  --invert-img-filter: invert(0);
+  }
