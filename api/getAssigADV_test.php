@@ -58,6 +58,18 @@ if($_POST['id'] != 'new')
 
 $lists = "<h1>No hay cesiones</h1>";
 
+function createOptions($id,$placa){
+  $placas = array('MADRID','VIGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA');
+  $select = '<select name="origen" id="origen'.$id.'">';
+  foreach ($placas as $key) {
+    if($key == $placa)
+      $select .= '<option value="'.$key.'" selected>'.$key.'</option>';
+    else
+      $select .= '<option value="'.$key.'">'.$key.'</option>';
+  }
+  $select .= '</select>';
+  return $select;
+}
 
 if(sizeof($rows) > 0){
   $lists = "<ul class='heading assignPendingAdv'>
@@ -98,6 +110,7 @@ if(sizeof($rows) > 0){
     $btnEnviar = '';
     $rechazado = '';
     $rechazadoStyle = '';
+    $usuarioCesion = '';
     $options = createOptons($agente);
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
     if($puesto == 'ADV'){
@@ -117,12 +130,17 @@ if(sizeof($rows) > 0){
           $envioDisgon = "✅";
       }
     }
+    $origen = $row[1];
+    if($puesto == 'ADV')
+      $origen = createOptions($row[0],$row[1]);
+    if($row[10] != $user[0][1])
+      $usuarioCesion = $row[10];
     if($row[23] == 1){
       $rechazado = "🚫";
-      $rechazadoStyle = 'background-color:red';
+      $rechazadoStyle = 'background-color:#ff000073';
     }
     if($row[15]== 1)
-      $btnOrigenPress = 'active-city-press';
+      $btnOrigenPress = 'ledOn';
     if($row[16]== 1)
       $btnDestinoPress = 'active-city-press';
     if($row[14] == 1){
@@ -132,10 +150,12 @@ if(sizeof($rows) > 0){
     if($codgClient[$row[1].$row[2].$nfm] == "6254-1" ||$codgClient[$row[1].$row[2].$nfm] == "78713-1"){
       $important = 'important';
     }
+    
     $lists .= '
     <ul class="assignPendingAdv" title="'.$contador++.'" style="'.$rechazadoStyle.'">
       <li title="Copiar: Origen > Destino" class="">
-        <span class="active-city '.$btnOrigenPress.'">'.$row[1].'</span><span class="active-city '.$btnDestinoPress.'">'.$row[2].'</span>
+        <span class="ledOff '.$btnOrigenPress.'"></span>'.$origen.'
+        <span class="active-city '.$btnDestinoPress.'">'.$row[2].'</span>
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$codgClient[$row[1].$row[2].$nfm].'</span>
       </li>
       <li title="Destino: " style="display:none">'.$row[2].'</li>
@@ -152,9 +172,10 @@ if(sizeof($rows) > 0){
         <select name="agente" id="agente'.$row[0].'">
         '.$options.'
         </select>
-        </li>
-        <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"><span title="'.$row[24].'">'.$rechazado.'</span></li>
-        <li class="send" >'.$btnEnviar.'<span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
+      </li>
+      <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"><span title="'.$row[24].'">'.$rechazado.'</span></li>
+      <li class="send" >'.$btnEnviar.'<span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
+      <li>'.$usuarioCesion.'</li>
     </ul>';
   }
 }

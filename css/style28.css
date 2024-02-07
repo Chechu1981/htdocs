@@ -391,7 +391,7 @@ select, input{
 
 .note-body textarea{
     width: 450px;
-    height: 380px;
+    height: 360px;
     border: none;
     padding: 14px;
     font-size: 1.2em;
@@ -721,6 +721,10 @@ input[type="color"]::-webkit-color-swatch {
     animation: noAssigns 5s infinite ease-in-out;
 }
 
+.libre{
+    background-color: #11ff0056 !important;
+}
+
 @keyframes noAssigns {
     0%{letter-spacing: normal;}
     50%{letter-spacing: 10px;}
@@ -799,8 +803,22 @@ input[type="color"]::-webkit-color-swatch {
   grid-template-columns: 4% 7% 9% 11% 23% 5% 4% 5% 10% 9% 9% 4%;
 }
 
+#cesiones ul li select{
+    font-size: 12px;
+    font-weight: 700;
+    font-family: nunito;
+    border: none;
+    border-radius: 3px;
+    padding: 3px 0;
+    background: linear-gradient(123deg, var(--second-bg-color), var(--cards-border-color));
+    box-shadow: 2px 2px black;
+    appearance: none;
+    width: 80px;
+    text-align: center;
+}
+
 #cesiones .assignPendingAdv{
-  grid-template-columns: 1% 9% 8% 15% 14% 7% 6% 4% 3% 3% 10% 5% 2% 8% 1%;
+  grid-template-columns: 2% 10% 8% 15% 14% 7% 6% 4% 3% 3% 10% 5% 2% 8% 1%;
 }
 
 #cesiones .tableLegend{
@@ -817,6 +835,22 @@ input[type="color"]::-webkit-color-swatch {
     font-size: large;
 }
 
+.ledOff{
+    border-radius: 50% 50%;
+    width: 15px;
+    height: 15px;
+    padding: 1px;
+    background-color: #233f21;
+    box-shadow: 0 0 10px rgba(3, 2, 2, 0.7);
+    border: 2px solid #507340;
+}
+
+.ledOn{
+    background-color: #12ff00;
+    box-shadow: 0 0 10px rgb(0 103 /0 70%);
+    border: 2px solid #206600;
+}
+
 .send{
   font-size: large;
   cursor: pointer;
@@ -828,10 +862,14 @@ input[type="color"]::-webkit-color-swatch {
 
 #cesiones ul li:first-child{
   display: grid;
-  grid-template-columns: 46% 50%;
+  grid-template-columns: 10% 55% 48%;
   text-align: center;
   cursor: pointer;
   justify-items: center;
+}
+
+#cesiones .heading li:first-child{
+    grid-template-columns: 50% 50%;
 }
 
 #cesiones button{
@@ -924,7 +962,6 @@ input[type="color"]::-webkit-color-swatch {
 .pass-items li img,
 .pass-items #complete li img,
 #center-list-items li img{
-  margin-bottom: 5px;
   cursor: pointer;
   border-radius: 8px;
   transition: .2s;
@@ -1406,6 +1443,8 @@ input[type="color"]::-webkit-color-swatch {
     box-shadow: 2px 2px black;
     background: linear-gradient(123deg, var(--second-bg-color), var(--cards-border-color));
     transition: .1s;
+    width: 80px;
+    text-align: center;
 }
 
 .active-city:hover{

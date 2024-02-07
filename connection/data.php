@@ -471,12 +471,12 @@ class Contacts
         return 'ok';
     }
 
-    public function updateAssigADVall($id,$fragil,$envio,$nfm,$pedido,$tratado,$origenBtn,$destinoBtn,$disgon){
+    public function updateAssigADVall($id,$fragil,$envio,$nfm,$pedido,$tratado,$origenBtn,$destinoBtn,$origen,$disgon){
         $fecha = date("Y-m-d H:i:s");
         if($envio == 'true')
-            $sql = "UPDATE `cesiones` SET `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `envio` = '$fecha', `emisor` = $origenBtn, `receptor` = $destinoBtn, `pedido` = '$pedido', `tratado` = '$tratado' WHERE `id` LIKE '$id'";
+            $sql = "UPDATE `cesiones` SET `origen` = '$origen', `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `envio` = '$fecha', `emisor` = $origenBtn, `receptor` = $destinoBtn, `pedido` = '$pedido', `tratado` = '$tratado' WHERE `id` LIKE '$id'";
         else
-            $sql = "UPDATE `cesiones` SET `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `pedido` = '$pedido', `emisor` = $origenBtn, `receptor` = $destinoBtn, `tratado` = '$tratado' WHERE `id` LIKE '$id'";
+            $sql = "UPDATE `cesiones` SET `origen` = '$origen', `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `pedido` = '$pedido', `emisor` = $origenBtn, `receptor` = $destinoBtn, `tratado` = '$tratado' WHERE `id` LIKE '$id'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';
@@ -501,12 +501,12 @@ class Contacts
         return $query->fetchAll();
     }
 
-    public function updateAssigADV2023($id,$fragil,$envio,$nfm,$pedido,$tratado,$origenBtn,$destinoBtn,$disgon){
+    public function updateAssigADV2023($id,$fragil,$envio,$nfm,$pedido,$tratado,$origenBtn,$destinoBtn,$origen,$disgon){
         $fecha = date("Y-m-d H:i:s");
         if($envio == 'true')
-            $sql = "UPDATE `cesiones` SET `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `envio` = '$fecha', `emisor` = $origenBtn, `receptor` = $destinoBtn, `pedido` = '$pedido', `tratado` = '$tratado' WHERE `id` LIKE '$id'";
+            $sql = "UPDATE `cesiones` SET `origen` = '$origen', `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `envio` = '$fecha', `emisor` = $origenBtn, `receptor` = $destinoBtn, `pedido` = '$pedido', `tratado` = '$tratado' WHERE `id` LIKE '$id'";
         else
-            $sql = "UPDATE `cesiones` SET `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `pedido` = '$pedido', `emisor` = $origenBtn, `receptor` = $destinoBtn, `tratado` = '$tratado' WHERE `id` LIKE '$id'";
+            $sql = "UPDATE `cesiones` SET `origen` = '$origen', `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `pedido` = '$pedido', `emisor` = $origenBtn, `receptor` = $destinoBtn, `tratado` = '$tratado' WHERE `id` LIKE '$id'";
         $query = $this->db->prepare($sql);
         $query->execute();
     }
@@ -1196,9 +1196,9 @@ class Contacts
     $proveedor = $items[1]["proveedor"];
     $ctipo = $items[1]["ctipo"];
     try{
-        $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE (`ctipo` != 'FI' OR `ctipo` != 'JE') AND `proveedor` = 'ALD'");
+        $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE (`proveedor` = 'ALD' AND `ctipo` != 'FI') AND (proveedor = 'ALD' AND`ctipo` != 'JE')");
         if($ctipo == "FI" || $ctipo == "JE")
-            $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE `ctipo` = 'FI' OR `ctipo` = 'JE'");
+            $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE (`proveedor` = 'ALD' AND `ctipo` = 'FI') OR (`proveedor` = 'ALD' AND `ctipo` = 'JE')");
         if($proveedor == "AUT")
             $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE `proveedor` = '$proveedor'");
         $queryClear->execute();

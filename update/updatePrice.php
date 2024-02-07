@@ -19,7 +19,7 @@
                 <input type="file" name="pending" id="pending" style="display:none">
                 <input type="submit" value="Actualizar" style="font-size: xx-large;margin:10px">
             </form>
-            <div></div>
+            <div id="panel" style="font-size: xx-large;text-align: center;"></div>
         </div>
     </div>
     <?php include('../helper/footer.php'); ?>

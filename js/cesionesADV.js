@@ -171,12 +171,12 @@ const showAssig = () =>{
     $('contacts-items').removeChild(divSpinner)
     $('cesiones').classList.remove('filter')
     const clearRowsMark = (li,text) =>{
-      const codeClient = li.childNodes[1].childNodes[4].textContent
+      const codeClient = li.childNodes[1].childNodes[6].textContent
       const id = li.childNodes[25].id
       const filas = $('cesiones').getElementsByTagName('ul')
       copyClipboard(text)
-      for(let i=1; i<filas.length; i++){
-        const codeClientLi = filas[i].childNodes[1].childNodes[4].textContent
+      for(let i = 1; i < filas.length; i++){
+        const codeClientLi = filas[i].childNodes[1].childNodes[6].textContent
         const idLi = filas[i].childNodes[25].id
         filas[i].classList.remove('marcado')
         filas[i].classList.remove('equal')
@@ -190,10 +190,11 @@ const showAssig = () =>{
       let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar = ''
         ul = $('cesiones').childNodes[i]
         id = ul.childNodes[25].id
-        origen = ul.childNodes[1].childNodes[1]
-        destino = ul.childNodes[1].childNodes[2]
+        origenLed = ul.childNodes[1].childNodes[1]
+        origen = ul.childNodes[1].childNodes[2]
+        destino = ul.childNodes[1].childNodes[4]
         cliente = ul.childNodes[5]
-        refCliente = ul.childNodes[1]
+        refCliente = ul.childNodes[1].childNodes[6]
         comentario = ul.childNodes[9]
         referencia = ul.childNodes[11]
         cantidad = ul.childNodes[13].textContent
@@ -205,28 +206,31 @@ const showAssig = () =>{
         nfm = ul.childNodes[17].firstChild
         btnSendMail = ul.childNodes[27] != undefined ? ul.childNodes[27].childNodes[0] : null
         btnSendMailDisgon = ul.childNodes[27] != undefined ? ul.childNodes[27].childNodes[1] : null
-        btnEliminar = ul.childNodes[25]
+        btnEliminar = ul.childNodes[25].firstChild
 
       if(disgon != null)
         disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
       if($('cesiones').childNodes[i].localName == 'ul' && $('cesiones').childNodes[i].localName != undefined)
-        pedido.addEventListener('keyup', e => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
+        pedido.addEventListener('keyup', e => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
 
-      nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
-      fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent))
-      tratado.addEventListener('change', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.textContent,destino.textContent)})
+      nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
+      fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
+      tratado.addEventListener('change', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)})
       referencia.addEventListener('click', () => {clearRowsMark(ul,referencia.childNodes[0].textContent.replaceAll(' ',''))})
       comentario.addEventListener('click', () => {clearRowsMark(ul,comentario.textContent)})
       cliente.addEventListener('click', () => {
         let fragilTxt = ''
         fragil.checked ? fragilTxt = '..~** ¡¡MATERIAL FRÁGIL!! **~.. Por favor, en lo posible, reforzar embalaje. Gracias; ' : ''
-        clearRowsMark(ul,`Cesión ${origen.textContent}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
+        clearRowsMark(ul,`Cesión ${origen.value}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
       })
       refCliente.addEventListener('click', () => {clearRowsMark(ul,`Cliente: ${cliente.childNodes[0].textContent}`)})
       
       if(user.puesto == 'ADV'){
-        origen.addEventListener('click', () => {
-          origen.classList.toggle('active-city-press')
+        origen.addEventListener('change', (e) => {
+          refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
+          })
+        origenLed.addEventListener('click', (e) => {
+          e.target.classList.toggle('ledOn')
           updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
         })
         destino.addEventListener('click', () => {
@@ -235,9 +239,9 @@ const showAssig = () =>{
         })
       }
       if(btnSendMail != null){
-        btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, id))
+        btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, id))
         if(btnSendMailDisgon != null)
-          btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.textContent, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id))
+          btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id))
       }
       btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
     }
@@ -303,7 +307,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
 
 const refreshInputs = (id,nfm,fragil,pedido,tratado,origen,destino) => {
   let cesion = null
-  let code = $(id).parentNode.childNodes[1].childNodes[4]
+  let code = $(id).parentNode.childNodes[1].childNodes[6]
   origen != destino ? cesion = origen + '' + destino:''
   nfm ? cesion += 'NM' :''
   fetch('../json/cesionesCliente.json')
@@ -336,8 +340,9 @@ const updateBubble = (operador) =>{
 
 const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   const disgon = $(id).parentNode.childNodes[21].firstChild == null ? false : $(id).parentNode.childNodes[21].firstChild.checked
-  const origenBtn = $(id).parentNode.childNodes[1].childNodes[1].className.includes('press') ? '1':'0'
-  const destinoBtn = $(id).parentNode.childNodes[1].childNodes[2].className.includes('press') ? '1':'0'
+  const origenBtn = $(id).parentNode.childNodes[1].childNodes[1].className.includes('ledOn') ? '1':'0'
+  const destinoBtn = $(id).parentNode.childNodes[1].childNodes[4].className.includes('press') ? '1':'0'
+  const origen = $(id).parentNode.childNodes[1].childNodes[2].value
   const data = new FormData()
   data.append('id', id)
   data.append('nfm',nfm)
@@ -348,6 +353,7 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   data.append('disgon', disgon)
   data.append('origenBtn', origenBtn)
   data.append('destinoBtn', destinoBtn)
+  data.append('origen', origen)
   fetch('../api/updateAssignADV2023.php',{
     method: 'POST',
     body: data
@@ -457,7 +463,7 @@ const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
     Saludos.`)
     if(confirm(`¿Enviar Correo a Disgón?`)){
       window.open(`mailto:pedidos@disgon.com; info@disgon.com; julio@disgon.com; carlosalberto.fernandez@stellantis.com?subject=${asunto}&body=${mail}`)
-      $(`disgon${id}`).innerHTML = ""
+      $(`disgon${id}`).innerHTML = "✅"
     }
   })
 }

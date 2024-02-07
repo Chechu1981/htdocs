@@ -54,6 +54,19 @@ function createOptons($user){
   return $optionsList;
 }
 
+function createOptionsOrigin($id,$placa){
+  $placas = array('MADRID','VIGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA');
+  $select = '<select name="origen" id="origen'.$id.'">';
+  foreach ($placas as $key) {
+    if($key == $placa)
+      $select .= '<option value="'.$key.'" selected>'.$key.'</option>';
+    else
+      $select .= '<option value="'.$key.'">'.$key.'</option>';
+  }
+  $select .= '</select>';
+  return $select;
+}
+
 if(sizeof($rows) > 0){
   $lists = "<ul class='heading assignPendingAdv'>
             <li><span>".$imgOrigen."</span><span>".$imgDestino."</span></li>
@@ -110,11 +123,14 @@ if(sizeof($rows) > 0){
         }
       }
     }
+    $libre = '';
+    if($agente == '')
+      $libre = 'libre';
     if($row[23] == 1){
       $rechazado = "🚫";
     }
     if($row[15]== 1)
-      $btnOrigenPress = 'active-city-press';
+      $btnOrigenPress = 'ledOn';
     if($row[16]== 1)
       $btnDestinoPress = 'active-city-press';
     if($row[14] == 1){
@@ -124,13 +140,17 @@ if(sizeof($rows) > 0){
     if($codgClient[$row[1].$row[2].$nfm] == "6254-1" ||$codgClient[$row[1].$row[2].$nfm] == "78713-1"){
       $important = 'important';
     }
+    $origen = $row[1];
+    if($user[0][4] == 'ADV')
+      $origen = createOptionsOrigin($row[0],$row[1]);
 
     $opctions = createOptons($agente);
 
     $lists .= '
-    <ul class="assignPendingAdv" title="'.$contador++.'">
+    <ul class="assignPendingAdv '.$libre.'" title="'.$contador++.'">
       <li title="Copiar: Origen > Destino" class="">
-        <span class="active-city '.$btnOrigenPress.'">'.$row[1].'</span><span class="active-city '.$btnDestinoPress.'">'.$row[2].'</span>
+        <span class="ledOff '.$btnOrigenPress.'"></span>'.$origen.'
+        <span class="active-city '.$btnDestinoPress.'">'.$row[2].'</span>
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$codgClient[$row[1].$row[2].$nfm].'</span>
       </li>
       <li title="Destino: " style="display:none">'.$row[2].'</li>
