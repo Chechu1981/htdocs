@@ -285,7 +285,6 @@ function checkNotificationPromise() {
   } catch (e) {
     return false;
   }
-
   return true;
 }
 
@@ -303,6 +302,22 @@ const notificacion = (titulo, texto) => {
 const newAssigns = setInterval(() => {
   const dataUser = new FormData()
   dataUser.append('id',window.location.href.split('?id=')[1])
+  const countUserAssign = new FormData()
+  countUserAssign.append('usuario',user.nombre)
+  countUserAssign.append('puesto',user.nombre)
+  countUserAssign.append('status','ready')
+  fetch(ruta[window.location.pathname.split('/').length] + "./api/getCountAssigns.php",{
+    method: 'POST',
+    body: countUserAssign
+  })
+  .then(item => item.text())
+  .then(valor => {
+    $('userAssignsready').className = ''
+    if(parseInt(valor) > 0){
+      $('userAssignsready').innerHTML = valor
+      $('userAssignsready').className = 'round'
+    }
+  })
   if(user.puesto != "ADV")
     return null
   const data = new FormData()
@@ -316,7 +331,7 @@ const newAssigns = setInterval(() => {
   .then(item => item.text())
   .then(valor => {
     const actual = $('cesionesActivas').childNodes[1].title
-    if(parseInt(valor) != parseInt(actual)){
+    if(parseInt(valor) > parseInt(actual)){
       $('cesionesActivas').childNodes[1].title = `${valor}`
       const dataAssign = new FormData()
       dataAssign.append('usr',user.nombre)
@@ -326,7 +341,7 @@ const newAssigns = setInterval(() => {
       })
       .then(ass => ass.json())
       .then(cesion =>{
-        if(cesion.puesto !== undefined){
+        if(cesion.puesto !== undefined && cesion.puesto != 'ADV'){
           notificacion(`Nueva cesión de ${cesion.puesto}.`,
           `referencia: ${cesion.ref} de ${cesion.origen} a ${cesion.destino}`)
           const path = window.location.pathname
@@ -334,6 +349,7 @@ const newAssigns = setInterval(() => {
             console.log("Entra!")
         }
       })
-    }
+    }else if(parseInt(valor) < parseInt(actual))
+      $('cesionesActivas').childNodes[1].title = `${valor}`
   })
 },10000)

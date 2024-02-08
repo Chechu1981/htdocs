@@ -12,15 +12,15 @@ const cesiones = (origen, destino,nfm) =>{
     if(numDest == "6254-1" || numDest == "78713-1"){
       $('pclient').classList.add('important')
       alerta = "Preguntar"
-    }else if(origen == 'PALMA'){
-      $('pclient').classList.add('important')
-      alerta = "Portes"
     }else if(destino == "VIGO" && date.getDate() >= 6){
       $('pclient').classList.add('important')
       alerta = "Denegado"
     }else if(origen == "VIGO" && date.getDate() >= 9){
       $('pclient').classList.add('important')
       alerta = "Denegado"
+    }else if(origen == 'PALMA'){
+      $('pclient').classList.add('important')
+      alerta = "Portes"
     }else{
       $('pclient').classList.remove('important')
       alerta = ""
@@ -341,8 +341,8 @@ const updateBubble = (operador) =>{
 const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   const disgon = $(id).parentNode.childNodes[21].firstChild == null ? false : $(id).parentNode.childNodes[21].firstChild.checked
   const origenBtn = $(id).parentNode.childNodes[1].childNodes[1].className.includes('ledOn') ? '1':'0'
-  const destinoBtn = $(id).parentNode.childNodes[1].childNodes[4].className.includes('press') ? '1':'0'
-  const origen = $(id).parentNode.childNodes[1].childNodes[2].value
+  const destinoBtn = $(`destinoBtn${id}`).className.includes('press') ? '1':'0'
+  const origen = $(`origen${id}`).nodeName == 'SELECT' ? $(`origen${id}`).value : $(`origen${id}`).innerHTML
   const data = new FormData()
   data.append('id', id)
   data.append('nfm',nfm)

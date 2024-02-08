@@ -415,7 +415,7 @@ class Contacts
     }
 
     public function getAssigLast(){
-        $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND `tratado` = '' ORDER BY `id` DESC ";
+        $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' ORDER BY `id` DESC LIMIT 1";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

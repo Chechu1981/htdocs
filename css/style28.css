@@ -1264,6 +1264,7 @@ input[type="color"]::-webkit-color-swatch {
   font-size: x-small;
   height: 12px;
   margin-right:10px;
+  text-align: center;
 }
 
 .change{

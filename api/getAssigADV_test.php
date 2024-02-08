@@ -130,7 +130,7 @@ if(sizeof($rows) > 0){
           $envioDisgon = "✅";
       }
     }
-    $origen = $row[1];
+    $origen = '<span id="origen'.$row[0].'">'.$row[1].'</span>';
     if($puesto == 'ADV')
       $origen = createOptions($row[0],$row[1]);
     if($row[10] != $user[0][1])
@@ -150,12 +150,14 @@ if(sizeof($rows) > 0){
     if($codgClient[$row[1].$row[2].$nfm] == "6254-1" ||$codgClient[$row[1].$row[2].$nfm] == "78713-1"){
       $important = 'important';
     }
+    if($row[2] == 'VIGO')
+      $important = 'important';
     
     $lists .= '
     <ul class="assignPendingAdv" title="'.$contador++.'" style="'.$rechazadoStyle.'">
       <li title="Copiar: Origen > Destino" class="">
         <span class="ledOff '.$btnOrigenPress.'"></span>'.$origen.'
-        <span class="active-city '.$btnDestinoPress.'">'.$row[2].'</span>
+        <span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'">'.$row[2].'</span>
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$codgClient[$row[1].$row[2].$nfm].'</span>
       </li>
       <li title="Destino: " style="display:none">'.$row[2].'</li>

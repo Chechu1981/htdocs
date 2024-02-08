@@ -15,6 +15,7 @@ $menuTodas = '';
 if($puesto == 'ADV')
     $menuTodas = '<li><a href="'.$src.'/src/cesionesAll.php?id='.$id.'">Todas</a></li>';
 $allAssigns = $contacts->getAssigCountNew($usuario, $puesto,'all')[0][0];
+$nuevas = $contacts->getAssigCountNew($usuario,$usuario,'ready')[0][0];
 ?>
 <picture class="head-img">
     <section>Agenda</section>
@@ -24,8 +25,8 @@ $allAssigns = $contacts->getAssigCountNew($usuario, $puesto,'all')[0][0];
         <li><a href="<?php echo $src.'/home.php?id='.$id; ?>" >Inicio</a></li>
         <li><a href="<?php echo $src.'/src/routeTest.php?id='.$id; ?>">Rutas</a></li>
         <li><a href="<?php echo $src.'/src/libreta.php?id='.$id; ?>">Libreta</a></li>
-        <li style="width: 44px;" id="cesionesActivas">
-            <a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>" title="<?php echo $allAssigns; ?>">Cesiones</a></a>
+        <li style="width: 84px;display:grid;grid-template-columns:84% 16%" id="cesionesActivas">
+            <a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>" title="<?php echo $allAssigns; ?>">Cesiones</a><span id="userAssignsready" class="round"><?php echo $nuevas; ?></span>
             <ul>
                 <?php echo $menuTodas; ?>
                 <li><a href="<?php echo $src.'/src/assigns/buscar.php?id='.$id ?>">Buscar</a></li>
