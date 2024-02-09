@@ -315,7 +315,7 @@ const newAssigns = setInterval(() => {
     $('userAssignsready').className = ''
     if(parseInt(valor) > 0){
       $('userAssignsready').innerHTML = valor
-      $('userAssignsready').className = 'round'
+      $('userAssignsready').className = 'round heart'
     }
   })
   if(user.puesto != "ADV")

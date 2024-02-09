@@ -20,12 +20,12 @@ $scripts = (object)[
   'CENTROS' => "/js/center3.js",
   'CESIONES1' => "/js/cesiones202312.js?1235",
   'CESIONES' => "/js/cesiones19.js",
-  'CESIONESALL' => "/js/cesionesAll.js?163",
-  'CESIONESADV' => "/js/cesionesADV.js?162",
+  'CESIONESALL' => "/js/cesionesAll.js?164",
+  'CESIONESADV' => "/js/cesionesADV.js?164",
   'BUSCAR' => "/../js/buscarCesiones.js?104",
   'READY' => "/../js/readyCesiones.js?104",
   'STATUS' => "/../js/statusCesiones.js?104",
-  'FINISH' => "/../js/finishCesiones.js?105",
+  'FINISH' => "/../js/finishCesiones.js?107",
   'CESIONESADV_TEST' => "/js/cesionesADV_test.js?127",
   'LIBRETA' => "/js/libreta13.js",
   'contact' => "/js/contact2.js",
@@ -65,7 +65,7 @@ $user = strtoupper($userBdd[0][3]);
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?php echo $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1259" defer content="1">
+<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1260" defer content="1">
 <link rel="stylesheet" href="<?php echo $src; ?>/css/150027.css?1005" defer content="1">
 <link rel="stylesheet" href="<?php echo $src ."/css/". str_replace(" ","_",strtolower($user)).".css"; ?>" defer content="0">
 <script type="text/javascript" src="<?php echo $src; ?>/js/script20.js?1012" defer content='no-cache'></script>

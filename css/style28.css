@@ -1267,6 +1267,20 @@ input[type="color"]::-webkit-color-swatch {
   text-align: center;
 }
 
+.heart{
+    box-shadow: 1px 1px  4px #5a36cf;
+    animation: heartbeat infinite 4s ease;
+}
+
+@keyframes heartbeat {
+    0% {background-color: #ffffff}
+    59%{background-color:#ffffff}
+    60% {background-color: red}
+    63% {background-color: #ffffff}
+    66% {background-color: red}
+    69% {background-color: #ffffff}
+}
+
 .change{
     animation: changeBox .6s cubic-bezier(0.36, -0.38, 0.57, 0.96);
 }
@@ -1333,9 +1347,15 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 @keyframes alert-blink {
-  0%{background-color: var(--main-font-color);}
+  0%{
+    background-color: var(--cards-border-color);
+    color: var(--bg-font-color);
+    }
   40%{background-color: red;}
-  100%{background-color: var(--main-font-color);}
+  100%{
+    background-color: var(--cards-border-color);
+    color: var(--bg-font-color);
+    }
 }
 
 .copy-container{

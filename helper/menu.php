@@ -26,12 +26,12 @@ $nuevas = $contacts->getAssigCountNew($usuario,$usuario,'ready')[0][0];
         <li><a href="<?php echo $src.'/src/routeTest.php?id='.$id; ?>">Rutas</a></li>
         <li><a href="<?php echo $src.'/src/libreta.php?id='.$id; ?>">Libreta</a></li>
         <li style="width: 84px;display:grid;grid-template-columns:84% 16%" id="cesionesActivas">
-            <a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>" title="<?php echo $allAssigns; ?>">Cesiones</a><span id="userAssignsready" class="round"><?php echo $nuevas; ?></span>
+            <a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>" title="<?php echo $allAssigns; ?>">Cesiones</a><span id="userAssignsready" class="round heart"><?php echo $nuevas; ?></span>
             <ul>
                 <?php echo $menuTodas; ?>
                 <li><a href="<?php echo $src.'/src/assigns/buscar.php?id='.$id ?>">Buscar</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/ready.php?id='.$id ?>">En curso</a></li>
-                <li><a href="<?php echo $src.'/src/assigns/finish.php?id='.$id ?>">Finalizadas</a></li>
+                <li><a href="<?php echo $src.'/src/assigns/finish.php?id='.$id ?>">Rechazadas</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/status.php?id='.$id ?>">Estadísticas</a></li>
             </ul>
         </li>    

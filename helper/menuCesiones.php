@@ -34,6 +34,6 @@ $titulo = "Cesiones de " . $usuario;
   <?php echo $btnAll; ?>
   <button id="find">Buscar</button>
   <button id="ready"><?php echo $enCurso; ?> En curso</button>
-  <button id="finish">Hechas</button>
+  <button id="finish">Rechazadas</button>
   <button id="status">Estadística</button>
 </section>

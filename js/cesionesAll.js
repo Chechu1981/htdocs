@@ -291,6 +291,7 @@ const showAssig = () =>{
           data.append('id',id)
           data.append('switch',true)
           data.append('usuario',usuario)
+          data.append('tratado',user.nombre.toUpperCase())
           fetch('../helper/formRechazo.php',{
             method: 'POST',
             body: data
@@ -369,6 +370,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
     return false
   }
   const dataName = new FormData()
+  tratado = tratado == '' ? user.nombre : tratado
   const disgon = $(id).parentNode.childNodes[21].firstChild == null ? false : $(id).parentNode.childNodes[21].firstChild.checked
   dataName.append('id', id)
   dataName.append('nfm',nfm)

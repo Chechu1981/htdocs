@@ -9,7 +9,7 @@ $puesto = $user[0][4];
 if($puesto == 'ADV')
   $puesto = $user[0][1];
 
-$rows = $contacts->getAssig($_POST['id'],$puesto,@$_POST['sort']);
+$rows = $contacts->getAssig($_POST['id'],$puesto,@$_POST['puesto']);
 
 function getCliente($cliente,$placa){
   $contacts = new Contacts();
@@ -73,6 +73,10 @@ if(sizeof($rows) > 0){
       if($_POST['id']!= 'new') {
           $agent = '<li title="Agente">'.$row[10].'</li>';
       }
+      $rechazado = '';
+      if($row[23] == 1){
+        $rechazado = '<span id="rechazo'.$row[0].'" title="'.$row[24].'" style="cursor:pointer">🚫</span>';
+      }
       $nfm = "";
       if($row[14])
           $nfm = "NFM";
@@ -94,7 +98,7 @@ if(sizeof($rows) > 0){
         <li title="Pedido: ">'.$row[7].'</li>
         <li title="Comentario: ">'.$row[11].'</li>
         <li title="Envío: ">'.$fechaD[2].'/'.$fechaD[1].'/'.$fechaD[0].' '.$fecha[1].'</li>
-        '.$li.'<li title="'.$row[21].'">'.$row[10].'</li>
+        '.$li.'<li title="'.$row[21].'">'.$row[10].$rechazado.'</li>
       </ul>';
     }
 }else{

@@ -344,12 +344,8 @@ class Contacts
         return $sql;
     }
 
-    public function getAssig($all,$usr,$sort){
+    public function getAssig($all,$usr,$puesto = null){
         $order = "ORDER BY `id` DESC LIMIT 100";
-        if($sort == 'origen')
-            $order = "ORDER BY `origen` ASC LIMIT 100";
-        if($sort == 'destino')
-            $order = "ORDER BY `destino` ASC LIMIT 100";
 
         $sql = "SELECT * FROM `cesiones` WHERE 
         `ref` LIKE '%$all%' OR
@@ -358,12 +354,17 @@ class Contacts
         `cliente` LIKE '%$all%'OR
         `comentario` LIKE '%$all%'OR
         `pedido` LIKE '%$all%' AND
+        `rechazado` = false AND
         (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";
 
         if($all == 'all')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         elseif($all == 'new')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";            
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";            
+        elseif($all == 'stop' AND $puesto != 'ADV')
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";
+        elseif($all == 'stop' AND $puesto == 'ADV')
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true;";
         $sql .= $order;
         $query = $this->db->prepare($sql);
         $query->execute();
@@ -378,15 +379,15 @@ class Contacts
     }
 
     public function getAssigCountNew($usr,$puesto,$state){
-        $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND `usuario` = '$usr'";
+        $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND `rechazado` = false AND`usuario` = '$usr'";
         if($puesto == 'ADV')
-            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
+            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `rechazado` = false AND `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         if($state == 'ready')
-            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `puesto` = '$puesto')";
+            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `puesto` = '$puesto')";
         if($state == 'all')
-            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00'";
+            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `rechazado` = false AND `recibido` LIKE '0000-00-00'";
         if($state == 'ready' AND $puesto == 'ADV')
-            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
+            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -399,16 +400,17 @@ class Contacts
         `destino` LIKE '%$all%' OR
         `cliente` LIKE '%$all%'OR
         `comentario` LIKE '%$all%' AND
+        `rechazado` = false AND
         `pedido` = '' AND
         (`usuario` = '$usr' OR `tratado` = '$usr')
         ORDER BY `destino`, `origen` DESC 
         LIMIT 100";
         if ($all == 'all')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND (`usuario` = '$usr' OR `tratado` = '$usr') ORDER BY `origen`, `destino` DESC ";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr') ORDER BY `origen`, `destino` DESC ";
         elseif ($all == 'new' AND $usr != 'all')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND (`usuario` = '$usr' OR `tratado` = '$usr') ORDER BY `origen`, `destino` DESC ";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `envio` LIKE '0000-00-00 00:00:00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr') ORDER BY `origen`, `destino` DESC ";
         elseif ($all == 'new' AND $usr = 'all')
-            $sql = "SELECT * FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' ORDER BY `origen`, `destino` DESC ";
+            $sql = "SELECT * FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `rechazado` = false ORDER BY `origen`, `destino` DESC ";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -460,6 +462,13 @@ class Contacts
         return 'ok';
     }
 
+    public function updateAssigDeclane($id){
+        $sql = "UPDATE `cesiones` SET `rechazado`= false WHERE `id`= $id";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return 'ok';
+    }
+
     public function updateAssigADV($id,$value,$pedido,$envio,$pvp){
         $fecha = date("Y-m-d H:i:s");
         if($envio == 'true')
@@ -488,8 +497,8 @@ class Contacts
         $query->execute();
     }
 
-    public function updateRechazo($id,$switch,$texto){
-        $sql = "UPDATE `cesiones` SET `rechazado` = $switch, `motivo` = '$texto' WHERE `id` LIKE '$id'";
+    public function updateRechazo($id,$switch,$texto,$tratado){
+        $sql = "UPDATE `cesiones` SET `tratado` = '$tratado', `rechazado` = $switch, `motivo` = '$texto' WHERE `id` LIKE '$id'";
         $query = $this->db->prepare($sql);
         $query->execute();
     }

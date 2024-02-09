@@ -2,4 +2,4 @@
 include_once '../connection/data.php';
 $contacts = new Contacts();
 
-$status = $contacts->updateRechazo($_POST['id'],$_POST['switch'],$_POST['texto']);
+$status = $contacts->updateRechazo($_POST['id'],$_POST['switch'],$_POST['texto'],$_POST['tratado']);
