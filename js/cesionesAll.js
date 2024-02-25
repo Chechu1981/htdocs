@@ -1,4 +1,9 @@
 "use strict";
+
+import contadores from "./updateCounter.js"
+
+setInterval(() =>{contadores()},1200)
+
 const textarea = document.getElementById("prueba")
 const src = "../api/addTest.php"
 const getsrc = "../api/getTest.php"
@@ -36,7 +41,7 @@ const cesiones = (origen, destino,nfm) =>{
   let cesion = null
   origen != destino ? cesion = origen + '' + destino:''
   nfm ? cesion += 'NM' :''
-  fetch('../json/cesionesCliente.json')
+  fetch('../json/cesionesCliente.json?100')
   .then(response => response.json())
   .then(response => {
     const numDest = response[cesion]
@@ -45,15 +50,15 @@ const cesiones = (origen, destino,nfm) =>{
     if(numDest == "6254-1" || numDest == "78713-1"){
       $('pclient').classList.add('important')
       alerta = "Preguntar"
-    }else if(origen == 'PALMA'){
+    }else if(destino == 'PALMA'){
       $('pclient').classList.add('important')
       alerta = "Portes"
-    }else if(destino == "VIGO" && date.getDate() >= 7){
+    /*}else if(destino == "VIGO" && date.getDate() >= 7){
       $('pclient').classList.add('important')
       alerta = "Denegado"
     }else if(origen == "VIGO" && date.getDate() >= 9){
       $('pclient').classList.add('important')
-      alerta = "Denegado"
+      alerta = "Denegado"*/
     }else{
       $('pclient').classList.remove('important')
       alerta = ""
@@ -165,7 +170,7 @@ const buscarDenominacionReferencia = (refer) =>{
   .then(res => res.text())
   .then((res) => {
     $('descRef').innerHTML = res
-    if($('origen').value == 'PALMA' || $('destino').value == 'PALMA'){
+    if($('destino').value == 'PALMA'){
       let portes = '40€'
       const pvp = parseFloat(res.split('PVP: ')[1].split('€')[0].replaceAll(',','.'))
       if(pvp < 150)
@@ -507,7 +512,10 @@ const createMail = (cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil
   }
   if(nfm)
     strNfm = `La entrada en Geode debe ser realizada como entrada 109. PIEZA SIN SOLUCIÓN DE REEMPLAZO.   `
-
+  if(origen == 'VIGO')
+    origen = 'GALICIA'
+  if(destino == 'VIGO')
+    destino = 'GALICIA'
   const fecha = new Date()
   const mailSub = `CESION ${asuntoDisgon} ${origen} -> ${destino}`
   const mailSaludo = fecha.getHours() > 14 ? `${mailFragil}Buenas tardes: ` : `${mailFragil}Buenos días: `
@@ -531,7 +539,7 @@ const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
   const direcciones = {
     MADRID: 'Carretera de Seseña a Esquivias, Km 0,8 - 45224 Seseña Nuevo (Toledo)',
     VALENCIA: 'Carrer dels Bombers, 20 - 46980 PATERNA - VALENCIA',
-    VIGO: 'Avenida de Citroën, 3 y 5, Naves 05/09 Zona Franca de Vigo 36210 VIGO (PONTEVEDRA)',
+    GALICIA: 'Vía Pasteur 41, CP:15898 Santiago de Compostela (A CORUÑA)',
     BARCELONA: 'Calle D, nº 41 - Polig. Ind. Zona Franca - 08040 BARCELONA',
     ZARAGOZA: 'C/ Río de Janeiro, 3 Polígono Industrial Centrovia 50198 - La Muela - ZARAGOZA',
     GRANADA: 'Polígono Industrial Huerta Ardila - Ctra. A-92 Km 6 - 18320 SANTA FE - GRANADA',
@@ -554,6 +562,10 @@ const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
   .then(result => {
     $(`disgon${id}`).className = ""
     $(`disgon${id}`).innerHTML = "✅"
+    if(origen == 'VIGO')
+      origen = 'GALICIA'
+    if(destino == 'VIGO')
+      destino = 'GALICIA'
     const descRef = result.denominacion
     const dirOrigen = direcciones[origen]
     const dirDestino = direcciones[destino]

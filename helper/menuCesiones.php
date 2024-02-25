@@ -11,12 +11,12 @@ $enCurso = $contacts->getAssigCountNew($usuario, $puesto,'ready')[0][0];
 if($nuevas > 0)
   $nuevas = "<span class='round'>".$nuevas."</span>";
 else
-  $nuevas = "";
+  $nuevas = "<span class='round'>0</span>";
 
 if($allAdvAssigns > 0)
   $allAdvAssigns = "<span class='round'>".$allAdvAssigns."</span>";
 else
-  $allAdvAssigns = "";
+  $allAdvAssigns = "<span class='round'>0</span>";
 
 $btnAll = '';
 if($puesto == 'ADV')

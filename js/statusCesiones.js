@@ -1,3 +1,7 @@
+import contadores from "./updateCounter.js"
+
+setInterval(() =>{contadores()},1000)
+
 const id = window.location.search.split('?id=')[1]
 const btnAll = document.getElementById('all') ?? 0
 

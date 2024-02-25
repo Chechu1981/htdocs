@@ -362,9 +362,9 @@ class Contacts
         elseif($all == 'new')
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";            
         elseif($all == 'stop' AND $puesto != 'ADV')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr') ORDER BY `id` DESC LIMIT 100";
         elseif($all == 'stop' AND $puesto == 'ADV')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true;";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true ORDER BY `id` DESC LIMIT 100;";
         $sql .= $order;
         $query = $this->db->prepare($sql);
         $query->execute();
@@ -829,7 +829,7 @@ class Contacts
             sleep(1);
             $batchSize = 3000;
             foreach (array_chunk($items, $batchSize) as $row) {
-                $sql = "INSERT INTO `inmovilizados`(`fecha`, `cuenta`, `nombre`, `referencia`, `designacion`, `fiabilidad`, `placa`, `aviso`, `vin`, `cantidad`, `npedido`, `prioridad`, `libre`,`reemplazamiento`,`marcado`, `marca`) VALUES ";
+                $sql = "INSERT INTO `inmovilizados`(`fecha`, `cuenta`, `nombre`, `referencia`, `designacion`, `fiabilidad`, `placa`, `aviso`, `vin`, `cantidad`, `npedido`, `prioridad`, `libre`,`reemplazamiento`,`marcado`, `marca`,`sap`) VALUES ";
                 foreach ($row as $rows) {
                     $fecha = $rows["fecha"];
                     $cuenta = $rows["cuenta"];
@@ -848,7 +848,8 @@ class Contacts
                     $reemplazamiento = $rows["reemplazamiento"];
                     $marcado = $rows["marcado"];
                     $marca = $rows["marca"];
-                    $sql .= "('$fecha','$cuenta','$nombre','$referencia','$designacion','$fiabilidad','$placa','$aviso','$vin','$cantidad','$npedido','$prioridad','$fecha_act','$reemplazamiento','$marcado', '$marca'),";
+                    $sap = $rows["sap"];
+                    $sql .= "('$fecha','$cuenta','$nombre','$referencia','$designacion','$fiabilidad','$placa','$aviso','$vin','$cantidad','$npedido','$prioridad','$fecha_act','$reemplazamiento','$marcado', '$marca','$sap'),";
                 }
                 $sql = substr($sql, 0, -1) . ";";
                 $query = $this->db->prepare($sql);
@@ -935,7 +936,7 @@ class Contacts
             sleep(1);
             $batchSize = 3000;
             foreach (array_chunk($items, $batchSize) as $row) {
-                $sql = "INSERT INTO `shortInmv`(`fecha`, `cuenta`, `nombre`, `referencia`, `designacion`, `fiabilidad`, `placa`, `aviso`, `vin`, `cantidad`, `npedido`, `prioridad`, `libre`, `reemplazamiento`, `marca`) VALUES ";
+                $sql = "INSERT INTO `shortInmv`(`fecha`, `cuenta`, `nombre`, `referencia`, `designacion`, `fiabilidad`, `placa`, `aviso`, `vin`, `cantidad`, `npedido`, `prioridad`, `libre`, `reemplazamiento`, `marca`,`sap`) VALUES ";
                 foreach ($row as $rows) {
                     $fecha = $rows["fecha"];
                     $cuenta = $rows["cuenta"];
@@ -953,7 +954,8 @@ class Contacts
                     $fecha_act = $rows["fecha_act"];
                     $reemplazamiento = $rows["reemplazamiento"];
                     $marca = $rows["marca"];
-                    $sql .= "('$fecha','$cuenta','$nombre','$referencia','$designacion','$fiabilidad','$placa','$aviso','$vin','$cantidad','$npedido','$prioridad','$fecha_act','$reemplazamiento','$marca'),";
+                    $sap = $rows["sap"];
+                    $sql .= "('$fecha','$cuenta','$nombre','$referencia','$designacion','$fiabilidad','$placa','$aviso','$vin','$cantidad','$npedido','$prioridad','$fecha_act','$reemplazamiento','$marca','$sap'),";
                 }
                 $sql = substr($sql, 0, -1) . ";";
                 $query = $this->db->prepare($sql);
@@ -1078,21 +1080,83 @@ class Contacts
       return "ok";
     }
 
-    public function newFileInmv($up, $down, $placa){
-      $date = date("Y/m/d H:i:s");
+    public function newFileInmv($up, $down, $placa, $date){
       $sql = "INSERT INTO `inmstatus` (`up`, `down`, `placa`, `date`) VALUES ('$up','$down','$placa','$date')";
       $query = $this->db->prepare($sql);
       $query->execute();
       return 'ok';
     }
 
-    public function getStatusInm($placa){
-        $sql = "SELECT `placa`,SUM(`up`),SUM(`down`), date FROM `inmstatus` WHERE `placa` = '$placa' GROUP BY `placa`, `date` ORDER BY `placa`,`date` DESC";
-        if($placa == 'all')
-            $sql = "SELECT 'Todos',SUM(`up`),SUM(`down`), DATE_FORMAT(`date`, '%Y-%m-%d') FROM `inmstatus` GROUP BY DATE_FORMAT(`date`, '%Y-%m-%d') ORDER BY DATE_FORMAT(`date`, '%Y-%m-%d') DESC";
+    public function newFileInmvDown($fichero){
+        $sql = "INSERT INTO `inm_down`(`calculo`,`fecha`, `cuenta`, `nombre`, `referencia`, 
+        `designacion`, `fiabilidad`, `placa`, `aviso`, `vin`, `cantidad`, `npedido`, 
+        `prioridad`, `marcado`, `libre`, `reemplazamiento`, `marca`)  VALUES"; 
+        foreach($fichero as $fila){
+            $fecha = $fila['fecha'];
+            $cuenta = $fila['cuenta'];
+            $nombre = $fila['nombre'];
+            $referencia = $fila['referencia'];
+            $designacion = $fila['designacion'];
+            $fiabilidad = $fila['fiabilidad'];
+            $placa = $fila['placa'];
+            $aviso = $fila['aviso'];
+            $vin = $fila['vin'];
+            $cantidad = $fila['cantidad'];
+            $npedido = $fila['npedido'];
+            $prioridad = $fila['prioridad'];
+            $marcado = $fila['marcado'];
+            $anterior = $fila['anterior'];
+            $reemplazamiento = $fila['reemplazamiento'];
+            $marca = $fila['marca'];
+            $calculo = $fila['calculo'];
+            $sql .= "(
+                '$calculo','$fecha','$cuenta','$nombre','$referencia','$designacion','$fiabilidad','$placa',
+                '$aviso','$vin','$cantidad','$npedido','$prioridad','$marcado','$anterior','$reemplazamiento','$marca'),";
+        }
+        $sql = substr($sql, 0, -1) . ";";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return 'ok';
+    }
+
+    public function getRefDown($date){
+        $sql = "SELECT * FROM `inm_down` WHERE `calculo` = '$date'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
+    }
+
+    public function getRefDownByRef($ref,$client){
+        $sentencia = "SELECT * FROM `inm_down` ";
+        $cliente = "WHERE `referencia` = '$ref' AND `cuenta` = '$client'";
+        if($client == '')
+            $cliente = "WHERE `referencia` = '$ref'";
+        elseif($ref == '')
+            $cliente = "WHERE `cuenta` = '$client'";
+
+        $sql = "$sentencia $cliente";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getStatusInm($placa){
+        $sql = "SELECT `placa`,SUM(`up`),SUM(`down`), date, `id` FROM `inmstatus` WHERE `placa` = '$placa' GROUP BY `placa`, `date` ORDER BY `placa`,`date` DESC";
+        if($placa == 'all')
+            $sql = "SELECT 'Todos',SUM(`up`),SUM(`down`), DATE_FORMAT(`date`, '%Y-%m-%d'), `id` FROM `inmstatus` GROUP BY DATE_FORMAT(`date`, '%Y-%m-%d') ORDER BY DATE_FORMAT(`date`, '%Y-%m-%d') DESC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function deleteSelectInmov($id,$calculo){
+        $sql = "DELETE FROM `inmstatus` WHERE `id` = '$id'";
+        $sql2 = "DELETE FROM `inm_down` WHERE `calculo` = '$calculo'";
+            echo $sql2;
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $query = $this->db->prepare($sql2);
+        $query->execute();
     }
 
     public function updateClientRoute($items){
@@ -1241,7 +1305,7 @@ class Contacts
   }
   
   public function getRefer($referencia){
-    $sql = "SELECT * FROM `tarifa` WHERE REPLACE(LTRIM(REPLACE(`referencia`,'0',' ')),' ','0') = '$referencia' OR (CHAR_LENGTH(`referencia`) < 7 AND `referencia` = '$referencia')";
+    $sql = "SELECT DISTINCT * FROM `tarifa` WHERE REPLACE(LTRIM(REPLACE(`referencia`,'0',' ')),' ','0') = REPLACE(LTRIM(REPLACE('$referencia','0',' ')),' ','0') OR (CHAR_LENGTH(`referencia`) < 7 AND `referencia` = '$referencia')";
     $query = $this->db->prepare($sql);
     $query->execute();
     return $query->fetchAll();

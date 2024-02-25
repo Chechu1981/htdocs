@@ -9,6 +9,9 @@ $puesto = $user[0][4];
 if($puesto == 'ADV')
   $puesto = $user[0][1];
 
+if($puesto == 'DESBORDE')
+  $puesto = $user[0][1];
+
 $rows = $contacts->getAssig($_POST['id'],$puesto,@$_POST['puesto']);
 
 function getCliente($cliente,$placa){
@@ -60,6 +63,7 @@ $lists = "<ul class='heading'>"
         <li>Comentario</li>".
         $imgDate."
         <li>Recibido</li>
+        <li>Tratado</li>
         <li>Agente</li>
         </ul>"; 
 
@@ -98,7 +102,9 @@ if(sizeof($rows) > 0){
         <li title="Pedido: ">'.$row[7].'</li>
         <li title="Comentario: ">'.$row[11].'</li>
         <li title="Envío: ">'.$fechaD[2].'/'.$fechaD[1].'/'.$fechaD[0].' '.$fecha[1].'</li>
-        '.$li.'<li title="'.$row[21].'">'.$row[10].$rechazado.'</li>
+        '.$li.'
+        <li title="Tratado">'.$row[17].'</li>
+        <li title="'.$row[21].'">'.$row[10].$rechazado.'</li>
       </ul>';
     }
 }else{

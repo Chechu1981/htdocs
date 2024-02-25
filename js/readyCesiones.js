@@ -1,3 +1,8 @@
+"use strict";
+import contadores from "./updateCounter.js"
+
+setInterval(() =>{contadores()},1000)
+
 const id = window.location.search.split('?id=')[1]
 const btnAll = document.getElementById('all') ?? 0
 
@@ -51,7 +56,7 @@ window.addEventListener('load',()=>{
     const refCopy = document.getElementsByClassName('copy')
     for(let i = 0; i < refCopy.length;i++)
       refCopy[i].addEventListener('click',e =>{
-        listRows = $('cesiones').getElementsByTagName('ul')
+        let listRows = $('cesiones').getElementsByTagName('ul')
         for(let j = 0; j < listRows.length ; j++)
           listRows[j].style = ''
         e.target.parentNode.style.color = 'royalblue'

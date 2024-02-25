@@ -49,10 +49,10 @@
               </section>
               <section>
                 <label for="pedido">*Envío</label>
-                <input type="text" name="envio" id="envio"></input>
+                <input type="text" name="envio" id="envio" class="inputSend"></input>
               </section>
               <section>
-                <label for="pedido">Pedido</label>
+                <label for="pedido">P. Power</label>
                 <input type="text" name="pedido" id="pedido"></input>
               </section>
               <section>
@@ -78,7 +78,7 @@
               </section>
               <section>
                 <label for="send">.</label>
-                <input type="submit" value="🔽" id="send">
+                <input type="submit" value="Solicitar" id="send">
               </section>
             </div>
         </form>

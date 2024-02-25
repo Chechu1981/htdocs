@@ -140,8 +140,8 @@ if(sizeof($rows) > 0){
     if($codgClient[$row[1].$row[2].$nfm] == "6254-1" ||$codgClient[$row[1].$row[2].$nfm] == "78713-1"){
       $important = 'important';
     }
-    if($row[2] == 'VIGO')
-      $important = 'important';
+    /*if($row[2] == 'VIGO')
+      $important = 'important';*/
     $origen = $row[1];
     if($user[0][4] == 'ADV')
       $origen = createOptionsOrigin($row[0],$row[1]);

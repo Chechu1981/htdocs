@@ -25,6 +25,11 @@ $botones = array(
     </div>
     <div class="csv-files nocompleta">
       <section>
+        <h2 style="text-align: center">Buscar referencias que bajan su prioridad</h2>
+        <input type="text" name="ref" id="searchRef" placeholder="Referencia">
+        <input type="text" name="cliente" id="searchClient" placeholder="Número de cliente">
+        <input type="submit" id="btnSbmt" value="Buscar Referencia"></input>
+        <hr style="margin-bottom: 15%">
         <?php
         foreach ($botones as $btn){
         ?>

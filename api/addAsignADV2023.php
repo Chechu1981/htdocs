@@ -21,7 +21,7 @@ function getCliente($cliente,$placa){
 function getDescRef($referencia){
     $descripcion = 'Desconocido';
     $contacts = new Contacts();
-    $rows = $contacts->getRefer($referencia);
+    $rows = $contacts->getRefer(str_replace(' ','',$referencia));
 
     if(sizeof($rows) > 0){
         foreach ($rows as $row) { 

@@ -132,7 +132,7 @@ document.addEventListener('click',(e)=>{
 
 $('contacts').childNodes[1].addEventListener('click', (e)=>{
   const title = $$('h1')[0].innerHTML 
-  fetch('../../json/center.json')
+  fetch('../../json/center.json?101')
   .then(response => response.json())
   .then(res => {
     modal(res[title],title)

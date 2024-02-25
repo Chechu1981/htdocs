@@ -64,7 +64,8 @@ while(($data = fgetcsv($handle, 1000, ";")) !== FALSE ){
       'reemplazamiento' => $data[46],
       'marcado' => '',
       'fecha_act' => date('d-m-Y H:i:s'),
-      'marca' => $data[30]]);
+      'marca' => $data[30],
+      'sap' => $data[14].$data[15].str_replace($charset,'',$data[6])]);
   }
 }
 
@@ -99,9 +100,9 @@ if($mismaPlaca){
 /* Comparo el fichero de entrada con la BBDD */
 for($n = 0; $n < count($items); $n++) {
   for($i = 0;$i < sizeof($oldFile);$i++){
-    if($items[$n]['aviso'] == "")
+    if($items[$n]['prioridad'] > 7)
       $items[$n]['aviso'] = 'encontrado';
-    if($oldFile[$i]['aviso'] == $items[$n]['aviso'] && $oldFile[$i]['prioridad'] == $items[$n]['prioridad'])
+    if($oldFile[$i]['sap'] == $items[$n]['sap'] && $oldFile[$i]['prioridad'] == $items[$n]['prioridad'])
       $items[$n]['aviso'] = 'encontrado';
   }
 }
@@ -124,10 +125,14 @@ foreach($items as $key){
     'prioridad' => $key['prioridad'],
     'reemplazamiento' => $key['reemplazamiento'],
     'marca' => $key['marca'],
-    'fecha_act' => date('d-m-Y H:i:s')]);
+    'fecha_act' => date('d-m-Y H:i:s'),
+    'sap' => $key['sap']]);
   }
 }
 
+$date = date("Y/m/d H:i:s");
+
+$lineaQueBaja = array();
 /* Cuento las lineas que bajan de prioridad */
 $up = 0;
 $down = 0;
@@ -137,6 +142,9 @@ for($n = 0; $n < count($items); $n++) {
       if($items[$n]['aviso'] == $oldFile[$i]['aviso']){
         if($items[$n]['prioridad'] > $oldFile[$i]['prioridad']){
           $down++;
+          $items[$n]['calculo'] = $date;
+          $items[$n]['anterior'] = $oldFile[$i]['prioridad'];
+          array_push($lineaQueBaja,$items[$n]);
         }
       }
     }
@@ -155,7 +163,7 @@ if($mismaPlaca){
     $marcado = "";
     if($newShortFile[$index]["reemplazamiento"] != "")
       $alerta = " <span class='alertReemp' id='".$newShortFile[$index]["reemplazamiento"]."'>⚠</span>";
-    if($oldFile[$i]["marcado"] != "")
+    if($oldFile[$index]["marcado"] != "")
       $marcado = 'class="inmovUpdate"';
     $htmlList .= '
     <ul '.$marcado.'>
@@ -164,7 +172,7 @@ if($mismaPlaca){
       <li>' . $newShortFile[$index]["cuenta"] . '</li>
       <li>' . $newShortFile[$index]["nombre"] . '</li>
       <li title="'.$newShortFile[$index]["marca"].'">' . $newShortFile[$index]["npedido"] . '</li>
-      <li class="copy" title="' . $newShortFile[$index]["referencia"] . '" id="'.$newShortFile[$index]["id"].'">' . $alerta . $contacts->formatRef($newShortFile[$index]["referencia"]) . '</li>
+      <li class="copy" title="' . $newShortFile[$index]["referencia"] . '" id="'.$newShortFile[$index]["id"].'">' . $contacts->formatRef($newShortFile[$index]["referencia"]) . $alerta . '</li>
       <li>' . $newShortFile[$index]["designacion"] . '</li>
       <li>' . $newShortFile[$index]["cantidad"] . '</li>
       <li class="priority">' . $newShortFile[$index]["prioridad"] . '</li>
@@ -173,7 +181,9 @@ if($mismaPlaca){
   
   /* Resto las lineas que bajan de prioridad a las totales a priorizar y inerto en BBDD */
   $up = sizeof($newShortFile) - $down;
-  $contacts->newFileInmv($up, $down, $placa);
+  $contacts->newFileInmv($up, $down, $placa, $date);
+  if(count($lineaQueBaja) > 0)
+    $contacts->newFileInmvDown($lineaQueBaja);
   
   /* Imprimo la cabecera y las lista */ 
   echo "<h2>".$placas[$items[1]['placa']] ." - ".$oldFile[0]["libre"].' - '.sizeof($newSortList) ." lineas</h2>" .$htmlList;

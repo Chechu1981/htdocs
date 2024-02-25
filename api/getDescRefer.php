@@ -8,10 +8,8 @@ $rows = $contacts->getRefer(str_replace(' ','',$_POST['referencia']));
 
 if(sizeof($rows) > 0){
     $list = '';
-    foreach ($rows as $row) { 
-        $list .= trim($rows[0][2],'000')."<p>
-            PVP: ".number_format($rows[0][4],2,',','.')."€";
-    }
+    $list .= trim($rows[0][2],'000')."<p>
+        PVP: ".number_format($rows[0][4],2,',','.')."€";
 }
 
 echo $list;

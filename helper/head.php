@@ -17,15 +17,15 @@ $scripts = (object)[
   'PALMA' => "/js/center3.js",
   'ZARAGOZA' => "/js/center3.js",
   'VIGO' => "/js/center3.js",
-  'CENTROS' => "/js/center3.js",
+  'CENTROS' => "/js/center3.js?101",
   'CESIONES1' => "/js/cesiones202312.js?1235",
   'CESIONES' => "/js/cesiones19.js",
-  'CESIONESALL' => "/js/cesionesAll.js?164",
-  'CESIONESADV' => "/js/cesionesADV.js?164",
-  'BUSCAR' => "/../js/buscarCesiones.js?104",
-  'READY' => "/../js/readyCesiones.js?104",
-  'STATUS' => "/../js/statusCesiones.js?104",
-  'FINISH' => "/../js/finishCesiones.js?107",
+  'CESIONESALL' => "/js/cesionesAll.js?174",
+  'CESIONESADV' => "/js/cesionesADV.js?175",
+  'BUSCAR' => "/../js/buscarCesiones.js?105",
+  'READY' => "/../js/readyCesiones.js?105",
+  'STATUS' => "/../js/statusCesiones.js?105",
+  'FINISH' => "/../js/finishCesiones.js?108",
   'CESIONESADV_TEST' => "/js/cesionesADV_test.js?127",
   'LIBRETA' => "/js/libreta13.js",
   'contact' => "/js/contact2.js",
@@ -36,7 +36,7 @@ $scripts = (object)[
   'ROUTETEST' => "/js/routeTest.js",
   'INMOVILIZADOS' => "/js/vi18.js?1237",
   'REFERENCIADOS' => "/js/referenciados.js?1002",
-  'INMSTATUS' => "/js/inmStat.js",
+  'INMSTATUS' => "/js/inmStat.js?104",
   'CONFIGROUTES' => "/js/cfgRutas2.js",
   'CONFIGREPERE' => "/js/formRepere.js",
   'CONFIGSOC' => "/js/cfgSoc.js",
@@ -47,7 +47,7 @@ $scripts = (object)[
   'TXTTOXLS' => "/js/txtToXls.js",
   'CONFIGCLIENT' => "/js/updateClient.js",
   'CONFIGPENDING' => "/js/updatePending.js?112",
-  'FORMNEWUSER' => "/../js/formNewUser.js"
+  'FORMNEWUSER' => "/../js/formNewUser.js?100"
 ];
 
 $usr = $contacts->getAllUsers();
@@ -65,9 +65,9 @@ $user = strtoupper($userBdd[0][3]);
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?php echo $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1260" defer content="1">
+<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1262" defer content="1">
 <link rel="stylesheet" href="<?php echo $src; ?>/css/150027.css?1005" defer content="1">
 <link rel="stylesheet" href="<?php echo $src ."/css/". str_replace(" ","_",strtolower($user)).".css"; ?>" defer content="0">
 <script type="text/javascript" src="<?php echo $src; ?>/js/script20.js?1012" defer content='no-cache'></script>
-<script type="text/javascript" src="<?php echo $src . $scripts->$page; ?>" defer content="0"></script>
+<script type="module" src="<?php echo $src . $scripts->$page; ?>" defer content="0"></script>
 <title>Chechu - <?php echo $page; ?></title>

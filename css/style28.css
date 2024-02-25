@@ -800,7 +800,7 @@ input[type="color"]::-webkit-color-swatch {
 
 #cesiones ul{
   padding-inline-start: 0;
-  grid-template-columns: 4% 7% 9% 11% 23% 5% 4% 5% 10% 9% 9% 4%;
+  grid-template-columns: 4% 7% 9% 11% 20% 5% 4% 5% 10% 9% 7% 6% 2%;
 }
 
 #cesiones ul li select{
@@ -1045,6 +1045,15 @@ input[type="color"]::-webkit-color-swatch {
 .delete img:hover{
     cursor: pointer;
     filter: invert(100)!important;
+}
+
+.erase{
+    cursor: pointer;
+    filter: brightness(.2);
+}
+
+.erase:hover{
+    filter: brightness(1);
 }
 
 .bottons{
@@ -1876,8 +1885,17 @@ margin: 0 10px;
 }
 
 #result .listInm{
-    grid-template-columns: 16% 10% 9% 6% 20% 10%;
+    grid-template-columns: 16% 10% 9% 6% 20% 10% 5%;
     margin: 0;
+}
+
+.downItems{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.downItems:hover{
+    color:var(--cards-active-color);
 }
 
 .inmovUpdate{
@@ -2137,6 +2155,8 @@ margin: 0 10px;
     justify-content: flex-start;
     text-align: center;
     font-size: small;
+    height: 100vh;
+    overflow: auto;
 }
 
 .listPendig th{

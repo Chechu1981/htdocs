@@ -35,6 +35,7 @@ $html = '<ul class="heading listInm">
 <li>bajan</li>
 <li>fecha</li>
 <li>total día</li>
+<li></li>
 </ul>';
 
 $acumulado = 0;
@@ -42,6 +43,8 @@ $imprime = "";
 
 for($i=0;$i < sizeof($items);$i++){
   $today = explode(' ',$items[$i][3])[0];
+  $enlace = $items[$i][2];
+  $eliminar = "<li></li>";
   if($i+1 >= sizeof($items))
     $tomorrow = "finished";
   else
@@ -51,15 +54,19 @@ for($i=0;$i < sizeof($items);$i++){
     $imprime = $acumulado;
     $acumulado = 0;
   }
-  
+  if($nplacas["PPCR ".strtoupper($_POST['placa'])] != 'all' && $enlace > 0)
+    $enlace = "<span title='".trim($items[$i][3])."' class='downItems'>".$items[$i][2]."</span>";
+  if($nplacas["PPCR ".strtoupper($_POST['placa'])] != 'all')
+    $eliminar = "<li class='erase' id='".$items[$i][4]."'>❌</li>";
   $formatDate = explode('-',$today)[2]."-".explode('-',$today)[1]."-".explode('-',$today)[0]." ".@explode(' ',$items[$i][3])[1];
   $html .= "<ul class='listInm'>
       <li>".$placas[$items[$i][0]]."</li>
       <li>".$items[$i][1] + $items[$i][2]."</li>
       <li>".$items[$i][1]."</li>
-      <li>".$items[$i][2]."</li>
+      <li>".$enlace."</li>
       <li>".$formatDate."</li>
       <li>".$imprime."</li>
+      ".$eliminar."
     </ul>";
   $imprime = "";
 }

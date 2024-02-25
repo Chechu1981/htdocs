@@ -134,7 +134,7 @@ if(sizeof($rows) > 0){
     if($puesto == 'ADV')
       $origen = createOptions($row[0],$row[1]);
     if($row[10] != $user[0][1])
-      $usuarioCesion = $row[10];
+      $usuarioCesion = $row[10].'<span id="rechazo'.$row[0].'">❌</span>';
     if($row[23] == 1){
       $rechazado = "🚫";
       $rechazadoStyle = 'background-color:#ff000073';
@@ -150,8 +150,8 @@ if(sizeof($rows) > 0){
     if($codgClient[$row[1].$row[2].$nfm] == "6254-1" ||$codgClient[$row[1].$row[2].$nfm] == "78713-1"){
       $important = 'important';
     }
-    if($row[2] == 'VIGO')
-      $important = 'important';
+    /*if($row[2] == 'VIGO')
+      $important = 'important';*/
     
     $lists .= '
     <ul class="assignPendingAdv" title="'.$contador++.'" style="'.$rechazadoStyle.'">
@@ -177,7 +177,7 @@ if(sizeof($rows) > 0){
       </li>
       <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"><span title="'.$row[24].'">'.$rechazado.'</span></li>
       <li class="send" >'.$btnEnviar.'<span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
-      <li>'.$usuarioCesion.'</li>
+      <li class="send" style="font-size:small">'.$usuarioCesion.'</li>
     </ul>';
   }
 }

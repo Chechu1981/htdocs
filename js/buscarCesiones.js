@@ -1,3 +1,6 @@
+import contadores from "./updateCounter.js"
+
+setInterval(() =>{contadores()},1000)
 
 // Accion de los botones de navegación
 const id = window.location.search.split('?id=')[1]
