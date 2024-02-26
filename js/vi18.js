@@ -103,7 +103,7 @@ const copyAndCheck = (e) =>{
       else
         result.getElementsByTagName('ul')[i].style = ""
     }
-    e.target.parentNode.style = "color: #2de376;"
+    e.target.parentNode.style = "color: #2de376; font-weight: 800;"
     const idData = new FormData()
     idData.append('id', e.target.id)
     idData.append('referencia', refer)
@@ -163,6 +163,13 @@ const eventoClick = e =>{
   .then(short => {
     result.innerHTML = short
     result.addEventListener('click', e => copyAndCheck(e))
+    const liArray = document.getElementsByClassName('history')
+    let configuracion_ventana ="menubar=no,location=yes,resizable=mo,scrollbars=yes,status=yes"
+    for(let i = 0;i < liArray.length;i++){
+      liArray[i].addEventListener('click',() =>{
+        window.open("www.google.es","Histórico de actualizaciones",configuracion_ventana)
+      })
+    }
   })
 }
 
@@ -204,13 +211,13 @@ complete.addEventListener('click', (e)=>{
     const client = e.target.parentNode.parentNode.childNodes[7].innerText
     const id = e.target.parentNode.parentNode.childNodes[1].id
     const priority = e.target.parentNode.parentNode.childNodes[17]
-    const title = e.target.parentNode.parentNode.childNodes[9].getElementsByTagName('a')[0].title
+    const titulo = e.target.parentNode.parentNode.childNodes[9].getElementsByTagName('a')[0]
     const lineItem = e.target.parentNode.parentNode
     let formModal = `
       <div><h2>${ref} - ${client}</h2></div>
       <form id="updateInmov" action="#">
         <label for="name">Nombre</label>
-        <input type="text" id="name" value="${title.replace('Amuentar la prioridad','')}"></input>
+        <input type="text" id="name" value="${titulo.title.replace('Amuentar la prioridad','')}"></input>
         <label for="num">Número</label>
         <select type="number" id="num">`
     for (var i = 1;i<10;i++){
@@ -236,7 +243,7 @@ complete.addEventListener('click', (e)=>{
         return
       }
       priority.innerHTML = num.value
-      title.innerText = `${nameAut}`
+      //titulo.title.innerText = nameAut
       lineItem.style.color = '#0d0d72'
       lineItem.style.backgroundColor = '#cd0a0a'
       const data = new FormData()

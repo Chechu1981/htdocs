@@ -40,6 +40,18 @@
 include_once '../connection/data.php';
 
 $contacts = new Contacts();
+
+$getPlacaName = array(
+  "027130L" => "PPCR BALEARES",
+  "027135M" => "PPCR BARCELONA",
+  "027120K" => "PPCR GRANADA",
+  "027015L" => "PPCR MADRID",
+  "027066M" => "PPCR PATERNA",
+  "027110G" => "PPCR SEVILLA",
+  "027115E" => "PPCR VIGO",
+  "027125R" => "PPCR ZARAGOZA"
+);
+
 $ano = explode("-",$_GET['date'])[0];
 $mes = explode("-",$_GET['date'])[1];
 $dia = explode(' ',explode("-",$_GET['date'])[2])[0];
@@ -69,7 +81,7 @@ if(count($rows) > 0){
         $htmlList .= '<li>'.$row[5] .'</li>';
         $htmlList .= '<li>'.$row[6] .'</li>';
         $htmlList .= '<li>'.$row[7] .'</li>';
-        $htmlList .= '<li>'.$row[8] .'</li>';
+        $htmlList .= '<li>'.$getPlacaName[$row[8]] .'</li>';
         $htmlList .= '<li>'.$row[9] .'</li>';
         $htmlList .= '<li>'.$row[10] .'</li>';
         $htmlList .= '<li>'.$row[12] .'</li>';
