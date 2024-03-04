@@ -47,7 +47,7 @@ $scripts = (object)[
   'TXTTOXLS' => "/js/txtToXls.js",
   'CONFIGCLIENT' => "/js/updateClient.js",
   'CONFIGPENDING' => "/js/updatePending.js?112",
-  'FORMNEWUSER' => "/../js/formNewUser.js?100"
+  'FORMNEWUSER' => "/../js/formNewUser.js?101"
 ];
 
 $usr = $contacts->getAllUsers();

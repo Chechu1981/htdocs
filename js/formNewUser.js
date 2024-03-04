@@ -18,6 +18,7 @@ $('nombre').addEventListener('blur', (e) =>{
 document.getElementsByTagName('form')[0].addEventListener('submit', (event) => {
   event.preventDefault()
   const nombre = $('nombre').value
+  const email = $('email').value
   const puesto = $('puesto').value
   const pass1 = $('pass1').value
   const pass2 = $('pass2').value
@@ -33,6 +34,7 @@ document.getElementsByTagName('form')[0].addEventListener('submit', (event) => {
   }
   const datos = new FormData()
   datos.append('nombre', nombre)
+  datos.append('email', email)
   datos.append('puesto', puesto)
   datos.append('pass', pass1)
   fetch('/../api/addNewUser.php',{

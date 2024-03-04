@@ -1,5 +1,11 @@
+const rutas = {
+    update:'../api/updatePass.php',
+    delete:'../api/deletePass.php',
+    new:'../api/addPass.php'
+  }
+
 document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
-    const src = success[e.target.title]
+    const src = rutas[e.target.title]
     e.preventDefault()
     e.stopImmediatePropagation()
     const data = new FormData()

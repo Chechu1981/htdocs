@@ -1,3 +1,5 @@
+'use strict';
+
 $$('input')[1].focus()
 
 const buscar = (e) => {
@@ -61,7 +63,7 @@ document.addEventListener('click',(e)=>{
     modal(newForm,"Nueva contraseña")
     const scrpt = Array.prototype.slice.call(document.scripts)
     scrpt.forEach(e => {
-      e.src.split('/')[4] == 'form2.js' ? null : createScript()
+      e.src.split('/')[4].includes('form2.js') ? null : createScript()
     })
   }else if(e.target.id.includes('delete')){
     if(confirm('¿Quieres eliminar este registro?') == true){
@@ -87,7 +89,7 @@ document.addEventListener('click',(e)=>{
       modal(res,"Editar contraseña")
       const scrpt = Array.prototype.slice.call(document.scripts)
       scrpt.forEach(e => {
-        e.src.split('/')[4] == 'form2.js' ? null : createScript()
+        e.src.split('/')[4].includes('form2.js') ? null : createScript()
       })
     })
   }
@@ -101,10 +103,4 @@ if($('center-items-pass').childNodes[1].childNodes[1] != undefined){
   $('center-items-pass').childNodes[1].addEventListener('click', (e) => {
     e.target.title != "" ? buscar(`btn${e.target.title.toLowerCase()}`) : null
   })
-}
-
-const success = {
-  update:"../api/updatePass.php",
-  delete:"../api/deletePass.php",
-  new:"../api/addPass.php"
 }
