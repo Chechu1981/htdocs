@@ -62,10 +62,13 @@ function createOptions($id,$placa){
   $placas = array('MADRID','VIGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA');
   $select = '<select name="origen" id="origen'.$id.'">';
   foreach ($placas as $key) {
+    $nombre = $key;
+    if($key == 'VIGO')
+      $nombre = 'SANTIAGO';
     if($key == $placa)
-      $select .= '<option value="'.$key.'" selected>'.$key.'</option>';
+      $select .= '<option value="'.$key.'" selected>'.$nombre.'</option>';
     else
-      $select .= '<option value="'.$key.'">'.$key.'</option>';
+      $select .= '<option value="'.$key.'">'.$nombre.'</option>';
   }
   $select .= '</select>';
   return $select;

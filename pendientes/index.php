@@ -10,6 +10,8 @@ $date = date_create($date[0][0]);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="PPCR, CITROEN, PEUGEOT, OPEL, PLACA DE RECAMBIOS, RECAMBIOS ORIGINALES">
+    <meta name="author" content="Jesús Martín">
     <meta name="description" content="Listado de referencias pendientes de servir de clientes de PPCR">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">

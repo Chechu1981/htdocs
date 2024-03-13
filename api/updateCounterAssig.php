@@ -1,10 +1,15 @@
 <?php
 include_once '../connection/data.php';
 $contacts = new Contacts();
+$usuario = "ROBOT";
+$hash = '';
+$puesto = 'ADV';
 $user = $contacts->getUserBySessid($_POST['id']);
-$usuario = $user[0][1];
-$hash = $user[0][5];
-$puesto = $user[0][4];
+if(count($user)>0){
+  $usuario = $user[0][1];
+  $hash = $user[0][5];
+  $puesto = $user[0][4];
+}
 
 $nuevas = $contacts->getAssigCountNew($usuario,$puesto,'')[0][0];
 $allAdvAssigns = $contacts->getAssigCountNew($usuario,$puesto,'all')[0][0];
