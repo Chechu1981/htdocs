@@ -286,6 +286,7 @@ const showAssig = () =>{
                 method: 'POST',
                 body: data
               })
+              ul.remove()
               $('close').click()
             })
           })
