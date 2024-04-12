@@ -59,12 +59,10 @@ if($_POST['id'] != 'new')
 $lists = "<h1>No hay cesiones</h1>";
 
 function createOptions($id,$placa){
-  $placas = array('MADRID','VIGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA');
+  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA');
   $select = '<select name="origen" id="origen'.$id.'">';
   foreach ($placas as $key) {
     $nombre = $key;
-    if($key == 'VIGO')
-      $nombre = 'SANTIAGO';
     if($key == $placa)
       $select .= '<option value="'.$key.'" selected>'.$nombre.'</option>';
     else
@@ -103,6 +101,8 @@ if(sizeof($rows) > 0){
     $fecha = explode(" ", $row[8]);
     $fechaD = explode("-", $fecha[0]);
     $fechaR = explode("-", $row[9]);
+    $fechaS = explode("-", $row[25]);
+    $fechaSHora = explode(".",explode(" ", $row[25])[1]);
     $fragChecked = "";
     $nfmChecked = "";
     $nfm = '';
@@ -134,6 +134,7 @@ if(sizeof($rows) > 0){
       }
     }
     $origen = '<span id="origen'.$row[0].'">'.$row[1].'</span>';
+    $destino = $row[2];
     if($puesto == 'ADV')
       $origen = createOptions($row[0],$row[1]);
     if($row[10] != $user[0][1])
@@ -150,17 +151,17 @@ if(sizeof($rows) > 0){
       $nfm = 'NM';
       $nfmChecked = 'checked="checked"';
     }
-    if($codgClient[$row[1].$row[2].$nfm] == "6254-1" ||$codgClient[$row[1].$row[2].$nfm] == "78713-1"){
+    if($codgClient[$row[1].$row[2].$nfm] == "6254-1" || $codgClient[$row[1].$row[2].$nfm] == "78713-1"){
       $important = 'important';
     }
-    /*if($row[2] == 'VIGO')
+    /*if($row[2] == 'SANTIAGO')
       $important = 'important';*/
     
     $lists .= '
     <ul class="assignPendingAdv" title="'.$contador++.'" style="'.$rechazadoStyle.'">
       <li title="Copiar: Origen > Destino" class="">
         <span class="ledOff '.$btnOrigenPress.'"></span>'.$origen.'
-        <span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'">'.$row[2].'</span>
+        <span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'">'.$destino.'</span>
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$codgClient[$row[1].$row[2].$nfm].'</span>
       </li>
       <li title="Destino: " style="display:none">'.$row[2].'</li>
@@ -180,7 +181,7 @@ if(sizeof($rows) > 0){
       </li>
       <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"><span title="'.$row[24].'">'.$rechazado.'</span></li>
       <li class="send" >'.$btnEnviar.'<span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
-      <li class="send" style="font-size:small">'.$usuarioCesion.'</li>
+      <li class="send" style="font-size:small" title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuarioCesion.'</li>
     </ul>';
   }
 }

@@ -1,3 +1,4 @@
+'use strict';
 $$('input')[1].focus()
 
 //Show Contacts
@@ -134,8 +135,8 @@ const loadItems = (search) => {
         newForm += "<label></label><input type='text' placeholder='referencia' id='referencia'>"
         newForm += "<input type='file' id='docFile' style='display:none'>"
         newForm += "<input type='submit' class='note-btn' style='position: absolute;' value='añadir'>"
-        newForm += "</form>"
         newForm += "<div id='dropContainer'>Arrastra aqui algún fichero</div>"
+        newForm += "</form>"
         modal(newForm,`Nueva nota`)
         const scrpt = Array.prototype.slice.call(document.scripts)
         scrpt.forEach(e => {
@@ -157,5 +158,10 @@ const success = {
 }
 
 $('center-items-pass').addEventListener('click',e =>{
-  loadItems(e.target.title)
+  if(e.target.title == "ACEITE")
+    location.href = `./aceite.php${location.search}`
+  else if(e.target.title == "BATERIAS")
+    location.href = `./baterias.php${location.search}`
+  else
+    loadItems(e.target.title)
 })

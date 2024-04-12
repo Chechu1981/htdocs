@@ -55,12 +55,10 @@ function createOptons($user){
 }
 
 function createOptionsOrigin($id,$placa){
-  $placas = array('MADRID','VIGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA');
+  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA');
   $select = '<select name="origen" id="origen'.$id.'">';
   foreach ($placas as $key) {
     $nombre = $key;
-    if($key == 'VIGO')
-      $nombre = 'SANTIAGO';
     if($key == $placa)
       $select .= '<option value="'.$key.'" selected>'.$nombre.'</option>';
     else
@@ -143,22 +141,25 @@ if(sizeof($rows) > 0){
     if($codgClient[$row[1].$row[2].$nfm] == "6254-1" ||$codgClient[$row[1].$row[2].$nfm] == "78713-1"){
       $important = 'important';
     }
-    /*if($row[2] == 'VIGO')
+    /*if($row[2] == 'SANTIAGO')
       $important = 'important';*/
     $origen = $row[1];
     if($user[0][4] == 'ADV')
       $origen = createOptionsOrigin($row[0],$row[1]);
-
+    $destino = $row[2];
+    if($row[2] == 'SANTIAGO')
+      $destino = "SANTIAGO";
     $opctions = createOptons($agente);
-
+    $fechaS = explode("-", $row[25]);
+    $fechaSHora = explode(".",explode(" ", $row[25])[1]);
     $lists .= '
     <ul class="assignPendingAdv '.$libre.'" title="'.$contador++.'">
       <li title="Copiar: Origen > Destino" class="">
         <span class="ledOff '.$btnOrigenPress.'"></span>'.$origen.'
-        <span class="active-city '.$btnDestinoPress.'">'.$row[2].'</span>
+        <span class="active-city '.$btnDestinoPress.'">'.$destino.'</span>
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$codgClient[$row[1].$row[2].$nfm].'</span>
       </li>
-      <li title="Destino: " style="display:none">'.$row[2].'</li>
+      <li title="Destino: " style="display:none">'.$destino.'</li>
       <li title="Cliente: " class="copy" style="font-size: medium;display:flex;flex-direction:column" value="'.$row[3].'">'.$row[3].'<span style="font-size:9px;text-align:center;line-height: 7px;">'.$clientName.'</span></li>
       <li title="Ref. Cliente: " style="display:none">'.$row[12].'</li>
       <li title="Comentario: " class="copy">'.$row[11].'</li>
@@ -175,7 +176,7 @@ if(sizeof($rows) > 0){
       </li>
       <li title="Eliminar: '.$row[4].'" class="send" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
       <li class="send" ><span title="Enviar Cesión" id="send'.$row[0].'">📩</span><span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
-      <li>'.$usuario.'<br>('.$puesto.')</li>
+      <li title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuario.'<br>('.$puesto.')</li>
       <li class="send"><span id="rechazo'.$row[0].'" title="'.$row[24].'">'.$rechazado.'</span></li>
     </ul>';
   }

@@ -345,7 +345,7 @@ class Contacts
     }
 
     public function getAssig($all,$usr,$puesto = null){
-        $order = "ORDER BY `id` DESC LIMIT 100";
+        $order = " ORDER BY `id` DESC LIMIT 100";
 
         $sql = "SELECT * FROM `cesiones` WHERE 
         `ref` LIKE '%$all%' OR
@@ -362,9 +362,9 @@ class Contacts
         elseif($all == 'new')
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";            
         elseif($all == 'stop' AND $puesto != 'ADV')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr') ORDER BY `id` DESC LIMIT 100";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";
         elseif($all == 'stop' AND $puesto == 'ADV')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true ORDER BY `id` DESC LIMIT 100;";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true";
         $sql .= $order;
         $query = $this->db->prepare($sql);
         $query->execute();
@@ -540,7 +540,7 @@ class Contacts
         `modelo` LIKE '%$search%' OR
         `descripcion` LIKE '%$search%' OR
         `referencia` LIKE '%$search%'
-        ORDER BY `marca`,`modelo`,`descripcion` ASC";
+        ORDER BY `marca`,`modelo`,`descripcion` ASC LIMIT 100";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -1362,5 +1362,45 @@ class Contacts
         $query = $this->db->prepare($sql);
         $query->execute();
     }
-}
 
+    public function getOil($densidad,$litros,$marca){
+        $sql = "SELECT * FROM `aceite_eurorepar` WHERE `grado` = '$densidad' AND `vol` LIKE '$litros' AND `marca` LIKE '$marca' ORDER BY `ACEA`";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getBattery($amperios,$stopStart,$normal){
+        $minAmperios = $amperios - 5;
+        $maxAmperios =  $amperios + 5;
+        if($normal == 'normal')
+            $normal = " AND (`Stop_Start` LIKE 'no' OR `Stop_Start` IS NULL) ";
+        if($stopStart == 'Option STT possible')
+            $stopStart = " AND (`Stop_Start` LIKE 'Option STT possible') ";
+        if($stopStart == " AND (`Stop_Start` LIKE 'Option STT possible') " && $normal == " AND (`Stop_Start` LIKE 'no' OR `Stop_Start` IS NULL) "){
+            $stopStart = '';
+            $normal = '';
+        }
+        $where = "WHERE REPLACE(REPLACE(SUBSTRING(`Desicription`,-7,3),'D',''),' ','') BETWEEN $minAmperios AND $maxAmperios ";
+        if($amperios == 120)
+            $where = " WHERE `Desicription` LIKE '%%' ";
+        
+        $sql = "SELECT DISTINCT SUBSTRING(`Desicription`,-3) AS `amperios`, 
+            REPLACE(REPLACE(SUBSTRING(`Desicription`,-7,3),'D',''),' ','') AS `aHora`,
+            `Stop_Start`,
+            `Exact`,
+            `Desicription`,
+            `Length`,
+            `Width`,
+            `Heights`,
+            `Polarity`,
+            `Borne` 
+            FROM `baterias` 
+            $where 
+            $stopStart $normal
+            ORDER BY CAST(REPLACE(`aHora`,'A','') AS INT),`amperios`,`Stop_Start` ASC;";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+}

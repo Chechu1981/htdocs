@@ -21,11 +21,12 @@
         </div>
       </div>
     </div>
-    <div id="contacts-items">
+    <div id="contacts-items" class="contacts-items">
       <div id="center-items-pass" class="bottons">
         <ul class="header-title" style="width:60%;margin:auto;">    
             <li title="CALENDARIO">CALENDARIOS</li>
             <li title="ACEITE">ACEITE</li>
+            <li title="BATERIAS">BATERÍAS</li>
             <li title="CITROEN">CITROEN / PEUGEOT</li>
             <li title="EUROREPAR">EUROREPAR</li>
             <li title="OPEL">OPEL / CHEVROLET</li>

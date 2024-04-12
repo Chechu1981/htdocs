@@ -5,12 +5,16 @@ $products = json_decode($data, true);
 $lists = '';
 $contacts = new Contacts();
 $pilot = $_POST['origen'];
+$destino = $_POST['destino'];
+$destinoC = $_POST['destinoC'];
+$origenF = $_POST['origenF'];
 if($_POST['origen'] == 'PALMA'){
     $pilot = 'BALEARES';
 }
-$mails = $products[$_POST['destino']];
-$mailsC = $products[$_POST['destinoC']];
-$mailsF = $products[$_POST['origenF']];
+
+$mails = $products[$destino];
+$mailsC = $products[$destinoC];
+$mailsF = $products[$origenF];
 $arr = ['destino' => $mails,'conCopia' => $mailsC,'fragil' => $mailsF];
 
 $rows = $contacts->getCenter('PPCR '.strtoupper($pilot),'PILOTO ECONOMICO');

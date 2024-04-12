@@ -20,14 +20,14 @@ $scripts = (object)[
   'CENTROS' => "/js/center3.js?101",
   'CESIONES1' => "/js/cesiones202312.js?1235",
   'CESIONES' => "/js/cesiones19.js",
-  'CESIONESALL' => "/js/cesionesAll.js?174",
-  'CESIONESADV' => "/js/cesionesADV.js?176",
+  'CESIONESALL' => "/js/cesionesAll.js?179",
+  'CESIONESADV' => "/js/cesionesADV.js?180",
   'BUSCAR' => "/../js/buscarCesiones.js?105",
   'READY' => "/../js/readyCesiones.js?105",
   'STATUS' => "/../js/statusCesiones.js?105",
   'FINISH' => "/../js/finishCesiones.js?108",
   'CESIONESADV_TEST' => "/js/cesionesADV_test.js?127",
-  'LIBRETA' => "/js/libreta13.js",
+  'LIBRETA' => "/js/libreta13.js?101",
   'contact' => "/js/contact2.js",
   'form' => "/js/form1.js",
   'fomrcontacts' => "/js/fomrcontacts1.js",
@@ -47,6 +47,8 @@ $scripts = (object)[
   'TXTTOXLS' => "/js/txtToXls.js",
   'CONFIGCLIENT' => "/js/updateClient.js",
   'CONFIGPENDING' => "/js/updatePending.js?112",
+  'ACEITE' => "/js/aceite.js?114",
+  'BATERIAS' => "/js/baterias.js?117",
   'FORMNEWUSER' => "/../js/formNewUser.js?101"
 ];
 
@@ -65,9 +67,9 @@ $user = strtoupper($userBdd[0][3]);
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?php echo $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1262" defer content="1">
+<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1270" defer content="1">
 <link rel="stylesheet" href="<?php echo $src; ?>/css/150027.css?1005" defer content="1">
 <link rel="stylesheet" href="<?php echo $src ."/css/". str_replace(" ","_",strtolower($user)).".css"; ?>" defer content="0">
-<script type="text/javascript" src="<?php echo $src; ?>/js/script20.js?1012" defer content='no-cache'></script>
+<script type="text/javascript" src="<?php echo $src; ?>/js/script20.js?1014" defer content='no-cache'></script>
 <script type="module" src="<?php echo $src . $scripts->$page; ?>" defer content="0"></script>
 <title>Chechu - <?php echo $page; ?></title>

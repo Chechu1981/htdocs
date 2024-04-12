@@ -342,7 +342,7 @@ const newAssigns = setInterval(() => {
       .then(ass => ass.json())
       .then(cesion =>{
         if(cesion.puesto !== undefined && cesion.puesto != 'ADV'){
-          notificacion(`Nueva cesión de ${cesion.puesto}.`,
+          notificacion(`Nueva cesión de ${cesion.usuario}.`,
           `referencia: ${cesion.ref} de ${cesion.origen} a ${cesion.destino}`)
           const path = window.location.pathname
           if(path.includes('cesiones') || path.includes('assigns'))

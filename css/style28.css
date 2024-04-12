@@ -135,6 +135,12 @@ select, input{
   justify-content: space-around;
 }
 
+#menu-items{
+    li{
+        width: 55px;
+    }
+}
+
 .head-img section{
     color: var(--main-font-color);
     font-size: larger;
@@ -886,6 +892,7 @@ input[type="color"]::-webkit-color-swatch {
 #center-list-items ul:nth-child(even){
   background-color: var(--bg-body-color);
   color: var(--main-font-color);
+  padding: 0;
 }
 
 #route-items ul:nth-child(odd),
@@ -896,13 +903,7 @@ input[type="color"]::-webkit-color-swatch {
 #center-list-items ul:nth-child(odd){
     background-color: var(--search-line);
     color: var(--main-font-color);
-}
-
-.assignPendingAdv::before {
-    content: attr(title);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0;
 }
 
 #route-items ul:hover,
@@ -918,8 +919,64 @@ input[type="color"]::-webkit-color-swatch {
     position: relative;
     transition: .2s;
 }
+
 #contacts-items ul:hover a{
     color:var(--bg-body-color);
+}
+
+.filter-oil{
+    display: flex;
+    flex-direction: column;
+}
+
+table.table_oil{
+    margin: auto;
+    border-collapse: collapse;
+    font-size: larger;
+}
+
+table.table_oil th{
+    font-size: larger;
+}
+
+table.table_oil td{
+    padding: 8px;
+}
+
+table.table_oil tr:nth-child(odd){
+    background-color:var(--search-line);
+}
+
+table td.ref{
+    cursor: url(../../img/content_copy_FILL0_wght700_GRAD200_opsz20.png), pointer;
+    font-weight: 800;
+}
+
+table td.ref:hover{
+    color: var(--cards-active-color);
+}
+
+span.button{
+    border: 1px solid black;
+    padding: 8px;
+    border-radius: 2px;
+    background-color: lightgray;
+    box-shadow: 1px 1px 2px gray;
+    display: block;
+    width: fit-content;
+    cursor: default;
+}
+
+span.button:active{
+    box-shadow: .2px .2px 2px rgb(8, 8, 8);
+    transform: translate(0.8px, 0.8px);
+}
+
+.assignPendingAdv::before {
+    content: attr(title);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .pass-items ul:nth-child(odd) a,
@@ -951,7 +1008,7 @@ input[type="color"]::-webkit-color-swatch {
 #center-list-items li{
   display: flex;
   justify-content: center;
-  padding: 0.2em;
+  overflow-wrap: break-word;
   margin: auto 0;
   list-style: none;
   align-items: center;
@@ -1094,9 +1151,33 @@ input[type="color"]::-webkit-color-swatch {
 .bottons li:hover{
     opacity: 1;
     background-color: var(--main-font-color);
-    font-size: x-large;
     box-shadow: 0 0 12px 1px var(--bg-font-color);
     cursor: pointer;
+}
+
+.bottons-oil li:hover{
+    font-size: medium;
+}
+
+.filter-oil{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.filter-oil li{
+    font-size: medium;
+    list-style: none !important;
+    border: 1px solid black;
+    box-shadow: 2px 2px 2px;
+    padding: 4px;
+    margin: 0 10px;
+    cursor: default;
+    border-radius: 4px;
+}
+
+.header-title{
+    display: flex;
 }
 
 .nPass{

@@ -24,8 +24,13 @@ $nuevas = $contacts->getAssigCountNew($usuario,$usuario,'ready')[0][0];
     <ul>
         <li><a href="<?php echo $src.'/home.php?id='.$id; ?>" >Inicio</a></li>
         <li><a href="<?php echo $src.'/src/routeTest.php?id='.$id; ?>">Rutas</a></li>
-        <li><a href="<?php echo $src.'/src/libreta.php?id='.$id; ?>">Libreta</a></li>
-        <li style="width: 84px;display:grid;grid-template-columns:84% 16%" id="cesionesActivas">
+        <li><a href="<?php echo $src.'/src/libreta.php?id='.$id; ?>">Libreta</a>
+            <ul>
+                <li><a href="<?php echo $src.'/src/aceite.php?id='.$id; ?>">Aceite</a></li>
+                <li><a href="<?php echo $src.'/src/baterias.php?id='.$id; ?>">Baterías</a></li>
+            </ul>
+        </li>
+        <li style="width:82px;display:grid;grid-template-columns:84% 16%" id="cesionesActivas">
             <a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>" title="<?php echo $allAssigns; ?>">Cesiones</a><span id="userAssignsready" class="round heart"><?php echo $nuevas; ?></span>
             <ul>
                 <?php echo $menuTodas; ?>

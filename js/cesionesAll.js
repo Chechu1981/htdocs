@@ -41,7 +41,7 @@ const cesiones = (origen, destino,nfm) =>{
   let cesion = null
   origen != destino ? cesion = origen + '' + destino:''
   nfm ? cesion += 'NM' :''
-  fetch('../json/cesionesCliente.json?100')
+  fetch('../json/cesionesCliente.json?101')
   .then(response => response.json())
   .then(response => {
     const numDest = response[cesion]
@@ -53,10 +53,10 @@ const cesiones = (origen, destino,nfm) =>{
     }else if(destino == 'PALMA'){
       $('pclient').classList.add('important')
       alerta = "Portes"
-    /*}else if(destino == "VIGO" && date.getDate() >= 7){
+    /*}else if(destino == "SANTIAGO" && date.getDate() >= 7){
       $('pclient').classList.add('important')
       alerta = "Denegado"
-    }else if(origen == "VIGO" && date.getDate() >= 9){
+    }else if(origen == "SANTIAGO" && date.getDate() >= 9){
       $('pclient').classList.add('important')
       alerta = "Denegado"*/
     }else{
@@ -433,7 +433,7 @@ const refreshInputs = (id,nfm,fragil,pedido,tratado,origen,destino) => {
   let code = $(id).parentNode.childNodes[1].childNodes[6]
   origen != destino ? cesion = origen + '' + destino:''
   nfm ? cesion += 'NM' :''
-  fetch('../json/cesionesCliente.json')
+  fetch('../json/cesionesCliente.json?100')
   .then(response => response.json())
   .then(response => {
     response[cesion] != undefined ? code.innerHTML = response[cesion] : code.innerHTML = ""
@@ -512,9 +512,9 @@ const createMail = (cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil
   }
   if(nfm)
     strNfm = `La entrada en Geode debe ser realizada como entrada 109. PIEZA SIN SOLUCIÓN DE REEMPLAZO.   `
-  if(origen == 'VIGO')
+  if(origen == 'SANTIAGO')
     origen = 'GALICIA'
-  if(destino == 'VIGO')
+  if(destino == 'SANTIAGO')
     destino = 'GALICIA'
   const fecha = new Date()
   const mailSub = `CESION ${asuntoDisgon} ${origen} -> ${destino}`
@@ -562,9 +562,9 @@ const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
   .then(result => {
     $(`disgon${id}`).className = ""
     $(`disgon${id}`).innerHTML = "✅"
-    if(origen == 'VIGO')
+    if(origen == 'SANTIAGO')
       origen = 'GALICIA'
-    if(destino == 'VIGO')
+    if(destino == 'SANTIAGO')
       destino = 'GALICIA'
     const descRef = result.denominacion
     const dirOrigen = direcciones[origen]

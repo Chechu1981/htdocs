@@ -21,7 +21,7 @@
                 <label for="destino">*Destino</label>
                 <select name="" id="origen">
                   <option value="MADRID">Madrid</option>
-                  <option value="VIGO">Santiago</option>
+                  <option value="SANTIAGO">Santiago</option>
                   <option value="BARCELONA">Barcelona</option>
                   <option value="ZARAGOZA">Zaragoza</option>
                   <option value="VALENCIA">Valencia</option>
@@ -31,7 +31,7 @@
                 </select>
                 <select name="" id="destino">
                   <option value="MADRID">Madrid</option>
-                  <option value="VIGO">Santiago</option>
+                  <option value="SANTIAGO">Santiago</option>
                   <option value="BARCELONA">Barcelona</option>
                   <option value="ZARAGOZA">Zaragoza</option>
                   <option value="VALENCIA">Valencia</option>

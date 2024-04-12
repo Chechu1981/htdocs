@@ -9,6 +9,8 @@ if($puesto == 'ADV')
     $tratado = strtoupper($user);
 
 function getCliente($cliente,$placa){
+    if($placa == 'SANTIAGO')
+        $placa = "VIGO";
     $contacts = new Contacts();
     $rows = $contacts->getClientNameByPlate(explode('-',$cliente)[0],substr($placa,0,3));
 
