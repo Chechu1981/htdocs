@@ -20,7 +20,7 @@
         </span>
         <div class="textbox" id="search-box">
           <form id="search-ref">
-            <input type="search" id="refAssig" placeholder="Buscar referencia">
+            <input type="search" id="refAssig" placeholder="Buscar a cholón">
           </form>
         </div>
       </div>

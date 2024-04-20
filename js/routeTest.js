@@ -86,7 +86,7 @@ const openDialog = id =>{
         <li>Teléfono: <b class="copy">${client.telefono}</b></li>
         <li>E-mail: <b class="copy">${client.email.toLowerCase()}</b></li>
         <li>Tipo: <b>${client.tipo}</b></li>
-        <li>Comercial: <b>${client.comercial}</b></li>
+        <li style="cursor:pointer">Comercial: <b id="comercial${client.id}" title="Enviar presupuesto al comercial">${client.comercial}</b></li>
       </ul>
       <iframe 
         src="https://www.google.com/maps?q=${encodeURIComponent(client.direccion)}+${encodeURIComponent(client.poblacion)}&output=embed&t=k"
@@ -99,6 +99,18 @@ const openDialog = id =>{
       </iframe>
       `,
       client.cliente)
+      $(`comercial${client.id}`).addEventListener('click', ()=>{
+        const contacto = new FormData()
+        contacto.append('nombre',client.comercial)
+        fetch('../api/getContact.php',{
+          method: 'POST',
+          body: contacto
+        })
+        .then(res => res.text())
+        .then(response => {
+          window.location.href = `mailto:${response}?subject=Presupuesto no confirmado&cc=ignacio.paris@stellantis.com&body=Adjutno presupuesto no confirmado del cliente `
+        })
+      })
       const bes = document.getElementsByTagName('b')
       for(let i = 0; i < bes.length; i++) {
         bes[i].addEventListener('click',e =>{

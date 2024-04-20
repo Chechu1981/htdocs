@@ -27,6 +27,7 @@
         <li title="vol_20">20L</li>
         <li title="vol_60">60L</li>
         <li title="vol_208">208L</li>
+        <li title="vol_1000">1000L</li>
         <li title="vol_GRANEL">GRANEL</li>
       </ul>
       <ul class="header-title">

@@ -28,13 +28,6 @@ class Contacts
         return $query->fetchAll();
     }
 
-    public function getUserBBDD($id){
-        $sql = "SELECT DISTINCT * FROM `usuarios` WHERE nombre LIKE '$usr' AND clave LIKE '$psw'";
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        return $query->fetchAll();
-    }
-
     public function getUserBySessid($sessid){
         $sql = "SELECT DISTINCT * FROM `usuarios` WHERE hash LIKE '$sessid'";
         $query = $this->db->prepare($sql);
@@ -69,7 +62,7 @@ class Contacts
     }
 
     public function getContacts($search){
-        $sql = "SELECT * FROM `route`, `rutas` WHERE route.TURN = rutas.TURN AND route.name LIKE '%$seacrh%'";
+        $sql = "SELECT * FROM `route`, `rutas` WHERE route.TURN = rutas.TURN AND route.name LIKE '%$search%'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return json_encode($query->fetchAll());
@@ -1399,6 +1392,16 @@ class Contacts
             $where 
             $stopStart $normal
             ORDER BY CAST(REPLACE(`aHora`,'A','') AS INT),`amperios`,`Stop_Start` ASC;";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getPartner($nombre){
+        $and = " WHERE `D` LIKE '%$nombre[0]%' ";
+        for($i = 1; $i < count($nombre); $i++)
+            $and .= " AND `D` LIKE '%$nombre[$i]%'";
+        $sql = "SELECT * FROM `centros` $and";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

@@ -1,10 +1,10 @@
 :root{
-  --main-font-color: hsl(0, 0%, 0%);
-  --second-bg-color: hsl(0, -30%, 25%);
-  --search-line: hsla(0, -14%,15%, 0.478);
-  --cards-border-color: hsl(0, 20%, 50%);
-  --cards-active-color: hsl(0, 23%, 27%);
-  --bg-body-color: hsl(0, -57%, 67%);
-  --bg-font-color: hsl(0, 1%, -22%);
+  --main-font-color: hsl(0, 6.060606060606061%, 38.8235294117647%);
+  --second-bg-color: hsl(0, -23.939393939394%, 63.823529411765%);
+  --search-line: hsla(0, -7.9393939393939%,73.823529411765%, 1);
+  --cards-border-color: hsl(0, 26.060606060606%, 88.823529411765%);
+  --cards-active-color: hsl(0, 29.060606060606%, 65.823529411765%);
+  --bg-body-color: hsl(0, -50.939393939394%, 105.82352941176%);
+  --bg-font-color: hsl(0, 7.0606060606061%, 16.823529411765%);
   --invert-img-filter: invert(0);
   }

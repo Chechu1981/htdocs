@@ -57,7 +57,7 @@ $nuevas = $contacts->getAssigCountNew($usuario,$usuario,'ready')[0][0];
                 <li><a href="<?php echo $src.'/src/center/central.php?id='.$id ?>">Central</a></li>
                 <li><a href="<?php echo $src.'/src/center/madrid.php?id='.$id ?>">Madrid</a></li>
                 <li><a href="<?php echo $src.'/src/center/sevilla.php?id='.$id ?>">Sevilla</a></li>
-                <li><a href="<?php echo $src.'/src/center/vigo.php?id='.$id ?>">Vigo</a></li>
+                <li><a href="<?php echo $src.'/src/center/vigo.php?id='.$id ?>">Santiago</a></li>
                 <li><a href="<?php echo $src.'/src/center/granada.php?id='.$id ?>">Granada</a></li>
                 <li><a href="<?php echo $src.'/src/center/zaragoza.php?id='.$id ?>">Zaragoza</a></li>
                 <li><a href="<?php echo $src.'/src/center/palma.php?id='.$id ?>">Palma</a></li>

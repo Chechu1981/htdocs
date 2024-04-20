@@ -52,16 +52,16 @@ if(@$_POST['sort'] == 'date')
 
 $agent = '';
 
-$lists = "<ul class='heading'>"
-        .$imgOrigen.$imgDestino."
+$lists = "<ul class='heading'>
+        $imgOrigen.$imgDestino
         <li>Cliente</li>
         <li>Referencia</li>
         <li>Denominación</li>
         <li>Cantidad</li>
         <li>NFM</li>
         <li>Pedido</li>
-        <li>Comentario</li>".
-        $imgDate."
+        <li>Comentario</li>
+        $imgDate
         <li>Recibido</li>
         <li>Tratado</li>
         <li>Agente</li>
@@ -75,11 +75,11 @@ if(sizeof($rows) > 0){
       //$designacion = getDesignacion($row[4]);
       $designacion = $row[19];
       if($_POST['id']!= 'new') {
-          $agent = '<li title="Agente">'.$row[10].'</li>';
+          $agent = "<li title='Agente'>$row[10]</li>";
       }
       $rechazado = '';
       if($row[23] == 1){
-        $rechazado = '<span id="rechazo'.$row[0].'" title="'.$row[24].'" style="cursor:pointer">🚫</span>';
+        $rechazado = "<span id='rechazo$row[0]' title='$row[24]' style='cursor:pointer'>🚫</span>";
       }
       $nfm = "";
       if($row[14])
@@ -91,30 +91,30 @@ if(sizeof($rows) > 0){
       $fechaSHora = explode(".",explode(" ", $row[25])[1]);
       $cadenaFechaEntrada = "";
       if($row[25] > '2024-04-11 00:00:00.000000')
-        $cadenaFechaEntrada = explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0];
-      $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
+        $cadenaFechaEntrada = explode(" ",$fechaS[2])[0] . "/$fechaS[1]/$fechaS[0] $fechaSHora[0]";
+      $li = "<li class='delete' title='Marcar como cesión recibida'><img id='$row[0]' alt='tick' src='../../img/done_FILL0_wght400_GRAD0_opsz24.png'></li>";
       if($fechaD[0] == '0000')
         $li='<li></li>';
       if(($_POST['id']) != 'new')
-        $li = '<li title="Envío: ">'.$fechaR[2].'/'.$fechaR[1].'/'.$fechaR[0].'</li>';
-      $lists .= '
-      <ul id="'.$row[0].'">
-        <li title="Origen: " style="display:block">'.$row[1].'</li>
-        <li title="Destino: ">'.$row[2].'</li>
-        <li title="Cliente: " class="tableLegend">'.$row[3].'<legend class="legend">' .$clientName.'</legend></li>
-        <li class="copy">'.$formatref.'<span class="toolTip"></span></li>
-        <li title="Denominación: ">'.$designacion.'</li>
-        <li title="Cantidad: ">'.$row[5].'</li>
-        <li title="NFM: ">'.$nfm.'</li>
-        <li title="Pedido: ">'.$row[7].'</li>
-        <li title="Comentario: ">'.$row[11].'</li>
-        <li title="Envío: ">'.$fechaD[2].'/'.$fechaD[1].'/'.$fechaD[0].' '.$fecha[1].'</li>
-        '.$li.'
-        <li title="Tratado">'.$row[17].'</li>
-        <li title="'.$row[21].'" style="flex-wrap:wrap">'.$row[10] . $rechazado ." <br>
-          <span style='font-size:8px;text-align:center'>".$cadenaFechaEntrada.'</span>
+        $li = "<li title='Envío: '>$fechaR[2]/$fechaR[1]/$fechaR[0]</li>";
+      $lists .= "
+      <ul id='$row[0]'>
+        <li title='Origen: ' style='display:block'>$row[1]</li>
+        <li title='Destino: '>$row[2]</li>
+        <li title='Cliente: ' class='tableLegend'>$row[3]<legend class='legend'>$clientName</legend></li>
+        <li class='copy'>$formatref<span class='toolTip'></span></li>
+        <li title='Denominación: '>$designacion</li>
+        <li title='Cantidad: '>$row[5]</li>
+        <li title='NFM: '>$nfm</li>
+        <li title='Pedido: '>$row[7]</li>
+        <li title='Comentario: '>$row[11]</li>
+        <li title='Envío: '>$fechaD[2]/$fechaD[1]/$fechaD[0] $fecha[1]</li>
+        $li
+        <li title='Tratado'>$row[17]</li>
+        <li title='$row[21]' style='flex-wrap:wrap'>$row[10]$rechazado <br>
+          <span style='font-size:8px;text-align:center'>$cadenaFechaEntrada</span>
         </li>
-      </ul>';
+      </ul>";
     }
 }else{
   $lists = "<h2>No hay coincidencias</h2>";

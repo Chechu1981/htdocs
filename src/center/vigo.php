@@ -11,7 +11,7 @@
     <div id="contacts" class="contacts">
       <div>
         <img src="../../img/pin_drop_FILL0_wght400_GRAD0_opsz24.png" alt="Ubicación" class="location">
-        <h1>PPCR VIGO</h1>
+        <h1>PPCR SANTIAGO</h1>
       </div>
       <div id="search-line" class="nPass search-line search-focused">
         <span class="lupa">
