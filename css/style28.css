@@ -39,6 +39,18 @@ iframe{
     height:150px;
 }
 
+.libreta{
+    height:400px;
+}
+
+.formNotebook{
+    display: grid;
+    grid-template-columns: 10% 80%;
+    justify-content: center;
+    grid-gap: 8px;
+    margin-top: 10px;
+}
+
 button{
   font-family: nunito, arial;
   background-color: var(--cards-border-color);

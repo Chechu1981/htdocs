@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../css/style28.css" type="text/css" />
+<link rel="stylesheet" href="../css/chechu.css" type="text/css" />
 <?php
 include_once '../connection/data.php';
 $contacts = new Contacts();
@@ -6,7 +8,7 @@ $textoDiv = 'Arrastra aqui algún fichero';
 if($rows[0][5] != '')
     $textoDiv = $rows[0][5];
 ?>
-<form action="" method="post" title="update">
+<form action="" method="post" title="update" class="formNotebook">
     <label>Marca</label>
         <select type='text' placeholder='marca' id='marca'>
             <option value='<?php echo $rows[0][1]; ?>' cheched><?php echo $rows[0][1]; ?></option>
@@ -27,3 +29,4 @@ if($rows[0][5] != '')
     <input type="hidden" id="<?php echo $_GET['id']; ?>" value="<?php echo $_GET['id']; ?>">
     <label></label><input type="submit" value="Modificar">
 </form>
+<script src="../js/formNotebook1.js?107"></script>

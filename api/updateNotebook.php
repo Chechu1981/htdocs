@@ -32,7 +32,8 @@ $items = [
     $_POST['marca'],
     $_POST['modelo'],
     $_POST['descripcion'],
-    $_POST['referencia']
+    $_POST['referencia'],
+    ''
 ];
 
 $namefile = "";
@@ -40,19 +41,10 @@ if(isset($_FILES['file'])){
     $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
     $namefile  = md5($_FILES['file']['name'].rand()).'.'.$ext;
     echo $_FILES['file']['name'];
-    array_push($items,$namefile);
+    $items[5] =$namefile;
     move_uploaded_file($_FILES['file']['tmp_name'], '../docs/'.$namefile.'');
     if($ext != 'pdf'){
         miniatura("../docs/".$namefile, explode('.',$namefile)[0], 100, 100);
-    }
-}else{
-    if($_FILES['file']['size'] > 0){
-        $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
-        $namefile  = md5($_FILES['file']['name']).'.'.$ext;
-        array_push($items,$namefile);
-        move_uploaded_file($_FILES['file']['tmp_name'], '../docs/'.$namefile.'');
-        miniatura("../docs/".$namefile, explode('.',$namefile)[0], 100, 100);
-        $contacts->eraseFile($_POST['id']);
     }
 }
 $rows = $contacts->updateNotebook($items);
