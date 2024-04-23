@@ -55,8 +55,6 @@ const loadItems = (search) => {
             .catch(functions => console.log("error: "+functions))
           }
         }
-        
-        /* CORREGIR ESTE PROBLEMA */
         if(e.target.id.includes('edit')){
           const id= e.target.parentNode.id
           const data = new FormData()
@@ -64,12 +62,7 @@ const loadItems = (search) => {
           const iframe = document.createElement('iframe')
           iframe.src = '../../helper/modalNotebook.php?id='+id
           modal('<iframe src="../../helper/modalNotebook.php?id='+id+'" class="libreta"></iframe>',"Editar nota")
-          //fetch('../../helper/modalNotebook.php?id='+id)
-          //.then(response => response.text())
-          //.then(res =>{
-          //})
         }
-
         if(e.target.classList.value === 'openFile' || e.target.parentNode.classList.value === 'openFile'){
           let target
           e.target.classList.value === 'openFile' ? target = e.target : target = e.target.parentNode
@@ -120,8 +113,11 @@ const loadItems = (search) => {
           }
         }
       })
-
+        /* ARREGLAR ESTE PROBLEMA */
       $('addNotebook').addEventListener('click', (e)=>{
+        const id= 'new'
+        modal('<iframe src="../../helper/modalNotebook.php?id='+id+'" class="libreta"></iframe>',"Editar nota")
+        /*
         let newForm = `<form action="" class="form-new" title="new" id="frmNewNotebook">`
         newForm += "<label></label><select type='text' placeholder='marca' id='marca'>"
         newForm += "<option value='MULTIMARCA'>Multimarca</option>"
@@ -144,7 +140,7 @@ const loadItems = (search) => {
         const scrpt = Array.prototype.slice.call(document.scripts)
         scrpt.forEach(e => {
           e.src.split('/')[4] == 'formNotebook1.js' ? null : createScript()
-        })
+        }) */
       })
   })
   .catch(err => console.log("error: "+err))
