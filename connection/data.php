@@ -28,6 +28,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getUserList(){
+        $sql = "SELECT * FROM `usuarios`";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function getUserBySessid($sessid){
         $sql = "SELECT DISTINCT * FROM `usuarios` WHERE hash LIKE '$sessid'";
         $query = $this->db->prepare($sql);
@@ -47,6 +54,13 @@ class Contacts
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
+    }
+
+    public function deleteUser($id){
+        $sql = "DELETE FROM `usuarios` WHERE id = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return 'ok';
     }
 
     public function addNewUser($user,$pass,$puesto,$email){
@@ -97,7 +111,7 @@ class Contacts
     }
 
     public function removeRoute($id){
-      $sql = "DELETE FROM rutas WHERE id = '$id'";
+        $sql = "DELETE FROM rutas WHERE id = '$id'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';

@@ -41,5 +41,11 @@ document.getElementsByTagName('form')[0].addEventListener('submit', (event) => {
     method: 'POST',
     body: datos
   })
-  window.location.reload()
+  const id = window.location.search.split('=')[1]
+  window.location.href = `../update/configUsers.php?id=${id}`
+})
+
+document.getElementById('userList').addEventListener('click',e =>{
+  const id = window.location.search.split('=')[1]
+  window.location.href = `../update/configUsers.php?id=${id}`
 })

@@ -16,6 +16,7 @@
   <div class="search-table">
     <div id="contacts" class="contacts">
       <h1>Usuarios - Configuración</h1>
+      <button id="userList">Lista de Usuarios</button>
     </div>
     <div class="note-body">
         <form action="" method="post" title="update">

@@ -49,6 +49,7 @@ $scripts = (object)[
   'CONFIGPENDING' => "/js/updatePending.js?112",
   'ACEITE' => "/js/aceite.js?114",
   'BATERIAS' => "/js/baterias.js?117",
+  'CONFIGUSERS' => "/js/users.js?100",
   'FORMNEWUSER' => "/../js/formNewUser.js?101"
 ];
 

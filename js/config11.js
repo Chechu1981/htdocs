@@ -13,7 +13,7 @@ if(typeof(href) != "object"){
   "tarifa": "update/updatePrice.php",
   "pending": "update/configPending.php",
   "clientes": "update/configClient.php",
-  "usuarios": "helper/formNewUser.php",
+  "usuarios": "update/configUsers.php",
   "repere": "update/configRepere.php"
   }
 
