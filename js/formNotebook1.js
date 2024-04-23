@@ -3,7 +3,7 @@ let success = {
   delete:"../api/deleteNotebook.php",
   new:"../api/addNotebook.php"
 }
-document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{A
+document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
   const src = success[e.target.title]
   e.preventDefault()
   e.stopImmediatePropagation()
