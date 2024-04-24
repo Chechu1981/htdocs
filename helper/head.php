@@ -50,7 +50,8 @@ $scripts = (object)[
   'ACEITE' => "/js/aceite.js?114",
   'BATERIAS' => "/js/baterias.js?117",
   'CONFIGUSERS' => "/js/users.js?101",
-  'FORMNEWUSER' => "/../js/formNewUser.js?101"
+  'FORMNEWUSER' => "/../js/formNewUser.js?101",
+  'FORMEDITUSER' => "/../js/formNewUser.js?101"
 ];
 
 $usr = $contacts->getAllUsers();

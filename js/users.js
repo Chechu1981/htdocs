@@ -1,8 +1,8 @@
 'use strict';
 
-const recargar = (destino) =>{
+const recargar = (destino,idUser = 0) =>{
   const id = window.location.search.split('=')[1]
-  window.location.href = `${destino}?id=${id}`
+  window.location.href = `${destino}?id=${id}&idUser=${idUser}`
 }
 
 document.getElementById('newUser').addEventListener('click',e =>{
@@ -29,6 +29,8 @@ for(let index = 0; index < pictures.length; index++) {
         body:data
       })
       recargar('../update/configUsers.php')
+    }else{
+      recargar('../helper/formEditUser.php',id)
     }
   })
 

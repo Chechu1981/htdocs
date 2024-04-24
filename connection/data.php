@@ -42,6 +42,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getUserById($id){
+        $sql = "SELECT DISTINCT * FROM `usuarios` WHERE `id` LIKE '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function getMailByUsername($userName){
         $sql = "SELECT DISTINCT `mail` FROM `usuarios` WHERE `nombre` = '$userName'";
         $query = $this->db->prepare($sql);

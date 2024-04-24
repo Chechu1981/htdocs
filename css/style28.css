@@ -2309,11 +2309,17 @@ margin: 0 10px;
 .user_list:nth-child(odd){
     background-color: var(--main-font-color);
     color: var(--bg-body-color);
+    img{
+        filter: invert();
+    }
 }
 
 .user_list:hover{
     background-color: var(--search-line);
     color: var(--bg-font-color);
+    img{
+        filter: invert();
+    }
 }
 
 .user_list img:hover{

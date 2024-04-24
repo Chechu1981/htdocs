@@ -60,7 +60,7 @@ $date = date_create($date[0][0]);
             <select name="placa" id="placa">
                 <option value="MADRID">Madrid</option>
                 <option value="SEVILLA">Sevilla</option>
-                <option value="VIGO">Vigo</option>
+                <option value="VIGO">Santiago</option>
                 <option value="GRANADA">Granada</option>
                 <option value="ZARAGOZA">Zaragoza</option>
                 <option value="PALMA">Palma</option>
