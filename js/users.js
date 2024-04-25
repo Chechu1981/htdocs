@@ -2,7 +2,7 @@
 
 const recargar = (destino,idUser = 0) =>{
   const id = window.location.search.split('=')[1]
-  window.location.href = `${destino}?id=${id}&idUser=${idUser}`
+  window.location.href = `${destino}?id=${id}&bla=${idUser}`
 }
 
 document.getElementById('newUser').addEventListener('click',e =>{

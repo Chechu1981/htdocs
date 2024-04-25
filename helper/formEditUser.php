@@ -6,7 +6,7 @@
   include('./../helper/logon.php');
   include_once '../connection/data.php';
   $contacts = new Contacts();
-  $rows = $contacts->getUserById($_GET['idUser']);
+  $rows = $contacts->getUserById($_GET['bla']);
   ?>
 </head>
 <body>

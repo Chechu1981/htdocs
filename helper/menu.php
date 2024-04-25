@@ -7,10 +7,10 @@ strpos($uri,'center') > 0 ? $src = "../.." : '';
 strpos($uri,'assigns') > 0 ? $src = "../.." : '';
 include_once $src . '/connection/data.php';
 $contacts = new Contacts();
-$rows = $contacts->getUserBySessid($_GET['id']);
+$id = $_GET['id'];
+$rows = $contacts->getUserBySessid($id);
 $puesto = $rows[0][4];
 $usuario = $rows[0][1];
-$id = $_GET['id'];
 $menuTodas = '';
 if($puesto == 'ADV')
     $menuTodas = '<li><a href="'.$src.'/src/cesionesAll.php?id='.$id.'">Todas</a></li>';

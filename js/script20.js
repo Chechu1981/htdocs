@@ -126,10 +126,10 @@ let user = ''
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const id = window.location.search.split('id=')[1]
+  const id = window.location.search.split('=')[1].split('&')[0]
   const data = new FormData()
   data.append('id', id)
-  fetch(`${ruta[window.location.pathname.split('/').length]}/api/getUserById.php`,{
+  fetch(`${ruta[window.location.pathname.split('/').length]}api/getUserById.php`,{
     method: 'POST',
     body: data
   })
@@ -301,7 +301,7 @@ const notificacion = (titulo, texto) => {
 
 const newAssigns = setInterval(() => {
   const dataUser = new FormData()
-  dataUser.append('id',window.location.href.split('?id=')[1])
+  dataUser.append('id',window.location.search.split('=')[1].split('&')[0])
   const countUserAssign = new FormData()
   countUserAssign.append('usuario',user.nombre)
   countUserAssign.append('puesto',user.nombre)
