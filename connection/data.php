@@ -43,7 +43,7 @@ class Contacts
     }
 
     public function getUserById($id){
-        $sql = "SELECT DISTINCT * FROM `usuarios` WHERE `id` LIKE '$id'";
+        $sql = "SELECT * FROM `usuarios` WHERE `id` LIKE '$id'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -72,6 +72,17 @@ class Contacts
 
     public function addNewUser($user,$pass,$puesto,$email){
         $sql = "INSERT INTO `usuarios` (`nombre`, `clave`, `puesto`,`theme`,`mail`) VALUES ('$user', '$pass', '$puesto','blue','$email')";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
+
+    public function updateUser($id,$user,$pass,$puesto,$email){
+        $sql = "UPDATE `usuarios` SET 
+        `nombre` = '$user', 
+        `clave` = '$pass', 
+        `puesto` = '$puesto',
+        `mail` = '$email' 
+        WHERE `id` = $id";
         $query = $this->db->prepare($sql);
         $query->execute();
     }

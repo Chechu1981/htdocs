@@ -1,8 +1,8 @@
 'use strict';
 
 const recargar = (destino,idUser = 0) =>{
-  const id = window.location.search.split('=')[1]
-  window.location.href = `${destino}?id=${id}&bla=${idUser}`
+  const id = window.location.search.split('=')[1].split('&')[0]
+  window.location.href = `${destino}?id=${id}&userId=${idUser}`
 }
 
 document.getElementById('newUser').addEventListener('click',e =>{

@@ -1,6 +1,9 @@
-$('nombre').addEventListener('blur', (e) =>{
+'use strict';
+
+async function usuarioExiste(usuario){
   const data = new FormData()
-  data.append('usuario', e.target.value)
+  data.append('usuario', usuario)
+  let exsiste = false
   fetch('/../api/getUserExist.php',{
     method: 'POST',
     body: data
@@ -10,12 +13,20 @@ $('nombre').addEventListener('blur', (e) =>{
     if(responseData){
       customAlert("Usuario exsiste")
       $('nombre').value = ""
-      return null
+      exsiste = true
+      return exsiste
+    }else{
+      return exsiste
     }
   })
+}
+
+$('nombre').addEventListener('blur', (e) =>{
+  usuarioExiste(e.target.value)
 })
 
 document.getElementsByTagName('form')[0].addEventListener('submit', (event) => {
+  const method = window.location.href.includes('Edit') ? 'edit' : 'new'
   event.preventDefault()
   const nombre = $('nombre').value
   const email = $('email').value
@@ -33,19 +44,31 @@ document.getElementsByTagName('form')[0].addEventListener('submit', (event) => {
     return null
   }
   const datos = new FormData()
-  datos.append('nombre', nombre)
-  datos.append('email', email)
-  datos.append('puesto', puesto)
-  datos.append('pass', pass1)
-  fetch('/../api/addNewUser.php',{
-    method: 'POST',
-    body: datos
-  })
-  const id = window.location.search.split('=')[1]
-  window.location.href = `../update/configUsers.php?id=${id}`
+    datos.append('nombre', nombre)
+    datos.append('email', email)
+    datos.append('puesto', puesto)
+    datos.append('pass', pass1)
+  if(method == 'new'){
+    if(!usuarioExiste(nombre)){
+      fetch('/../api/addNewUser.php',{
+        method: 'POST',
+        body: datos
+      })
+      const id = window.location.search.split('=')[1].split('&')[0]
+      window.location.href = `../update/configUsers.php?id=${id}`
+    }
+  }else if(method == 'edit'){
+    datos.append('id', window.location.search.split('=')[2].split('&userId=')[0])
+    fetch('/../api/updateUser.php',{
+      method: 'POST',
+      body: datos
+    })
+    const id = window.location.search.split('=')[1].split('&')[0]
+    window.location.href = `../update/configUsers.php?id=${id}`
+  }
 })
 
 document.getElementById('userList').addEventListener('click',e =>{
-  const id = window.location.search.split('=')[1]
+  const id = window.location.search.split('=')[1].split('&')[0]
   window.location.href = `../update/configUsers.php?id=${id}`
 })
