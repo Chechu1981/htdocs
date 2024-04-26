@@ -22,7 +22,7 @@ $nuevas = $contacts->getAssigCountNew($usuario,$usuario,'ready')[0][0];
 </picture>
 <nav id="menu-items">
     <ul>
-        <li><a href="<?php echo $src.'/home.php?id='.$id; ?>" >Inicio</a></li>
+        <li><a href="<?php echo $src.'/home.php?id='.$id; ?>" >Enlaces</a></li>
         <li><a href="<?php echo $src.'/src/routeTest.php?id='.$id; ?>">Rutas</a></li>
         <li><a href="<?php echo $src.'/src/libreta.php?id='.$id; ?>">Libreta</a>
             <ul>

@@ -771,6 +771,7 @@ input[type="color"]::-webkit-color-swatch {
     margin: 0;
     display: grid;
     grid-template-columns: 10% 20% 10% 10% 10% 10% 10% 10%;
+    justify-content: center;
     font-size: 1.2em;
     font-weight: bold;
 }
@@ -802,7 +803,8 @@ input[type="color"]::-webkit-color-swatch {
 .pass-items ul,
 .pass-items #complete ul
 {
-    grid-template-columns: 21% 7% 11% 21% 10% 10% 9% 7% 2%;
+    grid-template-columns: 21% 14% 12% 24% 15% 14%;
+    justify-content: center;
 }
 
 #center-list-items ul{
