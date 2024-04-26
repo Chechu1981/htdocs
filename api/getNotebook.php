@@ -43,7 +43,7 @@ $htmlList = "
   <li>Modelo</li>
   <li>Descripción</li>
   <li>Reerencia</li>
-  <li><div id='addNotebook' class='btn-plus' title='Añadir registro'>+</div></li>
+  <li></li>
 </ul>";
 
 

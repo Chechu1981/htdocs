@@ -692,9 +692,16 @@ input[type="color"]::-webkit-color-swatch {
     transition: .3s;
 }
 
+.new_note{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
 #contacts{
     display: grid;
-    grid-template-columns:21% 40% 50%;
+    grid-template-columns:20% 40% 40%;
     position: sticky;
     background-color: var(--bg-body-color);
     z-index: 3;
@@ -803,7 +810,7 @@ input[type="color"]::-webkit-color-swatch {
 .pass-items ul,
 .pass-items #complete ul
 {
-    grid-template-columns: 21% 14% 12% 24% 15% 14%;
+    grid-template-columns: 23% 15% 13% 25% 17% 7%;
     justify-content: center;
 }
 

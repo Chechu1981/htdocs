@@ -113,13 +113,14 @@ const loadItems = (search) => {
           }
         }
       })
-      $('addNotebook').addEventListener('click', (e)=>{
-        const id = 'new'
-        modal('<iframe src="../../helper/modalNotebook.php?id='+id+'" class="libreta"></iframe>',"Nueva nota")
-      })
   })
   .catch(err => console.log("error: "+err))
 }
+
+$('addNotebook').addEventListener('click', (e)=>{
+  const id = 'new'
+  modal('<iframe src="../../helper/modalNotebook.php?id='+id+'" class="libreta"></iframe>',"Nueva nota")
+})
 
 const openFile = (file) => {
   modal(file,"Fichero")

@@ -20,6 +20,9 @@
           <input type="search" id="search-contacts" placeholder="Buscar notas...">
         </div>
       </div>
+      <div class="new_note" >
+        <button id="addNotebook" >Nueva nota</button>
+      </div>
     </div>
     <div id="contacts-items" class="contacts-items">
       <div id="center-items-pass" class="bottons">

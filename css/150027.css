@@ -1,11 +1,4 @@
 @media screen and (max-width: 1500px) {
-    body{
-        display: grid;
-        grid-template-columns: 100%;
-        grid-gap: 22px;
-        margin: 0;
-    }
-
     #menu{
         grid-template-columns: 13% 56% 15% 10% 3% 4%;
     }
@@ -106,7 +99,7 @@
     }
 
     #cesiones .assignPendingAdv{
-      grid-template-columns: 1% 13% 12% 10% 14% 4% 8% 4% 4% 4% 9% 4% 5% 8% 1%;
+      grid-template-columns: 1% 12% 12% 10% 14% 4% 8% 4% 4% 4% 9% 4% 5% 8% 1%;
       padding-inline-start: 0;
     }
 
