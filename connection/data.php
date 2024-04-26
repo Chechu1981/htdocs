@@ -617,7 +617,7 @@ class Contacts
             WHERE id LIKE $item[0]";
         $query = $this->db->prepare($sql);
         $query->execute();
-        return $sql;
+        return 'ok';
     }
 
     public function getCenter($center,$search){

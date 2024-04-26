@@ -61,7 +61,7 @@ const loadItems = (search) => {
           data.append('id',id)
           const iframe = document.createElement('iframe')
           iframe.src = '../../helper/modalNotebook.php?id='+id
-          modal('<iframe src="../../helper/modalNotebook.php?id='+id+'" class="libreta"></iframe>',"Editar nota")
+          modal('<iframe src="../../helper/modalNotebook.php?id='+id+'" class="libreta"></iframe>','Editar nota')
         }
         if(e.target.classList.value === 'openFile' || e.target.parentNode.classList.value === 'openFile'){
           let target
@@ -113,34 +113,9 @@ const loadItems = (search) => {
           }
         }
       })
-        /* ARREGLAR ESTE PROBLEMA */
       $('addNotebook').addEventListener('click', (e)=>{
-        const id= 'new'
-        modal('<iframe src="../../helper/modalNotebook.php?id='+id+'" class="libreta"></iframe>',"Editar nota")
-        /*
-        let newForm = `<form action="" class="form-new" title="new" id="frmNewNotebook">`
-        newForm += "<label></label><select type='text' placeholder='marca' id='marca'>"
-        newForm += "<option value='MULTIMARCA'>Multimarca</option>"
-        newForm += "<option value='CITROEN'>Citroen</option>"
-        newForm += "<option value='PEUGEOT'>Peugeot</option>"
-        newForm += "<option value='OPEL'>Opel</option>"
-        newForm += "<option value='FIAT/JEEP'>Fiat / Jeep</option>"
-        newForm += "<option value='EUROREPAR'>Eurorepar</option>"
-        newForm += "<option value='DOCUMENTOS'>Documentos</option>"
-        newForm += "<option value='POWER'>Power Supply</option>"
-        newForm += "</select>"
-        newForm += "<label></label><input type='text' placeholder='modelo' id='modelo'>"
-        newForm += "<label></label><input type='text' placeholder='descripcion' id='descripcion'>"
-        newForm += "<label></label><input type='text' placeholder='referencia' id='referencia'>"
-        newForm += "<input type='file' id='docFile' style='display:none'>"
-        newForm += "<input type='submit' class='note-btn' style='position: absolute;' value='añadir'>"
-        newForm += "<div id='dropContainer'>Arrastra aqui algún fichero</div>"
-        newForm += "</form>"
-        modal(newForm,`Nueva nota`)
-        const scrpt = Array.prototype.slice.call(document.scripts)
-        scrpt.forEach(e => {
-          e.src.split('/')[4] == 'formNotebook1.js' ? null : createScript()
-        }) */
+        const id = 'new'
+        modal('<iframe src="../../helper/modalNotebook.php?id='+id+'" class="libreta"></iframe>',"Nueva nota")
       })
   })
   .catch(err => console.log("error: "+err))

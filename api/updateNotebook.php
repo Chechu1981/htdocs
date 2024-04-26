@@ -26,7 +26,7 @@ function miniatura($archivo, $nombre, $ancho, $alto){
 }
 
 $contacts = new Contacts();
-
+$yaHayFichero = isset($_POST['file']) ? $_POST['file'] : false;
 $items = [
     $_POST['id'],
     $_POST['marca'],
@@ -37,10 +37,11 @@ $items = [
 ];
 
 $namefile = "";
-if(isset($_FILES['file'])){
+if($yaHayFichero)
+    $items[5] = $_POST['file'];
+else if(isset($_FILES['file']) && !$yaHayFichero){
     $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
     $namefile  = md5($_FILES['file']['name'].rand()).'.'.$ext;
-    echo $_FILES['file']['name'];
     $items[5] =$namefile;
     move_uploaded_file($_FILES['file']['tmp_name'], '../docs/'.$namefile.'');
     if($ext != 'pdf'){

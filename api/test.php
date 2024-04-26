@@ -9,7 +9,7 @@
 <body>
   <textarea name="prueba" id="prueba" cols="30" rows="10"></textarea>
   <?php
-  echo $_SERVER['HTTP_X_REAL_IP'];
+  phpinfo();
   ?>
 </body>
 </html>
