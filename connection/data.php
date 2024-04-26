@@ -29,7 +29,7 @@ class Contacts
     }
 
     public function getUserList(){
-        $sql = "SELECT * FROM `usuarios`";
+        $sql = "SELECT * FROM `usuarios` ORDER BY `puesto`,`nombre`";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

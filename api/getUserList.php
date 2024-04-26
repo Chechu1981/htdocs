@@ -2,12 +2,14 @@
 include_once '../connection/data.php';
 
 $contacts = new Contacts();
+$rows = $contacts->getUserList();
 
 $charsetExtract = array("'");
+$count = 1;
 
-$rows = $contacts->getUserList(); ?>
-
+?>
 <ul class="user_list header">
+    <li></li>
     <li>USUARIO</li>
     <li>PUESTO</li>
     <li>CORREO</li>
@@ -15,6 +17,7 @@ $rows = $contacts->getUserList(); ?>
 
 <?php for ($i = 0;count($rows) > $i;$i++) { ?>
     <ul class="user_list">
+        <li><?= $count++ ?></li>
         <li id="<?= $rows[$i][0] ?>"><?= strtoupper($rows[$i]['nombre']) ?></li>
         <li><?= strtoupper($rows[$i]['puesto']) ?></li>
         <li><?= strtolower($rows[$i]['mail']) ?></li>
