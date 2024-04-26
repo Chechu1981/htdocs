@@ -27,7 +27,7 @@ $scripts = (object)[
   'STATUS' => "/../js/statusCesiones.js?105",
   'FINISH' => "/../js/finishCesiones.js?108",
   'CESIONESADV_TEST' => "/js/cesionesADV_test.js?127",
-  'LIBRETA' => "/js/libreta.js?101",
+  'LIBRETA' => "/js/libreta.js?102",
   'contact' => "/js/contact2.js",
   'form' => "/js/form1.js",
   'fomrcontacts' => "/js/fomrcontacts1.js",
@@ -68,10 +68,10 @@ $user = strtoupper($userBdd[0][3]);
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
-<link rel="icon" href="<?php echo $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?php echo $src; ?>/css/style28.css?1273" defer content="1">
-<link rel="stylesheet" href="<?php echo $src; ?>/css/150027.css?1005" defer content="1">
-<link rel="stylesheet" href="<?php echo $src ."/css/". str_replace(" ","_",strtolower($user)).".css"; ?>" defer content="0">
-<script type="text/javascript" src="<?php echo $src; ?>/js/script20.js?1015" defer content='no-cache'></script>
-<script type="module" src="<?php echo $src . $scripts->$page; ?>" defer content="0"></script>
-<title>Chechu - <?php echo $page; ?></title>
+<link rel="icon" href="<?= $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
+<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1275" defer content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1005" defer content="1">
+<link rel="stylesheet" href="<?= "$src/css/" . str_replace(" ","_",strtolower($user)).".css?" . rand(1,500); ?>" defer content="0">
+<script type="text/javascript" src="<?= $src; ?>/js/script20.js?1015" defer content='no-cache'></script>
+<script type="module" src="<?= $src . $scripts->$page; ?>" defer content="0"></script>
+<title>Chechu - <?= $page; ?></title>

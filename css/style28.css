@@ -14,15 +14,17 @@ body{
     font-family: nunito, arial; 
     letter-spacing: .01em;
     font-size: .6em;
+    margin: 0px;
+    background: var(--bg-body-color);
+    opacity: .9;
+}
+
+body::after{
     background-image: url(../img/Logo-PPCR-2022.png);
     background-repeat: no-repeat;
     background-position: center;
     background-blend-mode: soft-light;
-    margin: 0px;
-}
-
-body::after{
-    content: "";
+    content: "";//*
     background: var(--bg-body-color);
     opacity: 0.9;
     top: 0;
@@ -30,7 +32,7 @@ body::after{
     bottom: 0;
     right: 0;
     position: absolute;
-    z-index: -1; 
+    z-index: -1; */
 }
 
 iframe{
