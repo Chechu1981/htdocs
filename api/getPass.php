@@ -15,7 +15,7 @@ if(sizeof($rows) > 0){
     <li>Cuenta</li>
     <li>Usuario</li>
     <li>Password</li>
-    <li><div id="addPass" class="btn-plus" title="Añadir registro">+</div></li>
+    <li></li>
   </ul>'; 
     foreach ($rows as $row) { 
         $lists .= '

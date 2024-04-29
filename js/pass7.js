@@ -30,6 +30,14 @@ $('center-items-pass').addEventListener('click', (e) => {
   }
 })
 
+$('addLink').addEventListener('click',() =>{
+  modal("<iframe src='../helper/formNewLink.php' class='libreta'></iframe>","Nuevo enlace")
+  const scrpt = Array.prototype.slice.call(document.scripts)
+  scrpt.forEach(e => {
+    e.src.split('/')[4].includes('form2.js') ? null : createScript()
+  })
+})
+
 document.addEventListener('click',(e)=>{
   const id = e.target.parentNode.id
   const data = new FormData()
@@ -40,32 +48,7 @@ document.addEventListener('click',(e)=>{
     newScript.src = './js/form2.js'
     $('contacts').append(newScript)
   }
-  if(e.target.id.includes('addPass')){
-    let newForm = "<form class='form-new' title='new'>"
-    newForm += '<label></label><select type="text" placeholder="web" id="grupo">'
-    newForm += '<option value=""></option>'
-    newForm += '<option value="transporte">TRANSPORTE</option>'
-    newForm += '<option value="neumaticos">NEUMÁTICOS</option>'
-    newForm += '<option value="catalogo">CATÁLOGO</option>'
-    newForm += '<option value="ppcr">PPCR</option>'
-    newForm += '<option value="stellantis">STELLANTIS</option>'
-    newForm += '</select>'
-    newForm += "<label></label><input type='text' placeholder='web' id='web'>"
-    newForm += "<label></label><input type='text' placeholder='marca' id='marca'>"
-    newForm += "<label></label><input type='text' placeholder='placa' id='placa'>"
-    newForm += "<label></label><input type='text' placeholder='cuenta' id='cuenta'>"
-    newForm += "<label></label><input type='text' placeholder='usuario' id='usuario'>"
-    newForm += "<label></label><input type='text' placeholder='contrsaeña' id='paswd'>"
-    newForm += "<label></label><input type='text' placeholder='teléfono' id='phone'>"
-    newForm += "<label></label><input type='hidden' id='id'>"
-    newForm += "<input type='submit' class='note-btn' value='añadir'>"
-    newForm += "</form>"
-    modal(newForm,"Nueva contraseña")
-    const scrpt = Array.prototype.slice.call(document.scripts)
-    scrpt.forEach(e => {
-      e.src.split('/')[4].includes('form2.js') ? null : createScript()
-    })
-  }else if(e.target.id.includes('delete')){
+  if(e.target.id.includes('delete')){
     if(confirm('¿Quieres eliminar este registro?') == true){
       let data = new FormData();
       data.append('id', id)

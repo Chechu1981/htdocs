@@ -34,6 +34,9 @@
           </select>
         </div>
       </div>
+      <div class="new_note" >
+        <button id="addLink" >Nuevo enlace</button>
+      </div>
     </section>
     <section id="center-items-pass" class="bottons">
       <ul>    
