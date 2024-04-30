@@ -25,7 +25,7 @@
             <option value="TODOS">TODOS</option>
             <option value="MADRID">MADRID</option>
             <option value="SEVILLA">SEVILLA</option>
-            <option value="VIGO">GALICIA</option>
+            <option value="GALICIA">GALICIA</option>
             <option value="GRANADA">GRANADA</option>
             <option value="ZARAGOZA">ZARAGOZA</option>
             <option value="PALMA">PALMA</option>

@@ -583,7 +583,7 @@ const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
     
     Saludos.`)
     if(confirm(`¿Enviar Correo a Disgón?`)){
-      window.open(`mailto:pedidos@disgon.com; info@disgon.com; julio@disgon.com; carlosalberto.fernandez@stellantis.com?subject=${asunto}&body=${mail}`)
+      window.open(`mailto:pedidos@disgon.com; incidencias@disgon.com; info@disgon.com; julio@disgon.com; carlosalberto.fernandez@stellantis.com?subject=${asunto}&body=${mail}`)
       $(`disgon${id}`).innerHTML = "✅"
     }
   })

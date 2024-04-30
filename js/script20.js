@@ -141,7 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if(window.location.pathname.includes('home')){
       const options = $('search-line').childNodes[5].childNodes[1].childNodes
       for(let i=0; i<options.length; i++){
-        puesto == 'GALICIA' ? puesto = 'VIGO' : null
         if(options[i].value == puesto){
           $('search-line').childNodes[5].childNodes[1].childNodes[i].selected = true
         }
@@ -149,8 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }else if(window.location.pathname.includes('cesionesADV')){
       for(let i = 0; i < $$('form')[0][1].options.length; i++){
         let centro = puesto
-        if(puesto == 'GALICIA')
-          centro = 'VIGO'
       
         if($$('form')[0][1].options[i].value == centro)
           $$('form')[0][1].options[i].selected = true;
@@ -158,8 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }else if(window.location.pathname.includes('cesionesAll')){
       for(let i = 0; i < $$('form')[0][1].options.length; i++){
         let centro = puesto
-        if(puesto == 'GALICIA')
-          centro = 'VIGO'
       
         if($$('form')[0][1].options[i].value == centro)
           $$('form')[0][1].options[i].selected = true;

@@ -32,10 +32,6 @@ $('center-items-pass').addEventListener('click', (e) => {
 
 $('addLink').addEventListener('click',() =>{
   modal("<iframe src='../helper/formNewLink.php' class='libreta'></iframe>","Nuevo enlace")
-  const scrpt = Array.prototype.slice.call(document.scripts)
-  scrpt.forEach(e => {
-    e.src.split('/')[4].includes('form2.js') ? null : createScript()
-  })
 })
 
 document.addEventListener('click',(e)=>{
@@ -63,18 +59,7 @@ document.addEventListener('click',(e)=>{
       .catch(functions => console.log("error: "+functions))
     }
   }else if(e.target.id.includes('edit')){
-    const id= e.target.parentNode.id
-    const data = new FormData()
-    data.append('id',id)
-    fetch('../helper/modal.php?id='+id)
-    .then(response => response.text())
-    .then(res =>{
-      modal(res,"Editar contraseña")
-      const scrpt = Array.prototype.slice.call(document.scripts)
-      scrpt.forEach(e => {
-        e.src.split('/')[4].includes('form2.js') ? null : createScript()
-      })
-    })
+    modal(`<iframe src='../helper/formNewLink.php?id=${id}' class='libreta'></iframe>`,"Editar enlace")
   }
 })
 

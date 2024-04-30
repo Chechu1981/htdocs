@@ -25,7 +25,7 @@ document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
     .then(res => res.text())
     .then(response =>{
         if(response == 'ok'){
-            window.location.reload()
+            window.parent.location.reload()
         }else{
             alert('Ha habido un error'+e)
         }
