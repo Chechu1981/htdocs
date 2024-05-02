@@ -193,6 +193,11 @@ select, input{
     display: none;
 }
 
+.hover-action:hover{
+    filter: brightness(20);
+    cursor: pointer;
+}
+
 @keyframes rule {
     0% { text-shadow:0px 0px 0px var(--bg-font-color); }
     17% { text-shadow:5px 5px 5px var(--bg-font-color); }

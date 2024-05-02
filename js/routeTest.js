@@ -86,7 +86,10 @@ const openDialog = id =>{
         <li>Teléfono: <b class="copy">${client.telefono}</b></li>
         <li>E-mail: <b class="copy">${client.email.toLowerCase()}</b></li>
         <li>Tipo: <b>${client.tipo}</b></li>
-        <li style="cursor:pointer">Comercial: <b id="comercial${client.id}" title="Enviar presupuesto al comercial">${client.comercial}</b></li>
+        <li>
+          Comercial: <b>${client.comercial}</b>
+          <b id="comercial${client.id}" title="Enviar presupuesto al comercial" class="hover-action">📩</b>
+        </li>
       </ul>
       <iframe 
         src="https://www.google.com/maps?q=${encodeURIComponent(client.direccion)}+${encodeURIComponent(client.poblacion)}&output=embed&t=k"
