@@ -155,6 +155,25 @@ select, input{
     }
 }
 
+.submenu{
+    position: absolute;
+    padding-inline-start: 0;
+    font-weight: 500;
+    font-size: .8em;
+    margin-block: 0;
+    z-index: 999;
+    p{
+        margin-block: 0;
+    }
+    p:hover{
+        color: var(--search-line);
+    }
+}
+
+.submenu_hidden{
+    display: none;
+}
+
 .head-img section{
     color: var(--main-font-color);
     font-size: larger;
@@ -269,6 +288,7 @@ select, input{
     cursor: pointer;    
     transition: .3s;
     font-size: 1.8em;
+    height: min-content;
 }
 
 .note-active{

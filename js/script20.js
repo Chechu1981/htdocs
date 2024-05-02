@@ -55,6 +55,28 @@ const modal = (params,title) =>{
   })
 }
 
+const sendMail = (placa) =>{
+  const destino = {
+    'madrid' : ["armando.sanz@external.stellantis.com;david.reja@external.stellantis.com;franciscojavier.belmonte@stellantis.com;ivan.villaseca@stellantis.com;moises.albarran@stellantis.com;emilio.crespo@stellantis.com"],
+    'santiago' : ["marcos.rodriguez@stellantis.com;jorge.ferreiro@stellantis.com"]
+  }
+  const saludo = Date().split(' ')[4].split(':')[0] < 14 ? `Buenos días: `: `Buenas tardes`
+  const cuerpo = `Un cliente va a pasar a recoger este pedido por el mostrador: `
+  window.location.href = `mailto:${destino[placa]}?subject=Pedido de mostrador&body=${saludo} %0A${cuerpo}%0A%0AUn saludo.`  
+}
+
+$('mailMostrador').addEventListener('click',(e) => {
+  $('submenu').classList.toggle('submenu_hidden')
+})
+
+$('madrid').addEventListener('click',(e) => {
+  sendMail("madrid")
+})
+
+$('santiago').addEventListener('click',(e) => {
+  sendMail("santiago")
+})
+
 $('notes').addEventListener('click',(e) => {
   let src = ruta[window.location.pathname.split('/').length] + 'api/getNotes.php'
   fetch(src)
