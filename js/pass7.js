@@ -3,9 +3,10 @@
 $$('input')[1].focus()
 
 const buscar = (e) => {
+  const placa = $('placa').value == 'SANTIAGO' ? 'GALICIA' : $('placa').value
   let data = new FormData();
   data.append('search', e)
-  data.append('tipo', $('placa').value)
+  data.append('tipo', placa)
   data.append('usuario', $('placa').value)
   fetch('./api/getPass.php',{
     method: 'POST',
