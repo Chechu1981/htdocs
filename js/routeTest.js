@@ -108,7 +108,10 @@ const openDialog = id =>{
         })
         .then(res => res.text())
         .then(response => {
-          window.location.href = `mailto:${response}?subject=Presupuesto no confirmado&cc=ignacio.paris@stellantis.com&body=Adjunto presupuesto no confirmado del cliente `
+          const conCopia = `ignacio.paris@stellantis.com`
+          const saludo = Date().split(' ')[4].split(':')[0] < 14 ? `Buenos días: ` : `Buenas tardes:`
+          const cuerpo = `Adjunto presupuesto no confirmado del cliente ${client.code} (${client.cliente}): `
+          window.location.href = `mailto:${response}?subject=Presupuesto no confirmado&cc=${conCopia}&body=${saludo} %0A${cuerpo}%0A%0AUn saludo.`
         })
       })
       const bes = document.getElementsByTagName('b')
