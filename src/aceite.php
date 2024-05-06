@@ -17,6 +17,7 @@
         <li title="visco_0W30">0W30</li>
         <li title="visco_5W20">5W20</li>
         <li title="visco_5W30">5W30</li>
+        <li title="visco_5W40">5W40</li>
         <li title="visco_10W40">10W40</li>
         <li title="visco_15W40">15W40</li>
         <li title="visco_ACEITE">OTROS</li>

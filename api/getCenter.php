@@ -24,7 +24,7 @@ $lists .="<li>Entidad</li>
           <li>Móvil</li>
           <li>Nº Corto</li>
           <li>Correo</li>
-          <li><div id='addContact' class='btn-plus' title='Añadir registro'>+</div></li>
+          <li></li>
         </ul>";
 $centro = "";
 foreach($rows as $row){  

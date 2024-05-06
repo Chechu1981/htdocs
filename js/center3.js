@@ -18,25 +18,7 @@ const createScript = () => {
 
 const clickAdd = () =>{
   $('addContact').addEventListener('click', ()=>{
-    let centro = ''
-    !$('contacts').childNodes[3] ? centro = '' :centro = $('contacts').childNodes[3].innerText
-    let newForm = "<form class='form-new' title='new'>"
-    newForm += `<input type="hidden" value="${centro}">`
-    newForm += "<label></label><input type='text' placeholder='entidad' id='entidad'>"
-    newForm += "<label></label><input type='text' placeholder='equipo' id='equipo'>"
-    newForm += "<label></label><input type='text' placeholder='nombre' id='nombre'>"
-    newForm += "<label></label><input type='text' placeholder='puesto' id='puesto'>"
-    newForm += "<label></label><input type='text' placeholder='ext' id='ext'>"
-    newForm += "<label></label><input type='text' placeholder='nº largo' id='nlargo'>"
-    newForm += "<label></label><input type='text' placeholder='móvil' id='movil'>"
-    newForm += "<label></label><input type='text' placeholder='nº corto' id='ncorto'>"
-    newForm += "<label></label><input type='text' placeholder='correo' id='correo'>"
-    newForm += "<input type='hidden' placeholder='id' id='id'>"
-    newForm += "<input type='submit' class='note-btn' value='añadir'>"
-    newForm += "</form>"
-    modal(newForm,`Nuevo contacto en ${centro}`)
-    const scrpt = Array.prototype.slice.call(document.scripts)
-    createScript()
+    modal('<iframe src="../../helper/formNewContact.php" ></iframe>',`Nuevo contacto en `)
   })
 }
 const data = new FormData()
