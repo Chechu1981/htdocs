@@ -121,7 +121,7 @@ select, input{
 
 #menu{
     display: grid;
-    grid-template-columns: 15% 50% 26% 6% 2%;
+    grid-template-columns: 15% 50% 24% 8% 2%;
     padding: 10px 10px 0px;
     color: var(--bg-body-color);
     font-weight: bold;
@@ -162,6 +162,10 @@ select, input{
     font-size: .8em;
     margin-block: 0;
     z-index: 999;
+    background-color: var(--bg-body-color);
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0px 0px 7px 1px black;
     p{
         margin-block: 0;
     }
