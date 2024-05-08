@@ -43,17 +43,17 @@ $imgOrigen  = "<li style='display:flex'>Origen<img alt='arrow' src='../../img/so
 $imgDestino = "<li>Destino<img alt='arrow' src='../../img/sort_both.png' id='sortDestino'/></li>";
 $imgDate = "<li>Envío<img alt='arrow' src='../../img/sort_both.png' id='sortEnvio'/></li>";
 
-if(@$_POST['sort'] == 'origen')
+/*if(@$_POST['sort'] == 'origen')
     $imgOrigen = "<li style='display:flex'>Origen<img alt='arrow' src='../../img/sort_desc.png' id='sortOrigen'/></li>";
 if(@$_POST['sort'] == 'destino')
     $imgDestino = "<li>Destino<img alt='arrow' src='../../img/sort_desc.png' id='sortDestino'/></li>";
 if(@$_POST['sort'] == 'date')
     $imgDate = "<li>Envío<img alt='arrow' src='../../img/sort_desc.png' id='sortEnvio'/></li>";
-
+*/
 $agent = '';
 
 $lists = "<ul class='heading'>
-        $imgOrigen.$imgDestino
+        $imgOrigen $imgDestino
         <li>Cliente</li>
         <li>Referencia</li>
         <li>Denominación</li>
