@@ -78,6 +78,7 @@ $nuevas = $contacts->getAssigCountNew($usuario,$usuario,'ready')[0][0];
       <menu name="submenuSendMailTo" id="submenu" class="submenu submenu_hidden">
         <p id="madrid" title="Enviar correo al mostrador de Madrid">MADRID</p>
         <p id="santiago" title="Enviar correo al mostrador de Santiago">SANTIAGO</p>
+        <p id="malaga" title="(628 620 699) Teléfono de mostrador de Málaga"><a href="tel:+34628620699" style="letter-spacing: 0">MÁLAGA</a></p>
       </menu>
     </span>
     <span id="notes">
