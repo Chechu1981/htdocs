@@ -10,7 +10,7 @@
   </menu>
   <div class="search-table">
     <section id="contacts">
-      <h1>Inicio</h1>
+      <h1>Enlaces</h1>
       <div id="search-line" class="nPass search-line search-focused">
         <span class="lupa">
           <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
