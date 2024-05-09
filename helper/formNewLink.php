@@ -15,18 +15,29 @@ $PLACAS = [
   "PALMA",
   "VALENCIA",
   "BARCELONA"
-];
+  ];
+$GRUPOS = [
+  "TRANSPORTE",
+  "NEUMATICOS",
+  "CATALOGO",
+  "PPCR",
+  "STELLANTIS"
+  ];
 ?>
 <link rel="stylesheet" href="../css/style28.css" type="text/css" />
 <link rel="stylesheet" href="../css/chechu.css" type="text/css" />
 <form class='formNotebook' title='new'>
-  <label></label><select type="text" placeholder="web" id="grupo">
+  <label></label>
+  <select type="text" placeholder="web" id="grupo">
     <option value="" selected disabled hidden></option>
-    <option value="transporte">TRANSPORTE</option>
-    <option value="neumaticos">NEUMÁTICOS</option>
-    <option value="catalogo">CATÁLOGO</option>
-    <option value="ppcr">PPCR</option>
-    <option value="stellantis">STELLANTIS</option>
+    <?php foreach($GRUPOS as $grupo) {
+      $selected = '';
+          if($grupo == strtoupper(@$link[0][10])) { 
+            $selected = 'selected';
+          }
+      ?>
+      <option value="<?= $grupo ?>" <?= strtolower($selected) ?> ><?= $grupo ?></option>
+    <?php } ?>
   </select>
   <label></label><input type='text' placeholder='Web' id='web' value="<?= @$link[0][9] ?>">
   <label></label><input type='text' placeholder='Nombre' id='marca' value="<?= @$link[0][1] ?>">
@@ -36,7 +47,7 @@ $PLACAS = [
       <?php foreach ($PLACAS as $placa) { ?>
         <?php
           $selected = '';
-          if($placa == $link[0][2]) { 
+          if($placa == @$link[0][2]) { 
             $selected = 'selected';
           }
           ?>
