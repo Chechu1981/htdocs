@@ -26,7 +26,7 @@ $GRUPOS = [
 ?>
 <link rel="stylesheet" href="../css/style28.css" type="text/css" />
 <link rel="stylesheet" href="../css/chechu.css" type="text/css" />
-<form class='formNotebook' title='new'>
+<form class='formNotebook' title="links">
   <label></label>
   <select type="text" placeholder="web" id="grupo">
     <option value="" selected disabled hidden></option>
@@ -58,6 +58,6 @@ $GRUPOS = [
   <label></label><input type='text' placeholder='Usuario' id='usuario' value="<?= @$link[0][4] ?>">
   <label></label><input type='text' placeholder='Contrsaeña' id='paswd' value="<?= @$link[0][5] ?>">
   <label></label><input type='text' placeholder='Teléfono' id='phone' value="<?= @$link[0][8] ?>">
-  <input type='submit' value='añadir'>
+  <input type='submit' id="<?= $id ?>" value='añadir'>
 </form>
 <script src="../js/form2.js?108"></script>

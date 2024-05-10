@@ -5,12 +5,12 @@ const rutas = {
   }
 
 document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
-    const src = rutas[e.target.title]
+    const src = window.location.href.includes('id=') ? rutas['update'] : rutas['new']
     e.preventDefault()
     e.stopImmediatePropagation()
     const data = new FormData()
     data.append('tipo',e.target.children[1].value)
-    data.append('id',e.target.children[16].value)
+    data.append('id',e.target.children[16].id)
     data.append('web', e.target.children[3].value)
     data.append('marca', e.target.children[5].value)
     data.append('placa', e.target.children[7].value)
