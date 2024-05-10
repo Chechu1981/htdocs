@@ -1438,4 +1438,11 @@ class Contacts
         $query->execute();
         return $query->fetchAll();
     }
+
+    public function getCredentialsMA($plate){
+        $sql = "SELECT * FROM `neumaticos` WHERE `marca` LIKE '%Mister%' AND `placa` LIKE '%$plate%'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

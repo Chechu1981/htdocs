@@ -28,6 +28,7 @@
                   <option value="GRANADA">Granada</option>
                   <option value="SEVILLA">Sevilla</option>
                   <option value="PALMA">Palma</option>
+                  <option value="MAT">Mister-auto</option>
                 </select>
                 <select name="" id="destino">
                   <option value="MADRID">Madrid</option>

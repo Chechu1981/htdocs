@@ -1,3 +1,4 @@
+import { createMail, enviarMailDisgon, createMailMat } from "./createMail.js"
 import contadores from "./updateCounter.js"
 
 setInterval(() =>{contadores()},1000)
@@ -7,7 +8,7 @@ const cesiones = (origen, destino,nfm) =>{
   let cesion = null
   origen != destino ? cesion = origen + '' + destino:''
   nfm ? cesion += 'NM' :''
-  fetch('../json/cesionesCliente.json?102')
+  fetch('../json/cesionesCliente.json?104')
   .then(response => response.json())
   .then(response => {
     const numDest = response[cesion]
@@ -22,7 +23,7 @@ const cesiones = (origen, destino,nfm) =>{
     }else if(origen == "SANTIAGO" && date.getDate() >= 9){
       $('pclient').classList.add('important')
       alerta = "Denegado"*/
-    }else if(destino == 'PALMA'){
+    }else if(destino == 'PALMA' && origen != 'MAT'){
       $('pclient').classList.add('important')
       alerta = "Portes"
     }else{
@@ -32,16 +33,36 @@ const cesiones = (origen, destino,nfm) =>{
     numDest != undefined ? $('pclient').innerText = `${numDest} ${alerta}` : $('pclient').innerText = ""
   })
 }
+const createInputMat = (ref) => {
+  return `
+  <input type="text" id="refMat" 
+    style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
+    value="${ref}"></input>
+    <span style="font-size: small;line-height: 7;">Ref. Mister-Auto</span>`
+
+}
 
 $('nfm').addEventListener('change', (e) => {
-  cesiones($('origen').value,$('destino').value,e.target.checked)
+  const origen = $('origen').value
+  if(origen == 'MAT'){
+    const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
+    $('pclient').innerHTML = createInputMat(refMat)
+    return null
+  }
+  cesiones(origen,$('destino').value,e.target.checked)
 })
 
 $('origen').addEventListener('change',()=>{
   $('newTitle').style.fontWeight = ''
   $('newTitle').classList.remove('copy')
-  if($('origen').value != $('destino').value){
-    cesiones($('origen').value,$('destino').value,$('nfm').checked)
+  const origen = $('origen').value
+  if(origen == 'MAT'){
+    const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
+    $('pclient').innerHTML = createInputMat(refMat)
+    return null
+  }
+  if(origen != $('destino').value){
+    cesiones(origen,$('destino').value,$('nfm').checked)
   }else{
     $('provider').innerText = ""
     $('pclient').innerText = ""
@@ -54,8 +75,14 @@ $('destino').addEventListener('change',()=>{
   $('newTitle').classList.remove('copy')
   $('frag').checked ? disgon(true) : disgon(false)
   buscarCliente($('destino').value.substring(0,3),$('client').value)
-  if($('origen').value != $('destino').value){
-    cesiones($('origen').value,$('destino').value,$('nfm').checked)
+  const origen = $('origen').value
+  if(origen == 'MAT'){
+    const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
+    $('pclient').innerHTML = createInputMat(refMat)
+    return null
+  }
+  if(origen != $('destino').value){
+    cesiones(origen,$('destino').value,$('nfm').checked)
   }else{
     $('provider').innerText = ""
     $('pclient').innerText = ""
@@ -229,7 +256,12 @@ const showAssig = () =>{
         fragil.checked ? fragilTxt = '..~** ¡¡MATERIAL FRÁGIL!! **~.. Por favor, en lo posible, reforzar embalaje. Gracias; ' : ''
         clearRowsMark(ul,`Cesión ${origen.value}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
       })
-      refCliente.addEventListener('click', () => {clearRowsMark(ul,`Cliente: ${cliente.childNodes[0].textContent}`)})
+      refCliente.addEventListener('click', () => {
+        let texto = `Cliente: ${cliente.childNodes[0].textContent}`
+        if(origen.value == 'MAT')
+          texto = $(`origen${id}`).parentNode.childNodes[6].innerText
+        clearRowsMark(ul, texto)
+      })
       
       if(user.puesto == 'ADV'){
         origen.addEventListener('change', (e) => {
@@ -294,7 +326,7 @@ const showAssig = () =>{
       }
 
       if(btnSendMail != null){
-        btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, id))
+        btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente.innerText))
         if(btnSendMailDisgon != null)
           btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id))
       }
@@ -303,7 +335,7 @@ const showAssig = () =>{
   })
 }
 
-const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, id, cantidad, nfm, tratado) =>{
+const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, id, cantidad, nfm, tratado, refCliente) =>{
   if($(`disgon${id}`).innerHTML == "🚚"){
     customAlert("Debes enviar primero el correo a Disgón")
     return false
@@ -323,6 +355,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
   dataName.append('destino', destino)
   dataName.append('destinoC', `${destino}C`)
   dataName.append('origenF', `${origen}F`)
+  dataName.append('misterauto', refCliente)
   fetch('../api/isSend.php',{
     method: 'POST',
     body: dataName
@@ -340,18 +373,22 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
         body:dataName
       })
       .then((item) => item.text())
-      .then((item) => {
+      .then(() => {
         fetch('../api/getBccMails.php',{
           method: 'POST',
           body: dataName
         })
         .then(response => response.json())
         .then(res => {
-          let destinoFragil = ''
-          if(fragil){
-            destinoFragil = res['fragil']
+          if(origen == 'MAT'){
+            createMailMat(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'])
+          }else{
+            let destinoFragil = ''
+            if(fragil){
+              destinoFragil = res['fragil']
+            }
+            createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],disgon)
           }
-          createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],disgon)
           $(`send${id}`).parentNode.parentNode.remove()
           updateBubble('-')
         })
@@ -363,13 +400,15 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
 const refreshInputs = (id,nfm,fragil,pedido,tratado,origen,destino) => {
   let cesion = null
   let code = $(id).parentNode.childNodes[1].childNodes[6]
-  origen != destino ? cesion = origen + '' + destino:''
-  nfm ? cesion += 'NM' :''
-  fetch('../json/cesionesCliente.json?100')
-  .then(response => response.json())
-  .then(response => {
-    response[cesion] != undefined ? code.innerHTML = response[cesion] : code.innerHTML = ""
-  })
+  origen != destino ? cesion = origen + '' + destino : ''
+  nfm ? cesion += 'NM' : ''
+  if(origen != 'MAT'){
+    fetch('../json/cesionesCliente.json?104')
+    .then(response => response.json())
+    .then(response => {
+      response[cesion] != undefined ? code.innerHTML = response[cesion] : code.innerHTML = ""
+    })
+  }
   updateChkbx(id,nfm,fragil,pedido,tratado,destino)
 }
 
@@ -433,101 +472,6 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
       disgonSend.innerHTML = ''
     }
   }
-}
-
-const createMail = (cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,mailOrigen,mailDestino,bcc,disgon) =>{
-  let mailTarget, asuntoDisgon = ''
-  let strDisgon = ``
-  let mailFragil = encodeURIComponent(``)
-  let strNfm = 'La entrada en Geode debe ser realizada como entrada esperada 103 y no con el 109. '
-  let strCantidad = 'la referencia'
-  if(cantidad > 1){
-    strCantidad = `${cantidad} unidades de la referencia`
-  }
-  if(fragil){
-    mailFragil = encodeURIComponent(`
-    *******__‼️ ATENCIÓN ‼️__*******
-    ******************************
-    **⚠️⚠️ MATERIAL FRÁGIL ⚠️⚠️**
-    ******************************
-    
-    `)
-  }
-  if(disgon){
-    asuntoDisgon = `DISGON`
-    strDisgon = `🚚🚩🚩ATENCIÓN RECOGE DISGON O LOGISTICA🚩🚩🚚`
-  }
-  if(nfm)
-    strNfm = `La entrada en Geode debe ser realizada como entrada 109. PIEZA SIN SOLUCIÓN DE REEMPLAZO.   `
-  if(origen == 'SANTIAGO')
-    origen = 'GALICIA'
-  if(destino == 'SANTIAGO')
-    destino = 'GALICIA'
-  const fecha = new Date()
-  const mailSub = `${asuntoDisgon} CESION ${origen} -> ${destino}`
-  const mailSaludo = fecha.getHours() > 14 ? `${mailFragil}Buenas tardes: ` : `${mailFragil}Buenos días: `
-  mailTarget = encodeURIComponent(`
-Va a llegar de la placa de ${origen} a ${destino} ${strCantidad} ${referencia} para la cuenta ${cliente}.
-${strNfm}
-${strDisgon}
-Saludos.`)
-
-  window.open(`mailto:${destinoFragil};${mailDestino};${mailOrigen}?subject=${mailSub}&cc=${bcc}&body=${mailSaludo + mailTarget}`)  
-}
-
-const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
-  $(`disgon${id}`).className = "wait"
-  const direcciones = {
-    MADRID: 'Carretera de Seseña a Esquivias, Km 0,8 - 45224 Seseña Nuevo (Toledo)',
-    VALENCIA: 'Carrer dels Bombers, 20 - 46980 PATERNA - VALENCIA',
-    GALICIA: 'Vía Pasteur 41, CP:15898 Santiago de Compostela (A CORUÑA)',
-    BARCELONA: 'Calle D, nº 41 - Polig. Ind. Zona Franca - 08040 BARCELONA',
-    ZARAGOZA: 'C/ Río de Janeiro, 3 Polígono Industrial Centrovia 50198 - La Muela - ZARAGOZA',
-    GRANADA: 'Polígono Industrial Huerta Ardila - Ctra. A-92 Km 6 - 18320 SANTA FE - GRANADA',
-    SEVILLA: 'Parque Logístico de Carmona - MANZANA B, NAVE 1.Autovía A-4 Km. 521    41410 Carmona - Sevilla',
-    PALMA:'Avda. 16 de Julio, 5 - 07009 SON CASTELLO- PALMA DE MALLORCA'
-  }
-
-  const hora = new Date().getHours()
-  let saludo = `Buenos días`
-  if(hora > 14)
-    saludo = `Buenas tardes`
-
-  const datos = new FormData()
-  datos.append('search',referencia)
-  fetch('../api/getRefer.php',{
-    method: 'POST',
-    body: datos
-  })
-  .then(item => item.json())
-  .then(result => {
-    $(`disgon${id}`).className = ""
-    $(`disgon${id}`).innerHTML = "✅"
-    if(origen == 'SANTIAGO')
-      origen = 'GALICIA'
-    if(destino == 'SANTIAGO')
-      destino = 'GALICIA'
-    const descRef = result.denominacion
-    const dirOrigen = direcciones[origen]
-    const dirDestino = direcciones[destino]
-    const importe = Math.ceil(result.pvp * ((100 - result.dtoNum) / 100))
-    const asunto = "RECOGIDA PPCR - DISGON"
-    const mail = encodeURIComponent(`${saludo}:
-    Necesitamos recoger la referencia ${result.referencia} cantidad ${cantidad} ${descRef} en PPCR ${origen}
-    ${dirOrigen}
-    
-    Para enviarlo a PPCR ${destino}
-    ${dirDestino}
-  
-    ENVÍO ASEGURADO EN    ${importe}€
-    
-    
-    Saludos.`)
-    if(confirm(`¿Enviar Correo a Disgón?`)){
-      window.open(`mailto:pedidos@disgon.com; incidencias@disgon.com; info@disgon.com; julio@disgon.com; carlosalberto.fernandez@stellantis.com?subject=${asunto}&body=${mail}`)
-      $(`disgon${id}`).innerHTML = "✅"
-    }
-  })
 }
 
 const eliminarLinea = (id,referencia,tratado) =>{
@@ -610,6 +554,15 @@ $$('form')[0].addEventListener('submit',(e)=>{
   const ref = $('ref').value
   const cantidad = $('units').value
   const nfm = $('nfm').checked
+  let refMat = ''
+  if(origen == 'MAT'){
+    refMat = $('refMat').value
+    if(refMat == 'ZZMAT' || refMat == ''){
+      customAlert('Falta indicar la referencia de Mister-auto')
+      document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
+      return false
+    }
+  }
   if(origen === destino){
     customAlert('El destino y el origen debe ser diferente')
     document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
@@ -654,7 +607,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   data.append('origen',origen)
   data.append('destino',destino)
   data.append('cliente',`${cliente}-${envio}`)
-  data.append('refClient','')
+  data.append('refClient', refMat)
   data.append('comentario',$('coment').value)
   data.append('ref',ref)
   data.append('cantidad',cantidad)

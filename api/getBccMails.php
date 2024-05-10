@@ -11,6 +11,9 @@ $origenF = $_POST['origenF'];
 if($_POST['origen'] == 'PALMA'){
     $pilot = 'BALEARES';
 }
+if($_POST['origen'] == 'MAT'){
+    $origenF = $_POST['destino']."F";
+}
 
 $mails = $products[$destino];
 $mailsC = $products[$destinoC];
