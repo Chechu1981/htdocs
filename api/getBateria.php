@@ -19,14 +19,14 @@
   }
 
   function getBorne($numBorne){
-    if($numBorne == 3)
-      return "JAPÓN";
+    if($numBorne == 1)
+      return "../img/japan.svg";
     else  
-      return "EUROPA";
+      return "../img/europe.svg";
   }
 
   function getPositivo($numPositivo){
-    if($numPositivo == 0)
+    if($numPositivo == 'd')
       return "+ DCHA";
     else
       return "+ IZDA";
@@ -34,33 +34,37 @@
 
 ?>
 <table class="table_oil">
-  <tr>
+  <tr style="position:sticky;top: 162px;">
     <th>Capacidad</th>
     <th>Amperios</th>
     <th>S&S</th>
     <th>Referencia</th>
     <th>Descripción</th>
     <th>Largo</th>
-    <th>Alto</th>
     <th>Ancho</th>
+    <th>Alto</th>
     <th>Polaridad</th>
     <th>Borne</th>
+    <th>Talón</th>
+    <th>Bandeja</th>
   </tr>
   <?php 
   foreach ($aceite as $items){ 
     $referencia = str_replace('.','',$items[3]);
   ?>
     <tr>
-      <td><?php echo $items[1].'A';?></td>
-      <td><?php echo $items[0].'Ah';?></td>
-      <td style="width:120px;text-align:center"><?php echo $items[2];?></td>
-      <td class="copy" style="font-weight: bolder;"><?php echo formatRef($referencia); ?></td>
-      <td><?php echo $items[4];?></td>
-      <td><?php echo $items[5];?></td>
-      <td><?php echo $items[7];?></td>
-      <td><?php echo $items[6];?></td>
-      <td><?php echo getPositivo($items[8]);?></td>
-      <td><?php echo getBorne($items[9]);?></td>
+      <td><?= $items[1].'Ah';?></td>
+      <td><?= $items[2].'A';?></td>
+      <td style="width:120px;text-align:center"><?= $items[4];?></td>
+      <td class="copy" style="font-weight: bolder;"><?= formatRef($referencia); ?></td>
+      <td><?= strtoupper($items[5]);?></td>
+      <td><?= $items[6];?></td>
+      <td><?= $items[7];?></td>
+      <td><?= $items[8];?></td>
+      <td><?= getPositivo($items[9]);?></td>
+      <td><img src="<?= getBorne($items[10]);?>" alt="borne"></td>
+      <td><?= $items[11];?></td>
+      <td><?= $items[12];?></td>
     </tr>
   <?php } ?>
 </table>

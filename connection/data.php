@@ -1407,31 +1407,21 @@ class Contacts
         $minAmperios = $amperios - 5;
         $maxAmperios =  $amperios + 5;
         if($normal == 'normal')
-            $normal = " AND (`Stop_Start` LIKE 'no' OR `Stop_Start` IS NULL) ";
+            $normal = " AND (`Stop_Start` LIKE 'no') ";
         if($stopStart == 'Option STT possible')
-            $stopStart = " AND (`Stop_Start` LIKE 'Option STT possible') ";
-        if($stopStart == " AND (`Stop_Start` LIKE 'Option STT possible') " && $normal == " AND (`Stop_Start` LIKE 'no' OR `Stop_Start` IS NULL) "){
+            $stopStart = " AND (`Stop_Start` LIKE 'SI') ";
+        if($stopStart == " AND (`Stop_Start` LIKE 'SI') " && $normal == " AND `Stop_Start` LIKE 'no'"){
             $stopStart = '';
             $normal = '';
         }
-        $where = "WHERE REPLACE(REPLACE(SUBSTRING(`Desicription`,-7,3),'D',''),' ','') BETWEEN $minAmperios AND $maxAmperios ";
+        $where = " WHERE `amp` BETWEEN $minAmperios AND $maxAmperios ";
         if($amperios == 120)
             $where = " WHERE `Desicription` LIKE '%%' ";
         
-        $sql = "SELECT DISTINCT SUBSTRING(`Desicription`,-3) AS `amperios`, 
-            REPLACE(REPLACE(SUBSTRING(`Desicription`,-7,3),'D',''),' ','') AS `aHora`,
-            `Stop_Start`,
-            `Exact`,
-            `Desicription`,
-            `Length`,
-            `Width`,
-            `Heights`,
-            `Polarity`,
-            `Borne` 
-            FROM `baterias` 
+        $sql = "SELECT * FROM `baterias` 
             $where 
             $stopStart $normal
-            ORDER BY CAST(REPLACE(`aHora`,'A','') AS INT),`amperios`,`Stop_Start` ASC;";
+            ORDER BY `amp`,`amph`,`Stop_Start` ASC;";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

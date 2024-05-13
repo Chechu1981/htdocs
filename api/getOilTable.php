@@ -4,7 +4,7 @@
   $aceite = $conexion->getOil($_POST['grado'],$_POST['vol'],$_POST['marca']);
 ?>
 <table class="table_oil">
-  <tr>
+  <tr style="position:sticky;top: 162px;">
     <th colspan="3">Producto</th>
     <th>ACEA</th>
     <th>API</th>

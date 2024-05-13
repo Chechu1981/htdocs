@@ -985,6 +985,7 @@ table.table_oil{
     margin: auto;
     border-collapse: collapse;
     font-size: larger;
+    box-shadow: 4px 5px 12px 1px black;
 }
 
 table.table_oil th{
@@ -997,6 +998,14 @@ table.table_oil td{
 
 table.table_oil tr:nth-child(odd){
     background-color:var(--search-line);
+}
+
+table.table_oil tr:nth-child(even){
+    background-color:var(--second-bg-color);
+}
+
+table.table_oil tr:hover{
+    background-color: var(--cards-active-color);
 }
 
 table td.ref{
