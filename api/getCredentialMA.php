@@ -3,6 +3,11 @@ include_once '../connection/data.php';
 
 $methods = new Contacts();
 
-$rows = $methods->getCredentialsMA($_POST['placa']);
+$placa = $_POST['placa'];
+
+if($_POST['placa'] == 'SANTIAGO') 
+  $placa = 'GALICIA';
+
+$rows = $methods->getCredentialsMA($placa);
 
 echo json_encode($rows[0]);

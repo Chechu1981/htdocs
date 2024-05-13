@@ -408,6 +408,20 @@ const refreshInputs = (id,nfm,fragil,pedido,tratado,origen,destino) => {
     .then(response => {
       response[cesion] != undefined ? code.innerHTML = response[cesion] : code.innerHTML = ""
     })
+  }else{
+    const session = window.location.search.split('?id=')[1]
+    const data = new FormData()
+    data.append('id', id)
+    data.append('session', session)
+    fetch('../api/getAssignZzmat.php',{
+      method: 'POST',
+      body: data
+    })
+    .then(response => response.json())
+    .then(response => {
+      const refZZMAT = document.getElementById(`destinoBtn${id}`).parentNode.childNodes[6]
+      refZZMAT.innerHTML = `<span class="copy " style="grid-column: 1 / 4;font-size: medium;">${response.refClient}</span>`
+    })
   }
   updateChkbx(id,nfm,fragil,pedido,tratado,destino)
 }

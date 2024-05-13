@@ -449,6 +449,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getZzmat($id){ 
+        $sql = "SELECT * FROM `cesiones` WHERE `id` = '$id' LIMIT 1";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function newSelectPending($ip,$placa,$cliente,$referencia,$envio,$nombre){
         $sql = "INSERT INTO `statusPending` (`ip`,`plate`,`NumClient`,`ref`,`dirClient`,`date`,`free1`) 
         VALUES ('$ip','$placa','$cliente','$referencia','$envio',CURRENT_TIMESTAMP(),'$nombre')";
