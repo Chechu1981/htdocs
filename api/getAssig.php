@@ -81,6 +81,8 @@ if(sizeof($rows) > 0){
       if($row[23] == 1){
         $rechazado = "<span id='rechazo$row[0]' title='$row[24]' style='cursor:pointer'>🚫</span>";
       }
+      if($row[1] == 'MAT')
+        $row[1] = "MR AUTO<br /><legend class='legend copy'>$row[12]</legend>";
       $nfm = "";
       if($row[14])
           $nfm = "NFM";

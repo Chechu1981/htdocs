@@ -376,6 +376,7 @@ class Contacts
         `ref` LIKE '%$all%' OR
         `origen` LIKE '%$all%' OR
         `destino` LIKE '%$all%' OR
+        `refClient` LIKE '%$all%' OR
         `cliente` LIKE '%$all%'OR
         `comentario` LIKE '%$all%'OR
         `pedido` LIKE '%$all%' AND
