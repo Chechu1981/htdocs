@@ -1,5 +1,5 @@
 "use strict";
-import { createMail,enviarMailDisgon } from "./createMail.js"
+import { createMail, enviarMailDisgon, createMailMat } from "./createMail.js"
 import contadores from "./updateCounter.js"
 
 setInterval(() =>{contadores()},1200)
@@ -350,7 +350,7 @@ const showAssig = () =>{
           updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
         })
         if(btnSendMail != null){
-          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.childNodes[1].value))
+          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.childNodes[1].value, refCliente.innerText))
           if(btnSendMailDisgon != null)
             btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id))
         }
@@ -369,7 +369,7 @@ const showAssig = () =>{
   })
 }
 
-const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, id, cantidad, nfm, tratado) =>{
+const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, id, cantidad, nfm, tratado, refCliente) =>{
   if($(`disgon${id}`).innerHTML == "🚚"){
     customAlert("Debes enviar primero el correo a Disgón")
     return false
@@ -390,6 +390,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
   dataName.append('destino', destino)
   dataName.append('destinoC', `${destino}C`)
   dataName.append('origenF', `${origen}F`)
+  dataName.append('misterauto', refCliente)
   fetch('../api/isSend.php',{
     method: 'POST',
     body: dataName
@@ -408,22 +409,20 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
       })
       .then((item) => item.text())
       .then(() => {
-        if(origen == 'MAT'){
-          alert('Mister-auto')
-          return true
-        }
         fetch('../api/getBccMails.php',{
           method: 'POST',
           body: dataName
         })
         .then(response => response.json())
         .then(res => {
-          console.log(res)
-          let destinoFragil = ''
-          if($('frag').checked){
-            destinoFragil = res['fragil']
+          if(origen == 'MAT'){
+            createMailMat(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'])
+          }else{
+            let destinoFragil = ''
+            if($('frag').checked)
+              destinoFragil = res['fragil']
+            createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],disgon)
           }
-          createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],disgon)
           $(`send${id}`).parentNode.remove()
           updateBubble('-')
         })
