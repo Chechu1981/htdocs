@@ -49,9 +49,9 @@ $scripts = (object)[
   'CONFIGPENDING' => "/js/updatePending.js?112",
   'ACEITE' => "/js/aceite.js?114",
   'BATERIAS' => "/js/baterias.js?118",
-  'CONFIGUSERS' => "/js/users.js?101",
-  'FORMNEWUSER' => "/../js/formNewUser.js?101",
-  'FORMEDITUSER' => "/../js/formNewUser.js?101"
+  'CONFIGUSERS' => "/js/users.js?102",
+  'FORMNEWUSER' => "/../js/formNewUser.js?102",
+  'FORMEDITUSER' => "/../js/formNewUser.js?102"
 ];
 
 $usr = $contacts->getAllUsers();

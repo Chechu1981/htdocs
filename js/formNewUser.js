@@ -1,6 +1,6 @@
 'use strict';
 
-async function usuarioExiste(usuario){
+function usuarioExiste(usuario){
   const data = new FormData()
   data.append('usuario', usuario)
   let exsiste = false
@@ -49,14 +49,12 @@ document.getElementsByTagName('form')[0].addEventListener('submit', (event) => {
     datos.append('puesto', puesto)
     datos.append('pass', pass1)
   if(method == 'new'){
-    if(!usuarioExiste(nombre)){
-      fetch('/../api/addNewUser.php',{
-        method: 'POST',
-        body: datos
-      })
-      const id = window.location.search.split('=')[1].split('&')[0]
-      window.location.href = `../update/configUsers.php?id=${id}`
-    }
+    fetch('/../api/addNewUser.php',{
+      method: 'POST',
+      body: datos
+    })
+    const id = window.location.search.split('=')[1].split('&')[0]
+    window.location.href = `../update/configUsers.php?id=${id}`
   }else if(method == 'edit'){
     datos.append('id', window.location.search.split('=')[2].split('&userId=')[0])
     fetch('/../api/updateUser.php',{

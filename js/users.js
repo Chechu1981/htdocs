@@ -13,7 +13,7 @@ const pictures = document.getElementsByClassName('users')[0].getElementsByTagNam
 
 for(let index = 0; index < pictures.length; index++) {
   pictures[index].addEventListener('click', (e) =>{
-    const id = e.target.parentNode.parentNode.childNodes[1].id
+    const id = e.target.parentNode.parentNode.childNodes[3].id
     const usuario = e.target.parentNode.parentNode.childNodes[1].innerHTML
     let confirmacion = false
     if(e.target.alt == 'eliminar')
@@ -28,7 +28,8 @@ for(let index = 0; index < pictures.length; index++) {
         method: 'POST',
         body:data
       })
-      recargar('../update/configUsers.php')
+      .then(rec=>rec.text())
+      .then(fin => recargar('../update/configUsers.php'))
     }else{
       recargar('../helper/formEditUser.php',id)
     }
