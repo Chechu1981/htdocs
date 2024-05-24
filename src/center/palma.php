@@ -23,6 +23,9 @@
           <input type="search" id="search-contacts" placeholder="Busca...">
         </div>
       </div>
+      <div class="new_note" id='addContact'>
+        <button id="addNotebook" >Nuevo contacto</button>
+      </div>
     </div>
     <div id="center-list-items">
     </div>

@@ -15,20 +15,54 @@ $PLACAS = [
   "VALENCIA",
   "BARCELONA"
 ];
+$ENTIDAD = [
+  "PPCR",
+  "GECOINSA",
+  "CEVA",
+  "TRASNPORTE",
+  "NORTEMPO",
+  "FOMINTER",
+  "PCAE",
+  "INMOSANMAR",
+  "MNP&MAKA S.L"
+];
+$EQUIPO = [
+  "COMERCIO",
+  "EXPLOTACIÓN",
+  "GESTION",
+  "POA/ADMON",
+  "DISTRIBUCIÓN",
+  "DIRECCIÓN",
+  "APROVISIONAMIENTO",
+  "CALL CENTER",
+  "LIGÍSITICA"
+];
 ?>
 <link rel="stylesheet" href="../css/style28.css" type="text/css" />
 <link rel="stylesheet" href="../css/chechu.css" type="text/css" />
-<form class='form-new' title='new'>
+<form class='formNewContact' title='new'>
     <input type="hidden" value="${centro}">
-    <label></label>
+    <label>Placa</label>
     <select type='text' placeholder='placa' id='placa'>
       <option value="" disabled hidden selected></option>
       <?php foreach ($PLACAS as $placa) { ?>
         <option value="<?= $placa ?>"><?= $placa ?></option>
       <?php } ?>  
     </select>
-    <label></label><input type='text' placeholder='entidad' id='entidad'>
-    <label></label><input type='text' placeholder='equipo' id='equipo'>
+    <label>Entidad</label>
+    <select type='text' placeholder='entidad' id='entidad'>
+      <option value="" disabled hidden selected></option>
+      <?php foreach ($ENTIDAD as $placa) { ?>
+        <option value="<?= $placa ?>"><?= $placa ?></option>
+      <?php } ?>  
+    </select>
+    <label>Equipo</label>
+    <select type='text' placeholder='equipo' id='equipo'>
+      <option value="" disabled hidden selected></option>
+      <?php foreach ($EQUIPO as $placa) { ?>
+        <option value="<?= $placa ?>"><?= $placa ?></option>
+      <?php } ?>  
+    </select>
     <label></label><input type='text' placeholder='nombre' id='nombre'>
     <label></label><input type='text' placeholder='puesto' id='puesto'>
     <label></label><input type='text' placeholder='ext' id='ext'>

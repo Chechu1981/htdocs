@@ -661,6 +661,12 @@ select, input{
     margin: 1px 5px;
 }
 
+.formNewContact{
+    display: grid;
+    grid-template-columns: 14% 83%;
+    grid-gap: 8px;
+}
+
 #config{
     display: flex;
     flex-wrap: wrap;

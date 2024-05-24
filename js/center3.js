@@ -18,9 +18,10 @@ const createScript = () => {
 
 const clickAdd = () =>{
   $('addContact').addEventListener('click', ()=>{
-    modal('<iframe src="../../helper/formNewContact.php" ></iframe>',`Nuevo contacto en `)
+    modal('<iframe src="../../helper/formNewContact.php" style="height: 410px;"></iframe>',`Nuevo contacto en `)
   })
 }
+
 const data = new FormData()
 data.append('center',$$('h1')[0].innerHTML)
 data.append('search','')
