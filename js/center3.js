@@ -18,7 +18,7 @@ const createScript = () => {
 
 const clickAdd = () =>{
   $('addContact').addEventListener('click', ()=>{
-    modal('<iframe src="../../helper/formNewContact.php" style="height: 410px;"></iframe>',`Nuevo contacto en `)
+    modal(`<iframe src="../../helper/formNewContact.php?placa=${document.getElementsByTagName('h1')[0].innerText}" style="height: 410px;"></iframe>`,`Nuevo contacto en `)
   })
 }
 
@@ -102,14 +102,7 @@ document.addEventListener('click',(e)=>{
     }
   }else if(e.target.id.includes('edit')){
     const id= e.target.parentNode.id
-    const data = new FormData()
-    data.append('id',id)
-    fetch('../../helper/modalContact.php?id='+id)
-    .then(response => response.text())
-    .then(res =>{
-      modal(res,"Editar plataforma")
-      createScript()
-    })
+    modal(`<iframe src="../../helper/formNewContact.php?id=${id}" style="height: 410px;"></iframe>`,`Editar contacto`)
   }
 })
 
