@@ -63,8 +63,8 @@ $EQUIPO = [
   "LIGISITICA"
 ];
 ?>
-<link rel="stylesheet" href="../css/style28.css" type="text/css" />
-<link rel="stylesheet" href="../css/chechu.css" type="text/css" />
+<link rel="stylesheet" href="../css/style28.css?100" type="text/css" />
+<link rel="stylesheet" href="../css/chechu.css?100" type="text/css" />
 <form class='formNewContact' title='<?= $titulo ?>'>
     <input type="hidden" value="${centro}">
     <label for="placa">Placa</label>
