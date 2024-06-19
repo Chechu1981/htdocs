@@ -75,9 +75,9 @@ foreach ($rows as $row) {
     <ul '.$style.'>
       <li><img src="../img/'.$imgs->$marca.'" alt="'.$row[1].'" '.$invert.' class="iconBrand"></li>
       <li>'.$file.'</li>
-      <li>'.$row[2].'</li>
-      <li>'.$row[3].'</li>
-      <li title="'.$row[4].'" class="copy">'.formatRef($row[4]).'</li>
+      <li>'.strtoupper($row[2]).'</li>
+      <li>'.strtoupper($row[3]).'</li>
+      <li title="'.$row[4].'" class="copy">'.formatRef(strtoupper($row[4])).'</li>
       <li title="Correo: " class="delete">
         <span title="eliminar registro '.$row[3].' ('.$row[4].')" id="'.$row[0].'">
           <img id="delete" alt="eliminar" src="../../img/delete_FILL0_wght400_GRAD0_opsz24.png">

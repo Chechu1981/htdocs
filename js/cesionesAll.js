@@ -543,7 +543,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   const envio = $('envio').value
   const cliente = $('client').value
   const pedido = $('pedido').value
-  const ref = $('ref').value
+  const ref = $('ref').value.replaceAll(' ','')
   const cantidad = $('units').value
   const nfm = $('nfm').checked
   if(origen === destino){
