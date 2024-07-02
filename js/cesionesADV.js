@@ -253,7 +253,8 @@ const showAssig = () =>{
       comentario.addEventListener('click', () => {clearRowsMark(ul,comentario.textContent)})
       cliente.addEventListener('click', () => {
         let fragilTxt = ''
-        fragil.checked ? fragilTxt = '..~** ¡¡MATERIAL FRÁGIL!! **~.. Por favor, en lo posible, reforzar embalaje. Gracias; ' : ''
+        disgon != null ? fragilTxt += 'Recoge DISGON. ' : ''
+        fragil.checked ? fragilTxt += '..~** ¡¡MATERIAL FRÁGIL!! **~..Reforzar embalaje;' : ''
         clearRowsMark(ul,`Cesión ${origen.value}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
       })
       refCliente.addEventListener('click', () => {
