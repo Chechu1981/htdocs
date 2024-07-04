@@ -152,6 +152,10 @@ $('ref').addEventListener('blur',() =>{
   buscarDenominacionReferencia($('ref').value)
 })
 
+$('envio').addEventListener('change',(valor) =>{
+  $('envio').options[envio + 1].innerHTML = valor.value
+})
+
 const buscarDenominacionReferencia = (refer) =>{
   const data = new FormData()
   data.append('referencia', refer)
