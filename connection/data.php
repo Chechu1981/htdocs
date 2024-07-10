@@ -1250,7 +1250,7 @@ class Contacts
         WHERE CONCAT('RUTA ',clientes.turnoU) = rutas.TURN 
         AND clientes.placa = rutas.CENTRO 
         AND code LIKE '$search%' 
-        ORDER BY LENGTH(clientes.code), clientes.code ASC LIMIT 100";
+        ORDER BY LENGTH(clientes.code), clientes.code ASC LIMIT 500";
       $query = $this->db->prepare($sql);
       $query->execute();
       return $query->fetchAll();

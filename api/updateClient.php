@@ -35,7 +35,8 @@ try {
         $envio = $data[2];
         if($data[2] == '')
           $envio = 0;
-      array_push($items,['placa' => $data[0],
+      array_push($items,[
+        'placa' => $data[0],
         'cuenta' => utf8_encode(str_replace($charset,'',$data[1])),
         'envio' => $envio,
         'telefono' => utf8_encode(str_replace($charset,'',$data[3])),

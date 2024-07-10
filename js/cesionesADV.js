@@ -140,6 +140,9 @@ const buscarCliente = (placa,cliente) => {
       });
       $('envio').remove()
       section.appendChild(selected)
+      $('envio').addEventListener('change',(valor) =>{
+        $('envio').options[valor.target.value + 1].innerHTML = valor.target.value
+      })
     }
   })
 }
@@ -150,10 +153,6 @@ $('client').addEventListener('blur',(e)=>{
 
 $('ref').addEventListener('blur',() =>{
   buscarDenominacionReferencia($('ref').value)
-})
-
-$('envio').addEventListener('change',(valor) =>{
-  $('envio').options[envio + 1].innerHTML = valor.value
 })
 
 const buscarDenominacionReferencia = (refer) =>{
