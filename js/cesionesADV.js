@@ -165,7 +165,7 @@ const buscarDenominacionReferencia = (refer) =>{
   .then(res => res.text())
   .then((res) => {
     $('descRef').innerHTML = res
-    if($('destino').value == 'PALMA'){
+    if($('destino').value == 'PALMA' && $('origen').value != 'MAT'){
       let portes = '40€'
       const pvp = parseFloat(res.split('PVP: ')[1].split('€')[0].replaceAll(',','.'))
       if(pvp < 150)
