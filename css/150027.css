@@ -41,7 +41,7 @@
     }
 
     .arrow-right {
-        width: max-content;
+        /* width: max-content;*/
         min-width: 90px;
     }
 

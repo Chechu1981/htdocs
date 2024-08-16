@@ -83,6 +83,8 @@ if(sizeof($rows) > 0){
       }
       if($row[1] == 'MAT')
         $row[1] = "MR AUTO<br /><legend class='legend copy'>$row[12]</legend>";
+      if($row[1] == 'EXT')
+        $row[1] = "C.EXTERNA<br /><legend class='legend'>$row[12]</legend>";
       $nfm = "";
       if($row[14])
           $nfm = "NFM";

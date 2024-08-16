@@ -11,7 +11,7 @@ $origenF = $_POST['origenF'];
 if($_POST['origen'] == 'PALMA'){
     $pilot = 'BALEARES';
 }
-if($_POST['origen'] == 'MAT'){
+if($_POST['origen'] == 'MAT' || $_POST['origen'] == 'EXT'){
     $origenF = $_POST['destino']."F";
 }
 

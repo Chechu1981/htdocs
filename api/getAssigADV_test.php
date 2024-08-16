@@ -58,13 +58,15 @@ if($_POST['id'] != 'new')
 
 $lists = "<h1>No hay cesiones</h1>";
 
-function createOptions($id,$placa){
-  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA','MISTER-AUTO');
+function createOptions($id,$placa,$proveedor){
+  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA','MISTER-AUTO','C. EXTERNA');
   $select = '<select name="origen" id="origen'.$id.'">';
   foreach ($placas as $key) {
     $nombre = $key;
     if($key == 'MISTER-AUTO')
       $key = 'MAT';
+    if($key == 'C. EXTERNA')
+      $key = 'EXT';
     if($key == $placa)
       $select .= '<option value="'.$key.'" selected>'.$nombre.'</option>';
     else
@@ -138,7 +140,7 @@ if(sizeof($rows) > 0){
     $origen = '<span id="origen'.$row[0].'">'.$row[1].'</span>';
     $destino = $row[2];
     if($puesto == 'ADV')
-      $origen = createOptions($row[0],$row[1]);
+      $origen = createOptions($row[0],$row[1],$row[12]);
     if($row[10] != $user[0][1])
       $usuarioCesion = $row[10].'<span id="rechazo'.$row[0].'">❌</span>';
     if($row[23] == 1){
@@ -153,12 +155,18 @@ if(sizeof($rows) > 0){
       $nfm = 'NM';
       $nfmChecked = 'checked="checked"';
     }
-    if($codgClient[$row[1].$row[2].$nfm] == "6254-1" || $codgClient[$row[1].$row[2].$nfm] == "78713-1"){
-      $important = 'important';
+    if($row[1] != 'MAT' && $row[1] != 'EXT'){
+      $numPie = $codgClient[$row[1].$row[2].$nfm];
+      if($codgClient[$row[1].$row[2].$nfm] == "6254-1" || $codgClient[$row[1].$row[2].$nfm] == "78713-1")
+        $important = 'important';
     }
+    else
+      $numPie = '';
 
-    $numPie = $codgClient[$row[1].$row[2].$nfm];
     if($row[1] == 'MAT'){
+      $numPie = $row[12];
+    }
+    if($row[1] == 'EXT'){
       $numPie = $row[12];
     }
     /*if($row[2] == 'SANTIAGO')

@@ -52,9 +52,9 @@ export const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
   }
 
   const hora = new Date().getHours()
-  let saludo = `Buenos días`
+  let saludo = `Buenos días:`
   if(hora > 14)
-    saludo = `Buenas tardes`
+    saludo = `Buenas tardes:`
 
   const datos = new FormData()
   datos.append('search',referencia)
@@ -95,29 +95,36 @@ export const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
 
 export const createMailMat = (cantidad,misterauto,destino,referencia,cliente,pedido,nfm,fragil,destinatarios) => {
   const hora = new Date()
-  const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días`
+  const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
   const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
-  const plate = new FormData()
-  plate.append('placa', destino)
-  fetch('../api/getCredentialMA.php',{
-    method: 'POST',
-    body: plate
-  })
-  .then(res => res.json())
-  .then((credential) =>{
 
-    const mensaje = `%0AEl cliente ${cliente} ha autorizado a servir ${numero} ${referencia.toUpperCase()} con pedido a proveedor ${pedido} por alternativa ${misterauto.toUpperCase()} en Mister-Auto.
-  
-    %0APodéis descargar la factura desde el portal de M.A. https://www.mister-auto.es/
-  
-    %0AUsuario: ${credential.usuario}
-    %0AContraseña: ${credential.pass}
-  
-    %0AAprovisionamiento, por favor ¿podríais crear la referencia indicada?
-  
-    %0A%0AMuchas gracias.
-  `
-  
-    window.location.href = `mailto:${destinatarios}?cc=dfs1@stellantis.com&subject=Compra Mister-Auto ${destino}&body=${saludo}${mensaje}` //
-  })
+  const mensaje = `%0AEl cliente ${cliente} ha autorizado a servir ${numero} ${referencia.toUpperCase()} con pedido a proveedor ${pedido} por alternativa ${misterauto.toUpperCase()} en Mister-Auto.
+
+  %0APodéis descargar la factura desde el portal de M.A. https://www.mister-auto.es/
+
+  %0AUsuario: ${credential.usuario}
+  %0AContraseña: ${credential.pass}
+
+  %0AAprovisionamiento, por favor ¿podríais crear la referencia indicada?
+
+  %0A%0AMuchas gracias.
+`
+
+  window.location.href = `mailto:${destinatarios}?cc=dfs1@stellantis.com&subject=Compra Mister-Auto ${destino}&body=${saludo}${mensaje}` //
+}
+
+export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,pedido,nfm,fragil,destinatarios) => {
+  const hora = new Date()
+  const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
+  const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
+  let strNfm = 'La entrada en Geode debe ser realizada como entrada 109.';
+  if (nfm)
+    strNfm += ` PIEZA SIN SOLUCIÓN DE REEMPLAZO.`;
+
+  const mensaje = `%0ASe va a recibir ${numero} ${referencia.toUpperCase()} desde la placa de ${placaExterna} para el cliente ${cliente}.
+  %0A${strNfm}
+  %0A%0AMuchas gracias.
+`
+
+  window.location.href = `mailto:${destinatarios}?cc=dfs1@stellantis.com&subject=Compra Mister-Auto ${destino}&body=${saludo}${mensaje}` //
 }

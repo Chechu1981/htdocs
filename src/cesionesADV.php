@@ -29,6 +29,7 @@
                   <option value="SEVILLA">Sevilla</option>
                   <option value="PALMA">Palma</option>
                   <option value="MAT">Mister-auto</option>
+                  <option value="EXT">Compra externa</option>
                 </select>
                 <select name="" id="destino">
                   <option value="MADRID">Madrid</option>

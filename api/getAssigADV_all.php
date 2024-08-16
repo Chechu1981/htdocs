@@ -140,10 +140,11 @@ if(sizeof($rows) > 0){
       $nfm = 'NM';
       $nfmChecked = 'checked="checked"';
     }
-    if($codgClient[$row[1].$row[2].$nfm] == "6254-1" ||$codgClient[$row[1].$row[2].$nfm] == "78713-1"){
-      $important = 'important';
+    if($row[1] != 'MAT' && $row[1] != 'EXT'){
+      if($codgClient[$row[1].$row[2].$nfm] == "6254-1" ||$codgClient[$row[1].$row[2].$nfm] == "78713-1")
+        $important = 'important';
+      $numPie = $codgClient[$row[1].$row[2].$nfm];
     }
-    $numPie = $codgClient[$row[1].$row[2].$nfm];
     if($row[1] == 'MAT'){
       $numPie = $row[12];
     }

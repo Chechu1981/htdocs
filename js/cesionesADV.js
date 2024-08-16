@@ -1,4 +1,4 @@
-import { createMail, enviarMailDisgon, createMailMat } from "./createMail.js"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js"
 import contadores from "./updateCounter.js"
 
 setInterval(() =>{contadores()},1000)
@@ -23,7 +23,7 @@ const cesiones = (origen, destino,nfm) =>{
     }else if(origen == "SANTIAGO" && date.getDate() >= 9){
       $('pclient').classList.add('important')
       alerta = "Denegado"*/
-    }else if(destino == 'PALMA' && origen != 'MAT'){
+    }else if(destino == 'PALMA' && (origen != 'MAT' || origen == 'EXT')){
       $('pclient').classList.add('important')
       alerta = "Portes"
     }else{
@@ -42,9 +42,18 @@ const createInputMat = (ref) => {
 
 }
 
+const createInputExt = () => {
+  return `
+  <input type="text" id="refMat" 
+    style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
+    value=""></input>
+    <span style="font-size: small;line-height: 7;">Nnobre placa externa</span>`
+
+}
+
 $('nfm').addEventListener('change', (e) => {
   const origen = $('origen').value
-  if(origen == 'MAT'){
+  if(origen == 'MAT' || origen == 'EXT'){
     const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
     $('pclient').innerHTML = createInputMat(refMat)
     return null
@@ -59,6 +68,10 @@ $('origen').addEventListener('change',()=>{
   if(origen == 'MAT'){
     const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
     $('pclient').innerHTML = createInputMat(refMat)
+    return null
+  }
+  if(origen == 'EXT'){
+    $('pclient').innerHTML = createInputExt()
     return null
   }
   if(origen != $('destino').value){
@@ -79,6 +92,10 @@ $('destino').addEventListener('change',()=>{
   if(origen == 'MAT'){
     const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
     $('pclient').innerHTML = createInputMat(refMat)
+    return null
+  }
+  if(origen == 'EXT'){
+    $('pclient').innerHTML = createInputExt()
     return null
   }
   if(origen != $('destino').value){
@@ -265,6 +282,8 @@ const showAssig = () =>{
         let texto = `Cliente: ${cliente.childNodes[0].textContent}`
         if(origen.value == 'MAT')
           texto = $(`origen${id}`).parentNode.childNodes[6].innerText
+        if(origen.value == 'EXT')
+          texto = 'Cesión externa'
         clearRowsMark(ul, texto)
       })
       
@@ -387,7 +406,9 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
         .then(res => {
           if(origen == 'MAT'){
             createMailMat(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'])
-          }else{
+          }else if(origen == 'EXT')
+            createMailExt(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'])
+          else{
             let destinoFragil = ''
             if(fragil){
               destinoFragil = res['fragil']
@@ -407,7 +428,7 @@ const refreshInputs = (id,nfm,fragil,pedido,tratado,origen,destino) => {
   let code = $(id).parentNode.childNodes[1].childNodes[6]
   origen != destino ? cesion = origen + '' + destino : ''
   nfm ? cesion += 'NM' : ''
-  if(origen != 'MAT'){
+  if(origen != 'MAT' && origen != 'EXT'){
     fetch('../json/cesionesCliente.json?104')
     .then(response => response.json())
     .then(response => {
@@ -578,6 +599,16 @@ $$('form')[0].addEventListener('submit',(e)=>{
     refMat = $('refMat').value
     if(refMat == 'ZZMAT' || refMat == ''){
       customAlert('Falta indicar la referencia de Mister-auto')
+      $('refMat').style.backgroundColor = 'red';
+      document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
+      return false
+    }
+  }
+  if(origen == 'EXT'){
+    refMat = $('refMat').value
+    if(refMat == ''){
+      customAlert('Falta indicar el nombre del proveedor')
+      $('refMat').style.backgroundColor = 'red';
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
       return false
     }

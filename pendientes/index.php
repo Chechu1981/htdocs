@@ -70,7 +70,10 @@ $date = date_create($date[0][0]);
             <input placeholder="Nº cliente" type="number" id="cliente">
             <input placeholder="D. envío" type="number" id="envio">
             <input placeholder="Referencia" type="text" id="referencia">
-            <input type="submit" value="Consultar">
+            <div>
+                <input type="submit" value="En curso">
+                <input type="submit" value="Histórico">
+            </div>
         </form>
         <div id="items"></div>
     </div>
