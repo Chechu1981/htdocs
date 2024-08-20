@@ -75,7 +75,7 @@ export const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
     const dirDestino = direcciones[destino]
     const importe = Math.ceil(result.pvp * ((100 - result.dtoNum) / 100))
     const asunto = "RECOGIDA PPCR - DISGON"
-    const mail = encodeURIComponent(`${saludo}:
+    const mail = encodeURIComponent(`${saludo}
     Necesitamos recoger la referencia ${result.referencia} cantidad ${cantidad} ${descRef} en PPCR ${origen}
     ${dirOrigen}
     
@@ -126,5 +126,5 @@ export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,p
   %0A%0AMuchas gracias.
 `
 
-  window.location.href = `mailto:${destinatarios}?cc=dfs1@stellantis.com&subject=Compra Mister-Auto ${destino}&body=${saludo}${mensaje}` //
+  window.location.href = `mailto:${destinatarios}&subject=Compra externa - ${placaExterna}&body=${saludo}${mensaje}` //
 }
