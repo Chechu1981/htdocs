@@ -1,4 +1,4 @@
-import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js?101"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js?102"
 import contadores from "./updateCounter.js"
 
 setInterval(() =>{contadores()},1000)
@@ -407,7 +407,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
           if(origen == 'MAT'){
             createMailMat(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'])
           }else if(origen == 'EXT')
-            createMailExt(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'])
+            createMailExt(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'],res['conCopia'])
           else{
             let destinoFragil = ''
             if(fragil){

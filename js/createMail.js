@@ -30,7 +30,7 @@ export const createMail = (cantidad, origen, destino, referencia, cliente, pedid
   const mailSub = `${asuntoDisgon} CESION ${origen} -> ${destino}`;
   const mailSaludo = fecha.getHours() > 14 ? `${mailFragil}Buenas tardes: ` : `${mailFragil}Buenos días: `;
   mailTarget = encodeURIComponent(`
-Va a llegar de la placa de ${origen} a ${destino} ${strCantidad} ${referencia} para la cuenta ${cliente}.
+Va a llegar de la placa de ${origen} a ${destino} ${strCantidad} ${referencia} para la cuenta ${cliente.replaceAll('&','and')}.
 ${strNfm}
 ${strDisgon}
 Saludos.`);
@@ -98,7 +98,7 @@ export const createMailMat = (cantidad,misterauto,destino,referencia,cliente,ped
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
   const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
 
-  const mensaje = `%0AEl cliente ${cliente} ha autorizado a servir ${numero} ${referencia.toUpperCase()} con pedido a proveedor ${pedido} por alternativa ${misterauto.toUpperCase()} en Mister-Auto.
+  const mensaje = `%0AEl cliente ${cliente.replaceAll('&','and')} ha autorizado a servir ${numero} ${referencia.toUpperCase()} con pedido a proveedor ${pedido} por alternativa ${misterauto.toUpperCase()} en Mister-Auto.
 
   %0APodéis descargar la factura desde el portal de M.A. https://www.mister-auto.es/
 
@@ -113,7 +113,7 @@ export const createMailMat = (cantidad,misterauto,destino,referencia,cliente,ped
   window.location.href = `mailto:${destinatarios}?cc=dfs1@stellantis.com&subject=Compra Mister-Auto ${destino}&body=${saludo}${mensaje}` //
 }
 
-export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,pedido,nfm,fragil,destinatarios) => {
+export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,pedido,nfm,fragil,destinatarios,bcc) => {
   const hora = new Date()
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
   const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
@@ -121,10 +121,10 @@ export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,p
   if (nfm)
     strNfm += ` PIEZA SIN SOLUCIÓN DE REEMPLAZO.`;
 
-  const mensaje = `%0ASe va a recibir ${numero} ${referencia.toUpperCase()} desde la placa de ${placaExterna} para el cliente ${cliente}.
+  const mensaje = `%0ASe va a recibir ${numero} ${referencia.toUpperCase()} desde la placa de ${placaExterna} para el cliente ${cliente.replaceAll('&','and')}.
   %0A${strNfm}
   %0A%0AMuchas gracias.
 `
 
-  window.location.href = `mailto:${destinatarios}&subject=Compra externa - ${placaExterna}&body=${saludo}${mensaje}` //
+  window.location.href = `mailto:${destinatarios}?cc=${bcc}&subject=Compra externa - ${placaExterna}&body=${saludo}${mensaje}` //
 }
