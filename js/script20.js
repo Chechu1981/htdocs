@@ -58,7 +58,8 @@ const modal = (params,title) =>{
 const sendMail = (placa) =>{
   const destino = {
     'madrid' : ["armando.sanz@external.stellantis.com;franciscojavier.belmonte@stellantis.com;ivan.villaseca@stellantis.com;moises.albarran@stellantis.com;"],
-    'santiago' : ["marcos.rodriguez@stellantis.com;jorge.ferreiro@stellantis.com;damian.bello@stellantis.com;ivan.huertas@stellantis.com;"]
+    'santiago' : ["marcos.rodriguez@stellantis.com;jorge.ferreiro@stellantis.com;damian.bello@stellantis.com;ivan.huertas@stellantis.com;"],
+    'malaga' : ["Isabel.villalon@stellantis.com;Alejandro.bujalance@stellantis.com;Javier.cespedes@stellantis.com;Arielhernan.agulenca@stellantis.com;"]
   }
   const saludo = Date().split(' ')[4].split(':')[0] < 14 ? `Buenos días: `: `Buenas tardes`
   const cuerpo = `Un cliente va a pasar a recoger este pedido por el mostrador: `
@@ -75,6 +76,10 @@ $('madrid').addEventListener('click',(e) => {
 
 $('santiago').addEventListener('click',(e) => {
   sendMail("santiago")
+})
+
+$('malaga').addEventListener('click',(e) => {
+  sendMail("malaga")
 })
 
 $('notes').addEventListener('click',(e) => {
