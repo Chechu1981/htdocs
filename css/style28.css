@@ -899,6 +899,18 @@ input[type="color"]::-webkit-color-swatch {
     font-size: large;
 }
 
+#cesiones .assignPendingAdv textarea{
+    resize: none;
+    border: none;
+    font-family: nunito, arial;
+    border-radius: 4px;
+}
+
+#cesiones .assignPendingAdv textarea:focus{
+    background-color: var(--cards-active-color);
+    color: var(--bg-body-color);
+}
+
 .ledOff{
     border-radius: 50% 50%;
     width: 15px;
@@ -947,7 +959,8 @@ input[type="color"]::-webkit-color-swatch {
 #cesiones ul:nth-child(even),
 .pass-items ul:nth-child(even),
 .pass-items #complete ul:nth-child(even),
-#center-list-items ul:nth-child(even){
+#center-list-items ul:nth-child(even),
+#contacts-items ul:nth-child(even) textarea{
   background-color: var(--bg-body-color);
   color: var(--main-font-color);
   padding: 0;
@@ -958,7 +971,8 @@ input[type="color"]::-webkit-color-swatch {
 #cesiones ul:nth-child(odd),
 .pass-items ul:nth-child(odd),
 .pass-items #complete ul:nth-child(odd),
-#center-list-items ul:nth-child(odd){
+#center-list-items ul:nth-child(odd),
+#contacts-items ul:nth-child(odd) textarea{
     background-color: var(--search-line);
     color: var(--main-font-color);
     padding: 0;

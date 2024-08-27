@@ -182,7 +182,7 @@ if(sizeof($rows) > 0){
       <li title="Destino: " style="display:none">'.$row[2].'</li>
       <li title="Cliente: " class="copy" style="font-size: medium;display:flex;flex-direction:column" value="'.$row[3].'">'.$row[3].'<span style="font-size:9px;text-align:center;line-height: 7px;">'.$clientName.'</span></li>
       <li title="Ref. Cliente: " style="display:none">'.$row[12].'</li>
-      <li title="Comentario: " class="copy">'.$row[11].'</li>
+      <li title="Copiar comentario" class="copy"><textarea type="text" name="Comentario" id="coment'.$row[0].'">'.$row[11].'</textarea></li>
       <li title="Referencia: '.$row[4].'" class="copy" style="font-size: medium;display:flex;flex-direction:column">'.$formatref.'<span style="font-size:9px;text-align:center;line-height: 7px;">'.$designRefer.'</span></li>
       <li title="Cantidad: " class="storage">'.$row[5].'</li>
       <li title="Pedido: "><input type="text" value="'.$row[7].'" name="pedido"></input></li>
