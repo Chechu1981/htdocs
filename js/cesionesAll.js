@@ -230,7 +230,17 @@ const enabledForm = () =>{
     formInputs[i].disabled = false
   for(let i = 0; i < formSelects.length; i++)
     formSelects[i].disabled = false
-} 
+}
+
+const updateCounterAssignment = (id,comentario) => {
+  const data = new FormData()
+  data.append('id',id)
+  data.append('comentario',comentario)
+  fetch('../api/updateAssignADV2023.php',{
+    method: 'POST',
+    body: data
+  })
+}
 
 const showAssig = () =>{
   const data = new FormData()
@@ -290,6 +300,9 @@ const showAssig = () =>{
           tratado.addEventListener('change', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)})
           tratado.addEventListener('focus', ()=>{stopUpdates()})
           tratado.addEventListener('blur', () => iniciar())
+          comentario.childNodes[0].addEventListener('focus', ()=> stopUpdates())
+          comentario.childNodes[0].addEventListener('keyup', () => {updateCounterAssignment(id,comentario.firstElementChild.value)})
+          comentario.childNodes[0].addEventListener('blur', ()=> iniciar())
         }
         rechazo.addEventListener('click', ()=>{
           const data = new FormData()
@@ -316,7 +329,6 @@ const showAssig = () =>{
               const mailSaludo = fecha.getHours() > 14 ? `Buenas tardes: ` : `Buenos días: `
               const mailTarget = encodeURIComponent(`
               ${texto.value}
-              
               
               Un saludo ${user.nombre}`)
               fetch('../api/getEmailByUsername.php',{

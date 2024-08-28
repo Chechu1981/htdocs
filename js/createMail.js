@@ -121,7 +121,7 @@ export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,p
   if (nfm)
     strNfm += ` PIEZA SIN SOLUCIÓN DE REEMPLAZO.`;
 
-  const mensaje = `%0ASe va a recibir ${numero} ${referencia.toUpperCase()} desde la placa de ${placaExterna} para el cliente ${cliente.replaceAll('&','and')}.
+  const mensaje = `%0ASe va a recibir ${numero} ${referencia.toUpperCase()} desde la placa de ${placaExterna} a la placa de ${destino} para el cliente ${cliente.replaceAll('&','and')}.
   %0A${strNfm}
   %0A%0AMuchas gracias.
 `

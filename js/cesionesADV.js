@@ -197,6 +197,16 @@ const buscarDenominacionReferencia = (refer) =>{
   })
 }
 
+const updateCounterAssignment = (id,comentario) => {
+  const data = new FormData()
+  data.append('id',id)
+  data.append('comentario',comentario)
+  fetch('../api/updateAssignADV2023.php',{
+    method: 'POST',
+    body: data
+  })
+}
+
 const showAssig = () =>{
   const divSpinner = document.createElement('div')
   fetch('../api/spinner.php')
@@ -271,6 +281,7 @@ const showAssig = () =>{
       tratado.addEventListener('change', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)})
       referencia.addEventListener('click', () => {clearRowsMark(ul,referencia.childNodes[0].textContent.replaceAll(' ',''))})
       comentario.addEventListener('click', () => {clearRowsMark(ul,comentario.textContent)})
+      comentario.childNodes[0].addEventListener('keyup', () => {updateCounterAssignment(id,comentario.firstElementChild.value)})
       cliente.addEventListener('click', () => {
         let fragilTxt = ''
         if(disgon != null)
