@@ -783,8 +783,9 @@ input[type="color"]::-webkit-color-swatch {
     animation: noAssigns 5s infinite ease-in-out;
 }
 
+.libre textarea,
 .libre{
-    background-color: #11ff0056 !important;
+    background-color: #9cff95 !important;
 }
 
 @keyframes noAssigns {
@@ -909,6 +910,7 @@ input[type="color"]::-webkit-color-swatch {
 #cesiones .assignPendingAdv textarea:focus{
     background-color: var(--cards-active-color);
     color: var(--bg-body-color);
+    outline-width: 0px;
 }
 
 .ledOff{
@@ -981,6 +983,7 @@ input[type="color"]::-webkit-color-swatch {
 #route-items ul:hover,
 #contacts-items ul:hover,
 #cesiones ul:hover,
+#cesiones ul:hover textarea,
 .pass-items ul:hover,
 .pass-items #complete ul:hover,
 #center-list-items ul:hover{
@@ -990,6 +993,14 @@ input[type="color"]::-webkit-color-swatch {
     cursor: context-menu;
     position: relative;
     transition: .2s;
+}
+
+#cesiones ul textarea:hover {
+    cursor: text;
+}
+
+#cesiones ul:hover textarea {
+    box-shadow: none !important;
 }
 
 #contacts-items ul:hover a{
