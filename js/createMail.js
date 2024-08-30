@@ -97,20 +97,28 @@ export const createMailMat = (cantidad,misterauto,destino,referencia,cliente,ped
   const hora = new Date()
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
   const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
+  const plate = new FormData()
+  plate.append('placa', destino)
+  fetch('../api/getCredentialMA.php',{
+    method: 'POST',
+    body: plate
+  })
+  .then(res => res.json())
+  .then((credential) =>{
+    const mensaje = `%0AEl cliente ${cliente.replaceAll('&','and')} ha autorizado a servir ${numero} ${referencia.toUpperCase()} con pedido a proveedor ${pedido} por alternativa ${misterauto.toUpperCase()} en Mister-Auto.
 
-  const mensaje = `%0AEl cliente ${cliente.replaceAll('&','and')} ha autorizado a servir ${numero} ${referencia.toUpperCase()} con pedido a proveedor ${pedido} por alternativa ${misterauto.toUpperCase()} en Mister-Auto.
+    %0APodéis descargar la factura desde el portal de M.A. https://www.mister-auto.es/
 
-  %0APodéis descargar la factura desde el portal de M.A. https://www.mister-auto.es/
+    %0AUsuario: ${credential.usuario}
+    %0AContraseña: ${credential.pass}
 
-  %0AUsuario: ${credential.usuario}
-  %0AContraseña: ${credential.pass}
+    %0AAprovisionamiento, por favor ¿podríais crear la referencia indicada?
 
-  %0AAprovisionamiento, por favor ¿podríais crear la referencia indicada?
+    %0A%0AMuchas gracias.
+  `
 
-  %0A%0AMuchas gracias.
-`
-
-  window.location.href = `mailto:${destinatarios}?cc=dfs1@stellantis.com&subject=Compra Mister-Auto ${destino}&body=${saludo}${mensaje}` //
+    window.location.href = `mailto:${destinatarios}?cc=dfs1@stellantis.com&subject=Compra Mister-Auto ${destino}&body=${saludo}${mensaje}` //
+  })
 }
 
 export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,pedido,nfm,fragil,destinatarios,bcc) => {

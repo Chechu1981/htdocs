@@ -1,4 +1,4 @@
-import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js?102"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js?103"
 import contadores from "./updateCounter.js"
 
 setInterval(() =>{contadores()},1000)
