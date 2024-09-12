@@ -645,8 +645,8 @@ class Contacts
         `B` LIKE '%$search%' OR
         `D` LIKE '%$search%' OR
         `E` LIKE '%$search%' OR
-        `F` LIKE '%$search%' OR
-        `G` LIKE '%$search%' OR
+        REPLACE(`F`,' ','') LIKE '%$search%' OR
+        REPLACE(`G`,' ','') LIKE '%$search%' OR
         REPLACE(H,' ','') LIKE '%$tlf' OR
         `I` LIKE '%$search%' OR
         `J` LIKE '%$search%') 
@@ -711,7 +711,7 @@ class Contacts
     }
 
     public function getRoutesName($route) {
-        $sql = "SELECT * FROM rutas WHERE `Turn` LIKE '%$route%'";
+        $sql = "SELECT * FROM rutas WHERE `Turn` LIKE '%$route%' ORDER BY 'CENTRO' ASC";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

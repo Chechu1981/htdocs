@@ -94,6 +94,9 @@ if(sizeof($rows) > 0){
       $fechaS = explode("-", $row[25]);
       $fechaSHora = explode(".",explode(" ", $row[25])[1]);
       $cadenaFechaEntrada = "";
+      $disgon = "";
+      if($row[18] == 1)
+        $disgon = "<em style='background-color:green;color:white'>(DISGON) </em>";
       if($row[25] > '2024-04-11 00:00:00.000000')
         $cadenaFechaEntrada = explode(" ",$fechaS[2])[0] . "/$fechaS[1]/$fechaS[0] $fechaSHora[0]";
       $li = "<li class='delete' title='Marcar como cesión recibida'><img id='$row[0]' alt='tick' src='../../img/done_FILL0_wght400_GRAD0_opsz24.png'></li>";
@@ -111,7 +114,7 @@ if(sizeof($rows) > 0){
         <li title='Cantidad: '>$row[5]</li>
         <li title='NFM: '>$nfm</li>
         <li title='Pedido: '>$row[7]</li>
-        <li title='Comentario: '>$row[11]</li>
+        <li title='Comentario: ' style='display:block'>$disgon $row[11]</li>
         <li title='Envío: '>$fechaD[2]/$fechaD[1]/$fechaD[0] $fecha[1]</li>
         $li
         <li title='Tratado'>$row[17]</li>

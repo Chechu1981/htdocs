@@ -60,7 +60,7 @@ $EQUIPO = [
   "DIRECCION",
   "APROVISIONAMIENTO",
   "CALL CENTER",
-  "LIGISITICA"
+  "LOGISITICA"
 ];
 ?>
 <link rel="stylesheet" href="../css/style28.css?100" type="text/css" />
