@@ -41,8 +41,8 @@ $date = date_create($date[0][0]);
     <div class="top">
         <img width="39px" height="39px" src="./img/user-128.png" alt="user">
         <form>
-            <input id="user" type="text"><label for="user">Usuario</label>
-            <input id="pass" type="password"><label for="pass">Contraseña</label>
+            <input id="user" type="text" name="password"><label for="user">Usuario</label>
+            <input id="pass" type="password" name="password" autocomplete="on"><label for="pass">Contraseña</label>
             <input type="submit" value="Entrar">
             <div id="msg" class="error"></div>
         </form>

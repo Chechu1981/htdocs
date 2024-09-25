@@ -1,7 +1,22 @@
 import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js?103"
 import contadores from "./updateCounter.js"
 
-setInterval(() =>{contadores()},1000)
+const setCounters = setInterval(() =>{contadores()},1000)
+
+const rutasDirectas = ["12753","12754-1"]
+const rutasPreguntar = ["6254-1","78713-1"]
+const rutasPortes = ["12753","12754-1"]
+
+function isAlertRoutes(route,arrayRoutes, mensaje = ''){
+  $('pclient').classList.remove('important')
+  let encontrado
+  arrayRoutes.filter(rutas => {
+    encontrado = rutas.includes(route)
+  })
+  encontrado != false ?
+    $('pclient').classList.add('important') : ''
+  return mensaje
+}
 
 const cesiones = (origen, destino,nfm) =>{
   $('newTitle').innerText = `${origen}>${destino}`
@@ -13,22 +28,9 @@ const cesiones = (origen, destino,nfm) =>{
   .then(response => {
     const numDest = response[cesion]
     let alerta = ""
-    const date = new Date()
-    if(numDest == "6254-1" || numDest == "78713-1"){
-      $('pclient').classList.add('important')
-      alerta = "Preguntar"
-    /*}else if(destino == "SANTIAGO" && date.getDate() >= 6){
-      $('pclient').classList.add('important')
-      alerta = "Denegado"
-    }else if(origen == "SANTIAGO" && date.getDate() >= 9){
-      $('pclient').classList.add('important')
-      alerta = "Denegado"*/
-    }else if(destino == 'PALMA' && (origen != 'MAT' || origen == 'EXT')){
-      $('pclient').classList.add('important')
-      alerta = "Portes"
-    }else{
-      $('pclient').classList.remove('important')
-      alerta = ""
+    if(origen != 'MAT' || origen != 'EXT'){
+      alerta = isAlertRoutes(numDest,rutasDirectas, "Ruta")
+      alerta = isAlertRoutes(numDest,rutasPreguntar, "Preguntar")
     }
     numDest != undefined ? $('pclient').innerText = `${numDest} ${alerta}` : $('pclient').innerText = ""
   })
