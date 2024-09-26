@@ -6,6 +6,11 @@
   src: url('../fonts/Nunito-VariableFont_wght.ttf');
 }
 
+:root{
+    --main-notification-bg-color: hsl(118deg, 85.46%, 17.49%);
+    --main-notification-font-color: hsl(75.29deg, 100%, 50%);
+}  
+
 html *{
     scrollbar-width: thin;
 }
@@ -1526,6 +1531,12 @@ span.button:active{
 .important{
   font-size: 16px !important;
   animation: alert-blink .5s infinite linear;
+}
+
+.route{
+    background-color: var(--main-notification-bg-color) !important;
+    color: var(--main-notification-font-color) !important;
+    font-size: 2.1em !important;
 }
 
 @keyframes alert-blink {

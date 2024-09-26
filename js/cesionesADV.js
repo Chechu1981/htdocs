@@ -3,18 +3,36 @@ import contadores from "./updateCounter.js"
 
 const setCounters = setInterval(() =>{contadores()},1000)
 
-const rutasDirectas = ["12753","12754-1"]
+const rutasDirectas = ["12753","12754-1","12750-1","11433-1","9071-1","6279-1","12849-1","12864-1","7545-1","14075-1","105250","105253-1","105249-1","105251-1","105342-1","78766-1","105228-1","78664-1","105510-1","105310-1"]
 const rutasPreguntar = ["6254-1","78713-1"]
-const rutasPortes = ["12753","12754-1"]
+const rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"]
 
-function isAlertRoutes(route,arrayRoutes, mensaje = ''){
+function isAlertRoutes(route){
   $('pclient').classList.remove('important')
+  $('pclient').classList.remove('route')
   let encontrado
-  arrayRoutes.filter(rutas => {
-    encontrado = rutas.includes(route)
+  let mensaje = ''
+  rutasDirectas.filter(rutas => {
+    if(rutas.includes(route)){
+      encontrado = route
+      mensaje = "Ruta"
+      $('pclient').classList.add('route')
+    }
   })
-  encontrado != false ?
-    $('pclient').classList.add('important') : ''
+  rutasPreguntar.filter(rutas => {
+    if(rutas.includes(route)){
+      encontrado = route
+      mensaje = "Preguntar"
+      $('pclient').classList.add('important')
+    }
+  })
+  rutasPortes.filter(rutas => {
+    if(rutas.includes(route)){
+      encontrado = route
+      mensaje = "Portes"
+      $('pclient').classList.add('important')
+    }
+  })
   return mensaje
 }
 
@@ -29,8 +47,7 @@ const cesiones = (origen, destino,nfm) =>{
     const numDest = response[cesion]
     let alerta = ""
     if(origen != 'MAT' || origen != 'EXT'){
-      alerta = isAlertRoutes(numDest,rutasDirectas, "Ruta")
-      alerta = isAlertRoutes(numDest,rutasPreguntar, "Preguntar")
+      alerta = isAlertRoutes(numDest)
     }
     numDest != undefined ? $('pclient').innerText = `${numDest} ${alerta}` : $('pclient').innerText = ""
   })
@@ -122,8 +139,10 @@ const disgon = (esDisgon) =>{
   dsgDiv.appendChild(dsgLabel)
   dsgDiv.appendChild(dsgButton)
   const destino = $('destino').value
-  if(esDisgon && $('disgonBox') == null)
+  if(esDisgon && $('disgonBox') == null){
     document.getElementsByClassName('form-group')[0].childNodes[15].appendChild(dsgDiv)
+    $('disgonBox').addEventListener('change',() => buscarDenominacionReferencia($('ref').value))
+  }
   else if(!esDisgon && $('disgonBox'))
     $('disgonDiv').remove()
 }
@@ -184,9 +203,18 @@ const buscarDenominacionReferencia = (refer) =>{
   .then(res => res.text())
   .then((res) => {
     $('descRef').innerHTML = res
-    if($('destino').value == 'PALMA' && $('origen').value != 'MAT'){
+    pvp = parseFloat(res.split('PVP: ')[1].split('€')[0].replaceAll(',','.'))
+    if(res == 'desconocido')
+      pvp = '0,00€'
+    if($('destino').value == 'ZARAGOZA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT') && $('disgonBox') != null) {
+      if(!$('coment').value.includes(` \n¡¡OJO!! ${Math.round(pvp * 0.10)}€ de portes.`) && $('disgonBox').checked)
+        $('coment').value += ` \n¡¡OJO!! ${Math.round(pvp * 0.10)}€ de portes.`
+      if(!$('disgonBox').checked)
+        $('coment').value = $('coment').value.replaceAll(` \n¡¡OJO!! ${Math.round(pvp * 0.10)}€ de portes.`,'')
+    }
+    if($('destino').value == 'PALMA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT')){
       let portes = '40€'
-      const pvp = parseFloat(res.split('PVP: ')[1].split('€')[0].replaceAll(',','.'))
+      const pvp = pvp
       if(pvp < 150)
         portes = '30€'
       else if(pvp > 400)

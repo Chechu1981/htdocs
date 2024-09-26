@@ -22,6 +22,39 @@ const newChanges = (response) =>{
   return false
 }
 
+const rutasDirectas = ["12753","12754-1","12750-1","11433-1","9071-1","6279-1","12849-1","12864-1","7545-1","14075-1","105250","105253-1","105249-1","105251-1","105342-1","78766-1","105228-1","78664-1","105510-1","105310-1"]
+const rutasPreguntar = ["6254-1","78713-1"]
+const rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"]
+
+function isAlertRoutes(route){
+  $('pclient').classList.remove('important')
+  $('pclient').classList.remove('route')
+  let encontrado
+  let mensaje = ''
+  rutasDirectas.filter(rutas => {
+    if(rutas.includes(route)){
+      encontrado = route
+      mensaje = "Ruta"
+      $('pclient').classList.add('route')
+    }
+  })
+  rutasPreguntar.filter(rutas => {
+    if(rutas.includes(route)){
+      encontrado = route
+      mensaje = "Preguntar"
+      $('pclient').classList.add('important')
+    }
+  })
+  rutasPortes.filter(rutas => {
+    if(rutas.includes(route)){
+      encontrado = route
+      mensaje = "Portes"
+      $('pclient').classList.add('important')
+    }
+  })
+  return mensaje
+}
+
 const iniciar = () => {
   refresco = setInterval(() =>{
     showAssig()
@@ -47,21 +80,8 @@ const cesiones = (origen, destino,nfm) =>{
     const numDest = response[cesion]
     let alerta = ""
     const date = new Date()
-    if(numDest == "6254-1" || numDest == "78713-1"){
-      $('pclient').classList.add('important')
-      alerta = "Preguntar"
-    }else if(destino == 'PALMA'){
-      $('pclient').classList.add('important')
-      alerta = "Portes"
-    /*}else if(destino == "SANTIAGO" && date.getDate() >= 7){
-      $('pclient').classList.add('important')
-      alerta = "Denegado"
-    }else if(origen == "SANTIAGO" && date.getDate() >= 9){
-      $('pclient').classList.add('important')
-      alerta = "Denegado"*/
-    }else{
-      $('pclient').classList.remove('important')
-      alerta = ""
+    if(origen != 'MAT' || origen != 'EXT'){
+      alerta = isAlertRoutes(numDest)
     }
     numDest != undefined ? $('pclient').innerText = `${numDest} ${alerta}` : $('pclient').innerText = ""
   })
