@@ -178,9 +178,9 @@ const buscarCliente = (placa,cliente) => {
       });
       $('envio').remove()
       section.appendChild(selected)
-      $('envio').addEventListener('change',(valor) =>{
-        $('envio').options[valor.target.value + 1].innerHTML = valor.target.value
-      })
+      /*$('envio').addEventListener('change',(valor) =>{
+        $('envio').options[valor.target.value + 1].innerText = "valor.target.innerText"
+      })*/
     }
   })
 }
@@ -200,17 +200,18 @@ const buscarDenominacionReferencia = (refer) =>{
     method: 'POST',
     body: data
   })
-  .then(res => res.text())
+  .then(res => res.json())
   .then((res) => {
-    $('descRef').innerHTML = res
+    $('descRef').innerHTML = res.descripcionPrecio
     let pvp = 0
-    if(!res.includes('Desconocido'))
-      pvp = parseFloat(res.split('PVP: ')[1].split('€')[0].replaceAll(',','.'))
+    if(!res.descripcionPrecio.includes('Desconocido'))
+      pvp = parseFloat(res.precio.replaceAll(',','.'))
+      let dto = parseInt(res.descuento)
     if($('destino').value == 'ZARAGOZA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT') && $('disgonBox') != null) {
-      if(!$('coment').value.includes(` \n¡¡OJO!! ${Math.round(pvp * 0.10)}€ de portes.`) && $('disgonBox').checked)
-        $('coment').value += ` \n¡¡OJO!! ${Math.round(pvp * 0.10)}€ de portes.`
+      if(!$('coment').value.includes(` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`) && $('disgonBox').checked)
+        $('coment').value += ` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`
       if(!$('disgonBox').checked)
-        $('coment').value = $('coment').value.replaceAll(` \n¡¡OJO!! ${Math.round(pvp * 0.10)}€ de portes.`,'')
+        $('coment').value = $('coment').value.replaceAll(` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`,'')
     }
     if($('destino').value == 'PALMA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT')){
       let portes = '40€'
