@@ -203,9 +203,9 @@ const buscarDenominacionReferencia = (refer) =>{
   .then(res => res.text())
   .then((res) => {
     $('descRef').innerHTML = res
-    pvp = parseFloat(res.split('PVP: ')[1].split('€')[0].replaceAll(',','.'))
-    if(res == 'desconocido')
-      pvp = '0,00€'
+    let pvp = 0
+    if(!res.includes('Desconocido'))
+      pvp = parseFloat(res.split('PVP: ')[1].split('€')[0].replaceAll(',','.'))
     if($('destino').value == 'ZARAGOZA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT') && $('disgonBox') != null) {
       if(!$('coment').value.includes(` \n¡¡OJO!! ${Math.round(pvp * 0.10)}€ de portes.`) && $('disgonBox').checked)
         $('coment').value += ` \n¡¡OJO!! ${Math.round(pvp * 0.10)}€ de portes.`

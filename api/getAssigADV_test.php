@@ -155,18 +155,19 @@ if(sizeof($rows) > 0){
       $nfm = 'NM';
       $nfmChecked = 'checked="checked"';
     }
-    if($row[1] != 'MAT' && $row[1] != 'EXT'){
-      $numPie = $codgClient[$row[1].$row[2].$nfm];
-      if($codgClient[$row[1].$row[2].$nfm] == "6254-1" || $codgClient[$row[1].$row[2].$nfm] == "78713-1")
-        $important = 'important';
-    }
-    else
-      $numPie = '';
 
-    if($row[1] == 'MAT'){
-      $numPie = $row[12];
+    $rutasDirectas = ["12753","12754-1","12750-1","11433-1","9071-1","6279-1","12849-1","12864-1","7545-1","14075-1","105250","105253-1","105249-1","105251-1","105342-1","78766-1","105228-1","78664-1","105510-1","105310-1"];
+    $rutasPreguntar = ["6254-1","78713-1"];
+    $rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"];
+
+    if($row[1] != 'MAT' && $row[1] != 'EXT'){
+      if(in_array($codgClient[$row[1].$row[2].$nfm],$rutasPreguntar))
+        $important = 'important';
+      if(in_array($codgClient[$row[1].$row[2].$nfm],$rutasDirectas))
+        $important = 'route';
+      $numPie = $codgClient[$row[1].$row[2].$nfm];
     }
-    if($row[1] == 'EXT'){
+    if($row[1] == 'MAT'){
       $numPie = $row[12];
     }
     /*if($row[2] == 'SANTIAGO')

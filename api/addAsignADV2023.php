@@ -5,44 +5,61 @@ $userFilds = $contacts->getUserBySessid($_POST['session']);
 $user = $userFilds[0][1];
 $puesto = $userFilds[0][4];
 $tratado = "";
+$contacts = new Contacts();
+
 if($puesto == 'ADV')
     $tratado = strtoupper($user);
 
 function getCliente($cliente,$placa){
     if($placa == 'SANTIAGO')
-        $placa = "VIGO";
-    $contacts = new Contacts();
-    $rows = $contacts->getClientNameByPlate(explode('-',$cliente)[0],substr($placa,0,3));
-
+        $placa = "VIGO";    $rows = $GLOBALS['contacts']->getClientNameByPlate(explode('-',$cliente)[0],substr($placa,0,3));
     if(count($rows) > 0)
         return $rows[0][6];
     else
         return '';
 }
-  
-function getDescRef($referencia){
-    $descripcion = 'Desconocido';
-    $contacts = new Contacts();
-    $rows = $contacts->getRefer(str_replace(' ','',$referencia));
 
-    if(sizeof($rows) > 0){
-        foreach ($rows as $row) { 
-            $descripcion = trim($rows[0][2],'000') . " (" . str_replace('.',',',$rows[0][4])."€)";
+function getDescRef($referencia){
+    global $contacts;
+    $rowsRefer = $contacts->getRefer(str_replace(' ','',$referencia));
+    $descripcion = 'Desconocido';
+    if(sizeof($rowsRefer) > 0){
+        foreach ($rowsRefer as $row) { 
+            $descripcion = trim($row[2],'000') . " (" . str_replace('.',',',$row[4])."€)";
         }
     }
-
     return $descripcion;
 }
 
-$NombreCliente = getCliente($_POST['cliente'],$_POST['destino']);
-$Designacion = getDescRef($_POST['ref']);
+function getPvp($referencia){
+    $pvp = 0;
+    global $contacts;
+    $rows = $contacts->getRefer(str_replace(' ','',$referencia));
+    if(sizeof($rows) > 0){
+        foreach ($rows as $row) { 
+            $pvp = $row[4];
+        }
+    }
+    return $pvp;
+}
 
+$nombreCliente = getCliente($_POST['cliente'],$_POST['destino']);
+$designacion = getDescRef($_POST['ref']);
+$comentario = $_POST['comentario'];
+
+/* Busca si hay portes de las cesiones de Zaragoza por Disgon. Emplea mucho tiempo en hacer tres consultas a servidor 
+$pvp = getPvp($_POST['ref']);
+if($_POST['destino'] == 'ZARAGOZA' && @$_POST['disgon'] == true){
+    $portes = round($pvp / 100);
+    $comentario .= ` ¡¡OJO!! $portes de portes`;
+}
+*/
 $items = [
     $_POST['origen'],
     $_POST['destino'],
     $_POST['cliente'],
     $_POST['refClient'],
-    $_POST['comentario'],
+    $comentario,
     $_POST['ref'],
     $_POST['pvp'],
     $_POST['cantidad'],
@@ -51,8 +68,8 @@ $items = [
     $user,
     $_POST['pedido'],
     @$_POST['disgon'],
-    $Designacion,
-    $NombreCliente,
+    $designacion,
+    $nombreCliente,
     $tratado,
     $puesto
 ];
