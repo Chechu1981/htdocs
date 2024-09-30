@@ -132,8 +132,14 @@ setInterval(() => {
 $('menu').childNodes[7].addEventListener('click',(e) => {
   if(e.target.title == "Configuración"){
     let src = ''
+    let id = document.location.search.split('=')[1]
+    let data = new FormData()
+    data.append('id',id)
     src = ruta[window.location.pathname.split('/').length] + '../helper/modalConfig.php'
-    fetch(src)
+    fetch(src,{
+      method: 'POST',
+      body: data
+    })
     .then(response => response.text())
     .then((res) => {
       modal(res,"Configuración")
