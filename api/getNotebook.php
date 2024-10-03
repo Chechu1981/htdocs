@@ -36,6 +36,7 @@ $icons->xlsm = "./../img/excel.png";
 $icons->doc = "./../img/word.png";
 $icons->docx = "./../img/word.png";
 $icons->pptx = "./../img/power.png";
+$icons->zip = "./../img/zip.png";
 
 $htmlList = "
 <ul class='heading'".$style.">
@@ -55,7 +56,7 @@ foreach ($rows as $row) {
   if ($row[1] == 'FIAT/JEEP')
     $marca = "FIAT";
     
-  $ext = array("pdf", "xls", "xlsx", "xlsm", "doc", "docx", "pptx");
+  $ext = array("pdf", "xls", "xlsx", "xlsm", "doc", "docx", "pptx", "zip");
   $iconExt = explode('.',$row[5])[count(explode('.',$row[5]))-1];
   $icono = "";
 

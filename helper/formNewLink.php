@@ -1,5 +1,5 @@
 <?php
-$id = @$_GET["id"];
+$id = @$_GET["idItem"];
 $links = [];
 if($id != '') {
   include_once '../connection/data.php';
@@ -58,6 +58,7 @@ $GRUPOS = [
   <label></label><input type='text' placeholder='Usuario' id='usuario' value="<?= @$link[0][4] ?>">
   <label></label><input type='text' placeholder='Contrsaeña' id='paswd' value="<?= @$link[0][5] ?>">
   <label></label><input type='text' placeholder='Teléfono' id='phone' value="<?= @$link[0][8] ?>">
-  <input type='submit' id="<?= $id ?>" value='añadir'>
+  <label></label><div class="formPrivatePass"><label>Privado</label><input type='checkbox' id='private' title="Contraseña privada"></div>
+  <label></label><input type='submit' id="<?= $id ?>" value='añadir'>
 </form>
 <script src="../js/form2.js?108"></script>

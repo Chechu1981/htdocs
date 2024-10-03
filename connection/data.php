@@ -266,6 +266,7 @@ class Contacts
             `tlf` = '$item[7]',
             `tipo` = '$item[8]'
             WHERE id LIKE $item[0]";
+        echo $sql;
         $query = $this->db->prepare($sql);
         $query->execute();
         return "ok";

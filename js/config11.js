@@ -90,9 +90,7 @@ if(typeof(href) != "object"){
             window.location.reload(true)
           })
         })
-      }else if(e.target.title == 'pending' || e.target.title == 'rutas' || e.target.title == 'repere' || e.target.title == 'soc' || e.target.title == 'clientes' || e.target.title == 'tarifa'){
-        window.location.href = src + href[e.target.title] + window.location.search
-      }else if(e.target.title == 'usuarios' || e.target.title == 'rutas' || e.target.title == 'repere' || e.target.title == 'soc' || e.target.title == 'clientes' || e.target.title == 'tarifa'){
+      }else if(e.target.title == 'usuarios' || e.target.title == 'pending' || e.target.title == 'rutas' || e.target.title == 'repere' || e.target.title == 'soc' || e.target.title == 'clientes' || e.target.title == 'tarifa'){
         window.location.href = src + href[e.target.title] + window.location.search
       }else{
         data.append('title',e.target.innerHTML)
@@ -102,7 +100,7 @@ if(typeof(href) != "object"){
         })
         .then(res=> res.text())
         .then(response=>{
-          document.getElementsByClassName('note-body')[0].childNodes[1].innerHTML = response
+          document.getElementsByClassName('note-body')[0].childNodes[2].innerHTML = response
         })
       }
     }

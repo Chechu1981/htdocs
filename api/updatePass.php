@@ -1,6 +1,11 @@
 <?php
 include_once '../connection/data.php';
 $contacts = new Contacts();
+$privateKey = '';
+
+if($_POST['private']){
+    $privateKey = $contacts->getMailByUsername($_POST['ssId']);
+}
 
 $items = [
     $_POST['id'],
@@ -11,7 +16,8 @@ $items = [
     $_POST['pswd'],
     $_POST['web'],
     $_POST['phone'],
-    $_POST['tipo']
+    $_POST['tipo'],
+    $privateKey
 ];
 
 $rows = $contacts->updatePass($items);

@@ -11,7 +11,8 @@ $items = [
     $_POST['pswd'],
     $_POST['web'],
     $_POST['phone'],
-    $_POST['tipo']
+    $_POST['tipo'],
+    $_POST['private']
 ];
 
 $rows = $contacts->newPass($items);

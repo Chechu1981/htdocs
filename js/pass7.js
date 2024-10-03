@@ -32,13 +32,14 @@ $('center-items-pass').addEventListener('click', (e) => {
 })
 
 $('addLink').addEventListener('click',() =>{
-  modal("<iframe src='../helper/formNewLink.php' class='libreta'></iframe>","Nuevo enlace")
+  let id = document.location.search.split('=')[1]
+  modal(`<iframe src='../helper/formNewLink.php?id=${id}' class='libreta'></iframe>`,"Nuevo enlace")
 })
 
 document.addEventListener('click',(e)=>{
-  const id = e.target.parentNode.id
+  const idItem = e.target.parentNode.id
   const data = new FormData()
-  data.append('id',id)
+  data.append('idItem',idItem)
   const createScript = () =>{
     const newScript = document.createElement('script')
     newScript.type = 'text/javascript'
@@ -48,7 +49,7 @@ document.addEventListener('click',(e)=>{
   if(e.target.id.includes('delete')){
     if(confirm('¿Quieres eliminar este registro?') == true){
       let data = new FormData();
-      data.append('id', id)
+      data.append('idItem', idItem)
       fetch('./api/deletePass.php',{
         method: 'POST',
         body: data})
@@ -60,7 +61,8 @@ document.addEventListener('click',(e)=>{
       .catch(functions => console.log("error: "+functions))
     }
   }else if(e.target.id.includes('edit')){
-    modal(`<iframe src='../helper/formNewLink.php?id=${id}' class='libreta'></iframe>`,"Editar enlace")
+    let id = document.location.search.split('=')[1]
+    modal(`<iframe src='../helper/formNewLink.php?id=${id}&idItem=${idItem}' class='libreta'></iframe>`,"Editar enlace")
   }
 })
 

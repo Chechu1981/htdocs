@@ -215,7 +215,6 @@ const buscarDenominacionReferencia = (refer) =>{
     }
     if($('destino').value == 'PALMA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT')){
       let portes = '40€'
-      const pvp = pvp
       if(pvp < 150)
         portes = '30€'
       else if(pvp > 400)

@@ -58,6 +58,17 @@ iframe{
     margin-top: 10px;
 }
 
+.formPrivatePass{
+    font-size: x-large;
+    display: flex;
+    align-content: center;
+    justify-content: start;
+    input{
+        width: 30px;
+        height: 30px;
+    }
+}
+
 button{
   font-family: nunito, arial;
   background-color: var(--cards-border-color);
@@ -1529,11 +1540,15 @@ span.button:active{
 }
 
 .important{
-  font-size: 16px !important;
-  animation: alert-blink .5s infinite linear;
+    border-radius: 4px;
+    padding: 0 4px;
+    font-size: 16px !important;
+    animation: alert-blink .5s infinite linear;
 }
 
 .route{
+    border-radius: 4px;
+    padding: 0 4px;
     background-color: var(--main-notification-bg-color) !important;
     color: var(--main-notification-font-color) !important;
     font-size: 2.1em !important;

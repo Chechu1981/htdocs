@@ -16,7 +16,7 @@ $opciones = '
     <div class="cards" title="pending">Actualizar pendientes</div>
     <div class="cards" title="clientes">Actualizar clientes con rutas</div>';
 
-if($privilegio > 100){$opciones .= '<div class="cards" title="usuarios">Usuarios</div>';}
+if($privilegio >= 100){$opciones .= '<div class="cards" title="usuarios">Usuarios</div>';}
 
 $opciones .= '</section>';
 echo $opciones;

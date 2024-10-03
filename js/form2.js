@@ -18,6 +18,8 @@ document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
     data.append('usr', e.target.children[11].value)
     data.append('pswd', e.target.children[13].value)
     data.append('phone', e.target.children[15].value)
+    data.append('private', e.target.children[17].children[1].checked)
+    data.append('ssId', document.location.search.split('=')[1])
     fetch(src,{
         method: 'POST',
         body: data
