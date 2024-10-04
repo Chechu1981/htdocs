@@ -1,5 +1,7 @@
 <?php
 
+use PhpOffice\PhpSpreadsheet\Calculation\TextData\Replace;
+
 include_once '../connection/data.php';
 $contacts = new Contacts();
 
@@ -13,7 +15,7 @@ ini_set('max_execution_time', 300);
 $filename = $_FILES['file']['tmp_name'];
 $handle = fopen($filename, "r");
 $items = array();
-
+$placa = $_FILES["file"]["name"];
 
 $nplaca = [
   "DO"=>"",
@@ -27,6 +29,7 @@ $nplaca = [
   "027125R"=>"PPCR ZARAGOZA"
 ];
 
+
 try {
   if($extension == 'csv'){
     while(($data = fgetcsv($handle, 0,";")) !== FALSE ){
@@ -36,7 +39,7 @@ try {
         if($data[2] == '')
           $envio = 0;
       array_push($items,[
-        'placa' => $data[0],
+        'placa' => str_replace('.csv','',$placa),
         'cuenta' => utf8_encode(str_replace($charset,'',$data[1])),
         'envio' => $envio,
         'telefono' => utf8_encode(str_replace($charset,'',$data[3])),
@@ -49,7 +52,7 @@ try {
         'turnoU' => utf8_encode(str_replace($charset,'',$data[10])),
         'turnoN' => utf8_encode(str_replace($charset,'',$data[11])),
         'tipo' => utf8_encode(str_replace($charset,'',$data[12])),
-        'comercial' => utf8_encode($data[13]),
+        'comercial' => $data[13],
         'email' => $data[14],
         'cif' => $data[15]]);
       }
