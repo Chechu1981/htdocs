@@ -5,7 +5,7 @@ const rutas = {
   }
 
 document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
-    const src = window.location.href.includes('id=') ? rutas['update'] : rutas['new']
+    const src = window.location.href.includes('idPass=') ? rutas['update'] : rutas['new']
     e.preventDefault()
     e.stopImmediatePropagation()
     const data = new FormData()
