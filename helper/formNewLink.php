@@ -1,10 +1,14 @@
 <?php
 $id = @$_GET["idItem"];
 $links = [];
+$private = '';
 if($id != '') {
   include_once '../connection/data.php';
   $conexion = new Contacts();
   $link = $conexion->getPassId($id);
+}
+if(@$link[0][11] != ''){
+  $private = 'checked';
 }
 $PLACAS = [
   "MADRID",
@@ -58,7 +62,7 @@ $GRUPOS = [
   <label></label><input type='text' placeholder='Usuario' id='usuario' value="<?= @$link[0][4] ?>">
   <label></label><input type='text' placeholder='Contrsaeña' id='paswd' value="<?= @$link[0][5] ?>">
   <label></label><input type='text' placeholder='Teléfono' id='phone' value="<?= @$link[0][8] ?>">
-  <label></label><div class="formPrivatePass"><label>Privado</label><input type='checkbox' id='private' title="Contraseña privada"></div>
+  <label></label><div class="formPrivatePass"><label>Privado</label><input type='checkbox' id='private' <?= $private ?> title="Contraseña privada"></div>
   <label></label><input type='submit' id="<?= $id ?>" value='añadir'>
 </form>
 <script src="../js/form2.js?109"></script>

@@ -2,10 +2,11 @@
 include_once '../connection/data.php';
 $contacts = new Contacts();
 $privateKey = '';
-
-if($_POST['private']){
-    $privateKey = $contacts->getMailByUsername($_POST['ssId']);
+$privado = $_POST['private'];
+if($privado){
+    $privateKey = $contacts->getMailBySsid($_POST['ssId'])[0][0];
 }
+echo "privado: ".$_POST['private']." / ".$privateKey;
 
 $items = [
     $_POST['id'],

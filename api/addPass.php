@@ -1,9 +1,14 @@
 <?php
 include_once '../connection/data.php';
 $contacts = new Contacts();
+$privateKey = '';
+
+if($_POST['private']){
+    $privateKey = $contacts->getMailBySsid($_POST['ssId'])[0][0];
+}
 
 $items = [
-    $_POST['id'],
+    $_POST['ssId'],
     $_POST['marca'],
     $_POST['placa'],
     $_POST['cuenta'],
@@ -12,7 +17,7 @@ $items = [
     $_POST['web'],
     $_POST['phone'],
     $_POST['tipo'],
-    $_POST['private']
+    $privateKey,
 ];
 
 $rows = $contacts->newPass($items);

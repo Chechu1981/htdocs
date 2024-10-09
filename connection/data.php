@@ -56,6 +56,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getMailBySsid($ssid){
+        $sql = "SELECT DISTINCT `mail` FROM `usuarios` WHERE `hash` = '$ssid'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function getAllUsers(){
         $sql = "SELECT DISTINCT * FROM `usuarios` ORDER BY `nombre` ASC";
         $query = $this->db->prepare($sql);
@@ -248,8 +255,8 @@ class Contacts
     }
 
     public function newPass($item){
-        $sql = "INSERT INTO `neumaticos` (`marca`,`placa`,`cuenta`,`usuario`,`pass`,`web`,`tlf`,`consultausr`,`consultapwd`,`tipo`) VALUES 
-        ('$item[1]','$item[2]','$item[3]','$item[4]','$item[5]','$item[6]','$item[7]','','','$item[8]')";
+        $sql = "INSERT INTO `neumaticos` (`marca`,`placa`,`cuenta`,`usuario`,`pass`,`web`,`tlf`,`consultausr`,`consultapwd`,`tipo`,`propietario`) VALUES 
+        ('$item[1]','$item[2]','$item[3]','$item[4]','$item[5]','$item[6]','$item[7]','','','$item[8]','$item[9]')";
         $query = $this->db->prepare($sql);  
         $query->execute();
         return "ok";
@@ -264,9 +271,9 @@ class Contacts
             `pass` = '$item[5]',
             `web` = '$item[6]',
             `tlf` = '$item[7]',
-            `tipo` = '$item[8]'
+            `tipo` = '$item[8]',
+            `propietario` = '$item[9]'
             WHERE id LIKE $item[0]";
-        echo $sql;
         $query = $this->db->prepare($sql);
         $query->execute();
         return "ok";

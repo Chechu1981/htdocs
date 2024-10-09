@@ -5,13 +5,14 @@ const rutas = {
   }
 
 document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
-    const src = window.location.href.includes('id=') ? rutas['update'] : rutas['new']
-    const idPass = window.location.href.includes('idPass=') ? document.location.search.split('=')[1] :''
+    const src = window.location.href.includes('idItem=') ? rutas['update'] : rutas['new']
+    const idItem = window.location.href.includes('idItem=') ? document.location.search.split('=')[2] :''
+    const id = window.location.href.includes('idItem=') ? document.location.search.split('=')[1].replace('&idItem','') : document.location.search.split('=')[1]
     e.preventDefault()
     e.stopImmediatePropagation()
     const data = new FormData()
     data.append('tipo',e.target.children[1].value)
-    data.append('id',e.target.children[16].id)
+    data.append('id',idItem)
     data.append('web', e.target.children[3].value)
     data.append('marca', e.target.children[5].value)
     data.append('placa', e.target.children[7].value)
@@ -20,7 +21,7 @@ document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
     data.append('pswd', e.target.children[13].value)
     data.append('phone', e.target.children[15].value)
     data.append('private', e.target.children[17].children[1].checked)
-    data.append('ssId', document.location.search.split('=')[1])
+    data.append('ssId', id)
     fetch(src,{
         method: 'POST',
         body: data
