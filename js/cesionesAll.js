@@ -385,7 +385,7 @@ const showAssig = () =>{
           updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
         })
         if(btnSendMail != null){
-          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.childNodes[1].value, refCliente.innerText))
+          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.childNodes[1].value, refCliente.innerText,comentario.firstChild.textContent.innerHTML))
           if(btnSendMailDisgon != null)
             btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id))
         }
@@ -404,7 +404,7 @@ const showAssig = () =>{
   })
 }
 
-const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, id, cantidad, nfm, tratado, refCliente) =>{
+const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, id, cantidad, nfm, tratado, refCliente,comentario) =>{
   if($(`disgon${id}`).innerHTML == "🚚"){
     customAlert("Debes enviar primero el correo a Disgón")
     return false
@@ -425,6 +425,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
   dataName.append('destino', destino)
   dataName.append('destinoC', `${destino}C`)
   dataName.append('origenF', `${origen}F`)
+  dataName.append('comentario', comentario)
   dataName.append('misterauto', refCliente)
   fetch('../api/isSend.php',{
     method: 'POST',
