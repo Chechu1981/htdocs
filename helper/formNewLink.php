@@ -61,4 +61,4 @@ $GRUPOS = [
   <label></label><div class="formPrivatePass"><label>Privado</label><input type='checkbox' id='private' title="Contraseña privada"></div>
   <label></label><input type='submit' id="<?= $id ?>" value='añadir'>
 </form>
-<script src="../js/form2.js?108"></script>
+<script src="../js/form2.js?109"></script>
