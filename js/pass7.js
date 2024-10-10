@@ -8,6 +8,7 @@ const buscar = (e) => {
   data.append('search', e)
   data.append('tipo', placa)
   data.append('usuario', $('placa').value)
+  data.append('mail', user.mail)
   fetch('./api/getPass.php',{
     method: 'POST',
     body: data})

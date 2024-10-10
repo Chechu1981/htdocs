@@ -211,7 +211,7 @@ class Contacts
         return $query->fetchAll();
     }
 
-    public function getPassHTML($ref, $tipo){
+    public function getPassHTML($ref, $tipo, $mail){
         $placa = $tipo;
         if($tipo == 'TODOS')
             $placa = '%';
@@ -221,7 +221,7 @@ class Contacts
 
         if(substr($ref,0,3) == 'btn'){
             $sql = "SELECT * FROM `neumaticos` WHERE 
-            `tipo` LIKE '$btn'
+            `tipo` LIKE '$btn' AND (`propietario` LIKE '$mail' OR `propietario` LIKE '')
             INTERSECT
             SELECT * FROM `neumaticos` WHERE
             `placa` LIKE '$placa'
@@ -229,24 +229,24 @@ class Contacts
             ORDER BY `marca` ASC";
         }else if($tipo != 'TODOS'){
             $sql = "SELECT * FROM `neumaticos` WHERE 
-            `marca` LIKE '%$btn%'
+            `marca` LIKE '%$btn%' AND (`propietario` LIKE '$mail' OR `propietario` LIKE '')
             OR `usuario` LIKE '%$btn%'
             OR `tlf` LIKE '%$btn%'
             OR `cuenta` LIKE '%$btn%'
             OR `tipo` LIKE '%$btn%'
             INTERSECT
             SELECT * FROM `neumaticos` WHERE
-            `placa` = '$placa'
+            `placa` = '$placa' AND (`propietario` LIKE '$mail' OR `propietario` LIKE '')
             OR `placa` = ''
             ORDER BY `marca` ASC";
         }else{
             $sql = "SELECT * FROM `neumaticos` WHERE 
-            `marca` LIKE '%$btn%'
+            (`marca` LIKE '%$btn%'
             OR `usuario` LIKE '%$btn%'
             OR `tlf` LIKE '%$btn%'
             OR `cuenta` LIKE '%$btn%'
             OR `placa` LIKE '%$btn%'
-            OR `tipo` LIKE '%$btn%'
+            OR `tipo` LIKE '%$btn%') AND (`propietario` LIKE '$mail' OR `propietario` LIKE '')
             ORDER BY `marca` ASC";
         }
         $query = $this->db->prepare($sql);

@@ -40,6 +40,11 @@ body::after{
     z-index: -1; */
 }
 
+.goldText{
+    color: gold;
+    text-shadow: 0 0 black;
+}
+
 iframe{
     border:none;
     width:100%;

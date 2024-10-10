@@ -6,7 +6,7 @@ $search = str_replace("'","",$_POST['search']);
 $tipo = str_replace("'","",$_POST['tipo']);
 $usuario = str_replace("'","",$_POST['usuario']);
 
-$rows = $contacts->getPassHTML($search, $tipo);
+$rows = $contacts->getPassHTML($search, $tipo, $_POST['mail']);
 $lists = '<h1>No se han encontrado coincidencias</h1>';
 if(sizeof($rows) > 0){
     $lists = '<ul class="heading" style="text-align: center;display:grid;grid-template-columns: 23% 15% 13% 25% 17% 7%;list-style:none">
@@ -18,6 +18,9 @@ if(sizeof($rows) > 0){
     <li></li>
   </ul>'; 
     foreach ($rows as $row) { 
+        $private = '';
+        if($row[11] != '')
+            $private = '$';
         $lists .= '
         <ul>
             <li><a href="'. $row[9].'" target="_blank">'.strtoupper($row[1]).'</a></li>
@@ -32,6 +35,7 @@ if(sizeof($rows) > 0){
                 <span title="Editar registro '.$row[1].'" id="'.$row[0].'">
                     <img id="edit" alt="editar" src="../img/edit_square_FILL0_wght400_GRAD0_opsz24.png">
                 </span>
+                <span class="goldText">'.$private.'</span>
             </li>
         </ul>';
     }
