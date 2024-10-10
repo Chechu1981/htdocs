@@ -55,7 +55,7 @@ document.addEventListener('click',(e)=>{
         body: data})
       .then(response => response.text())
       .then(response => {
-        buscar()
+        buscar($('search-pass').value)
         notify(response)
       })
       .catch(functions => console.log("error: "+functions))
