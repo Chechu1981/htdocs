@@ -632,6 +632,7 @@ const enabledForm = () =>{
 $$('form')[0].addEventListener('submit',(e)=>{
   document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = true
   $('pclient').classList.remove('important')
+  $('pclient').classList.remove('route')
   e.preventDefault()
   const origen = $('origen').value
   const destino = $('destino').value

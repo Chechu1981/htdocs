@@ -573,6 +573,7 @@ const limpiarSpinner = () =>{
 $$('form')[0].addEventListener('submit',(e)=>{
   document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = true
   $('pclient').classList.remove('important')
+  $('pclient').classList.remove('route')
   $('descRef').innerHTML = ""
   $('clientName').innerHTML = ""
   e.preventDefault()
