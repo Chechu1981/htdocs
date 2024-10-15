@@ -190,7 +190,7 @@ if(sizeof($rows) > 0){
         '.$opctions.'
         </select>
       </li>
-      <li title="Eliminar: '.$row[4].'" class="send" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
+      <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
       <li class="send" ><span title="Enviar Cesión" id="send'.$row[0].'">📩</span><span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
       <li title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuario.'<br>('.$puesto.')</li>
       <li class="send"><span id="rechazo'.$row[0].'" title="'.$row[24].'">'.$rechazado.'</span></li>

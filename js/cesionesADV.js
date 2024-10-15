@@ -1,4 +1,4 @@
-import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js?103"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js?104"
 import contadores from "./updateCounter.js"
 
 const setCounters = setInterval(() =>{contadores()},1000)
@@ -314,9 +314,11 @@ const showAssig = () =>{
       comentario.childNodes[0].addEventListener('keyup', () => {updateCounterAssignment(id,comentario.firstElementChild.value)})
       cliente.addEventListener('click', () => {
         let fragilTxt = ''
-        if(disgon != null)
-          disgon.checked ? fragilTxt += 'Recoge DISGON. ' : ''
-        fragil.checked ? fragilTxt += '..~** ¡¡MATERIAL FRÁGIL!! **~..Reforzar embalaje;' : ''
+        if(disgon != null){
+          disgon.checked && $(`disgon${id}`).innerHTML == '📦' ? fragilTxt += 'Recoge LOGISTICA. ' : ''
+          disgon.checked && $(`disgon${id}`).innerHTML == '🚚' ? fragilTxt += 'Recoge DISGON. ' : ''
+        }
+        fragil.checked ? fragilTxt += '..~** ¡¡MATERIAL FRÁGIL!! **~..REFORZAR EMBALAJE;' : ''
         clearRowsMark(ul,`Cesión ${origen.value}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
       })
       refCliente.addEventListener('click', () => {
@@ -393,13 +395,15 @@ const showAssig = () =>{
       if(btnSendMail != null){
         btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente.innerText,comentario.firstChild.innerHTML))
         if(btnSendMailDisgon != null)
-          if(btnSendMailDisgon.innerHTML == "🚚")
-            btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id,comentario.firstChild.innerHTML))
-          else
-            btnSendMailDisgon.addEventListener('click',() => {window.open("https://recambios.logistica.com/page/index.aspx"),$(`disgon${id}`).innerHTML = "✅"})
+          btnSendMailDisgon.addEventListener('click',(e) => {
+            if(e.target.innerHTML == '🚚')
+              enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id,comentario.firstChild.innerHTML)
+            else if(e.target.innerHTML == '📦')
+              window.open("https://recambios.logistica.com/page/index.aspx"),$(`disgon${id}`).innerHTML = "✅"
+          })
+        }
+        btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
       }
-      btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
-    }
   })
 }
 

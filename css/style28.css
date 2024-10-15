@@ -904,7 +904,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #cesiones .assignPendingAdv{
-  grid-template-columns: 2% 10% 8% 15% 14% 7% 6% 4% 3% 3% 10% 5% 2% 8% 1%;
+  grid-template-columns: 2% 10% 8% 15% 14% 7% 6% 4% 3% 3% 10% 5% 4% 8% 1%;
 }
 
 #cesiones .tableLegend{
@@ -953,10 +953,21 @@ input[type="color"]::-webkit-color-swatch {
 .send{
   font-size: large;
   cursor: pointer;
+  border-radius: 5px;
+  background-color: rgb(5 5 5 / 86%);
+  box-shadow: #ffffff 0px 0px 4px 0px;
+  padding: 4px;
+}
+
+.send span{
+    padding: 1px;
+    border-radius: 8px;
 }
 
 .send span:hover{
-  filter: invert(1);
+  filter: brightness(1.5);
+  box-shadow: #ffffff 0px 0px 9px 2px;
+  transition: .3s;
 }
 
 #cesiones ul li:first-child{
@@ -1212,7 +1223,8 @@ span.button:active{
     height: 24px;
 }
 
-.delete img:hover{
+.delete img:hover,
+.delete span:hover{
     cursor: pointer;
     filter: invert(100)!important;
 }

@@ -18,6 +18,8 @@ export const createMail = (cantidad, origen, destino, referencia, cliente, pedid
   }
   if (disgon) {
     asuntoDisgon = `DISGON`;
+    if(origen != 'SANTIAGO')
+      asuntoDisgon = `LOGISTICA`;
     strDisgon = `🚚🚩🚩ATENCIÓN RECOGE DISGON O LOGISTICA🚩🚩🚚`;
   }
   if (nfm)
