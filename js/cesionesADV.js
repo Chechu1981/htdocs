@@ -393,7 +393,10 @@ const showAssig = () =>{
       if(btnSendMail != null){
         btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente.innerText,comentario.firstChild.innerHTML))
         if(btnSendMailDisgon != null)
-          btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id,comentario.firstChild.innerHTML))
+          if(btnSendMailDisgon.innerHTML == "🚚")
+            btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id,comentario.firstChild.innerHTML))
+          else
+            btnSendMailDisgon.addEventListener('click',() => {window.open("https://recambios.logistica.com/page/index.aspx"),$(`disgon${id}`).innerHTML = "✅"})
       }
       btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
     }
@@ -401,8 +404,8 @@ const showAssig = () =>{
 }
 
 const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, id, cantidad, nfm, tratado, refCliente,comentario) =>{
-  if($(`disgon${id}`).innerHTML == "🚚"){
-    customAlert("Debes enviar primero el correo a Disgón")
+  if($(`disgon${id}`).innerHTML == "🚚" || $(`disgon${id}`).innerHTML == "📦"){
+    customAlert("Debes enviar primero el correo a Disgón o Logistica")
     return false
   }
   const dataName = new FormData()
@@ -546,7 +549,9 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   }
   if(disgonSend != null && user.puesto == 'ADV'){
     if(fragil && disgonLi.childNodes[0].checked)
-      disgonSend.innerText = '🚚'
+      disgonSend.innerText = '📦'
+      if(origen == 'SANTIAGO')
+        disgonSend.innerText = '🚚'
     else if(fragil && !disgonLi.childNodes[0].checked)
       disgonSend.innerText = ''
     if(!fragil && disgonLi.firstChild != null){

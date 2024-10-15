@@ -517,7 +517,9 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   }
   if(disgonSend != null){
     if(fragil && disgonLi.childNodes[0].checked)
-      disgonSend.innerText = '🚚'
+      disgonSend.innerText = '📦'
+      if(origen == 'SANTIAGO')
+        disgonSend.innerText = '🚚'
     else if(fragil && !disgonLi.childNodes[0].checked)
       disgonSend.innerText = ''
     if(!fragil && disgonLi.firstChild != null){

@@ -14,7 +14,7 @@ $opciones = '
     <div class="cards" title="tarifa">Actualizar tarifa</div>
     <!-- <div class="cards" title="soc">Servicios Oficiales</div> -->
     <div class="cards" title="pending">Actualizar pendientes</div>
-    <div class="cards" title="clientes">Actualizar clientes con rutas</div>';
+    <div class="cards" title="clientes">Actualizar clientes~rutas</div>';
 
 if($privilegio >= 100){$opciones .= '<div class="cards" title="usuarios">Usuarios</div>';}
 

@@ -132,7 +132,9 @@ if(sizeof($rows) > 0){
       if($row[18] == 1)
         $disgon = '<input type="checkbox" checked="checked"></input>';
       if($row[18] == 1 && $puesto == 'ADV'){
-        $envioDisgon = '🚚';
+        $envioDisgon = '📦';
+        if($row[1] == 'SANTIAGO')
+          $envioDisgon = '🚚';
         if($row[22] == 1)
           $envioDisgon = "✅";
       }
@@ -167,11 +169,9 @@ if(sizeof($rows) > 0){
         $important = 'route';
       $numPie = $codgClient[$row[1].$row[2].$nfm];
     }
-    if($row[1] == 'MAT'){
+    if($row[1] == 'MAT' || $row[1] == 'EXT'){
       $numPie = $row[12];
     }
-    /*if($row[2] == 'SANTIAGO')
-      $important = 'important';*/
     
     $lists .= '
     <ul class="assignPendingAdv" title="'.$contador++.'" style="'.$rechazadoStyle.'">

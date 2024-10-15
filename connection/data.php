@@ -1271,7 +1271,7 @@ class Contacts
   }
 
   public function getClientNameByPlate($cuenta,$placa){
-      $sql = "SELECT * FROM `clientes` WHERE `placa` = '$placa' AND `cuenta` = '$cuenta' ORDER BY LPAD(`envio`,2,'0') ASC";
+      $sql = "SELECT * FROM `clientes` WHERE `placa` = '$placa' AND `cuenta` = '$cuenta' ORDER BY LPAD(`envio`,3,'0') ASC";
       $query = $this->db->prepare($sql);
       $query->execute();
       return $query->fetchAll();

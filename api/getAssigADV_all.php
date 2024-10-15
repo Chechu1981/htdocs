@@ -120,7 +120,9 @@ if(sizeof($rows) > 0){
       $disgon = '<input type="checkbox" ></input>';
       if($row[18] == 1){
         $disgon = '<input type="checkbox" checked="checked"></input>';
-        $envioDisgon = "🚚";
+        $envioDisgon = '📦';
+        if($row[1] == 'SANTIAGO')
+          $envioDisgon = '🚚';
         if($row[22] == 1){
           $envioDisgon = "✅";
         }
