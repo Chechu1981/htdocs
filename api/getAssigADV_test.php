@@ -120,9 +120,6 @@ if(sizeof($rows) > 0){
     $usuarioCesion = '';
     $options = createOptons($agente);
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
-    if($puesto == 'ADV'){
-      $btnEnviar = '<span title="Enviar Cesión" id="send'.$row[0].'">📩</span>';
-    }
     if(($_POST['id']) != 'new')
       $li = '<li title="Envío: ">'.$fechaR[2].'/'.$fechaR[1].'/'.$fechaR[0].'</li>';
     if($row[13] == 1)
@@ -141,8 +138,14 @@ if(sizeof($rows) > 0){
     }
     $origen = '<span id="origen'.$row[0].'">'.$row[1].'</span>';
     $destino = $row[2];
-    if($puesto == 'ADV')
+    $classDelete = '';
+    $classSend = '';
+    if($puesto == 'ADV'){
+      $classSend = 'class="send"';
+      $classDelete = 'class="delete"';
+      $btnEnviar = '<span title="Enviar Cesión" id="send'.$row[0].'">📩</span>';
       $origen = createOptions($row[0],$row[1],$row[12]);
+    }
     if($row[10] != $user[0][1])
       $usuarioCesion = $row[10].'<span id="rechazo'.$row[0].'">❌</span>';
     if($row[23] == 1){
@@ -196,8 +199,8 @@ if(sizeof($rows) > 0){
         </select>
       </li>
       <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"><span title="'.$row[24].'">'.$rechazado.'</span></li>
-      <li class="send" >'.$btnEnviar.'<span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
-      <li class="delete" style="text-align:center;font-size:small" title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuarioCesion.'</li>
+      <li '.$classSend.' >'.$btnEnviar.'<span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
+      <li '.$classDelete.' style="text-align:center;font-size:small" title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuarioCesion.'</li>
     </ul>';
   }
 }

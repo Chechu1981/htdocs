@@ -551,17 +551,18 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
     })
     disgonLi.appendChild(chkDisgon)
   }
-  if(disgonSend != null && user.puesto == 'ADV'){
-    if(fragil && disgonLi.childNodes[0].checked)
+  if(disgonSend != null && user.puesto == 'ADV' && fragil){
+    if(disgonLi.childNodes[0].checked){
       disgonSend.innerText = '📦'
       if(origen == 'SANTIAGO')
         disgonSend.innerText = '🚚'
-    else if(fragil && !disgonLi.childNodes[0].checked)
-      disgonSend.innerText = ''
-    if(!fragil && disgonLi.firstChild != null){
-      disgonLi.firstChild.remove()
-      disgonSend.innerHTML = ''
     }
+    else if(!disgonLi.childNodes[0].checked)
+      disgonSend.innerText = ''
+  }
+  if(!fragil && disgonLi.firstChild != null){
+    disgonLi.firstChild.remove()
+    disgonSend.innerHTML = ''
   }
 }
 
