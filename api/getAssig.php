@@ -95,6 +95,8 @@ if(sizeof($rows) > 0){
       $fechaSHora = explode(".",explode(" ", $row[25])[1]);
       $cadenaFechaEntrada = "";
       $disgon = "";
+      if($row[18] == 2)
+        $disgon = "<em style='background-color:green;color:white'>(LOGISTICA) </em>";
       if($row[18] == 1)
         $disgon = "<em style='background-color:green;color:white'>(DISGON) </em>";
       if($row[25] > '2024-04-11 00:00:00.000000')

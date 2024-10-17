@@ -146,6 +146,7 @@ if(sizeof($rows) > 0){
     $rutasDirectas = ["6251-2","78709-1","12752-1","105252-1","105342-1","14075-1","7545-1","78766-1"];
     $rutasPreguntar = ["6254-1","78713-1"];
     $rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"];
+    $numPie = '';
     
     if($row[1] != 'MAT' && $row[1] != 'EXT'){
       if(in_array($codgClient[$row[1].$row[2].$nfm],$rutasPreguntar))
@@ -193,7 +194,7 @@ if(sizeof($rows) > 0){
       <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
       <li class="send" ><span title="Enviar Cesión" id="send'.$row[0].'">📩</span><span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
       <li title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuario.'<br>('.$puesto.')</li>
-      <li class="send"><span id="rechazo'.$row[0].'" title="'.$row[24].'">'.$rechazado.'</span></li>
+      <li class="delete" ><span id="rechazo'.$row[0].'" title="'.$row[24].'">'.$rechazado.'</span></li>
     </ul>';
   }
 }

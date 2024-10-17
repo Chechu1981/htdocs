@@ -7,6 +7,13 @@ export const createMail = (cantidad, origen, destino, referencia, cliente, pedid
   if (cantidad > 1) {
     strCantidad = `${cantidad} unidades de la referencia`;
   }
+  if (disgon) {
+    asuntoDisgon = `DISGON`;
+    strDisgon = `🚚🚩🚩ATENCIÓN RECOGE DISGON🚩🚩🚚`;
+    if(origen != 'SANTIAGO')
+      strDisgon = `🚚🚩🚩ATENCIÓN RECOGE LOGISTICA🚩🚩🚚`;
+      asuntoDisgon = `LOGISTICA`;
+  }
   if (fragil) {
     mailFragil = encodeURIComponent(`
     *******__‼️ ATENCIÓN ‼️__*******
@@ -16,12 +23,6 @@ export const createMail = (cantidad, origen, destino, referencia, cliente, pedid
     
     `);
   }
-  if (disgon) {
-    asuntoDisgon = `DISGON`;
-    if(origen != 'SANTIAGO')
-      asuntoDisgon = `LOGISTICA`;
-    strDisgon = `🚚🚩🚩ATENCIÓN RECOGE DISGON O LOGISTICA🚩🚩🚚`;
-  }
   if (nfm)
     strNfm = `La entrada en Geode debe ser realizada como entrada 109. PIEZA SIN SOLUCIÓN DE REEMPLAZO.   `;
   if (origen == 'SANTIAGO')
@@ -30,11 +31,10 @@ export const createMail = (cantidad, origen, destino, referencia, cliente, pedid
     destino = 'GALICIA';
   const fecha = new Date();
   const mailSub = `${asuntoDisgon} CESION ${origen} -> ${destino}`;
-  const mailSaludo = fecha.getHours() > 14 ? `${mailFragil}Buenas tardes: ` : `${mailFragil}Buenos días: `;
+  const mailSaludo = fecha.getHours() > 14 ? `${strDisgon}${mailFragil}Buenas tardes: ` : `${strDisgon}${mailFragil}Buenos días: `;
   mailTarget = encodeURIComponent(`
 Va a llegar de la placa de ${origen} a ${destino} ${strCantidad} ${referencia} para la cuenta ${cliente.replaceAll('&','and')}.
 ${strNfm}
-${strDisgon}
 Saludos.`);
 
   window.open(`mailto:${destinoFragil};${mailDestino};${mailOrigen}?subject=${mailSub}&cc=${bcc}&body=${mailSaludo + mailTarget}`);

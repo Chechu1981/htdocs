@@ -1,5 +1,5 @@
 "use strict";
-import { createMail, enviarMailDisgon, createMailMat } from "./createMail.js";
+import { createMail, enviarMailDisgon, createMailMat } from "./createMail.js?100";
 import contadores from "./updateCounter.js";
 
 setInterval(() =>{contadores()},1200)
@@ -413,7 +413,12 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
   }
   const dataName = new FormData()
   tratado = tratado == '' ? user.nombre : tratado
-  const disgon = $(id).parentNode.childNodes[21].firstChild == null ? false : $(id).parentNode.childNodes[21].firstChild.checked
+  let disgon = 0
+  if($(id).parentNode.childNodes[21].firstChild != null){
+    if($(id).parentNode.childNodes[21].firstChild.checked){
+      disgon = origen == 'SANTIAGO' ? 1 : 2
+    }
+  }
   dataName.append('id', id)
   dataName.append('nfm',nfm)
   dataName.append('fragil',fragil)
