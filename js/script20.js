@@ -319,7 +319,7 @@ function checkNotificationPromise() {
 
 const notificacion = (titulo, texto) => {
   const ifNotif = checkNotificationPromise() 
-  icon = '../img/icons8-coche-64.png'
+  const icon = '../img/icons8-coche-64.png'
   if(ifNotif){
     const notif = new Notification(titulo,{
       body: texto,

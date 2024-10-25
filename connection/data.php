@@ -263,6 +263,8 @@ class Contacts
     }
 
     public function updatePass($item){
+        foreach($item as $campos)
+            
         $sql = "UPDATE `neumaticos` SET 
             `marca`= '$item[1]',
             `placa` = '$item[2]',

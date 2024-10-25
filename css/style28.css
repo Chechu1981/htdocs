@@ -951,23 +951,22 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 .send{
-  font-size: large;
-  cursor: pointer;
-  border-radius: 5px;
-  background-color: var(--bg-font-color);
-  box-shadow: #ffffff 0px 0px 4px 0px;
-  padding: 4px;
+    font-size: large;
+    border-radius: 5px;
+    background-color: var(--bg-font-color);
+    box-shadow: #000000 1px 1px 4px 0px;
+    padding: 2px;
+    border: 2px solid black;
 }
 
 .send span{
+    cursor: pointer;
     padding: 1px;
     border-radius: 8px;
 }
 
 .send span:hover{
   filter: brightness(1.5);
-  box-shadow: #ffffff 0px 0px 9px 2px;
-  transition: .3s;
 }
 
 #cesiones ul li:first-child{

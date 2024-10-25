@@ -188,12 +188,21 @@ const buscarDenominacionReferencia = (refer) =>{
     method: 'POST',
     body: data
   })
-  .then(res => res.text())
+  .then(res => res.json())
   .then((res) => {
-    $('descRef').innerHTML = res
-    if($('destino').value == 'PALMA' && $('origen').value != 'MAT'){
+    $('descRef').innerHTML = res.descripcionPrecio
+    let pvp = 0
+    if(!res.descripcionPrecio.includes('Desconocido'))
+      pvp = parseFloat(res.precio.replaceAll(',','.'))
+      let dto = parseInt(res.descuento)
+    if($('destino').value == 'ZARAGOZA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT') && $('disgonBox') != null) {
+      if(!$('coment').value.includes(` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`) && $('disgonBox').checked)
+        $('coment').value += ` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`
+      if(!$('disgonBox').checked)
+        $('coment').value = $('coment').value.replaceAll(` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`,'')
+    }
+    if($('destino').value == 'PALMA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT')){
       let portes = '40€'
-      const pvp = parseFloat(res.split('PVP: ')[1].split('€')[0].replaceAll(',','.'))
       if(pvp < 150)
         portes = '30€'
       else if(pvp > 400)
