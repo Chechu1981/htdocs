@@ -123,6 +123,8 @@ if(sizeof($rows) > 0){
         $envioDisgon = '📦';
         if($row[1] == 'SANTIAGO')
           $envioDisgon = '🚚';
+        if($row[1] == 'VALENCIA')
+          $envioDisgon = '';
         if($row[22] == 1){
           $envioDisgon = "✅";
         }

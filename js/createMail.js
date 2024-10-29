@@ -10,9 +10,14 @@ export const createMail = (cantidad, origen, destino, referencia, cliente, pedid
   if (disgon) {
     asuntoDisgon = `DISGON`;
     strDisgon = `🚚🚩🚩ATENCIÓN RECOGE DISGON🚩🚩🚚`;
-    if(origen != 'SANTIAGO')
+    if(origen != 'SANTIAGO'){
       strDisgon = `🚚🚩🚩ATENCIÓN RECOGE LOGISTICA🚩🚩🚚`;
       asuntoDisgon = `LOGISTICA`;
+    }
+    if(origen == 'VALENCIA'){
+      strDisgon = ``;
+      asuntoDisgon = ``;
+    }
   }
   if (fragil) {
     mailFragil = encodeURIComponent(`

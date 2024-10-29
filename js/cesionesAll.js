@@ -506,6 +506,7 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   const origenBtn = $(id).parentNode.childNodes[1].childNodes[1].className.includes('ledOn') ? '1':'0'
   const destinoBtn = $(id).parentNode.childNodes[1].childNodes[4].className.includes('press') ? '1':'0'
   const origen = $(id).parentNode.childNodes[1].childNodes[2].value
+  const comentario = $(`coment${id}`).value
   const data = new FormData()
   data.append('id', id)
   data.append('nfm',nfm)
@@ -514,6 +515,7 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   data.append('tratado',tratado)
   data.append('envio', false)
   data.append('disgon', disgon)
+  data.append('comentario', comentario)
   data.append('origenBtn', origenBtn)
   data.append('destinoBtn', destinoBtn)
   data.append('origen', origen)
@@ -536,6 +538,8 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
       disgonSend.innerText = '📦'
       if(origen == 'SANTIAGO')
         disgonSend.innerText = '🚚'
+      if(origen == 'VALENCIA')
+        disgonSend.innerText = ''
     else if(fragil && !disgonLi.childNodes[0].checked)
       disgonSend.innerText = ''
     if(!fragil && disgonLi.firstChild != null){

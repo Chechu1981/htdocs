@@ -74,13 +74,11 @@ if(sizeof($rows) > 0){
       $clientName = $row[20];
       //$designacion = getDesignacion($row[4]);
       $designacion = $row[19];
-      if($_POST['id']!= 'new') {
-          $agent = "<li title='Agente'>$row[10]</li>";
-      }
+      if($_POST['id'] != 'new')
+        $agent = "<li title='Agente'>$row[10]</li>";
       $rechazado = '';
-      if($row[23] == 1){
+      if($row[23] == 1)
         $rechazado = "<span id='rechazo$row[0]' title='$row[24]' style='cursor:pointer'>🚫</span>";
-      }
       if($row[1] == 'MAT')
         $row[1] = "MR AUTO<br /><legend class='legend copy'>$row[12]</legend>";
       if($row[1] == 'EXT')
