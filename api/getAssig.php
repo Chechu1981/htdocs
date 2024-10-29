@@ -102,7 +102,7 @@ if(sizeof($rows) > 0){
       $li = "<li class='delete' title='Marcar como cesión recibida'><img id='$row[0]' alt='tick' src='../../img/done_FILL0_wght400_GRAD0_opsz24.png'></li>";
       if($fechaD[0] == '0000')
         $li='<li></li>';
-      if(($_POST['id']) != 'new')
+      if($fechaR[0] != '0000')
         $li = "<li title='Envío: '>$fechaR[2]/$fechaR[1]/$fechaR[0]</li>";
       $lists .= "
       <ul id='$row[0]'>

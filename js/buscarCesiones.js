@@ -59,8 +59,33 @@ document.getElementById('search-ref').addEventListener('submit',e=>{
     const refCopy = document.getElementsByClassName('copy')
     for(let i = 0; i < refCopy.length;i++)
       refCopy[i].addEventListener('click',e =>{
+        let listRows = $('cesiones').getElementsByTagName('ul')
+        for(let j = 0; j < listRows.length ; j++)
+          listRows[j].style = ''
+        e.target.parentNode.style.color = 'royalblue'
+        e.target.parentNode.style.backgroundColor = 'aquamarine'
         copyClipboard(e.target.textContent.replaceAll(' ',''))
     })
+    const btnTik = cesiones.getElementsByTagName('img')
+    for(let i = 0;i < btnTik.length; i++){
+      if(btnTik[i].alt == 'tick'){
+        btnTik[i].addEventListener('click',e=>{
+          if(confirm("Se ha recibido esta cesion?") == true){
+            const data = new FormData()
+            data.append('id',e.target.id)
+            fetch('../../api/updateAssig.php',{
+              method: 'POST',
+              body: data
+            })
+            .then(response => response.text())
+            .then(() => {
+              e.target.parentNode.parentNode.remove()
+              ready.firstChild.innerText = parseInt(ready.firstChild.innerText) - 1
+            })
+          }
+        })
+      }
+    }
   })
 })
 

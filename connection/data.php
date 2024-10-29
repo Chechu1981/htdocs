@@ -402,7 +402,6 @@ class Contacts
         elseif($all == 'stop' AND $puesto == 'ADV')
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true";
         $sql .= $order;
-        echo $sql;
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
