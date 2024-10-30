@@ -9,6 +9,7 @@
 :root{
     --main-notification-bg-color: hsl(118deg, 85.46%, 17.49%);
     --main-notification-font-color: hsl(75.29deg, 100%, 50%);
+    --sz: 10vmin;
 }  
 
 html *{
@@ -49,6 +50,51 @@ iframe{
     border:none;
     width:100%;
     height:150px;
+}
+
+.alertRibon{
+    background-color: red;
+    text-align: center;
+    font-size: large;
+    font-weight: 900;
+}
+
+.alertHiden{
+    display: none;
+}
+
+.switch{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.switch input[type="checkbox"]{
+    display: none;
+}
+
+.switch div{
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: aliceblue;
+    margin: 10px;
+    cursor: pointer;
+    box-shadow: 0 0px calc(var(--sz) / 50) calc(var(--sz) / 50) #0008, 0 -4px calc(var(--sz) / 10) calc(var(--sz) / 500) #000, 0 2px calc(var(--sz) / 10) calc(var(--sz) / 500) #fff8, 0 0px calc(var(--sz) / 20) calc(var(--sz) / 25) #000;
+}
+
+.switch div:before{
+    background: radial-gradient(circle at 50% 32%, #fff5 0 calc(var(--sz) / 20), #000 calc(var(--sz) / 3) calc(var(--sz) / 3));
+    box-shadow: 0 0 calc(var(--sz) / 3) 0 #003ef520, 0 0 calc(var(--sz) / 3) calc(var(--sz) / 20) #003ef520 inset;
+}
+
+.switch div:hover{
+    background-color: rgb(82, 82, 99);
+    transition-duration: .3s;
+}
+
+.switchOn{
+
 }
 
 .libreta{

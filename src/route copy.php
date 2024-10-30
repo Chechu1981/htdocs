@@ -5,6 +5,7 @@
   <?php include_once('../helper/head.php'); ?>
 </head>
 <body>
+  <?php include_once '../helper/alert.php'; ?>
   <div id="menu">
     <?php include_once '../helper/menu.php'; ?>  
     </div>

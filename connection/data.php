@@ -1461,4 +1461,11 @@ class Contacts
         $query->execute();
         return $query->fetchAll();
     }
+
+    public function getAlert(){
+        $sql = "SELECT * FROM `alert`";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

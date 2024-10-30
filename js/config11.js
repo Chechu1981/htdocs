@@ -14,7 +14,8 @@ if(typeof(href) != "object"){
   "pending": "update/configPending.php",
   "clientes": "update/configClient.php",
   "usuarios": "update/configUsers.php",
-  "repere": "update/configRepere.php"
+  "repere": "update/configRepere.php",
+  "alertas": "api/getAlertEdition.php"
   }
 
   const colores = {
