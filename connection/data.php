@@ -1468,4 +1468,11 @@ class Contacts
         $query->execute();
         return $query->fetchAll();
     }
+
+    function updateAlert($active, $coment){
+        $sql = "UPDATE `alert` SET `active` = '$active', `coment` = '$coment'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

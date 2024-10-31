@@ -102,6 +102,33 @@ if(typeof(href) != "object"){
         .then(res=> res.text())
         .then(response=>{
           document.getElementsByClassName('note-body')[0].childNodes[2].innerHTML = response
+            if($('swhBtn')!=null){
+              $('saveAlert').addEventListener('click',() => {
+                const data = new FormData()
+                data.append('active',$('chkBtn').checked == true ? "1" : "0")
+                data.append('coment',$('txtNotes').value)
+                fetch(src + 'api/updateStatusSwitch.php',{
+                  method: 'POST',
+                  body: data
+                })
+                .then(response =>{
+                  window.location.reload()
+                })
+              })
+              $('swhBtn').addEventListener('click',() => {
+                const data = new FormData()
+                data.append('active',$('chkBtn').checked == true ? "1" : "0")
+                data.append('coment',$('txtNotes').value)
+                fetch(src + 'api/updateStatusSwitch.php',{
+                  method: 'POST',
+                  body: data
+                })
+                $('swhBtn').classList.toggle('switchOn')
+                $('swhBtn').classList.toggle('switchOff')
+                $('alertRibon').classList.toggle('alertHiden')
+                $('chkBtn').click()
+            })
+          }
         })
       }
     }

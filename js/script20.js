@@ -30,7 +30,7 @@ $$('input')[0].addEventListener('keyup', (e) => {
 
 const modal = (params,title) =>{
   $('notes').parentNode.parentNode.parentNode.children[1].classList.toggle('filter')
-  $('notes').parentNode.parentNode.parentNode.children[0].classList.toggle('filter')
+  $('notes').parentNode.parentNode.parentNode.children[2].classList.toggle('filter')
   let box = document.createElement('div')
   box.className = 'note-active'
   let contentBox = document.createElement('div')
@@ -51,7 +51,7 @@ const modal = (params,title) =>{
       }
     }
     $('notes').parentNode.parentNode.parentNode.children[1].classList.toggle('filter')
-    $('notes').parentNode.parentNode.parentNode.children[0].classList.toggle('filter')
+    $('notes').parentNode.parentNode.parentNode.children[2].classList.toggle('filter')
     setTimeout(()=>box.remove(),350)
   })
 }
@@ -145,7 +145,7 @@ $('menu').childNodes[7].addEventListener('click',(e) => {
       modal(res,"Configuración")
       const newScript = document.createElement('script')
       newScript.type = 'text/javascript'
-      newScript.src = '../../js/config11.js?1001'
+      newScript.src = '../../js/config11.js?1002'
       $('contacts').append(newScript)
     })
   }

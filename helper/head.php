@@ -36,7 +36,7 @@ $scripts = (object)[
   'ROUTETEST' => "/js/routeTest.js?103",
   'INMOVILIZADOS' => "/js/vi18.js?1237",
   'REFERENCIADOS' => "/js/referenciados.js?1002",
-  'INMSTATUS' => "/js/inmStat.js?104",
+  'INMSTATUS' => "/js/inmStat.js?105",
   'CONFIGROUTES' => "/js/cfgRutas2.js",
   'CONFIGREPERE' => "/js/formRepere.js",
   'CONFIGSOC' => "/js/cfgSoc.js",
@@ -69,9 +69,9 @@ $user = strtoupper($userBdd[0][3]);
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?= $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1292" defer content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1294" defer content="1">
 <link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1007" defer content="1">
 <link rel="stylesheet" href="<?= "$src/css/" . str_replace(" ","_",strtolower($user)).".css?" . rand(1,500); ?>" defer content="0">
-<script type="text/javascript" src="<?= $src; ?>/js/script20.js?1023" defer content='no-cache'></script>
+<script type="text/javascript" src="<?= $src; ?>/js/script20.js?1026" defer content='no-cache'></script>
 <script type="module" src="<?= $src . $scripts->$page; ?>" defer content="0"></script>
 <title>Chechu - <?= $page; ?></title>

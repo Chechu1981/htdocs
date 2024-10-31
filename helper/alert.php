@@ -6,6 +6,6 @@ $class = 'alertHiden';
 if($alerta[0]['active'] == 1)
   $class = ''
 ?>
-<section class="alertRibon <?php echo $class; ?>">
+<section id="alertRibon" class="alertRibon <?php echo $class; ?>">
   ⚠️<?php echo $alerta[0]['coment']; ?>⚠️
 </section>
