@@ -116,13 +116,6 @@ if(typeof(href) != "object"){
                 })
               })
               $('swhBtn').addEventListener('click',() => {
-                const data = new FormData()
-                data.append('active',$('chkBtn').checked == true ? "1" : "0")
-                data.append('coment',$('txtNotes').value)
-                fetch(src + 'api/updateStatusSwitch.php',{
-                  method: 'POST',
-                  body: data
-                })
                 $('swhBtn').classList.toggle('switchOn')
                 $('swhBtn').classList.toggle('switchOff')
                 $('alertRibon').classList.toggle('alertHiden')

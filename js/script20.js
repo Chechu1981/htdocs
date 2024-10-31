@@ -145,7 +145,7 @@ $('menu').childNodes[7].addEventListener('click',(e) => {
       modal(res,"Configuración")
       const newScript = document.createElement('script')
       newScript.type = 'text/javascript'
-      newScript.src = '../../js/config11.js?1002'
+      newScript.src = '../../js/config11.js?1003  '
       $('contacts').append(newScript)
     })
   }

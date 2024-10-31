@@ -57,6 +57,7 @@ iframe{
     text-align: center;
     font-size: large;
     font-weight: 900;
+    border-bottom: 3px solid black;
 }
 
 .alertHiden{
