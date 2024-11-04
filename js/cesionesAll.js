@@ -178,7 +178,7 @@ $('client').addEventListener('blur',(e)=>{
 })
 
 $('ref').addEventListener('blur',() =>{
-  buscarDenominacionReferencia($('ref').value)
+  buscarDenominacionReferencia($('ref').value.replaceAll(/\t/g, ''))
 })
 
 const buscarDenominacionReferencia = (refer) =>{
@@ -602,7 +602,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   const envio = $('envio').value
   const cliente = $('client').value
   const pedido = $('pedido').value
-  const ref = $('ref').value.replaceAll(' ','')
+  const ref = $('ref').value.replaceAll(/\t/g, '')
   const cantidad = $('units').value
   const nfm = $('nfm').checked
   if(origen === destino){

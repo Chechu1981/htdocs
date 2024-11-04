@@ -195,7 +195,7 @@ $('ref').addEventListener('blur',() =>{
 
 const buscarDenominacionReferencia = (refer) =>{
   const data = new FormData()
-  data.append('referencia', refer)
+  data.append('referencia', refer.replaceAll(/\t/g, ''))
   fetch('../api/getDescRefer.php',{
     method: 'POST',
     body: data
@@ -653,7 +653,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   const envio = $('envio').value
   const cliente = $('client').value
   const pedido = $('pedido').value
-  const ref = $('ref').value
+  const ref = $('ref').value.replaceAll(/\t/g, '')
   const cantidad = $('units').value
   const nfm = $('nfm').checked
   let refMat = ''
