@@ -3,7 +3,7 @@
 $curl = curl_init();
 
 curl_setopt_array($curl, [
-	CURLOPT_URL => "https://api-matriculas-espana.p.rapidapi.com/es?plate=9595GGK",
+	CURLOPT_URL => "https://multibrand.servicebox-parts.com/bo/vehicle/v1/api/vehicles/license-plate?licensePlate=0050bzr&licenseCountry=ES",
 	CURLOPT_RETURNTRANSFER => true,
 	CURLOPT_ENCODING => "",
 	CURLOPT_MAXREDIRS => 10,

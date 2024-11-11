@@ -14,11 +14,11 @@ if(@$_POST['origen'] != ''){
     $_POST['destinoBtn'],
     $_POST['origen'],
     @$_POST['disgon'],
-    @$_POST['comentario']);
+    str_replace("'","\"",@$_POST['comentario']));
   echo $rows;
 }else{
   $rows = $contacts->updateComentAssigADV2023(
     $_POST['id'],
-    $_POST['comentario'],
+    str_replace("'","\"",$_POST['comentario']),
   );
 }

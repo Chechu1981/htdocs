@@ -45,7 +45,7 @@ function getPvp($referencia){
 
 $nombreCliente = getCliente($_POST['cliente'],$_POST['destino']);
 $designacion = getDescRef($_POST['ref']);
-$comentario = $_POST['comentario'];
+$comentario = str_replace("'","\"",$_POST['comentario']);
 
 /* Busca si hay portes de las cesiones de Zaragoza por Disgon. Emplea mucho tiempo en hacer tres consultas a servidor 
 $pvp = getPvp($_POST['ref']);
