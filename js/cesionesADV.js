@@ -204,6 +204,13 @@ const buscarDenominacionReferencia = (refer) =>{
   .then((res) => {
     $('descRef').innerHTML = res.descripcionPrecio
     let pvp = 0
+    const stringAlert = ['E:BATERÍA','E:BATERIA','E:LUBRICANTE']
+    if($('origen').value == 'GRANADA'){
+      stringAlert.forEach(e =>{
+        if(res.descripcionPrecio.includes(e))
+          customAlert("🚫No se pueden hacer cesiones desde Granada de baterías ni de aceite Eurorepar hasta Enero 2025")
+      })
+    }
     if(!res.descripcionPrecio.includes('Desconocido'))
       pvp = parseFloat(res.precio.replaceAll(',','.'))
       let dto = parseInt(res.descuento)
@@ -736,6 +743,9 @@ $$('form')[0].addEventListener('submit',(e)=>{
   })
   .then(response => response.text())
   .then(res =>{
+    if(res == 'Error')
+      customAlert("🚫No se pueden hacer cesiones desde Granada de baterías ni de aceite Eurorepar hasta Enero 2025. Consultar en ADV.")
+      res = 'ok'
     if(res == 'ok'){
       showAssig()
       enabledForm()

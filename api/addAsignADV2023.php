@@ -45,6 +45,17 @@ function getPvp($referencia){
 
 $nombreCliente = getCliente($_POST['cliente'],$_POST['destino']);
 $designacion = getDescRef($_POST['ref']);
+$stringAlert = ['E:BATERÍA','E:BATERIA','E:LUBRICANTE'];
+$num = '';
+$rows = '';
+foreach($stringAlert as $str){
+    $num = strpos($designacion,$str);
+    if($num > false)
+        break;
+}
+if($num != '' && $_POST['origen'] == 'GRANADA' && $puesto != 'ADV'){
+    $rows = "Error";
+}
 $comentario = str_replace("'","\"",$_POST['comentario']);
 
 /* Busca si hay portes de las cesiones de Zaragoza por Disgon. Emplea mucho tiempo en hacer tres consultas a servidor 
@@ -73,6 +84,6 @@ $items = [
     $tratado,
     $puesto
 ];
-
-$rows = $contacts->newAssigADV2023($items);
+if($rows != 'Error')
+    $rows = $contacts->newAssigADV2023($items);
 echo $rows;
