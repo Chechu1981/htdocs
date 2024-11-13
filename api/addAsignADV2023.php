@@ -46,14 +46,14 @@ function getPvp($referencia){
 $nombreCliente = getCliente($_POST['cliente'],$_POST['destino']);
 $designacion = getDescRef($_POST['ref']);
 $stringAlert = ['E:BATERÍA','E:BATERIA','E:LUBRICANTE'];
-$num = '';
+$num = 0;
 $rows = '';
 foreach($stringAlert as $str){
-    $num = strpos($designacion,$str);
-    if($num > false)
-        break;
+    $encontrado = strpos($designacion,$str);
+    if($encontrado >= 0)
+        $num++;
 }
-if($num != '' && $_POST['origen'] == 'GRANADA' && $puesto != 'ADV'){
+if($num >= 0 && $_POST['origen'] == 'GRANADA' && $puesto != 'ADV'){
     $rows = "Error";
 }
 $comentario = str_replace("'","\"",$_POST['comentario']);
