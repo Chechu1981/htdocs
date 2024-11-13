@@ -2,7 +2,8 @@
 include_once '../connection/data.php';
 $fileCsvName = md5(date("U"));
 $fp = fopen('../csv/'.$fileCsvName.'.csv', 'w');
-$list = array(['Fecha Pedido','Referencia','Cantidad','Descripcion','Fiabilidad','N reclamacion','VIN','Comentario','Fentrega','Cuenta']);
+$list = array(['Fecha Pedido','Referencia','Cantidad','Descripcion','Fiabilidad','N reclamacion','VIN','Comentario','Fentrega','D. Entrega']);
+$listFive = array(['Fecha Pedido','Referencia','Cantidad','Descripcion','Fiabilidad','N reclamacion','VIN','Comentario','Fentrega','D. Entrega','N_Cuenta','Razon','Placa']);
 $charsetClear = array("'",'"',"#","-");
 $NPLACAS = array(
     "027130L"=>"PALMA",
@@ -13,6 +14,7 @@ $NPLACAS = array(
     "027110G"=>"SEVILLA",
     "027115E"=>"VIGO", 
     "027125R"=>"ZARAGOZA",
+    "027069E"=>"DESCONOCIDO",
 );
 
 $contacts = new Contacts();
@@ -46,22 +48,39 @@ if(count($rows) > 0){
             $placaNum = explode('SPD ',$row[14]);
             $placaCesion = $NPLACAS[$placaNum[1]];
         }
-        if($cliente == "")
-            $cliente = $row[3];
+        if($_POST['cliente'] == '5000'){
+            array_push($listFive,['fecha_Pedido'=>$row[1],
+                'referencia'=>$row[4],
+                'cantidad'=>$row[10],
+                'descripcion'=>$row[5],
+                'fiabilidad'=>$row[6],
+                'nreclamacion'=>$row[8],
+                'vin'=>$row[9],
+                'comentario'=>$row[13],
+                'fentrega'=>$fentrega,
+                'cuenta'=>@$ncliente[1],
+                'n_cliente'=>$row[2],
+                'cliente'=>$row[3],
+                'placa'=>$NPLACAS[$row[7]]]
+            );
+        }
+        else {if($cliente == "" || $cliente == $row[3]){
+            $cliente = $row[3];}
             array_push($list,['fecha_Pedido'=>$row[1],
-            'referencia'=>$row[4],
-            'cantidad'=>$row[10],
-            'descripcion'=>$row[5],
-            'fiabilidad'=>$row[6],
-            'nreclamacion'=>$row[8],
-            'vin'=>$row[9],
-            'comentario'=>$row[13],
-            'fentrega'=>$fentrega,
-            'cuenta'=>@$ncliente[1]]
-        );
+                'referencia'=>$row[4],
+                'cantidad'=>$row[10],
+                'descripcion'=>$row[5],
+                'fiabilidad'=>$row[6],
+                'nreclamacion'=>$row[8],
+                'vin'=>$row[9],
+                'comentario'=>$row[13],
+                'fentrega'=>$fentrega,
+                'cuenta'=>@$ncliente[1]]
+            );
+        }
         if($row[10] == 0)
             $row[10] = '<img src="../img/check_circle_FILL0_wght400_GRAD0_opsz48.png" alt="✅" width="25px" title="Servido"></img>';
-        $htmlList .= '<ul class="table-result">
+            $htmlList .= '<ul class="table-result">
             <li title="">' . $contador++ . '</li>
             <li title="F. pedido: ">'.$row[1] .'</li>
             <li title="Referencia: ">'.$row[4] .'</li>
@@ -78,11 +97,15 @@ if(count($rows) > 0){
 }else{
     $htmlList .= "No hay coincidencias";
 }
-
-foreach ($list as $fields) {
-    fputcsv($fp, $fields,";");
+if($_POST['cliente'] == '5000'){
+    foreach ($listFive as $fields) {
+        fputcsv($fp, $fields,";");
+    }
+}elseif($cliente != ''){
+    foreach ($list as $fields) {
+        fputcsv($fp, $fields,";");
+    }
 }
-
 fclose($fp);
 
 echo "<h3 id='$fileCsvName'>Cliente: ".$_POST['cliente']." * <span style='font-size: small'>".count($rows). " lineas</span></h3>".$htmlList;
