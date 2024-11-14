@@ -23,5 +23,4 @@ export default function updateCounterAssignment(){
     if(googles.length > 3)
       CesAll.innerHTML = itemsNumbers.todas
   })
-  
 }

@@ -1,248 +1,82 @@
+'use strict';
 import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js?105"
+import { cesiones, createInputMat, createInputExt, eliminarLinea, disgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment} from "./alertsAssigns.js"
 import contadores from "./updateCounter.js"
 
 const setCounters = setInterval(() =>{contadores()},1000)
-
-const rutasDirectas = ["6251-2","78709-1","12752-1","105252-1","105342-1","14075-1","7545-1","78766-1"]
-const rutasPreguntar = ["6254-1","78713-1"]
-const rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"]
-
-function isAlertRoutes(route){
-  $('pclient').classList.remove('important')
-  $('pclient').classList.remove('route')
-  let encontrado
-  let mensaje = ''
-  rutasDirectas.filter(rutas => {
-    if(rutas.includes(route)){
-      encontrado = route
-      mensaje = "Ruta"
-      $('pclient').classList.add('route')
-    }
-  })
-  rutasPreguntar.filter(rutas => {
-    if(rutas.includes(route)){
-      encontrado = route
-      mensaje = "Preguntar"
-      $('pclient').classList.add('important')
-    }
-  })
-  rutasPortes.filter(rutas => {
-    if(rutas.includes(route)){
-      encontrado = route
-      mensaje = "Portes"
-      $('pclient').classList.add('important')
-    }
-  })
-  return mensaje
-}
-
-const cesiones = (origen, destino,nfm) =>{
-  $('newTitle').innerText = `${origen}>${destino}`
-  let cesion = null
-  origen != destino ? cesion = origen + '' + destino:''
-  nfm ? cesion += 'NM' :''
-  fetch('../json/cesionesCliente.json?104')
-  .then(response => response.json())
-  .then(response => {
-    const numDest = response[cesion]
-    let alerta = ""
-    if(origen != 'MAT' || origen != 'EXT'){
-      alerta = isAlertRoutes(numDest)
-    }
-    numDest != undefined ? $('pclient').innerText = `${numDest} ${alerta}` : $('pclient').innerText = ""
-  })
-}
-const createInputMat = (ref) => {
-  return `
-  <input type="text" id="refMat" 
-    style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
-    value="${ref}"></input>
-    <span style="font-size: small;line-height: 7;">Ref. Mister-Auto</span>`
-
-}
-
-const createInputExt = () => {
-  return `
-  <input type="text" id="refMat" 
-    style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
-    value=""></input>
-    <span style="font-size: small;line-height: 7;">Nnobre placa externa</span>`
-
-}
+const pclient = $('pclient')
+const newTitle = $('newTitle')
+const mat = $('refMat')
+const inputOrigen = $('origen')
+const inputDestino = $('destino')
 
 $('nfm').addEventListener('change', (e) => {
-  const origen = $('origen').value
+  const origen = inputOrigen.value
   if(origen == 'MAT' || origen == 'EXT'){
-    const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
-    $('pclient').innerHTML = createInputMat(refMat)
+    const refMat = mat == null ? 'ZZMAT' : mat.value
+    pclient.innerHTML = createInputMat(refMat)
     return null
   }
-  cesiones(origen,$('destino').value,e.target.checked)
+  cesiones(origen,inputDestino.value,e.target.checked)
 })
 
-$('origen').addEventListener('change',()=>{
-  $('newTitle').style.fontWeight = ''
-  $('newTitle').classList.remove('copy')
-  const origen = $('origen').value
+inputOrigen.addEventListener('change',()=>{
+  newTitle.style.fontWeight = ''
+  newTitle.classList.remove('copy')
+  const origen = inputOrigen.value
   if(origen == 'MAT'){
-    const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
-    $('pclient').innerHTML = createInputMat(refMat)
+    const refMat = mat == null ? 'ZZMAT' : mat.value
+    pclient.innerHTML = createInputMat(refMat)
     return null
   }
   if(origen == 'EXT'){
-    $('pclient').innerHTML = createInputExt()
+    pclient.innerHTML = createInputExt()
     return null
   }
-  if(origen != $('destino').value){
-    cesiones(origen,$('destino').value,$('nfm').checked)
+  if(origen != inputDestino.value){
+    cesiones(origen,inputDestino.value,$('nfm').checked)
   }else{
     $('provider').innerText = ""
-    $('pclient').innerText = ""
-    $('newTitle').innerText = "Nueva cesión"
+    pclient.innerText = ""
+    newTitle.innerText = "Nueva cesión"
   }
 })
 
-$('destino').addEventListener('change',()=>{
-  $('newTitle').style.fontWeight = ''
-  $('newTitle').classList.remove('copy')
+inputDestino.addEventListener('change',()=>{
+  newTitle.style.fontWeight = ''
+  newTitle.classList.remove('copy')
   $('frag').checked ? disgon(true) : disgon(false)
-  buscarCliente($('destino').value.substring(0,3),$('client').value)
-  const origen = $('origen').value
+  buscarCliente(inputDestino.value.substring(0,3),$('client').value)
+  const origen = inputOrigen.value
   if(origen == 'MAT'){
-    const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
-    $('pclient').innerHTML = createInputMat(refMat)
+    const refMat = mat == null ? 'ZZMAT' : mat.value
+    pclient.innerHTML = createInputMat(refMat)
     return null
   }
   if(origen == 'EXT'){
-    $('pclient').innerHTML = createInputExt()
+    pclient.innerHTML = createInputExt()
     return null
   }
-  if(origen != $('destino').value){
-    cesiones(origen,$('destino').value,$('nfm').checked)
+  if(origen != inputDestino.value){
+    cesiones(origen,inputDestino.value,$('nfm').checked)
   }else{
     $('provider').innerText = ""
-    $('pclient').innerText = ""
-    $('newTitle').innerText = "Nueva cesión"
+    pclient.innerText = ""
+    newTitle.innerText = "Nueva cesión"
   }
 })
-
-const disgon = (esDisgon) =>{
-  const dsgDiv = document.createElement('div')
-  const dsgButton = document.createElement('input')
-  const dsgLabel = document.createElement('label')
-  dsgButton.type = 'checkbox'
-  dsgButton.id = 'disgonBox'
-  dsgLabel.textContent = 'Disgon'
-  dsgLabel.id = 'disgonLabel'
-  dsgDiv.id = 'disgonDiv'
-  dsgDiv.style = 'display: flex;margin-top: -26px;'
-  dsgDiv.appendChild(dsgLabel)
-  dsgDiv.appendChild(dsgButton)
-  const destino = $('destino').value
-  if(esDisgon && $('disgonBox') == null){
-    document.getElementsByClassName('form-group')[0].childNodes[15].appendChild(dsgDiv)
-    $('disgonBox').addEventListener('change',() => buscarDenominacionReferencia($('ref').value))
-  }
-  else if(!esDisgon && $('disgonBox'))
-    $('disgonDiv').remove()
-}
 
 $('frag').addEventListener('change', e =>{
   e.target.checked ? disgon(true) : disgon(false)
 })
 
-const buscarCliente = (placa,cliente) => {
-  const data = new FormData()
-  const section = $('envio').parentNode
-  data.append('search',cliente != '' ? cliente : null)
-  data.append('placa', placa.toUpperCase())
-  fetch('../api/getClientName.php',{method: 'POST', body:data})
-  .then(respose => respose.json())
-  .then((res) => {
-    if(res[0].cliente == undefined){
-      $('clientName').innerHTML = 'desconocido'
-      $('envio').remove()
-      const inputEnvio = document.createElement('input')
-      inputEnvio.setAttribute('id','envio')
-      section.appendChild(inputEnvio)
-    }else{
-      $('clientName').innerHTML = res[0].cliente
-      const selected = document.createElement('select')
-      selected.setAttribute('id', 'envio')
-      selected.appendChild(document.createElement('option'))
-      res.map(element => {
-        const option = document.createElement('option')
-        option.value = element.envio
-        option.text = `${element.envio}: ${element.denvio}(${element.poblacion})`
-        selected.appendChild(option)
-      });
-      $('envio').remove()
-      section.appendChild(selected)
-      /*$('envio').addEventListener('change',(valor) =>{
-        $('envio').options[valor.target.value + 1].innerText = "valor.target.innerText"
-      })*/
-    }
-  })
-}
-
 $('client').addEventListener('blur',(e)=>{
-  buscarCliente($('destino').value.substring(0,3),$('client').value.split('-')[0])
+  buscarCliente(inputDestino.value.substring(0,3),$('client').value.split('-')[0])
 })
 
 $('ref').addEventListener('blur',() =>{
   buscarDenominacionReferencia($('ref').value)
 })
-
-const buscarDenominacionReferencia = (refer) =>{
-  const data = new FormData()
-  data.append('referencia', refer.replaceAll(/\t/g, ''))
-  fetch('../api/getDescRefer.php',{
-    method: 'POST',
-    body: data
-  })
-  .then(res => res.json())
-  .then((res) => {
-    $('descRef').innerHTML = res.descripcionPrecio
-    let pvp = 0
-    const stringAlert = ['E:BATERÍA','E:BATERIA','E:LUBRICANTE']
-    if($('origen').value == 'GRANADA'){
-      stringAlert.forEach(e =>{
-        if(res.descripcionPrecio.includes(e))
-          customAlert("🚫No se pueden hacer cesiones desde Granada de baterías ni de aceite Eurorepar hasta Enero 2025")
-      })
-    }
-    if(!res.descripcionPrecio.includes('Desconocido'))
-      pvp = parseFloat(res.precio.replaceAll(',','.'))
-      let dto = parseInt(res.descuento)
-    if($('destino').value == 'ZARAGOZA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT') && $('disgonBox') != null) {
-      if(!$('coment').value.includes(` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`) && $('disgonBox').checked)
-        $('coment').value += ` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`
-      if(!$('disgonBox').checked)
-        $('coment').value = $('coment').value.replaceAll(` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`,'')
-    }
-    if($('destino').value == 'PALMA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT')){
-      let portes = '40€'
-      if(pvp < 150)
-        portes = '30€'
-      else if(pvp > 400)
-        portes = '55€'
-      if($('coment').value != '')
-        $('coment').value += ` \n¡¡OJO!! ${portes} de portes.`
-      else
-        $('coment').value += `¡¡OJO!! ${portes} de portes.`
-    }
-  })
-}
-
-const updateCounterAssignment = (id,comentario) => {
-  const data = new FormData()
-  data.append('id',id)
-  data.append('comentario',comentario)
-  fetch('../api/updateAssignADV2023.php',{
-    method: 'POST',
-    body: data
-  })
-}
 
 const showAssig = () =>{
   const divSpinner = document.createElement('div')
@@ -582,52 +416,6 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   }
 }
 
-const eliminarLinea = (id,referencia,tratado) =>{
-  const dataName = new FormData()
-  dataName.append('id',id)
-  fetch('../api/isSend.php',{
-    method: 'POST',
-    body: dataName
-  })
-  .then((isSend)=>isSend.text())
-  .then(enviado => {
-    if(enviado){
-      customAlert("Ya está enviado. No se puede eliminar.")
-      showAssig()
-      return true
-    }
-    fetch('../api/isInProgress.php',{
-      method: 'POST',
-      body: dataName
-    })
-    .then(response => response.json())
-    .then(consulta =>{
-      const origenActivo = parseInt(consulta.emisor)
-      const destinoActivo = parseInt(consulta.receptor)
-      if(origenActivo || destinoActivo){
-        customAlert("Ya está en curso. Habla con ADV si quieres eliminar.")
-        showAssig()
-        return true
-      }
-      const confirmacion = confirm(`¿Quieres eliminar la referencia ${referencia}?`)
-      if(!confirmacion) 
-        return true
-      const data = new FormData()
-      data.append('id',id)
-      data.append('puesto',tratado)
-      fetch('../api/deleteAssignADV.php', {
-        method: 'POST',
-        body: data
-      })
-      .then(e => e.text())
-      .then(()=>{
-        $(id).parentNode.remove()
-        updateBubble('-')
-      })
-    })
-  })
-}
-
 const updateAssig = (id,values) => {
   console.log(id + ': ' + values)
 }
@@ -652,10 +440,10 @@ const enabledForm = () =>{
 
 $$('form')[0].addEventListener('submit',(e)=>{
   document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = true
-  $('pclient').classList.remove('important')
-  $('pclient').classList.remove('route')
+  pclient.classList.remove('important')
+  pclient.classList.remove('route')
   e.preventDefault()
-  const origen = $('origen').value
+  const origen = inputOrigen.value
   const destino = $('destino').value
   const envio = $('envio').value
   const cliente = $('client').value
@@ -665,19 +453,19 @@ $$('form')[0].addEventListener('submit',(e)=>{
   const nfm = $('nfm').checked
   let refMat = ''
   if(origen == 'MAT'){
-    refMat = $('refMat').value
+    refMat = mat.value
     if(refMat == 'ZZMAT' || refMat == ''){
       customAlert('Falta indicar la referencia de Mister-auto')
-      $('refMat').style.backgroundColor = 'red';
+      mat.style.backgroundColor = 'red';
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
       return false
     }
   }
   if(origen == 'EXT'){
-    refMat = $('refMat').value
+    refMat = mat.value
     if(refMat == ''){
       customAlert('Falta indicar el nombre del proveedor')
-      $('refMat').style.backgroundColor = 'red';
+      mat.style.backgroundColor = 'red';
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
       return false
     }
@@ -749,8 +537,8 @@ $$('form')[0].addEventListener('submit',(e)=>{
     if(res == 'ok'){
       showAssig()
       enabledForm()
-      $('newTitle').innerHTML = "Nueva cesión"
-      $('pclient').innerHTML = ""
+      newTitle.innerHTML = "Nueva cesión"
+      pclient.innerHTML = ""
       $('contacts-items').removeChild(divSpinner)
       $('cesiones').classList.remove('filter')
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false

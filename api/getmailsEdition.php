@@ -9,7 +9,7 @@ $products = json_decode($data, true);
   <legend><b>Con copia</b></legend>
   <textarea name="con copia" id="cc" cols="30" rows="10" style="width: 452px; height: 74px;"><?php echo str_replace(';',"\r\n",$products[$_POST['title'] . 'C']); ?></textarea>
   <legend>
-    <b>Mister-auto (Detino) / Frágil (Origen)</b><br>
+    <b>Mister-auto (Destino) / Frágil (Origen)</b><br>
     Estos correos se incluirán como origen cuando la cesión sea frágil o como destino si se trata de una cesión Misetr-Auto.
   </legend>
   <textarea name="frágil" id="fcc" cols="30" rows="10" style="width: 452px; height: 74px;"><?php echo str_replace(';',"\r\n",$products[$_POST['title'] . 'F']); ?></textarea>
