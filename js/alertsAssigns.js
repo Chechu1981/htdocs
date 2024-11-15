@@ -121,7 +121,7 @@ export const disgon = (esDisgon) =>{
   dsgDiv.style = 'display: flex;margin-top: -26px;'
   dsgDiv.appendChild(dsgLabel)
   dsgDiv.appendChild(dsgButton)
-  const destino = inputDestino.value
+  const destino = $('destino').value
   if(esDisgon && $('disgonBox') == null){
     document.getElementsByClassName('form-group')[0].childNodes[15].appendChild(dsgDiv)
     $('disgonBox').addEventListener('change',() => buscarDenominacionReferencia($('ref').value))
@@ -176,7 +176,7 @@ export const buscarDenominacionReferencia = (refer) =>{
     $('descRef').innerHTML = res.descripcionPrecio
     let pvp = 0
     const stringAlert = ['E:BATERÍA','E:BATERIA','E:LUBRICANTE']
-    if(inputOrigen.value == 'GRANADA'){
+    if($('origen').value == 'GRANADA'){
       stringAlert.forEach(e =>{
         if(res.descripcionPrecio.includes(e))
           customAlert("🚫No se pueden hacer cesiones desde Granada de baterías ni de aceite Eurorepar hasta Enero 2025")
@@ -185,13 +185,13 @@ export const buscarDenominacionReferencia = (refer) =>{
     if(!res.descripcionPrecio.includes('Desconocido'))
       pvp = parseFloat(res.precio.replaceAll(',','.'))
       let dto = parseInt(res.descuento)
-    if(inputDestino.value == 'ZARAGOZA' && (inputOrigen.value != 'MAT' || inputOrigen.value != 'EXT') && $('disgonBox') != null) {
+    if($('destino').value == 'ZARAGOZA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT') && $('disgonBox') != null) {
       if(!$('coment').value.includes(` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`) && $('disgonBox').checked)
         $('coment').value += ` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`
       if(!$('disgonBox').checked)
         $('coment').value = $('coment').value.replaceAll(` \n¡¡OJO!! ${Math.round(pvp * ((100 - dto)/100) * 0.10)}€ de portes.`,'')
     }
-    if(inputDestino.value == 'PALMA' && (inputOrigen.value != 'MAT' || inputOrigen.value != 'EXT')){
+    if($('destino').value == 'PALMA' && ($('origen').value != 'MAT' || $('origen').value != 'EXT')){
       let portes = '40€'
       if(pvp < 150)
         portes = '30€'

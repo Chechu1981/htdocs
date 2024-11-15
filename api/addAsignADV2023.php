@@ -49,11 +49,11 @@ $stringAlert = ['E:BATERÍA','E:BATERIA','E:LUBRICANTE'];
 $num = 0;
 $rows = '';
 foreach($stringAlert as $str){
-    $encontrado = strpos($designacion,$str);
-    if($encontrado >= 0)
+    $encontrado = str_contains($designacion,$str);
+    if($encontrado > 0)
         $num++;
 }
-if($num >= 0 && $_POST['origen'] == 'GRANADA' && $puesto != 'ADV'){
+if($num > 0 && $_POST['origen'] == 'GRANADA' && $puesto != 'ADV'){
     $rows = "Error";
 }
 $comentario = str_replace("'","\"",$_POST['comentario']);
