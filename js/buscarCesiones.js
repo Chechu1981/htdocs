@@ -32,8 +32,8 @@ document.getElementById('status').addEventListener('click',()=>{
   document.location = `./status.php?id=${id}`
 })
 
-//Código de la búsqueda
-document.getElementById('search-ref').addEventListener('submit',e=>{
+//Código de la búsqueda  
+const seacrhRef = (e) => {
   e.preventDefault()
   e.stopImmediatePropagation()
   const uriData = new FormData()
@@ -79,7 +79,7 @@ document.getElementById('search-ref').addEventListener('submit',e=>{
             })
             .then(response => response.text())
             .then(() => {
-              e.target.parentNode.parentNode.remove()
+              seacrhRef(e)
               ready.firstChild.innerText = parseInt(ready.firstChild.innerText) - 1
             })
           }
@@ -87,7 +87,9 @@ document.getElementById('search-ref').addEventListener('submit',e=>{
       }
     }
   })
-})
+}
+
+document.getElementById('search-ref').addEventListener('submit',e => seacrhRef(e))
 
 window.addEventListener('load',()=>{
   document.getElementById('refAssig').focus()

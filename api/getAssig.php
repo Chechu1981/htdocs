@@ -12,7 +12,7 @@ if($puesto == 'ADV')
 if($puesto == 'DESBORDE')
   $puesto = $user[0][1];
 
-$rows = $contacts->getAssig(str_replace(' ','',$_POST['id']),$puesto,@$_POST['puesto']);
+$rows = $contacts->getAssig(str_replace(' ','',ltrim($_POST['id'],'0')),$puesto,@$_POST['puesto']);
 
 function getCliente($cliente,$placa){
   $contacts = new Contacts();
