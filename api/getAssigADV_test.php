@@ -118,6 +118,7 @@ if(sizeof($rows) > 0){
     $rechazado = '';
     $rechazadoStyle = '';
     $usuarioCesion = '';
+    $seguro = '';
     $options = createOptons($agente);
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
     if(($_POST['id']) != 'new')
@@ -126,8 +127,11 @@ if(sizeof($rows) > 0){
       $fragChecked = 'checked="checked"';
     if($row[13] == 1){
       $disgon = '<input type="checkbox" ></input>';
-      if($row[18] == 1)
+      if($row[18] == 1){
         $disgon = '<input type="checkbox" checked="checked"></input>';
+        if($row[1] == "MADRID")
+          $seguro = 'SEG';
+      }
       if($row[18] == 1 && $puesto == 'ADV'){
         $envioDisgon = '📦';
         if($row[1] == 'SANTIAGO')
@@ -154,9 +158,9 @@ if(sizeof($rows) > 0){
       $rechazado = "🚫";
       $rechazadoStyle = 'background-color:#ff000073';
     }
-    if($row[15]== 1)
+    if($row[15] == 1)
       $btnOrigenPress = 'ledOn';
-    if($row[16]== 1)
+    if($row[16] == 1)
       $btnDestinoPress = 'active-city-press';
     if($row[14] == 1){
       $nfm = 'NM';
@@ -168,11 +172,11 @@ if(sizeof($rows) > 0){
     $rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"];
 
     if($row[1] != 'MAT' && $row[1] != 'EXT'){
-      if(in_array($codgClient[$row[1].$row[2].$nfm],$rutasPreguntar))
+      if(in_array($codgClient[$row[1].$row[2].$seguro.$nfm],$rutasPreguntar))
         $important = 'important';
-      if(in_array($codgClient[$row[1].$row[2].$nfm],$rutasDirectas))
+      if(in_array($codgClient[$row[1].$row[2].$seguro.$nfm],$rutasDirectas))
         $important = 'route';
-      $numPie = $codgClient[$row[1].$row[2].$nfm];
+      $numPie = $codgClient[$row[1].$row[2].$seguro.$nfm];
     }
     if($row[1] == 'MAT' || $row[1] == 'EXT'){
       $numPie = $row[12];

@@ -31,12 +31,15 @@ export function isAlertRoutes(route){
   return mensaje
 }
 
-export const cesiones = (origen, destino,nfm) =>{
+export const cesiones = (origen, destino,nfm,seg) =>{
   $('newTitle').innerText = `${origen}>${destino}`
   let cesion = null
   origen != destino ? cesion = origen + '' + destino:''
+  seg && origen == "MADRID" ? cesion += 'SEG' :''
   nfm ? cesion += 'NM' :''
-  fetch('../json/cesionesCliente.json?104')
+  fetch('../json/cesionesCliente.json?105',
+    {cache: "reload"}
+  )
   .then(response => response.json())
   .then(response => {
     const numDest = response[cesion]
@@ -109,7 +112,7 @@ export const eliminarLinea = (id,referencia,tratado) =>{
   })
 }
 
-export const disgon = (esDisgon) =>{
+export const esDisgon = (esSeguro) =>{
   const dsgDiv = document.createElement('div')
   const dsgButton = document.createElement('input')
   const dsgLabel = document.createElement('label')
@@ -121,12 +124,22 @@ export const disgon = (esDisgon) =>{
   dsgDiv.style = 'display: flex;margin-top: -26px;'
   dsgDiv.appendChild(dsgLabel)
   dsgDiv.appendChild(dsgButton)
-  const destino = $('destino').value
-  if(esDisgon && $('disgonBox') == null){
+  if(esSeguro && $('disgonBox') == null){
     document.getElementsByClassName('form-group')[0].childNodes[15].appendChild(dsgDiv)
-    $('disgonBox').addEventListener('change',() => buscarDenominacionReferencia($('ref').value))
+    $('disgonBox').addEventListener('change',(e) => {
+      let seguro = e.target.checked
+      buscarDenominacionReferencia($('ref').value)
+      const origen = $('origen').value
+      const nfm = $('nfm')
+      if(origen == 'MAT' || origen == 'EXT'){
+        const refMat = mat == null ? 'ZZMAT' : mat.value
+        pclient.innerHTML = createInputMat(refMat)
+        return null
+      }
+      cesiones(origen,$('destino').value,nfm.checked,seguro)
+  })
   }
-  else if(!esDisgon && $('disgonBox'))
+  else if(!esSeguro && $('disgonBox'))
     $('disgonDiv').remove()
 }
 

@@ -1,6 +1,6 @@
 'use strict';
 import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js?105"
-import { cesiones, createInputMat, createInputExt, eliminarLinea, disgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment} from "./alertsAssigns.js"
+import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment} from "./alertsAssigns.js"
 import contadores from "./updateCounter.js"
 
 const setCounters = setInterval(() =>{contadores()},1000)
@@ -12,12 +12,13 @@ const inputDestino = $('destino')
 
 $('nfm').addEventListener('change', (e) => {
   const origen = inputOrigen.value
+  const disgon = $('disgonBox') ?? ''
   if(origen == 'MAT' || origen == 'EXT'){
     const refMat = mat == null ? 'ZZMAT' : mat.value
     pclient.innerHTML = createInputMat(refMat)
     return null
   }
-  cesiones(origen,inputDestino.value,e.target.checked)
+  cesiones(origen,inputDestino.value,e.target.checked,disgon.checked)
 })
 
 inputOrigen.addEventListener('change',()=>{
@@ -45,7 +46,7 @@ inputOrigen.addEventListener('change',()=>{
 inputDestino.addEventListener('change',()=>{
   newTitle.style.fontWeight = ''
   newTitle.classList.remove('copy')
-  $('frag').checked ? disgon(true) : disgon(false)
+  $('frag').checked ? esDisgon(true) : esDisgon(false)
   buscarCliente(inputDestino.value.substring(0,3),$('client').value)
   const origen = inputOrigen.value
   if(origen == 'MAT'){
@@ -67,7 +68,7 @@ inputDestino.addEventListener('change',()=>{
 })
 
 $('frag').addEventListener('change', e =>{
-  e.target.checked ? disgon(true) : disgon(false)
+  e.target.checked ? esDisgon(true) : esDisgon(false)
 })
 
 $('client').addEventListener('blur',(e)=>{
@@ -141,15 +142,18 @@ const showAssig = () =>{
       btnSendMail = ul.childNodes[27] != undefined ? ul.childNodes[27].childNodes[0] : null
       btnSendMailDisgon = ul.childNodes[27] != undefined ? ul.childNodes[27].childNodes[1] : null
       btnEliminar = ul.childNodes[25].firstChild
-
-      if(disgon != null)
-        disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino.textContent))
+      if(disgon != null){
+        disgon.addEventListener('change',(e) => {
+          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino.textContent),
+          refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
+        })
+      }
       if($('cesiones').childNodes[i].localName == 'ul' && $('cesiones').childNodes[i].localName != undefined)
-        pedido.addEventListener('keyup', e => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
+        pedido.addEventListener('keyup', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
 
-      nfm.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
-      fragil.addEventListener('change', () => refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
-      tratado.addEventListener('change', () => {refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)})
+      nfm.addEventListener('change', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
+      fragil.addEventListener('change', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
+      tratado.addEventListener('change', () => {refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)})
       referencia.addEventListener('click', () => {clearRowsMark(ul,referencia.childNodes[0].textContent.replaceAll(' ',''))})
       comentario.addEventListener('click', () => {clearRowsMark(ul,comentario.textContent)})
       comentario.childNodes[0].addEventListener('keyup', () => {updateCounterAssignment(id,comentario.firstElementChild.value)})
@@ -173,7 +177,7 @@ const showAssig = () =>{
       
       if(user.puesto == 'ADV'){
         origen.addEventListener('change', (e) => {
-          refreshInputs(id,nfm.checked,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
+          refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
           })
         origenLed.addEventListener('click', (e) => {
           e.target.classList.toggle('ledOn')
@@ -318,13 +322,20 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
   })
 }
 
-const refreshInputs = (id,nfm,fragil,pedido,tratado,origen,destino) => {
+const refreshInputs = (id,fragil,pedido,tratado,origen,destino) => {
   let cesion = null
+  let chkSeguro = document.getElementById(id).parentNode.childNodes[21].childNodes[0]
+  let seguro =  chkSeguro == undefined ? false : chkSeguro.checked
+  let nfm = document.getElementById(id).parentNode.childNodes[17].childNodes[0].checked
   let code = $(id).parentNode.childNodes[1].childNodes[6]
   origen != destino ? cesion = origen + '' + destino : ''
+  seguro = fragil ? seguro = seguro : false 
+  seguro && origen == "MADRID" ? cesion += 'SEG' : ''
   nfm ? cesion += 'NM' : ''
   if(origen != 'MAT' && origen != 'EXT'){
-    fetch('../json/cesionesCliente.json?104')
+    fetch('../json/cesionesCliente.json?105',
+      {cache: "reload"}
+    )
     .then(response => response.json())
     .then(response => {
       response[cesion] != undefined ? code.innerHTML = response[cesion] : code.innerHTML = ""
@@ -394,8 +405,9 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   if(fragil && disgonLi.firstChild == undefined) {
     const chkDisgon = document.createElement('input')
     chkDisgon.setAttribute('type', 'checkbox')
-    chkDisgon.addEventListener('change', () => {
+    chkDisgon.addEventListener('change', e => {
       updateChkbx(id,nfm,fragil,pedido,tratado, destino)
+      refreshInputs(id,fragil,pedido,tratado,origen,destino,e.target)
     })
     disgonLi.appendChild(chkDisgon)
   }
