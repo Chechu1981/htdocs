@@ -186,13 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if($$('form')[0][1].options[i].value == centro)
           $$('form')[0][1].options[i].selected = true;
       }
-    }else if(window.location.pathname.includes('cesionesAll')){
-      for(let i = 0; i < $$('form')[0][1].options.length; i++){
-        let centro = puesto
-      
-        if($$('form')[0][1].options[i].value == centro)
-          $$('form')[0][1].options[i].selected = true;
-      }
     }
   })
 })

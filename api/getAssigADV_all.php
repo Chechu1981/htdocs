@@ -83,7 +83,6 @@ if(sizeof($rows) > 0){
             <li>D</li>
             <li>Agente</li>
             <li>Eliminar</li>
-            <li>Enviar</li>
             ".$agent_head."
             <li>usuario</li>
             <li></li>
@@ -111,6 +110,7 @@ if(sizeof($rows) > 0){
     $btnDestinoPress = '';
     $btnOrigenPress = '';
     $rechazado = '❌';
+    $seguro = '';
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
     if(($_POST['id']) != 'new')
       $li = '<li title="Envío: ">'.$fechaR[2].'/'.$fechaR[1].'/'.$fechaR[0].'</li>';
@@ -119,6 +119,8 @@ if(sizeof($rows) > 0){
     if($row[13] == 1){
       $disgon = '<input type="checkbox" ></input>';
       if($row[18] == 1){
+        if($row[1] == "MADRID")
+          $seguro = 'SEG';
         $disgon = '<input type="checkbox" checked="checked"></input>';
         $envioDisgon = '📦';
         if($row[1] == 'SANTIAGO')
@@ -151,11 +153,11 @@ if(sizeof($rows) > 0){
     $numPie = '';
     
     if($row[1] != 'MAT' && $row[1] != 'EXT'){
-      if(in_array($codgClient[$row[1].$row[2].$nfm],$rutasPreguntar))
+      if(in_array($codgClient[$row[1].$row[2].$seguro.$nfm],$rutasPreguntar))
         $important = 'important';
-      if(in_array($codgClient[$row[1].$row[2].$nfm],$rutasDirectas))
+      if(in_array($codgClient[$row[1].$row[2].$seguro.$nfm],$rutasDirectas))
         $important = 'route';
-      $numPie = $codgClient[$row[1].$row[2].$nfm];
+      $numPie = $codgClient[$row[1].$row[2].$seguro.$nfm];
     }
     if($row[1] == 'MAT'){
       $numPie = $row[12];
@@ -194,7 +196,6 @@ if(sizeof($rows) > 0){
         </select>
       </li>
       <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
-      <li class="send" ><span title="Enviar Cesión" id="send'.$row[0].'">📩</span><span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
       <li title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuario.'<br>('.$puesto.')</li>
       <li class="delete" ><span id="rechazo'.$row[0].'" title="'.$row[24].'">'.$rechazado.'</span></li>
     </ul>';

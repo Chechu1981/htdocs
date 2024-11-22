@@ -95,7 +95,7 @@ const showAssig = () =>{
   data.append('id','new')
   data.append('session',window.location.href.split('=')[1])
   data.append('sort', 'date')
-  fetch('../api/getAssigADV_test.php',{
+  fetch('../api/getAssigADV.php',{
     method: 'POST',
     body: data
   })
