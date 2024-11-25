@@ -3,6 +3,9 @@ include_once '../connection/data.php';
 $contacts = new Contacts();
 
 $user = $contacts->getUserBySessid($_POST['session']);
+if(count($user) <= 0){
+  return "No user";
+}
 
 $rows = $contacts->getAssigPending('new','all');
 

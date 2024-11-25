@@ -13,8 +13,10 @@ if($nuevas > 0)
 else
   $nuevas = "<span class='round'>0</span>";
 
-if($allAdvAssigns > 0)
-  $allAdvAssigns = "<span class='round'>".$allAdvAssigns."</span>";
+if($allAdvAssigns > 0 && $allAdvAssigns > 100)
+  $allAdvAssigns = "<span class='round' title=".$allAdvAssigns.">".$allAdvAssigns."</span>";
+elseif($allAdvAssigns > 100)
+  $allAdvAssigns = "<span class='round' title=".$allAdvAssigns.">+99</span>";
 else
   $allAdvAssigns = "<span class='round'>0</span>";
 
@@ -22,8 +24,10 @@ $btnAll = '';
 if($puesto == 'ADV')
   $btnAll = '<button id="all">'.$allAdvAssigns.' Todas</button>';
 
-if($enCurso > 0)
-  $enCurso = "<span class='round'>".$enCurso."</span>";
+if($enCurso > 0 && $enCurso < 100)
+  $enCurso = "<span class='round' title=".$enCurso.">".$enCurso."</span>";
+elseif($enCurso > 100)
+  $enCurso = "<span class='round' title=".$enCurso.">+99</span>";
 else
   $enCurso = "";
 

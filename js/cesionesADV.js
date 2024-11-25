@@ -1,7 +1,7 @@
 'use strict';
 import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js?105"
 import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment} from "./alertsAssigns.js"
-import contadores from "./updateCounter.js"
+import contadores from "./updateCounter.js?100"
 
 const setCounters = setInterval(() =>{contadores()},1000)
 const pclient = $('pclient')

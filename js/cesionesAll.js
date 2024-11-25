@@ -1,12 +1,9 @@
 "use strict";
 import { createMail, enviarMailDisgon, createMailMat } from "./createMail.js?100";
-import contadores from "./updateCounter.js";
+import contadores from "./updateCounter.js?100";
 
 setInterval(() =>{contadores()},1200)
 
-const textarea = document.getElementById("prueba")
-const src = "../api/addTest.php"
-const getsrc = "../api/getTest.php"
 let refresco
 
 const newChanges = (response) =>{
@@ -27,34 +24,6 @@ const rutasDirectas = ["6251-2","78709-1","12752-1","105252-1","105342-1","14075
 const rutasPreguntar = ["6254-1","78713-1"]
 const rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"]
 
-function isAlertRoutes(route){
-  $('pclient').classList.remove('important')
-  $('pclient').classList.remove('route')
-  let encontrado
-  let mensaje = ''
-  rutasDirectas.filter(rutas => {
-    if(rutas.includes(route)){
-      encontrado = route
-      mensaje = "Ruta"
-      $('pclient').classList.add('route')
-    }
-  })
-  rutasPreguntar.filter(rutas => {
-    if(rutas.includes(route)){
-      encontrado = route
-      mensaje = "Preguntar"
-      $('pclient').classList.add('important')
-    }
-  })
-  rutasPortes.filter(rutas => {
-    if(rutas.includes(route)){
-      encontrado = route
-      mensaje = "Portes"
-      $('pclient').classList.add('important')
-    }
-  })
-  return mensaje
-}
 
 const iniciar = () => {
   refresco = setInterval(() =>{
@@ -159,10 +128,13 @@ const showAssig = () =>{
         if(disgon != null)
           disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
         if(ul.localName == 'ul' && ul.localName != undefined){
-          pedido.addEventListener('focus', ()=>{stopUpdates()})
-          pedido.addEventListener('blur', () =>iniciar())
-          tratado.addEventListener('focus', ()=>{stopUpdates()})
-          tratado.addEventListener('blur', () => iniciar())
+          pedido.addEventListener('focus', ()=>stopUpdates())
+          tratado.addEventListener('focus', ()=>stopUpdates())
+          origen.addEventListener('focus', ()=> stopUpdates())
+          nfm.addEventListener('change', () => {refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent),iniciar()})
+          fragil.addEventListener('change', () => {refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent),iniciar()})
+          tratado.addEventListener('change', () => {refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent),iniciar()})
+          origen.addEventListener('change', () => {refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent),iniciar()})
           comentario.childNodes[0].addEventListener('focus', ()=> stopUpdates())
           comentario.childNodes[0].addEventListener('keyup', () => {updateCounterAssignment(id,comentario.firstElementChild.value)})
           comentario.childNodes[0].addEventListener('blur', ()=> iniciar())
@@ -241,6 +213,42 @@ const showAssig = () =>{
       }
     }
   })
+}
+
+const refreshInputs = (id,fragil,pedido,tratado,origen,destino) => {
+  let cesion = null
+  let chkSeguro = document.getElementById(id).parentNode.childNodes[21].childNodes[0]
+  let seguro =  chkSeguro == undefined ? false : chkSeguro.checked
+  let nfm = document.getElementById(id).parentNode.childNodes[17].childNodes[0].checked
+  let code = $(id).parentNode.childNodes[1].childNodes[6]
+  origen != destino ? cesion = origen + '' + destino : ''
+  seguro = fragil ? seguro = seguro : false 
+  seguro && origen == "MADRID" ? cesion += 'SEG' : ''
+  nfm ? cesion += 'NM' : ''
+  if(origen != 'MAT' && origen != 'EXT'){
+    fetch('../json/cesionesCliente.json?105',
+      {cache: "reload"}
+    )
+    .then(response => response.json())
+    .then(response => {
+      response[cesion] != undefined ? code.innerHTML = response[cesion] : code.innerHTML = ""
+    })
+  }else{
+    const session = window.location.search.split('?id=')[1]
+    const data = new FormData()
+    data.append('id', id)
+    data.append('session', session)
+    fetch('../api/getAssignZzmat.php',{
+      method: 'POST',
+      body: data
+    })
+    .then(response => response.json())
+    .then(response => {
+      const refZZMAT = document.getElementById(`destinoBtn${id}`).parentNode.childNodes[6]
+      refZZMAT.innerHTML = `<span class="copy " style="grid-column: 1 / 4;font-size: medium;">${response.refClient}</span>`
+    })
+  }
+  updateChkbx(id,nfm,fragil,pedido,tratado,destino)
 }
 
 const copyClipboard = (copiar) =>{
