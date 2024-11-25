@@ -336,7 +336,7 @@ const newAssigns = setInterval(() => {
   .then(valor => {
     $('userAssignsready').className = ''
     if(parseInt(valor) > 0){
-      $('userAssignsready').innerHTML = valor
+      $('userAssignsready').innerHTML = parseInt(valor) > 100 ? '+99' : valor
       $('userAssignsready').className = 'round heart'
     }
   })
