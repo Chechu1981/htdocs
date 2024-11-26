@@ -106,7 +106,7 @@ export const eliminarLinea = (id,referencia,tratado) =>{
       .then(e => e.text())
       .then(()=>{
         $(id).parentNode.remove()
-        updateBubble('-')
+        console.log("updateBubble('-')")
       })
     })
   })

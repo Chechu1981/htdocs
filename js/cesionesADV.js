@@ -13,7 +13,7 @@ $('nfm').addEventListener('change', (e) => {
   const origen = inputOrigen.value
   const disgon = $('disgonBox') ?? ''
   if(origen == 'MAT' || origen == 'EXT'){
-    const refMat = mat == null ? 'ZZMAT' : mat.value
+    const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
     pclient.innerHTML = createInputMat(refMat)
     return null
   }
@@ -25,7 +25,7 @@ inputOrigen.addEventListener('change',()=>{
   newTitle.classList.remove('copy')
   const origen = inputOrigen.value
   if(origen == 'MAT'){
-    const refMat = mat == null ? 'ZZMAT' : mat.value
+    const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
     pclient.innerHTML = createInputMat(refMat)
     return null
   }
@@ -49,7 +49,7 @@ inputDestino.addEventListener('change',()=>{
   buscarCliente(inputDestino.value.substring(0,3),$('client').value)
   const origen = inputOrigen.value
   if(origen == 'MAT'){
-    const refMat = mat == null ? 'ZZMAT' : mat.value
+    const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
     pclient.innerHTML = createInputMat(refMat)
     return null
   }
