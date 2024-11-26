@@ -6,7 +6,6 @@ import contadores from "./updateCounter.js?100"
 const setCounters = setInterval(() =>{contadores()},1000)
 const pclient = $('pclient')
 const newTitle = $('newTitle')
-const mat = $('refMat')
 const inputOrigen = $('origen')
 const inputDestino = $('destino')
 
@@ -465,19 +464,19 @@ $$('form')[0].addEventListener('submit',(e)=>{
   const nfm = $('nfm').checked
   let refMat = ''
   if(origen == 'MAT'){
-    refMat = mat.value
+    refMat = $('refMat').value
     if(refMat == 'ZZMAT' || refMat == ''){
       customAlert('Falta indicar la referencia de Mister-auto')
-      mat.style.backgroundColor = 'red';
+      $('refMat').style.backgroundColor = 'red';
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
       return false
     }
   }
   if(origen == 'EXT'){
-    refMat = mat.value
+    refMat = $('refMat').value
     if(refMat == ''){
       customAlert('Falta indicar el nombre del proveedor')
-      mat.style.backgroundColor = 'red';
+      $('refMat').style.backgroundColor = 'red';
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
       return false
     }
