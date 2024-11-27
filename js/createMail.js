@@ -132,14 +132,37 @@ export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,p
   const hora = new Date()
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
   const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
-  let strNfm = 'La entrada en Geode debe ser realizada como entrada 109.';
+  let strNfm = 'La entrada en Geode debe ser realizada como entrada 109.'
   if (nfm)
-    strNfm += ` PIEZA SIN SOLUCIÓN DE REEMPLAZO.`;
+    strNfm += ` PIEZA SIN SOLUCIÓN DE REEMPLAZO.`
 
   const mensaje = `%0ASe va a recibir ${numero} ${referencia.toUpperCase()} desde la placa de ${placaExterna} a la placa de ${destino} para el cliente ${cliente.replaceAll('&','and')}.
   %0A${strNfm}
   %0A%0AMuchas gracias.
 `
-
   window.location.href = `mailto:${destinatarios}?cc=${bcc}&subject=Compra externa - ${placaExterna}&body=${saludo}${mensaje}` //
+}
+
+export const createMailProv = (id,cantidad,placaExterna,destino,referencia,cliente,correo_proveedor) =>{
+  $(`disgon${id}`).className = "wait"
+  const hora = new Date()
+  const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
+  const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `La referencia`
+  const src = '../api/getDescRefer.php'
+  const data = new FormData()
+  const bcc = "jacqueline.perez@stellantis.com;maria.sanchez@stellantis.com;silvia.parro@citroen.com;lisbethnataly.aguilar1@stellantis.com;natalia.diez@external.stellantis.com"
+  data.append('referencia',referencia)
+  fetch(src,{
+    method: 'POST',
+    body: data
+  })
+  .then(items => items.json())
+  .then(tarifa => {
+    let mensaje = `%0ASolicito:
+${numero}: ${referencia}   PVP:${tarifa.precio}€  DTO:${tarifa.descuento - 3}% 
+%0ACliente: ${cliente}`
+    window.location.href = `mailto:${correo_proveedor}?cc=${bcc}&subject=Compra externa - PPCR ${destino}&body=${saludo}${mensaje}`
+    $(`disgon${id}`).classList.remove("wait")
+    $(`disgon${id}`).innerHTML = "✅"
+  })
 }

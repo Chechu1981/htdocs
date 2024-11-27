@@ -10,9 +10,10 @@
     --main-notification-bg-color: hsl(118deg, 85.46%, 17.49%);
     --main-notification-font-color: hsl(75.29deg, 100%, 50%);
     --sz: 10vmin;
-}  
+}
 
 html *{
+    color: var(--font-color);
     scrollbar-width: thin;
 }
 

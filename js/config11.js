@@ -67,6 +67,7 @@ if(typeof(href) != "object"){
           document.documentElement.style.setProperty('--cards-active-color',`hsl(${colorH},${colorS + 23}%,${colorL + 27}%)`)
           document.documentElement.style.setProperty('--bg-body-color',`hsl(${colorH},${colorS - 57}%,${colorL + 67}%)`)
           document.documentElement.style.setProperty('--bg-font-color',`hsl(${colorH},${colorS + 1}%,${colorL - 22}%)`)
+          document.documentElement.style.setProperty('--font-color',`hsl(${colorH},${colorS + 90}%,${colorL - 90}%)`)
         })
         $('color').value = rgbToHex(window.getComputedStyle(document.body).color)
         $('changeColor').addEventListener('click', (e) =>{
@@ -82,6 +83,7 @@ if(typeof(href) != "object"){
           })
           .then(e => e.text())
           .then(e => {
+            notify(e)
             const data = new FormData();
             data.append('nameTheme', $('menu').childNodes[1].childNodes[1].innerText)
             fetch(src + 'api/updateColorTheme.php',{

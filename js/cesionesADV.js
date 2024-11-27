@@ -1,5 +1,5 @@
 'use strict';
-import { createMail, enviarMailDisgon, createMailMat, createMailExt } from "./createMail.js?105"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?105"
 import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment} from "./alertsAssigns.js"
 import contadores from "./updateCounter.js?100"
 
@@ -30,7 +30,7 @@ inputOrigen.addEventListener('change',()=>{
     return null
   }
   if(origen == 'EXT'){
-    pclient.innerHTML = createInputExt()
+    pclient.innerHTML = createInputExt($('destino').value)
     return null
   }
   if(origen != inputDestino.value){
@@ -54,7 +54,7 @@ inputDestino.addEventListener('change',()=>{
     return null
   }
   if(origen == 'EXT'){
-    pclient.innerHTML = createInputExt()
+    pclient.innerHTML = createInputExt($('destino').value)
     return null
   }
   if(origen != inputDestino.value){
@@ -119,7 +119,7 @@ const showAssig = () =>{
     $('cesiones').style = ''
     $('cesiones').innerHTML = response
     for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
-      let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar, origenLed, rechazo, usuario, btnSendMailDisgon = ''
+      let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar, origenLed, rechazo, usuario, btnSendMailDisgon, correo_proveedor = ''
       ul = $('cesiones').childNodes[i]
       id = ul.childNodes[25].id
       origenLed = ul.childNodes[1].childNodes[1]
@@ -141,6 +141,7 @@ const showAssig = () =>{
       btnSendMail = ul.childNodes[27] != undefined ? ul.childNodes[27].childNodes[0] : null
       btnSendMailDisgon = ul.childNodes[27] != undefined ? ul.childNodes[27].childNodes[1] : null
       btnEliminar = ul.childNodes[25].firstChild
+      correo_proveedor = refCliente.childNodes.length > 1 ? refCliente.childNodes[1].innerText : ''
       if(disgon != null){
         disgon.addEventListener('change',(e) => {
           updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino.textContent),
@@ -237,11 +238,13 @@ const showAssig = () =>{
       }
 
       if(btnSendMail != null){
-        btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente.innerText,comentario.firstChild.innerHTML))
+        btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente.innerText,comentario.firstChild.innerHTML, correo_proveedor))
         if(btnSendMailDisgon != null)
           btnSendMailDisgon.addEventListener('click',(e) => {
             if(e.target.innerHTML == '🚚')
               enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id,comentario.firstChild.innerHTML)
+            else if(e.target.innerHTML == '🏬')
+              createMailProv(id,cantidad,refCliente,destino.textContent,referencia.firstChild.textContent.replaceAll(' ',''),cliente.firstChild.textContent,correo_proveedor)
             else if(e.target.innerHTML == '📦')
               window.open("https://recambios.logistica.com/page/index.aspx"),$(`disgon${id}`).innerHTML = "✅"
           })
@@ -251,9 +254,13 @@ const showAssig = () =>{
   })
 }
 
-const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, id, cantidad, nfm, tratado, refCliente,comentario) =>{
+const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, id, cantidad, nfm, tratado, refCliente,comentario, correo_proveedor) =>{
   if($(`disgon${id}`).innerHTML == "🚚" || $(`disgon${id}`).innerHTML == "📦"){
     customAlert("Debes enviar primero el correo a Disgón o Logistica")
+    return false
+  }
+  if($(`disgon${id}`).innerHTML == "🏬"){
+    customAlert(`Debes enviar primero el correo a ${refCliente}`)
     return false
   }
   const dataName = new FormData()
@@ -278,6 +285,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
   dataName.append('origenF', `${origen}F`)
   dataName.append('comentario', comentario)
   dataName.append('misterauto', refCliente)
+  dataName.append('correo', correo_proveedor)
   fetch('../api/isSend.php',{
     method: 'POST',
     body: dataName
@@ -304,9 +312,10 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
         .then(res => {
           if(origen == 'MAT'){
             createMailMat(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'])
-          }else if(origen == 'EXT')
-            createMailExt(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'],res['conCopia'])
-          else{
+          }else if(origen == 'EXT'){
+            let mail_proveedor = $('mailExt') == null ? '' : $('mailExt').value
+            createMailExt(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'],res['conCopia'], correo_proveedor)
+          }else{
             let destinoFragil = ''
             if(fragil){
               destinoFragil = res['fragil']
@@ -462,6 +471,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   const ref = $('ref').value.replaceAll(/\t/g, '')
   const cantidad = $('units').value
   const nfm = $('nfm').checked
+  const correo_proveedor = $('mailExt') == null ? '' : $('mailExt').value
   let refMat = ''
   if(origen == 'MAT'){
     refMat = $('refMat').value
@@ -478,6 +488,13 @@ $$('form')[0].addEventListener('submit',(e)=>{
       customAlert('Falta indicar el nombre del proveedor')
       $('refMat').style.backgroundColor = 'red';
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
+      return false
+    }
+    if(correo_proveedor == '' && destino == 'MADRID'){
+      customAlert('Debes rellenar el correo del proveedor')
+      document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false
+      $('mailExt').style.backgroundColor = 'red';
+      $('mailExt').focus()
       return false
     }
   }
@@ -534,6 +551,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   data.append('nfm',nfm)
   data.append('frag',$('frag').checked)
   data.append('session',window.location.href.split('=')[1])
+  data.append('correo',correo_proveedor)
   $('disgonBox') == null ? null : disgonStatus = $('disgonBox').checked
   data.append('disgon', disgonStatus)
   fetch('../api/addAsignADV2023.php',{

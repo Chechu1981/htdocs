@@ -58,9 +58,13 @@ export const createInputMat = (ref) => {
     <span style="font-size: small;line-height: 7;">Ref. Mister-Auto</span>`
 }
 
-export const createInputExt = () => {
-  return `
-  <input type="text" id="refMat" 
+export const createInputExt = (placa) => {
+  if(placa == 'MADRID')
+    return `<input type="text" id="refMat" 
+      style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
+      value="" placeholder="Nombre proveedor"></input>
+      <input id="mailExt" style="width:141px" value="" placeholder="Correo@proveedor.com"></input>`
+  return `<input type="text" id="refMat" 
     style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
     value=""></input>
     <span style="font-size: small;line-height: 7;">Nnobre placa externa</span>`

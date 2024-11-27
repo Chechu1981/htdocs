@@ -82,7 +82,8 @@ $items = [
     $designacion,
     $nombreCliente,
     $tratado,
-    $puesto
+    $puesto,
+    @$_POST['correo']
 ];
 if($rows != 'Error')
     $rows = $contacts->newAssigADV2023($items);

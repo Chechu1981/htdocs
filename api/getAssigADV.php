@@ -120,6 +120,7 @@ if(sizeof($rows) > 0){
     $usuarioCesion = '';
     $seguro = '';
     $options = createOptons($agente);
+    $textoMensajeria = "Abrir aplicación de Logística";
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
     if(($_POST['id']) != 'new')
       $li = '<li title="Envío: ">'.$fechaR[2].'/'.$fechaR[1].'/'.$fechaR[0].'</li>';
@@ -134,13 +135,19 @@ if(sizeof($rows) > 0){
       }
       if($row[18] == 1 && $puesto == 'ADV'){
         $envioDisgon = '📦';
-        if($row[1] == 'SANTIAGO')
+        if($row[1] == 'SANTIAGO'){
           $envioDisgon = '🚚';
+          $textoMensajeria = "Enviar correo a Disgon";
+        }
         if($row[1] == 'VALENCIA')
           $envioDisgon = '';
         if($row[22] == 1)
           $envioDisgon = "✅";
       }
+    }
+    if($row[26] != ''){
+      $textoMensajeria = "Enviar correo a ".ucwords($row[12]);
+      $envioDisgon = "🏬";
     }
     $origen = '<span id="origen'.$row[0].'">'.$row[1].'</span>';
     $destino = $row[2];
@@ -179,7 +186,7 @@ if(sizeof($rows) > 0){
       $numPie = $codgClient[$row[1].$row[2].$seguro.$nfm];
     }
     if($row[1] == 'MAT' || $row[1] == 'EXT'){
-      $numPie = $row[12];
+      $numPie = "$row[12] <p hidden>$row[26]</p>";
     }
     
     $lists .= '
@@ -205,7 +212,7 @@ if(sizeof($rows) > 0){
         </select>
       </li>
       <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"><span title="'.$row[24].'">'.$rechazado.'</span></li>
-      <li '.$classSend.' >'.$btnEnviar.'<span title="Enviar Disgon" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
+      <li '.$classSend.' >'.$btnEnviar.'<span title="'.$textoMensajeria.'" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
       <li '.$classDelete.' style="text-align:center;font-size:small" title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuarioCesion.'</li>
     </ul>';
   }

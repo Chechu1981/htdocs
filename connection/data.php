@@ -344,7 +344,8 @@ class Contacts
             `designacion`, 
             `nombreCliente`, 
             `tratado`, 
-            `puesto`) 
+            `puesto`,
+            `correo_prov`) 
             VALUES
             ('$items[0]',
             '$items[1]',
@@ -364,7 +365,8 @@ class Contacts
             '$items[13]', 
             '$items[14]', 
             '$items[15]', 
-            '$items[16]')";
+            '$items[16]',
+            '$items[17]')";
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';
