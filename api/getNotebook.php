@@ -27,6 +27,7 @@ $imgs->DS = "DS.jpg";
 $imgs->EUROREPAR = "EUROREPAR.png";
 $imgs->POWER = "distrigo.png";
 $imgs->DOCUMENTOS = "docs.png";
+$imgs->LEAPMOTOR = "leapmotor.svg";
 
 $icons = new stdClass();
 $icons->pdf = "./../img/pdf.png";

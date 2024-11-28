@@ -21,6 +21,7 @@ if($_GET['id'] != 'new'){
             <option value='PEUGEOT'>Peugeot</option>
             <option value='OPEL'>Opel</option>
             <option value='FIAT/JEEP'>Fiat / Jeep</option>
+            <option value='LEAPMOTOR'>Leap Motor</option>
             <option value='EUROREPAR'>Eurorepar</option>
             <option value='DOCUMENTOS'>Documentos</option>
             <option value='POWER'>Power Supply</option>
