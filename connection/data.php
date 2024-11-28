@@ -125,6 +125,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getMailProv($proveedor){
+        $sql = "SELECT DISTINCT correo_prov FROM `cesiones` WHERE refClient LIKE '$proveedor' AND origen LIKE 'EXT' ORDER BY `id` DESC LIMIT 1;";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function updateRoute($id,$corte,$salida){
         $sql = "UPDATE rutas 
             SET `CORTE` = '$corte',

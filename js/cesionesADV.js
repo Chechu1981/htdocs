@@ -1,7 +1,7 @@
 'use strict';
-import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?105"
-import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment} from "./alertsAssigns.js"
-import contadores from "./updateCounter.js?100"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?106"
+import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?100"
+import contadores from "./updateCounter.js?101"
 
 const setCounters = setInterval(() =>{contadores()},1000)
 const pclient = $('pclient')
@@ -12,9 +12,13 @@ const inputDestino = $('destino')
 $('nfm').addEventListener('change', (e) => {
   const origen = inputOrigen.value
   const disgon = $('disgonBox') ?? ''
-  if(origen == 'MAT' || origen == 'EXT'){
+  if(origen == 'MAT'){
     const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
     pclient.innerHTML = createInputMat(refMat)
+    return null
+  }else if(origen == 'EXT'){
+    pclient.innerHTML = createInputExt($('destino').value)
+    refMat.addEventListener('blur',() => buscar_ultimo_correo($('refMat').value))
     return null
   }
   cesiones(origen,inputDestino.value,e.target.checked,disgon.checked)
@@ -31,6 +35,7 @@ inputOrigen.addEventListener('change',()=>{
   }
   if(origen == 'EXT'){
     pclient.innerHTML = createInputExt($('destino').value)
+    refMat.addEventListener('blur',() => buscar_ultimo_correo($('refMat').value))
     return null
   }
   if(origen != inputDestino.value){
@@ -216,7 +221,7 @@ const showAssig = () =>{
               const mailTarget = encodeURIComponent(`
               ${texto.value}
               
-              
+          
               Un saludo ${user.nombre}`)
               fetch('../api/getEmailByUsername.php',{
                 method: 'POST',
@@ -360,7 +365,9 @@ const refreshInputs = (id,fragil,pedido,tratado,origen,destino) => {
     .then(response => response.json())
     .then(response => {
       const refZZMAT = document.getElementById(`destinoBtn${id}`).parentNode.childNodes[6]
-      refZZMAT.innerHTML = `<span class="copy " style="grid-column: 1 / 4;font-size: medium;">${response.refClient}</span>`
+      const ext = document.getElementById(`destinoBtn${id}`).parentNode.childNodes[2].value
+      if(ext != 'EXT' || ext != 'MAT')
+        refZZMAT.innerHTML = `<span class="copy " style="grid-column: 1 / 4;font-size: medium;">${response.refClient}</span>`
     })
   }
   updateChkbx(id,nfm,fragil,pedido,tratado,destino)
@@ -419,18 +426,18 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
     })
     disgonLi.appendChild(chkDisgon)
   }
-  if(disgonSend != null && user.puesto == 'ADV' && fragil){
+  if(disgonSend != null && user.puesto == 'ADV' && fragil && origen != 'EXT'){
     if(disgonLi.childNodes[0].checked){
       disgonSend.innerText = '📦'
       if(origen == 'SANTIAGO')
         disgonSend.innerText = '🚚'
-      if(origen == 'VALENCIA')
+      if(origen == 'VALENCIA' || origen == 'MAT')
         disgonSend.innerText = ''
     }
     else if(!disgonLi.childNodes[0].checked)
       disgonSend.innerText = ''
   }
-  if(!fragil && disgonLi.firstChild != null){
+  if(!fragil && disgonLi.firstChild != null && origen != 'EXT'){
     disgonLi.firstChild.remove()
     disgonSend.innerHTML = ''
   }

@@ -63,7 +63,7 @@ export const createInputExt = (placa) => {
     return `<input type="text" id="refMat" 
       style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
       value="" placeholder="Nombre proveedor"></input>
-      <input id="mailExt" style="width:141px" value="" placeholder="Correo@proveedor.com"></input>`
+      <input id="mailExt" style="width:141px;font-size:15px;" value="" placeholder="Correo@proveedor.com"></input>`
   return `<input type="text" id="refMat" 
     style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
     value=""></input>
@@ -134,13 +134,16 @@ export const esDisgon = (esSeguro) =>{
       let seguro = e.target.checked
       buscarDenominacionReferencia($('ref').value)
       const origen = $('origen').value
-      const nfm = $('nfm')
-      if(origen == 'MAT' || origen == 'EXT'){
-        const refMat = mat == null ? 'ZZMAT' : mat.value
+      const nfm = $('nfm').checked
+      if(origen == 'MAT'){
+        const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
         pclient.innerHTML = createInputMat(refMat)
         return null
+      }else if(origen == 'EXT'){
+        pclient.innerHTML = createInputExt($('destino').value)
+        refMat.addEventListener('blur',() => buscar_ultimo_correo($('refMat').value))
       }
-      cesiones(origen,$('destino').value,nfm.checked,seguro)
+      cesiones(origen,$('destino').value,nfm,seguro)
   })
   }
   else if(!esSeguro && $('disgonBox'))
@@ -174,9 +177,6 @@ export const buscarCliente = (placa,cliente) => {
       });
       $('envio').remove()
       section.appendChild(selected)
-      /*$('envio').addEventListener('change',(valor) =>{
-        $('envio').options[valor.target.value + 1].innerText = "valor.target.innerText"
-      })*/
     }
   })
 }
@@ -230,4 +230,14 @@ export const updateCounterAssignment = (id,comentario) => {
     method: 'POST',
     body: data
   })
+}
+
+export const buscar_ultimo_correo = (proveedor) => {
+  const data = new FormData()
+  data.append('proveedor',proveedor)
+  fetch('../api/getMailProv.php',{
+    method: 'POST',
+    body: data
+  }).then(e => e.json())
+  .then(mail => $('mailExt').value = mail.correo_prov)
 }

@@ -158,8 +158,8 @@ export const createMailProv = (id,cantidad,placaExterna,destino,referencia,clien
   })
   .then(items => items.json())
   .then(tarifa => {
-    let mensaje = `%0ASolicito:
-${numero}: ${referencia}   PVP:${tarifa.precio}€  DTO:${tarifa.descuento - 3}% 
+    let mensaje = `%0ASolicito 
+${numero}  ${referencia.toUpperCase()}   %0APVP:${tarifa.precio}€  DTO:${tarifa.descuento - 3}% 
 %0ACliente: ${cliente}`
     window.location.href = `mailto:${correo_proveedor}?cc=${bcc}&subject=Compra externa - PPCR ${destino}&body=${saludo}${mensaje}`
     $(`disgon${id}`).classList.remove("wait")

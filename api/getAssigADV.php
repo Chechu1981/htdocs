@@ -133,7 +133,7 @@ if(sizeof($rows) > 0){
         if($row[1] == "MADRID")
           $seguro = 'SEG';
       }
-      if($row[18] == 1 && $puesto == 'ADV'){
+      if($row[18] == 1 && $puesto == 'ADV' && $row[1] != 'MAT'){
         $envioDisgon = '📦';
         if($row[1] == 'SANTIAGO'){
           $envioDisgon = '🚚';
