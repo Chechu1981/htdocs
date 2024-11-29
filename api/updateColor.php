@@ -8,13 +8,7 @@ $h = $_POST['h'];
 $s = $_POST['s'];
 $l = $_POST['l'];
 
-$second_bg_color = ($s - 30);
-$search_line = ($s - 14);
-$cards_border_color = ($s + 20);
-$cards_active_color = ($s + 23); 
-$bg_body_color = ($s - 57);
-$bg_font_color = ($s + 1); 
-$font_color = ($s + 90); 
+$font_color = $l > 50 ? $l - 10 : $l + 60;
 
 $cssFile = ":root{
   --main-font-color: hsl($h, $s%, $l%);
@@ -24,7 +18,7 @@ $cssFile = ":root{
   --cards-active-color: hsl($h, ".($s + 23)."%, ".($l + 27)."%);
   --bg-body-color: hsl($h, ".($s - 57)."%, ".($l + 67)."%);
   --bg-font-color: hsl($h, ".($s + 1)."%, ".($l - 22)."%);
-  --font-color: hsl($h, ".($s + 90)."%, ".($l + 90)."%);
+  --font-color: hsl($h, ".($s + 90)."%, ".$font_color."%);
   --invert-img-filter: invert(0);
   }";
 
