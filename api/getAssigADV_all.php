@@ -58,12 +58,14 @@ function createOptons($user){
 }
 
 function createOptionsOrigin($id,$placa){
-  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA','MISTER-AUTO');
+  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA','MISTER-AUTO','C. EXTERNA');
   $select = '<select name="origen" id="origen'.$id.'">';
   foreach ($placas as $key) {
     $nombre = $key;
     if($key == 'MISTER-AUTO')
       $key = 'MAT';
+    if($key == 'C. EXTERNA')
+      $key = 'EXT';
     if($key == $placa)
       $select .= '<option value="'.$key.'" selected>'.$nombre.'</option>';
     else
@@ -162,7 +164,7 @@ if(sizeof($rows) > 0){
         $important = 'route';
       $numPie = $codgClient[$row[1].$row[2].$seguro.$nfm];
     }
-    if($row[1] == 'MAT'){
+    if($row[1] == 'MAT' || $row[1] == 'EXT'){
       $numPie = $row[12];
     }
     /*if($row[2] == 'SANTIAGO')

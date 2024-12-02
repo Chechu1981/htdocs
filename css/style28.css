@@ -1004,7 +1004,6 @@ input[type="color"]::-webkit-color-swatch {
     height: 15px;
     padding: 1px;
     left: 11px;
-    position: absolute;
     background-color: #233f21;
     box-shadow: 0 0 10px rgba(3, 2, 2, 0.7);
     border: 2px solid #507340;

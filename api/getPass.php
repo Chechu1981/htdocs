@@ -8,7 +8,7 @@ $usuario = str_replace("'","",$_POST['usuario']);
 
 $rows = $contacts->getPassHTML($search, $tipo, $_POST['mail']);
 $lists = '<h1>No se han encontrado coincidencias</h1>';
-if(sizeof($rows) > 0){
+if(sizeof($rows) > 0 && $search != ''){
     $lists = '<ul class="heading" style="text-align: center;display:grid;grid-template-columns: 23% 15% 13% 25% 17% 7%;list-style:none">
     <li>Aplicación</li>
     <li>Placa</li>
