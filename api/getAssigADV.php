@@ -191,8 +191,8 @@ if(sizeof($rows) > 0){
     
     $lists .= '
     <ul class="assignPendingAdv" title="'.$contador++.'" style="'.$rechazadoStyle.'">
-      <li title="Copiar: Origen > Destino" class="">
-        <span class="ledOff '.$btnOrigenPress.'"></span>'.$origen.'
+    <li title="Copiar: Origen > Destino" class="origenCesion">
+      <span class="ledOff '.$btnOrigenPress.'">'.$contador.'</span>'.$origen.'
         <span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'">'.$destino.'</span>
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$numPie.'</span>
       </li>

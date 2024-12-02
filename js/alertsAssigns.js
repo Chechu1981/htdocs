@@ -128,6 +128,9 @@ export const esDisgon = (esSeguro) =>{
   dsgDiv.style = 'display: flex;margin-top: -26px;'
   dsgDiv.appendChild(dsgLabel)
   dsgDiv.appendChild(dsgButton)
+  dsgButton.addEventListener('change',e => {
+    cesiones($('origen').value,$('destino').value,$('nfm').checked,e.target.checked)
+  })
   if(esSeguro && $('disgonBox') == null){
     document.getElementsByClassName('form-group')[0].childNodes[15].appendChild(dsgDiv)
     $('disgonBox').addEventListener('change',(e) => {
