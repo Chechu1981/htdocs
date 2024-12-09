@@ -1536,7 +1536,7 @@ span.button:active{
   background-color: var(--bg-body-color);
   color: var(--bg-font-color);
   border-radius: 50%;
-  width: 12px;
+  min-width: 12px;
   padding: 3px;
   border: 1px solid var(--bg-font-color);
   float: left;

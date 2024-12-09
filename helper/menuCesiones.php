@@ -13,9 +13,9 @@ if($nuevas > 0)
 else
   $nuevas = "<span class='round'>0</span>";
 
-if($allAdvAssigns > 0 && $allAdvAssigns > 100)
+if($allAdvAssigns > 0 && $allAdvAssigns < 100)
   $allAdvAssigns = "<span class='round' title=".$allAdvAssigns.">".$allAdvAssigns."</span>";
-elseif($allAdvAssigns > 100)
+elseif($allAdvAssigns > 99)
   $allAdvAssigns = "<span class='round' title=".$allAdvAssigns.">+99</span>";
 else
   $allAdvAssigns = "<span class='round'>0</span>";
@@ -26,7 +26,7 @@ if($puesto == 'ADV')
 
 if($enCurso > 0 && $enCurso < 100)
   $enCurso = "<span class='round' title=".$enCurso.">".$enCurso."</span>";
-elseif($enCurso > 100)
+elseif($enCurso > 99)
   $enCurso = "<span class='round' title=".$enCurso.">+99</span>";
 else
   $enCurso = "";

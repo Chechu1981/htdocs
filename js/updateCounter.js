@@ -18,8 +18,8 @@ export default function updateCounterAssignment(){
   })
   .then(numbers => numbers.json())
   .then(itemsNumbers =>{
-    CesNew.innerHTML = itemsNumbers.nuevas > 100 ? '+99' : itemsNumbers.nuevas
-    CesReady.innerHTML = itemsNumbers.enCurso > 100 ? '+99' : itemsNumbers.enCurso
+    CesNew.innerHTML = itemsNumbers.nuevas > 99 ? '+99' : itemsNumbers.nuevas
+    CesReady.innerHTML = itemsNumbers.enCurso > 99 ? '+99' : itemsNumbers.enCurso
     if(googles.length > 3)
       CesAll.innerHTML = itemsNumbers.todas
   })
