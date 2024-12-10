@@ -147,7 +147,7 @@ export const createMailProv = (id,cantidad,placaExterna,destino,referencia,clien
   $(`disgon${id}`).className = "wait"
   const hora = new Date()
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
-  const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `La referencia`
+  const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
   const src = '../api/getDescRefer.php'
   const data = new FormData()
   const bcc = "jacqueline.perez@stellantis.com;maria.sanchez@stellantis.com;silvia.parro@citroen.com;lisbethnataly.aguilar1@stellantis.com;natalia.diez@external.stellantis.com"
@@ -158,7 +158,8 @@ export const createMailProv = (id,cantidad,placaExterna,destino,referencia,clien
   })
   .then(items => items.json())
   .then(tarifa => {
-    let mensaje = `%0ASolicito 
+    let mensaje = `%0AProveedor: ${placaExterna.innerText}
+%0ASolicito 
 ${numero}  ${referencia.toUpperCase()}   %0APVP:${tarifa.precio}€  DTO:${tarifa.descuento - 3}% 
 %0ACliente: ${cliente}`
     window.location.href = `mailto:${correo_proveedor}?cc=${bcc}&subject=Compra externa - PPCR ${destino}&body=${saludo}${mensaje}`

@@ -2,7 +2,9 @@
 
 $$('input')[1].focus()
 
-const buscar = (e) => {
+const buscar = e => {
+  if(e == '')
+    return false
   const placa = $('placa').value == 'SANTIAGO' ? 'GALICIA' : $('placa').value
   let data = new FormData();
   data.append('search', e)
@@ -37,7 +39,7 @@ $('addLink').addEventListener('click',() =>{
   modal(`<iframe src='../helper/formNewLink.php?id=${id}' class='libreta'></iframe>`,"Nuevo enlace")
 })
 
-document.addEventListener('click',(e)=>{
+document.addEventListener('click', e => {
   const idItem = e.target.parentNode.id
   const data = new FormData()
   data.append('idItem',idItem)
@@ -67,12 +69,13 @@ document.addEventListener('click',(e)=>{
   }
 })
 
-$('placa').addEventListener('change', (e) => {
+$('placa').addEventListener('change', () => {
   buscar($('search-pass').value)
 })
 
 if($('center-items-pass').childNodes[1].childNodes[1] != undefined){
-  $('center-items-pass').childNodes[1].addEventListener('click', (e) => {
+  $('center-items-pass').childNodes[1].addEventListener('click', e => {
+    $('search-pass').value = `btn${e.target.title.toLowerCase()}`
     e.target.title != "" ? buscar(`btn${e.target.title.toLowerCase()}`) : null
   })
 }
