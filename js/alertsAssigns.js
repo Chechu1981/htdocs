@@ -35,9 +35,9 @@ export const cesiones = (origen, destino,nfm,seg) =>{
   $('newTitle').innerText = `${origen}>${destino}`
   let cesion = null
   origen != destino ? cesion = origen + '' + destino:''
-  seg && origen == "MADRID" ? cesion += 'SEG' :''
+  seg ? cesion += 'SEG' :''
   nfm ? cesion += 'NM' :''
-  fetch('../json/cesionesCliente.json?105',
+  fetch('../json/cesionesCliente.json?107',
     {cache: "reload"}
   )
   .then(response => response.json())

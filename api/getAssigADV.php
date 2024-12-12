@@ -130,8 +130,7 @@ if(sizeof($rows) > 0){
       $disgon = '<input type="checkbox" ></input>';
       if($row[18] == 1){
         $disgon = '<input type="checkbox" checked="checked"></input>';
-        if($row[1] == "MADRID")
-          $seguro = 'SEG';
+        $seguro = 'SEG';
       }
       if($row[18] == 1 && $puesto == 'ADV' && $row[1] != 'MAT'){
         $envioDisgon = '📦';

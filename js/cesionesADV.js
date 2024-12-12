@@ -1,6 +1,6 @@
 'use strict';
 import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?108"
-import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?100"
+import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?102"
 import contadores from "./updateCounter.js?101"
 
 const setCounters = setInterval(() =>{contadores()},1000)
@@ -343,10 +343,10 @@ const refreshInputs = (id,fragil,pedido,tratado,origen,destino) => {
   let code = $(id).parentNode.childNodes[1].childNodes[6]
   origen != destino ? cesion = origen + '' + destino : ''
   seguro = fragil ? seguro = seguro : false 
-  seguro && origen == "MADRID" ? cesion += 'SEG' : ''
+  seguro ? cesion += 'SEG' : ''
   nfm ? cesion += 'NM' : ''
   if(origen != 'MAT' && origen != 'EXT'){
-    fetch('../json/cesionesCliente.json?105',
+    fetch('../json/cesionesCliente.json?108',
       {cache: "reload"}
     )
     .then(response => response.json())
