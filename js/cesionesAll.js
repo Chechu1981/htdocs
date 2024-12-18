@@ -106,25 +106,25 @@ const showAssig = () =>{
       for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
         let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar, puesto, btnSendMailDisgon, rechazo, usuario, origenLed = ''
         ul = $('cesiones').childNodes[i]
-        id = ul.childNodes[25].id
-        origen = ul.childNodes[1].childNodes[2]
-        origenLed = ul.childNodes[1].childNodes[1]
-        destino = ul.childNodes[1].childNodes[4]
-        cliente = ul.childNodes[5]
-        refCliente = ul.childNodes[1].childNodes[6]
-        comentario = ul.childNodes[9]
-        referencia = ul.childNodes[11]
-        cantidad = ul.childNodes[13].textContent
-        pedido = ul.childNodes[15].firstChild
-        fragil = ul.childNodes[19].firstChild
-        disgon = ul.childNodes[21].firstChild
-        pvp = ul.childNodes[11].childNodes[1].textContent
+        id = ul.childNodes[27].id
+        origen = ul.childNodes[3].childNodes[1]
+        origenLed = ul.childNodes[1].childNodes[0]
+        destino = ul.childNodes[3].childNodes[3]
+        cliente = ul.childNodes[7]
+        refCliente = ul.childNodes[3].childNodes[5]
+        comentario = ul.childNodes[11]
+        referencia = ul.childNodes[13]
+        cantidad = ul.childNodes[15].textContent
+        pedido = ul.childNodes[17].firstChild
+        fragil = ul.childNodes[21].firstChild
+        disgon = ul.childNodes[23].firstChild
+        pvp = ul.childNodes[13].childNodes[1].textContent
         tratado = $(`agente${id}`)
-        nfm = ul.childNodes[17].firstChild
-        btnEliminar = ul.childNodes[25]
+        nfm = ul.childNodes[19].firstChild
+        btnEliminar = ul.childNodes[29]
         rechazo = $(`rechazo${id}`)
-        usuario = ul.childNodes[27].childNodes[0].data
-        puesto = ul.childNodes[27].childNodes[2].nodeValue.replaceAll('(','').replaceAll(')','')
+        usuario = ul.childNodes[29].childNodes[0].data
+        puesto = ul.childNodes[29].childNodes[2].nodeValue.replaceAll('(','').replaceAll(')','')
         if(disgon != null)
           disgon.addEventListener('change',() => updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino))
         if(ul.localName == 'ul' && ul.localName != undefined){
@@ -217,10 +217,10 @@ const showAssig = () =>{
 
 const refreshInputs = (id,fragil,pedido,tratado,origen,destino) => {
   let cesion = null
-  let chkSeguro = document.getElementById(id).parentNode.childNodes[21].childNodes[0]
+  let chkSeguro = document.getElementById(id).parentNode.childNodes[23].childNodes[0]
   let seguro =  chkSeguro == undefined ? false : chkSeguro.checked
-  let nfm = document.getElementById(id).parentNode.childNodes[17].childNodes[0].checked
-  let code = $(id).parentNode.childNodes[1].childNodes[6]
+  let nfm = document.getElementById(id).parentNode.childNodes[19].childNodes[0].checked
+  let code = $(id).parentNode.childNodes[3].childNodes[5]
   origen != destino ? cesion = origen + '' + destino : ''
   seguro = fragil ? seguro = seguro : false 
   seguro && origen == "MADRID" ? cesion += 'SEG' : ''
@@ -244,7 +244,7 @@ const refreshInputs = (id,fragil,pedido,tratado,origen,destino) => {
     })
     .then(response => response.json())
     .then(response => {
-      const refZZMAT = document.getElementById(`destinoBtn${id}`).parentNode.childNodes[6]
+      const refZZMAT = document.getElementById(`destinoBtn${id}`).parentNode.childNodes[5]
       refZZMAT.innerHTML = `<span class="copy " style="grid-column: 1 / 4;font-size: medium;">${response.refClient}</span>`
     })
   }
@@ -257,10 +257,10 @@ const copyClipboard = (copiar) =>{
 }
 
 const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
-  const disgon = $(id).parentNode.childNodes[21].firstChild == null ? false : $(id).parentNode.childNodes[21].firstChild.checked
-  const origenBtn = $(id).parentNode.childNodes[1].childNodes[1].className.includes('ledOn') ? '1':'0'
-  const destinoBtn = $(id).parentNode.childNodes[1].childNodes[4].className.includes('press') ? '1':'0'
-  const origen = $(id).parentNode.childNodes[1].childNodes[2].value
+  const disgon = $(id).parentNode.childNodes[23].firstChild == null ? false : $(id).parentNode.childNodes[23].firstChild.checked
+  const origenBtn = $(id).parentNode.childNodes[1].firstChild.className.includes('ledOn') ? '1':'0'
+  const destinoBtn = $(`destinoBtn${id}`).className.includes('press') ? '1':'0'
+  const origen = $(`origen${id}`).nodeName == 'SELECT' ? $(`origen${id}`).value : $(`origen${id}`).innerHTML
   const comentario = $(`coment${id}`).value
   const data = new FormData()
   data.append('id', id)

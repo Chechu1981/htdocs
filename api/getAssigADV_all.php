@@ -77,6 +77,7 @@ function createOptionsOrigin($id,$placa){
 
 if(sizeof($rows) > 0){
   $lists = "<ul class='heading assignPendingAdv'>
+            <li></li>
             <li><span>".$imgOrigen."</span><span>".$imgDestino."</span></li>
             <li>Cliente</li>
             <li>Comentario</li>
@@ -180,9 +181,10 @@ if(sizeof($rows) > 0){
     $fechaSHora = explode(".",explode(" ", $row[25])[1]);
     $lists .= '
     <ul class="assignPendingAdv '.$libre.'" title="'.$contador++.'">
-      <li title="Copiar: Origen > Destino" class="">
-        <span class="ledOff '.$btnOrigenPress.'"></span>'.$origen.'
-        <span class="active-city '.$btnDestinoPress.'">'.$destino.'</span>
+    <li><span class="ledOff '.$btnOrigenPress.'"></span></li>
+      <li title="Copiar: Origen > Destino" class="origenCesion">
+        '.$origen.'
+        <span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'">'.$destino.'</span>
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$numPie.'</span>
       </li>
       <li title="Destino: " style="display:none">'.$destino.'</li>

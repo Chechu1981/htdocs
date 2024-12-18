@@ -109,12 +109,12 @@ const showAssig = () =>{
     $('cesiones').classList.remove('filter')
     const clearRowsMark = (li,text) =>{
       const codeClient = li.childNodes[3].childNodes[5].textContent
-      const id = li.childNodes[25].id
+      const id = li.childNodes[27].id
       const filas = $('cesiones').getElementsByTagName('ul')
       copyClipboard(text)
       for(let i = 1; i < filas.length; i++){
         const codeClientLi = filas[i].childNodes[3].childNodes[5].textContent
-        const idLi = filas[i].childNodes[25].id
+        const idLi = filas[i].childNodes[27].id
         filas[i].classList.remove('marcado')
         filas[i].classList.remove('equal')
         codeClientLi == codeClient && idLi != id ? filas[i].classList.add('equal') : ''
@@ -270,8 +270,8 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
   }
   const dataName = new FormData()
   let disgon = 0
-  if($(id).parentNode.childNodes[21].firstChild != null){
-    if($(id).parentNode.childNodes[21].firstChild.checked){
+  if($(id).parentNode.childNodes[23].firstChild != null){
+    if($(id).parentNode.childNodes[23].firstChild.checked){
       disgon = origen == 'SANTIAGO' ? 1 : 2
     }
   }
