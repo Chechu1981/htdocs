@@ -84,7 +84,7 @@ iframe{
 }
 
 .switch div:before{
-    content: "";;
+    content: "";
     background: radial-gradient(circle at 50% 32%, #fff5 0 calc(var(--sz) / 20), #000 calc(var(--sz) / 3) calc(var(--sz) / 3));
     box-shadow: 0 0 calc(var(--sz) / 3) 0 #003ef520, 0 0 calc(var(--sz) / 3) calc(var(--sz) / 20) #003ef520 inset;
     border-radius: var(--sz);
@@ -856,6 +856,9 @@ input[type="color"]::-webkit-color-swatch {
 
 #cesiones{
     text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #cesiones h1{
@@ -900,7 +903,6 @@ input[type="color"]::-webkit-color-swatch {
     border-radius: 5px;
     margin: 0;
     display: grid;
-    grid-template-columns: 10% 20% 10% 10% 10% 10% 10% 10%;
     justify-content: center;
     font-size: 1.2em;
     font-weight: bold;
@@ -948,10 +950,10 @@ input[type="color"]::-webkit-color-swatch {
   font-weight: 900!important;
 }
 
-#cesiones ul{
+/*#cesiones ul{
   padding-inline-start: 0;
   grid-template-columns: 4% 7% 9% 11% 20% 5% 4% 5% 10% 9% 7% 6% 2%;
-}
+}*/
 
 #cesiones ul li select{
     font-size: 12px;
@@ -968,7 +970,7 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #cesiones .assignPendingAdv{
-  grid-template-columns: 2% 10% 8% 15% 14% 7% 6% 4% 3% 3% 10% 5% 4% 8% 1%;
+  grid-template-columns: 3% 13% 8% 15% 12% 5% 8% 3% 3% 3% 7% 4% 4% 8%;
 }
 
 #cesiones .tableLegend{
@@ -1004,6 +1006,9 @@ input[type="color"]::-webkit-color-swatch {
     height: 15px;
     padding: 1px;
     left: 11px;
+    color: var(--bg-body-color);
+    text-align: center;
+    cursor: pointer;
     background-color: #233f21;
     box-shadow: 0 0 10px rgba(3, 2, 2, 0.7);
     border: 2px solid #507340;
@@ -1013,6 +1018,7 @@ input[type="color"]::-webkit-color-swatch {
     background-color: #12ff00;
     box-shadow: 0 0 10px rgb(0 103 /0 70%);
     border: 2px solid #206600;
+    color: var(--bg-font-color);
 }
 
 .send{
@@ -1034,9 +1040,9 @@ input[type="color"]::-webkit-color-swatch {
   filter: brightness(1.5);
 }
 
-#cesiones ul li:first-child{
+#cesiones .origenCesion{
   display: grid;
-  grid-template-columns: 10% 55% 48%;
+  grid-template-columns: 50% 50%;
   text-align: center;
   cursor: pointer;
   justify-items: center;
@@ -1062,6 +1068,7 @@ input[type="color"]::-webkit-color-swatch {
   background-color: var(--bg-body-color);
   color: var(--main-font-color);
   padding: 0;
+  width: 90%;
 }
 
 #route-items ul:nth-child(odd),
@@ -1074,6 +1081,7 @@ input[type="color"]::-webkit-color-swatch {
     background-color: var(--search-line);
     color: var(--main-font-color);
     padding: 0;
+    width: 90%;
 }
 
 #route-items ul:hover,
@@ -1160,12 +1168,12 @@ span.button:active{
     transform: translate(0.8px, 0.8px);
 }
 
-.assignPendingAdv::before {
+/*.assignPendingAdv::before {
     content: attr(title);
     display: flex;
     justify-content: center;
     align-items: center;
-}
+}*/
 
 .pass-items ul:nth-child(odd) a,
 .pass-items #complete ul:nth-child(odd) a{
@@ -1195,11 +1203,11 @@ span.button:active{
 .pass-items #complete li,
 #center-list-items li{
   display: flex;
-  justify-content: center;
   overflow-wrap: break-word;
   margin: auto 0;
   list-style: none;
   align-items: center;
+  justify-content: center;
 }
 
 #contacts-items li img,
@@ -1398,6 +1406,7 @@ span.button:active{
     color: var(--bg-font-color) !important;
     text-transform: uppercase;
     z-index: 1;
+    justify-items: center;
 }
 
 .heading:hover{

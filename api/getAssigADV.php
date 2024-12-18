@@ -78,6 +78,7 @@ function createOptions($id,$placa,$proveedor){
 
 if(sizeof($rows) > 0){
   $lists = "<ul class='heading assignPendingAdv'>
+            <li></li>
             <li><span>".$imgOrigen."</span><span>".$imgDestino."</span></li>
             <li>Cliente</li>
             <li>Comentario</li>
@@ -93,7 +94,7 @@ if(sizeof($rows) > 0){
             .$agent_head."
             <li></li>
           </ul>";
-  $contador = 1;
+  $contador = 0;
   foreach ($rows as $row) {
     $designRefer = $row[19];
     $agente = $row[17];
@@ -189,9 +190,10 @@ if(sizeof($rows) > 0){
     }
     
     $lists .= '
-    <ul class="assignPendingAdv" title="'.$contador++.'" style="'.$rechazadoStyle.'">
+    <ul class="assignPendingAdv" title="'.++$contador.'" style="'.$rechazadoStyle.'">
+    <li><span class="ledOff '.$btnOrigenPress.'" title="'.$contador.'">'.$contador.'</span></li>
     <li title="Copiar: Origen > Destino" class="origenCesion">
-      <span class="ledOff '.$btnOrigenPress.'">'.$contador.'</span>'.$origen.'
+      '.$origen.'
         <span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'">'.$destino.'</span>
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$numPie.'</span>
       </li>

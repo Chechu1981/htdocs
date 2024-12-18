@@ -150,7 +150,7 @@ export const createMailProv = (id,cantidad,placaExterna,destino,referencia,clien
   const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
   const src = '../api/getDescRefer.php'
   const data = new FormData()
-  const bcc = "placamadridadministracion@stellantis.com"
+  const bcc = "placamadridadministracion@stellantis.com;natalia.diez@external.stellantis.com;lisbethnataly.aguilar1@stellantis.com;silvia.parro@stellantis.com;maria.sanchez@stellantis.com;jacqueline.perez@stellantis.com;emilio.crespo@stellantis.com"
   data.append('referencia',referencia)
   fetch(src,{
     method: 'POST',
