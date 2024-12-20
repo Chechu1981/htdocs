@@ -13,7 +13,7 @@
       <h1>Cesiones - Estadística</h1>
       <?php include_once '../../helper/menuCesiones.php'; ?>
     </div>
-    <div id="cesiones"></div>
+    <div id="cesiones" style="display: block;"></div>
   </div>
   <?php include('./../../helper/footer.php'); ?>
 </body>

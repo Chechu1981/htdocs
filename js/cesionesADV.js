@@ -85,6 +85,12 @@ $('ref').addEventListener('blur',() =>{
 
 const showAssig = () =>{
   const divSpinner = document.createElement('div')
+  $('descRef').innerHTML = ""
+  $('clientName').innerHTML = ""
+  const data = new FormData()
+  data.append('id','new')
+  data.append('session',window.location.href.split('=')[1])
+  data.append('sort', 'date')
   fetch('../api/spinner.php')
   .then(fn => fn.text())
   .then(req => {
@@ -92,170 +98,165 @@ const showAssig = () =>{
     divSpinner.className = 'spinner-center'
     $('contacts-items').append(divSpinner)
     $('cesiones').className = 'filter'
-  })
-  $('descRef').innerHTML = ""
-  $('clientName').innerHTML = ""
-  const data = new FormData()
-  data.append('id','new')
-  data.append('session',window.location.href.split('=')[1])
-  data.append('sort', 'date')
-  fetch('../api/getAssigADV.php',{
-    method: 'POST',
-    body: data
-  })
-  .then(response => response.text())
-  .then(response => {
-    $('contacts-items').removeChild(divSpinner)
-    $('cesiones').classList.remove('filter')
-    const clearRowsMark = (li,text) =>{
-      const codeClient = li.childNodes[3].childNodes[5].textContent
-      const id = li.childNodes[27].id
-      const filas = $('cesiones').getElementsByTagName('ul')
-      copyClipboard(text)
-      for(let i = 1; i < filas.length; i++){
-        const codeClientLi = filas[i].childNodes[3].childNodes[5].textContent
-        const idLi = filas[i].childNodes[27].id
-        filas[i].classList.remove('marcado')
-        filas[i].classList.remove('equal')
-        codeClientLi == codeClient && idLi != id ? filas[i].classList.add('equal') : ''
+  
+    return fetch('../api/getAssigADV.php',{
+      method: 'POST',
+      body: data
+    })
+    .then(response => response.text())
+    .then(response => {
+      $('contacts-items').removeChild(divSpinner)
+      $('cesiones').classList.remove('filter')
+      const clearRowsMark = (li,text) =>{
+        const codeClient = li.childNodes[3].childNodes[4].textContent
+        const id = li.childNodes[27].id
+        const filas = $('cesiones').getElementsByTagName('ul')
+        copyClipboard(text)
+        for(let i = 1; i < filas.length; i++){
+          const codeClientLi = filas[i].childNodes[3].childNodes[4].textContent
+          const idLi = filas[i].childNodes[27].id
+          filas[i].classList.remove('marcado')
+          filas[i].classList.remove('equal')
+          codeClientLi == codeClient && idLi != id ? filas[i].classList.add('equal') : ''
+        }
+        li.classList.add('marcado')
       }
-      li.classList.add('marcado')
-    }
-    $('cesiones').style = ''
-    $('cesiones').innerHTML = response
-    for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
-      let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar, origenLed, rechazo, usuario, btnSendMailDisgon, correo_proveedor = ''
-      ul = $('cesiones').childNodes[i]
-      id = ul.childNodes[27].id
-      origenLed = ul.childNodes[1].childNodes[0]
-      origen = ul.childNodes[3].childNodes[1]
-      destino = ul.childNodes[3].childNodes[3]
-      cliente = ul.childNodes[7]
-      refCliente = ul.childNodes[3].childNodes[5]
-      comentario = ul.childNodes[11]
-      referencia = ul.childNodes[13]
-      cantidad = ul.childNodes[15].textContent
-      pedido = ul.childNodes[17].firstChild
-      fragil = ul.childNodes[21].firstChild
-      disgon = ul.childNodes[23].firstChild
-      pvp = ul.childNodes[13].childNodes[1].textContent
-      tratado = $(`agente${id}`)
-      nfm = ul.childNodes[19].firstChild
-      rechazo = ul.childNodes[31].outerHTML.includes('❌') ? $(`rechazo${id}`) : null
-      usuario = ul.childNodes[31].outerHTML.includes('❌') ? ul.childNodes[31].childNodes[0].data : ''
-      btnSendMail = ul.childNodes[29] != undefined ? ul.childNodes[29].childNodes[0] : null
-      btnSendMailDisgon = ul.childNodes[29] != undefined ? ul.childNodes[29].childNodes[1] : null
-      btnEliminar = ul.childNodes[27].firstChild
-      correo_proveedor = refCliente.childNodes.length > 1 ? refCliente.childNodes[1].innerText : ''
-      if(disgon != null){
-        disgon.addEventListener('change',(e) => {
-          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino.textContent),
-          refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
-        })
-      }
-      if($('cesiones').childNodes[i].localName == 'ul' && $('cesiones').childNodes[i].localName != undefined)
-        pedido.addEventListener('keyup', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
-
-      nfm.addEventListener('change', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
-      fragil.addEventListener('change', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
-      tratado.addEventListener('change', () => {refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)})
-      referencia.addEventListener('click', () => {clearRowsMark(ul,referencia.childNodes[0].textContent.replaceAll(' ',''))})
-      comentario.addEventListener('click', () => {clearRowsMark(ul,comentario.textContent)})
-      comentario.childNodes[0].addEventListener('keyup', () => {updateCounterAssignment(id,comentario.firstElementChild.value)})
-      cliente.addEventListener('click', () => {
-        let fragilTxt = ''
+      $('cesiones').style = ''
+      $('cesiones').innerHTML = response
+      for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
+        let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar, origenLed, rechazo, usuario, btnSendMailDisgon, correo_proveedor = ''
+        ul = $('cesiones').childNodes[i]
+        id = ul.childNodes[27].id
+        origenLed = ul.childNodes[1].childNodes[0]
+        origen = ul.childNodes[3].childNodes[1]
+        destino = ul.childNodes[3].childNodes[2]
+        cliente = ul.childNodes[7]
+        refCliente = ul.childNodes[3].childNodes[4]
+        comentario = ul.childNodes[11]
+        referencia = ul.childNodes[13]
+        cantidad = ul.childNodes[15].textContent
+        pedido = ul.childNodes[17].firstChild
+        fragil = ul.childNodes[21].firstChild
+        disgon = ul.childNodes[23].firstChild
+        pvp = ul.childNodes[13].childNodes[1].textContent
+        tratado = $(`agente${id}`)
+        nfm = ul.childNodes[19].firstChild
+        rechazo = ul.childNodes[31].outerHTML.includes('❌') ? $(`rechazo${id}`) : null
+        usuario = ul.childNodes[31].outerHTML.includes('❌') ? ul.childNodes[31].childNodes[0].data : ''
+        btnSendMail = ul.childNodes[29] != undefined ? ul.childNodes[29].childNodes[0] : null
+        btnSendMailDisgon = ul.childNodes[29] != undefined ? ul.childNodes[29].childNodes[1] : null
+        btnEliminar = ul.childNodes[27].firstChild
+        correo_proveedor = refCliente.childNodes.length > 1 ? refCliente.childNodes[1].innerText : ''
         if(disgon != null){
-          disgon.checked && $(`disgon${id}`).innerHTML == '📦' ? fragilTxt += 'Recoge LOGISTICA. ' : ''
-          disgon.checked && $(`disgon${id}`).innerHTML == '🚚' ? fragilTxt += 'Recoge DISGON. ' : ''
-        }
-        fragil.checked ? fragilTxt += '..~** ¡¡MATERIAL FRÁGIL!! **~..REFORZAR EMBALAJE;' : ''
-        clearRowsMark(ul,`Cesión ${origen.value}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
-      })
-      refCliente.addEventListener('click', () => {
-        let texto = `Cliente: ${cliente.childNodes[0].textContent}`
-        if(origen.value == 'MAT')
-          texto = $(`origen${id}`).parentNode.childNodes[6].innerText
-        if(origen.value == 'EXT')
-          texto = 'Cesión externa'
-        clearRowsMark(ul, texto)
-      })
-      
-      if(user.puesto == 'ADV'){
-        origen.addEventListener('change', (e) => {
-          refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
-          })
-        origenLed.addEventListener('click', (e) => {
-          e.target.classList.toggle('ledOn')
-          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
-        })
-        destino.addEventListener('click', () => {
-          destino.classList.toggle('active-city-press')
-          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
-        })
-      }
-
-      if(rechazo != null){
-        rechazo.addEventListener('click', ()=>{
-          const data = new FormData()
-          data.append('id',id)
-          data.append('switch',true)
-          data.append('usuario',usuario)
-          data.append('tratado',user.nombre.toUpperCase())
-          fetch('../helper/formRechazo.php',{
-            method: 'POST',
-            body: data
-          })
-          .then((inp) => inp.text())
-          .then(items => {
-            modal(items,`Rechazar la cesión de ${origen.value} -> ${destino.textContent}`)
-            const texto = document.getElementById("texto")
-            const enviar = document.getElementById("enviar")
-            const cancelar = document.getElementById("cancelar")
-            cancelar.addEventListener("click", () => {
-              $('close').click()
-            })
-            enviar.addEventListener("click", () => {
-              data.append('texto',`(${user.nombre}) ${texto.value}`)
-              const fecha = new Date()
-              const mailSaludo = fecha.getHours() > 14 ? `Buenas tardes: ` : `Buenos días: `
-              const mailTarget = encodeURIComponent(`
-              ${texto.value}
-              
-          
-              Un saludo ${user.nombre}`)
-              fetch('../api/getEmailByUsername.php',{
-                method: 'POST',
-                body: data
-              })
-              .then(usrAll => usrAll.json())
-              .then(usrSend => {
-                window.open(`mailto:${usrSend.mail}?subject=Cesión de la ${referencia.childNodes[0].textContent.replaceAll(' ','')} rechazada&body=${mailSaludo + mailTarget}`)
-              })
-              fetch('../api/updateRechazo.php',{
-                method: 'POST',
-                body: data
-              })
-              ul.remove()
-              $('close').click()
-            })
-          })
-        })
-      }
-
-      if(btnSendMail != null){
-        btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[0].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente.innerText,comentario.firstChild.innerHTML, correo_proveedor))
-        if(btnSendMailDisgon != null)
-          btnSendMailDisgon.addEventListener('click',(e) => {
-            if(e.target.innerHTML == '🚚')
-              enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id,comentario.firstChild.innerHTML)
-            else if(e.target.innerHTML == '🏬')
-              createMailProv(id,cantidad,refCliente,destino.textContent,referencia.firstChild.textContent.replaceAll(' ',''),cliente.firstChild.textContent,correo_proveedor)
-            else if(e.target.innerHTML == '📦')
-              window.open("https://recambios.logistica.com/page/index.aspx"),$(`disgon${id}`).innerHTML = "✅"
+          disgon.addEventListener('change',(e) => {
+            updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino.textContent),
+            refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
           })
         }
-        btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
-      }
+        if($('cesiones').childNodes[i].localName == 'ul' && $('cesiones').childNodes[i].localName != undefined)
+          pedido.addEventListener('keyup', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
+
+        nfm.addEventListener('change', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
+        fragil.addEventListener('change', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
+        tratado.addEventListener('change', () => {refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)})
+        referencia.addEventListener('click', () => {clearRowsMark(ul,referencia.childNodes[0].textContent.replaceAll(' ',''))})
+        comentario.addEventListener('click', () => {clearRowsMark(ul,comentario.textContent)})
+        comentario.childNodes[0].addEventListener('keyup', () => {updateCounterAssignment(id,comentario.firstElementChild.value)})
+        cliente.addEventListener('click', () => {
+          let fragilTxt = ''
+          if(disgon != null){
+            disgon.checked && $(`disgon${id}`).innerHTML == '📦' ? fragilTxt += 'Recoge LOGISTICA. ' : ''
+            disgon.checked && $(`disgon${id}`).innerHTML == '🚚' ? fragilTxt += 'Recoge DISGON. ' : ''
+          }
+          fragil.checked ? fragilTxt += '..~** ¡¡MATERIAL FRÁGIL!! **~..REFORZAR EMBALAJE;' : ''
+          clearRowsMark(ul,`Cesión ${origen.value}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
+        })
+        refCliente.addEventListener('click', () => {
+          let texto = `Cliente: ${cliente.childNodes[0].textContent}`
+          if(origen.value == 'MAT')
+            texto = $(`origen${id}`).parentNode.childNodes[6].innerText
+          if(origen.value == 'EXT')
+            texto = 'Cesión externa'
+          clearRowsMark(ul, texto)
+        })
+        
+        if(user.puesto == 'ADV'){
+          origen.addEventListener('change', (e) => {
+            refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
+            })
+          origenLed.addEventListener('click', (e) => {
+            e.target.classList.toggle('ledOn')
+            updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+          })
+          destino.addEventListener('click', () => {
+            destino.classList.toggle('active-city-press')
+            updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+          })
+        }
+
+        if(rechazo != null){
+          rechazo.addEventListener('click', ()=>{
+            const data = new FormData()
+            data.append('id',id)
+            data.append('switch',true)
+            data.append('usuario',usuario)
+            data.append('tratado',user.nombre.toUpperCase())
+            fetch('../helper/formRechazo.php',{
+              method: 'POST',
+              body: data
+            })
+            .then((inp) => inp.text())
+            .then(items => {
+              modal(items,`Rechazar la cesión de ${origen.value} -> ${destino.textContent}`)
+              const texto = document.getElementById("texto")
+              const enviar = document.getElementById("enviar")
+              const cancelar = document.getElementById("cancelar")
+              cancelar.addEventListener("click", () => {
+                $('close').click()
+              })
+              enviar.addEventListener("click", () => {
+                data.append('texto',`(${user.nombre}) ${texto.value}`)
+                const fecha = new Date()
+                const mailSaludo = fecha.getHours() > 14 ? `Buenas tardes: ` : `Buenos días: `
+                const mailTarget = encodeURIComponent(`
+                ${texto.value}
+                
+            
+                Un saludo ${user.nombre}`)
+                fetch('../api/getEmailByUsername.php',{
+                  method: 'POST',
+                  body: data
+                })
+                .then(usrAll => usrAll.json())
+                .then(usrSend => {
+                  window.open(`mailto:${usrSend.mail}?subject=Cesión de la ${referencia.childNodes[0].textContent.replaceAll(' ','')} rechazada&body=${mailSaludo + mailTarget}`)
+                })
+                fetch('../api/updateRechazo.php',{
+                  method: 'POST',
+                  body: data
+                })
+                ul.remove()
+                $('close').click()
+              })
+            })
+          })
+        }
+
+        if(btnSendMail != null){
+          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente.innerText,comentario.firstChild.innerHTML, correo_proveedor))
+          if(btnSendMailDisgon != null)
+            btnSendMailDisgon.addEventListener('click',(e) => {
+              if(e.target.innerHTML == '🚚')
+                enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id,comentario.firstChild.innerHTML)
+              else if(e.target.innerHTML == '🏬')
+                createMailProv(id,cantidad,refCliente,destino.textContent,referencia.firstChild.textContent.replaceAll(' ',''),cliente.firstChild.textContent,correo_proveedor)
+              else if(e.target.innerHTML == '📦')
+                window.open("https://recambios.logistica.com/page/index.aspx"),$(`disgon${id}`).innerHTML = "✅"
+            })
+          }
+          btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
+        }
+    })
   })
 }
 
@@ -416,7 +417,7 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
     body: data
   })
   const disgonLi = $(`${id}`).parentNode.childNodes[23]
-  const disgonSend = $(`${id}`).parentNode.childNodes[29] != undefined ? $(`${id}`).parentNode.childNodes[29].childNodes[1]: null
+  const disgonSend = $(`disgon${id}`)
   if(fragil && disgonLi.firstChild == undefined) {
     const chkDisgon = document.createElement('input')
     chkDisgon.setAttribute('type', 'checkbox')

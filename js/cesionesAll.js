@@ -40,12 +40,12 @@ const stopUpdates = ()=>{
 }
 
 const markLines = (ul) =>{
-  const codeClient = ul.childNodes[1].childNodes[6].textContent
-  const id = ul.childNodes[25].id
+  const codeClient = ul.childNodes[3].childNodes[5].textContent
+  const id = ul.childNodes[27].id
   const filas = $('cesiones').getElementsByTagName('ul')
   for(let i=1; i < filas.length; i++){
-    const codeClientLi = filas[i].childNodes[1].childNodes[6].textContent
-    const idLi = filas[i].childNodes[25].id
+    const codeClientLi = filas[i].childNodes[3].childNodes[5].textContent
+    const idLi = filas[i].childNodes[27].id
     filas[i].classList.remove('marcado')
     filas[i].classList.remove('equal')
     codeClientLi == codeClient && idLi != id ? filas[i].classList.add('equal') : ''

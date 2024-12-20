@@ -19,6 +19,9 @@ $nuevas = $contacts->getAssigCountNew($usuario,$usuario,'ready')[0][0];
 ?>
 <picture class="head-img">
     <section>Agenda</section>
+    <section>
+        <img src="<?php echo $src.'/img/Logo-PPCR-2022.png'; ?>" alt="logo" id="logo">
+    </section>
 </picture>
 <nav id="menu-items">
     <ul>

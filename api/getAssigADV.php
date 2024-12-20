@@ -149,11 +149,15 @@ if(sizeof($rows) > 0){
       $textoMensajeria = "Enviar correo a ".ucwords($row[12]);
       $envioDisgon = "🏬";
     }
-    $origen = '<span id="origen'.$row[0].'">'.$row[1].'</span>';
+    if($row[16] == 1)
+      $btnDestinoPress = 'active-city-press';
     $destino = $row[2];
+    $origen = '<span id="origen'.$row[0].'" >'.$row[1].'</span>';
+    $destinoSpan = '<span id="destinoBtn'.$row[0].'" class="'.$btnDestinoPress.'">'.$destino.'</span>';
     $classDelete = '';
     $classSend = '';
     if($puesto == 'ADV'){
+      $destinoSpan = '<span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'">'.$destino.'</span>';
       $classSend = 'class="send"';
       $classDelete = 'class="delete"';
       $btnEnviar = '<span title="Enviar Cesión" id="send'.$row[0].'">📩</span>';
@@ -167,8 +171,6 @@ if(sizeof($rows) > 0){
     }
     if($row[15] == 1)
       $btnOrigenPress = 'ledOn';
-    if($row[16] == 1)
-      $btnDestinoPress = 'active-city-press';
     if($row[14] == 1){
       $nfm = 'NM';
       $nfmChecked = 'checked="checked"';
@@ -193,8 +195,7 @@ if(sizeof($rows) > 0){
     <ul class="assignPendingAdv" title="'.++$contador.'" style="'.$rechazadoStyle.'">
     <li><span class="ledOff '.$btnOrigenPress.'" title="'.$contador.'">'.$contador.'</span></li>
     <li title="Copiar: Origen > Destino" class="origenCesion">
-      '.$origen.'
-        <span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'">'.$destino.'</span>
+      '.$origen.$destinoSpan.'
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$numPie.'</span>
       </li>
       <li title="Destino: " style="display:none">'.$row[2].'</li>
