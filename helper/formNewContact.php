@@ -49,7 +49,8 @@ $ENTIDAD = [
   "FOMINTER",
   "PCAE",
   "INMOSANMAR",
-  "MNP&MAKA S.L"
+  "MNP&MAKA S.L",
+  "SELIGISTICA"
 ];
 $EQUIPO = [
   "COMERCIO",

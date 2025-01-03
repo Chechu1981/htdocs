@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
   .then(response => response.json())
   .then(res => {
     user = res
-    $('menu').childNodes[1].childNodes[1].innerText = res.nombre.toUpperCase()
+    $('userName').innerText = res.nombre.toUpperCase()
     let puesto = res.puesto.toUpperCase()
     if(window.location.pathname.includes('home')){
       const options = $('search-line').childNodes[5].childNodes[1].childNodes

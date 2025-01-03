@@ -45,9 +45,12 @@ function getPvp($referencia){
 
 $nombreCliente = getCliente($_POST['cliente'],$_POST['destino']);
 $designacion = getDescRef($_POST['ref']);
+$comentario = str_replace("'","\"",$_POST['comentario']);
+$rows = '';
+/* NO SE PUEDEN HACER CESIONES DE BATERÍAS, NI LUBRICANTE EUROREPAR
+
 $stringAlert = ['E:BATERÍA','E:BATERIA','E:LUBRICANTE'];
 $num = 0;
-$rows = '';
 foreach($stringAlert as $str){
     $encontrado = str_contains($designacion,$str);
     if($encontrado > 0)
@@ -55,8 +58,7 @@ foreach($stringAlert as $str){
 }
 if($num > 0 && $_POST['origen'] == 'GRANADA' && $puesto != 'ADV'){
     $rows = "Error";
-}
-$comentario = str_replace("'","\"",$_POST['comentario']);
+}*/
 
 /* Busca si hay portes de las cesiones de Zaragoza por Disgon. Emplea mucho tiempo en hacer tres consultas a servidor 
 $pvp = getPvp($_POST['ref']);

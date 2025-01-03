@@ -341,7 +341,7 @@ const refreshInputs = (id,fragil,pedido,tratado,origen,destino) => {
   let chkSeguro = document.getElementById(id).parentNode.childNodes[23].childNodes[0]
   let seguro =  chkSeguro == undefined ? false : chkSeguro.checked
   let nfm = document.getElementById(id).parentNode.childNodes[19].childNodes[0].checked
-  let code = $(id).parentNode.childNodes[3].childNodes[5]
+  let code = $(id).parentNode.childNodes[3].childNodes[4]
   origen != destino ? cesion = origen + '' + destino : ''
   seguro = fragil ? seguro = seguro : false 
   seguro ? cesion += 'SEG' : ''
