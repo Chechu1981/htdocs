@@ -392,7 +392,7 @@ class Contacts
         $order = " ORDER BY `id` DESC LIMIT 100";
 
         $sql = "SELECT * FROM `cesiones` WHERE 
-        `ref` LIKE '%$all%' OR
+        REPLACE(`ref`,' ','') LIKE '%$all%' OR
         `origen` LIKE '%$all%' OR
         `destino` LIKE '%$all%' OR
         `refClient` LIKE '%$all%' OR

@@ -1586,7 +1586,7 @@ span.button:active{
 .round{
   background-color: var(--bg-body-color);
   color: var(--bg-font-color);
-  border-radius: 50%;
+  border-radius: 15px;
   min-width: 12px;
   padding: 3px;
   border: 1px solid var(--bg-font-color);
