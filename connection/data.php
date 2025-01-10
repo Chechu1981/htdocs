@@ -1553,4 +1553,8 @@ class Contacts
         $query->execute();
         return $query->fetchAll();
     }
+
+    function addNewHistoryParts($items){
+        echo "ok";
+    }
 }
