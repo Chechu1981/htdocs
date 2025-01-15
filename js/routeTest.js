@@ -84,7 +84,7 @@ const openDialog = id =>{
         <li>Provincia: <b>${client.provincia}</b></li>
         <li>CP: <b>${client.cp}</b></li>
         <li>Teléfono: <b class="copy">${client.telefono}</b></li>
-        <li>E-mail: <b class="copy">${client.email.toLowerCase()}</b></li>
+        <li>E-mail: <b class="copy">${client.email.toLowerCase()}</b><b id="mail${client.id}" title="Enviar correo diréctamente" class="hover-action">📩</b></li>
         <li>Tipo: <b>${client.tipo}</b></li>
         <li>
           Comercial: <b>${client.comercial}</b>
@@ -116,6 +116,10 @@ const openDialog = id =>{
           const cuerpo = `Adjunto presupuesto no confirmado del cliente ${client.code} (${client.cliente}): `
           window.location.href = `mailto:${response}?subject=Presupuesto no confirmado&cc=${conCopia}&body=${saludo} %0A${cuerpo}%0A%0AUn saludo.`
         })
+      })
+      $(`mail${client.id}`).addEventListener('click', ()=>{
+        const saludo = Date().split(' ')[4].split(':')[0] < 14 ? `Buenos días: ` : `Buenas tardes:`
+        window.location.href = `mailto:${client.email.toLowerCase()}?subject=PPCR&body=${saludo} %0A%0A%0AUn saludo.`
       })
       const bes = document.getElementsByTagName('b')
       for(let i = 0; i < bes.length; i++) {
