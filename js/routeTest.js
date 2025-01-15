@@ -118,8 +118,9 @@ const openDialog = id =>{
         })
       })
       $(`mail${client.id}`).addEventListener('click', ()=>{
+        const asunto = prompt('Asunto del correo: ')
         const saludo = Date().split(' ')[4].split(':')[0] < 14 ? `Buenos días: ` : `Buenas tardes:`
-        window.location.href = `mailto:${client.email.toLowerCase()}?subject=PPCR&body=${saludo} %0A%0A%0AUn saludo.`
+        window.location.href = `mailto:${client.email.toLowerCase()}?subject=${asunto}&body=${saludo} %0A%0A%0AUn saludo.`
       })
       const bes = document.getElementsByTagName('b')
       for(let i = 0; i < bes.length; i++) {
