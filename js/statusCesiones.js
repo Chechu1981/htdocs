@@ -123,7 +123,7 @@ window.addEventListener('load',()=>{
       option.innerHTML = name
       option.setAttribute('value',i)
       input.appendChild(option)
-      if(name.toUpperCase() == $('menu').childNodes[1].childNodes[1].innerText.toUpperCase()){
+      if(name.toUpperCase() == user.nombre.toUpperCase()){
         usuario = i
         option.setAttribute('selected',true)
       }

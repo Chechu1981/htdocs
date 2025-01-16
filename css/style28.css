@@ -832,7 +832,7 @@ input[type="color"]::-webkit-color-swatch {
     position: sticky;
     background-color: var(--bg-body-color);
     z-index: 3;
-    top: 76px;
+    top: 72px;
     height: 70px;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -1443,7 +1443,7 @@ span.button:active{
 
 .heading{
     position: sticky !important;
-    top: 162px;
+    top: 158px;
     background-color: var(--bg-body-color) !important;
     border-bottom: 2px solid var(--main-font-color);
     border-radius: 0  !important;
