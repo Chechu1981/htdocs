@@ -6,10 +6,7 @@ $user = $contacts->getUserBySessid($_POST['session']);
 
 $puesto = $user[0][4];
 
-if($puesto == 'ADV')
-  $puesto = $user[0][1];
-
-if($puesto == 'DESBORDE')
+if($puesto == 'ADV' || $puesto == 'DESBORDE')
   $puesto = $user[0][1];
 
 $rows = $contacts->getAssig(str_replace(' ','',ltrim($_POST['id'],'0')),$puesto,@$_POST['puesto']);

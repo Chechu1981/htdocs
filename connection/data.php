@@ -156,8 +156,7 @@ class Contacts
         echo 'ok';
     }
 
-    public function getTyres($search)
-    {
+    public function getTyres($search){
         $sql = "SELECT *,CONCAT_WS('',`ANCHO`,`PERFIL`,`RADIO`,`CODCARGA`,`INDICE VELOCIDAD`) AS `search` 
             FROM `tyres` 
             WHERE CONCAT_WS('',`ANCHO`,`PERFIL`,`RADIO`,`CODCARGA`,`INDICE VELOCIDAD`) LIKE '%$search%'";
@@ -166,8 +165,7 @@ class Contacts
         return json_encode($query->fetchAll());
     }
 
-    public function getTyresHTML($width,$height,$diameter,$load_code,$speed_index)
-    {
+    public function getTyresHTML($width,$height,$diameter,$load_code,$speed_index){
         $sql = "SELECT * FROM `tyres` WHERE `ANCHO` = '$width' AND `PERFIL` = '$height' AND `RADIO` = '$diameter' AND `CODCARGA` = '$load_code' AND `INDICE VELOCIDAD` = '$speed_index'";
         $query = $this->db->prepare($sql);
         $query->execute();
@@ -196,8 +194,7 @@ class Contacts
         return $query->fetchAll();
     }
 
-    public function getClientHTML($search)
-    {
+    public function getClientHTML($search){
         $sql = "SELECT DISTINCT `code`,`center`,`cutt`,`exit`,`name`,`phone`,`addres`,`city`,`state`,`turn` FROM route WHERE 
         name LIKE '%$search%' 
         OR addres LIKE '%$search%'
@@ -470,6 +467,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function esTratado($id){
+        $sql = "SELECT * FROM `cesiones` WHERE `id` LIKE '$id' AND `tratado` NOT LIKE ''";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function getZzmat($id){ 
         $sql = "SELECT * FROM `cesiones` WHERE `id` = '$id' LIMIT 1";
         $query = $this->db->prepare($sql);
@@ -656,7 +660,7 @@ class Contacts
     }
 
     public function getCenter($center,$search){
-      $tlf = str_replace(" ","",$search);
+        $tlf = str_replace(" ","",$search);
         if(strtoupper($center) == 'CENTROS')
             $center = '%%';
         $sql = "SELECT * FROM `centros` WHERE `A` LIKE '$center' AND 
@@ -1182,10 +1186,10 @@ class Contacts
     }
 
     public function getLastShortRefFile($placa){
-    $sql = "SELECT * FROM `shortref` WHERE `placa` = '$placa' ORDER BY `referencia`, STR_TO_DATE(`fecha`,'%d/%m/%Y'),`npedido`, `prioridad`";
-      $query = $this->db->prepare($sql);
-      $query->execute();
-      return $query->fetchAll();
+        $sql = "SELECT * FROM `shortref` WHERE `placa` = '$placa' ORDER BY `referencia`, STR_TO_DATE(`fecha`,'%d/%m/%Y'),`npedido`, `prioridad`";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
     }
 
     public function getFilterList($placa){
@@ -1193,7 +1197,7 @@ class Contacts
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
-        }
+    }
 
     public function updateShortFile($id){
       $sql = "UPDATE `shortInmv` SET `marcado` = 'SI' WHERE `id` = $id";
@@ -1348,136 +1352,136 @@ class Contacts
       $query = $this->db->prepare($sql);
       $query->execute();
       return $query->fetchAll();
-  }
+    }
 
-  public function getClientNameByPlate($cuenta,$placa){
+    public function getClientNameByPlate($cuenta,$placa){
       $sql = "SELECT * FROM `clientes` WHERE `placa` = '$placa' AND `cuenta` = '$cuenta' ORDER BY LPAD(`envio`,3,'0') ASC";
       $query = $this->db->prepare($sql);
       $query->execute();
       return $query->fetchAll();
-  }
-
-  public function getClientHTMLtest($search){
-    $sinEspacios = str_replace(" ","",$search);
-    $sql = $sql = "SELECT DISTINCT 
-    clientes.code,
-    rutas.CENTRO,
-    rutas.CORTE,
-    rutas.SALIDA,
-    clientes.cliente,
-    clientes.telefono,
-    clientes.direccion,
-    clientes.poblacion,
-    clientes.provincia,
-    rutas.turn,
-    clientes.id
-    FROM `clientes`, `rutas` 
-    WHERE CONCAT('RUTA ',clientes.turnoU) = rutas.TURN 
-    AND clientes.placa = rutas.CENTRO 
-    AND (clientes.cliente LIKE '%$search%' 
-    OR clientes.direccion LIKE '%$search%'
-    OR clientes.poblacion LIKE '%$search%'
-    OR clientes.provincia LIKE '%$search%'
-    OR clientes.cif = '$sinEspacios'
-    OR clientes.email LIKE '%$sinEspacios%'
-    OR REPLACE(clientes.telefono,' ','') LIKE '%$sinEspacios%')
-    ORDER BY LENGTH(code), code ASC LIMIT 100";
-    $query = $this->db->prepare($sql);
-    $query->execute();
-    return $query->fetchAll();
-  }
-
-  public function getRoutesHTMLId($id){
-    $sql = "SELECT * FROM clientes WHERE `id` = $id";
-    $query = $this->db->prepare($sql);
-    $query->execute();
-    return $query->fetchAll();
-  }
-
-  public function updatePrices($items){
-    $proveedor = $items[1]["proveedor"];
-    $ctipo = $items[1]["ctipo"];
-    try{
-        $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE (`proveedor` = 'ALD' AND `ctipo` != 'FI') AND (proveedor = 'ALD' AND`ctipo` != 'JE')");
-        if($ctipo == "FI" || $ctipo == "JE")
-            $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE (`proveedor` = 'ALD' AND `ctipo` = 'FI') OR (`proveedor` = 'ALD' AND `ctipo` = 'JE')");
-        if($proveedor == "AUT")
-            $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE `proveedor` = '$proveedor'");
-        $queryClear->execute();
-        sleep(1);
-        $batchSize = 3000;
-        foreach (array_chunk($items, $batchSize) as $row) {
-            $sql = "INSERT INTO `tarifa`(`referencia`, `denominacion`, `designacion`, `pvp`, `uv`, `peso`, `dto`, `refprov`, `pvpprov`, `proveedor`, `ctipo`) VALUES ";
-            foreach ($row as $rows) {
-                $referencia = $rows["referencia"];
-                $denominacion = str_replace("'","`",$rows["denominacion"]);
-                $designacion = str_replace("'","`",$rows["designacion"]);
-                $pvp = $rows["pvp"];
-                $uv = $rows["uv"];
-                $peso = $rows["peso"];
-                $dto = $rows["dto"];
-                $refprov = $rows["refprov"];
-                $pvpprov = $rows["pvpprov"];
-                $ctipo = $rows["ctipo"];
-                $sql .= "('$referencia','$denominacion','$designacion','$pvp','$uv','$peso','$dto','$refprov','$pvpprov','$proveedor','$ctipo'),";
-            }
-            $sql = substr($sql, 0, -1) . ";";
-            $query = $this->db->prepare($sql);
-            $query->execute();
-        }
-        $queryDelete = $this->db->prepare("DELETE FROM `tarifa` WHERE `referencia` = '000000000000000000';");
-        $queryDelete->execute();
-        return "¡¡ Tarifa actualizada !!";
-    }catch(Exception $e){
-        return $e;
     }
-  }
+
+    public function getClientHTMLtest($search){
+        $sinEspacios = str_replace(" ","",$search);
+        $sql = $sql = "SELECT DISTINCT 
+        clientes.code,
+        rutas.CENTRO,
+        rutas.CORTE,
+        rutas.SALIDA,
+        clientes.cliente,
+        clientes.telefono,
+        clientes.direccion,
+        clientes.poblacion,
+        clientes.provincia,
+        rutas.turn,
+        clientes.id
+        FROM `clientes`, `rutas` 
+        WHERE CONCAT('RUTA ',clientes.turnoU) = rutas.TURN 
+        AND clientes.placa = rutas.CENTRO 
+        AND (clientes.cliente LIKE '%$search%' 
+        OR clientes.direccion LIKE '%$search%'
+        OR clientes.poblacion LIKE '%$search%'
+        OR clientes.provincia LIKE '%$search%'
+        OR clientes.cif = '$sinEspacios'
+        OR clientes.email LIKE '%$sinEspacios%'
+        OR REPLACE(clientes.telefono,' ','') LIKE '%$sinEspacios%')
+        ORDER BY LENGTH(code), code ASC LIMIT 100";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getRoutesHTMLId($id){
+        $sql = "SELECT * FROM clientes WHERE `id` = $id";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function updatePrices($items){
+        $proveedor = $items[1]["proveedor"];
+        $ctipo = $items[1]["ctipo"];
+        try{
+            $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE (`proveedor` = 'ALD' AND `ctipo` != 'FI') AND (proveedor = 'ALD' AND`ctipo` != 'JE')");
+            if($ctipo == "FI" || $ctipo == "JE")
+                $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE (`proveedor` = 'ALD' AND `ctipo` = 'FI') OR (`proveedor` = 'ALD' AND `ctipo` = 'JE')");
+            if($proveedor == "AUT")
+                $queryClear = $this->db->prepare("DELETE FROM `tarifa` WHERE `proveedor` = '$proveedor'");
+            $queryClear->execute();
+            sleep(1);
+            $batchSize = 3000;
+            foreach (array_chunk($items, $batchSize) as $row) {
+                $sql = "INSERT INTO `tarifa`(`referencia`, `denominacion`, `designacion`, `pvp`, `uv`, `peso`, `dto`, `refprov`, `pvpprov`, `proveedor`, `ctipo`) VALUES ";
+                foreach ($row as $rows) {
+                    $referencia = $rows["referencia"];
+                    $denominacion = str_replace("'","`",$rows["denominacion"]);
+                    $designacion = str_replace("'","`",$rows["designacion"]);
+                    $pvp = $rows["pvp"];
+                    $uv = $rows["uv"];
+                    $peso = $rows["peso"];
+                    $dto = $rows["dto"];
+                    $refprov = $rows["refprov"];
+                    $pvpprov = $rows["pvpprov"];
+                    $ctipo = $rows["ctipo"];
+                    $sql .= "('$referencia','$denominacion','$designacion','$pvp','$uv','$peso','$dto','$refprov','$pvpprov','$proveedor','$ctipo'),";
+                }
+                $sql = substr($sql, 0, -1) . ";";
+                $query = $this->db->prepare($sql);
+                $query->execute();
+            }
+            $queryDelete = $this->db->prepare("DELETE FROM `tarifa` WHERE `referencia` = '000000000000000000';");
+            $queryDelete->execute();
+            return "¡¡ Tarifa actualizada !!";
+        }catch(Exception $e){
+            return $e;
+        }
+    }
   
-  public function getRefer($referencia){
-    $sql = "SELECT DISTINCT * FROM `tarifa` WHERE REPLACE(LTRIM(REPLACE(`referencia`,'0',' ')),' ','0') = REPLACE(LTRIM(REPLACE('$referencia','0',' ')),' ','0') OR (CHAR_LENGTH(`referencia`) < 7 AND `referencia` = '$referencia')";
-    $query = $this->db->prepare($sql);
-    $query->execute();
-    return $query->fetchAll();
-  }
+    public function getRefer($referencia){
+        $sql = "SELECT DISTINCT * FROM `tarifa` WHERE REPLACE(LTRIM(REPLACE(`referencia`,'0',' ')),' ','0') = REPLACE(LTRIM(REPLACE('$referencia','0',' ')),' ','0') OR (CHAR_LENGTH(`referencia`) < 7 AND `referencia` = '$referencia')";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 
-  public function getDto($codDto){
-    $sql = "SELECT * FROM `dto_compra` WHERE `codDto` = '$codDto' AND `t_pedido` LIKE 'VOR'";
-    $query = $this->db->prepare($sql);
-    $query->execute();
-    return $query->fetchAll();
-  }
+    public function getDto($codDto){
+        $sql = "SELECT * FROM `dto_compra` WHERE `codDto` = '$codDto' AND `t_pedido` LIKE 'VOR'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 
-  public function newRecordDownloadFile($ipClient){
-    $date = date("d/m/y H:i:s");
-    $sql = "INSERT INTO `ipClientes` (`ip`,`fecha`) VALUES ('$ipClient','$date');";
-    $query = $this->db->prepare($sql);
-    $query->execute();
-  }
-
-  public function getIpClients(){
-    $sql = "SELECT * FROM `ipClientes` ORDER BY `id` DESC";
-    $query = $this->db->prepare($sql);
-    $query->execute();
-    return $query->fetchAll();
-  }
-
-  public function getPalabrasClave(){
-    $sql = "SELECT * FROM `palabrasclave`";
-    $query = $this->db->prepare($sql);
-    $query->execute();
-    return $query->fetchAll();
-  }
-
-  public function updateClavesRef($clave){
-    $queryClear = $this->db->prepare("DELETE FROM `palabrasclave`");
-    $queryClear->execute();
-    sleep(1);
-    foreach($clave as $frase){
-        $sql = "INSERT INTO `palabrasclave` (`clave`) VALUES ('$frase')";
+    public function newRecordDownloadFile($ipClient){
+        $date = date("d/m/y H:i:s");
+        $sql = "INSERT INTO `ipClientes` (`ip`,`fecha`) VALUES ('$ipClient','$date');";
         $query = $this->db->prepare($sql);
         $query->execute();
     }
-  }
+
+    public function getIpClients(){
+        $sql = "SELECT * FROM `ipClientes` ORDER BY `id` DESC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getPalabrasClave(){
+        $sql = "SELECT * FROM `palabrasclave`";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function updateClavesRef($clave){
+        $queryClear = $this->db->prepare("DELETE FROM `palabrasclave`");
+        $queryClear->execute();
+        sleep(1);
+        foreach($clave as $frase){
+            $sql = "INSERT INTO `palabrasclave` (`clave`) VALUES ('$frase')";
+            $query = $this->db->prepare($sql);
+            $query->execute();
+        }
+    }
 
     public function getTest(){
         $sql = "SELECT * FROM `tester` WHERE `id` = '1'";

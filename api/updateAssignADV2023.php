@@ -1,8 +1,13 @@
 <?php
 include_once '../connection/data.php';
 $contacts = new Contacts();
-
-if(@$_POST['origen'] != ''){
+$update = True;
+$esTratado = $contacts->esTratado($_POST['id']);
+if($esTratado[0]['tratado'] != '' && $_POST['puesto'] != 'ADV')
+    $update = False;  
+if(@$_POST['origen'] == '')
+    $update = False;
+if($update){
   $rows = $contacts->updateAssigADV2023(
     $_POST['id'],
     $_POST['fragil'],
@@ -15,9 +20,8 @@ if(@$_POST['origen'] != ''){
     $_POST['origen'],
     @$_POST['disgon'],
     str_replace("'","\"",@$_POST['comentario']));
-  echo $rows;
 }else{
-  $rows = $contacts->updateComentAssigADV2023(
+    $rows = $contacts->updateComentAssigADV2023(
     $_POST['id'],
     str_replace("'","\"",$_POST['comentario']),
   );

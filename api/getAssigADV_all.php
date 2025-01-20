@@ -153,7 +153,7 @@ if(sizeof($rows) > 0){
       $nfmChecked = 'checked="checked"';
     }
     
-    $rutasDirectas = ["6251-2","78709-1","12752-1","105252-1","105342-1","14075-1","7545-1","78766-1"];
+    $rutasDirectas = ["6251-2","78709-1","12752-1","105252-1","105342-1","14075-1"];
     $rutasPreguntar = ["6254-1","78713-1"];
     $rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"];
     $numPie = '';
@@ -181,7 +181,7 @@ if(sizeof($rows) > 0){
     $fechaSHora = explode(".",explode(" ", $row[25])[1]);
     $lists .= '
     <ul class="assignPendingAdv '.$libre.'" title="'.$contador++.'">
-    <li><span class="ledOff '.$btnOrigenPress.'"></span></li>
+    <li><span class="ledOff '.$btnOrigenPress.'" style="cursor:initial"></span></li>
       <li title="Copiar: Origen > Destino" class="origenCesion">
         '.$origen.'
         <span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'">'.$destino.'</span>

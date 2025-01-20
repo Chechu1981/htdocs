@@ -39,17 +39,24 @@ if($_POST['sort'] == 'destino')
 $agent = '';
 $agent_head = '';
 
-function createOptons($user){
-  $optionsList = '<option value="" selected ></option>';
+function createOptons($user,$id){
+  global $puesto;
+  $disabled = '';
+  if($user != '')
+    $disabled = 'disabled';
+  if($puesto == 'ADV')
+    $disabled = ''; 
+  $optionsList = '<select name="agente" id="agente'.$id.'" '.$disabled.'><option value="" selected></option>';
   global $allUsers;
   for($i = 0; $i < count($allUsers); $i++){
     if($allUsers[$i][4] != 'ADV')
-    continue;
+      continue;
     if($user == strtoupper($allUsers[$i][1]))
       $optionsList .= '<option value="'.strtoupper($allUsers[$i][1]).'" selected >'.strtoupper($allUsers[$i][1]).'</option>';
     else
       $optionsList .= '<option value="'.strtoupper($allUsers[$i][1]).'">'.strtoupper($allUsers[$i][1]).'</option>';
   }
+  $optionsList .= '<option value="ADV">ADV</option></select>';
   return $optionsList;
 }
 
@@ -120,7 +127,7 @@ if(sizeof($rows) > 0){
     $rechazadoStyle = '';
     $usuarioCesion = '';
     $seguro = '';
-    $options = createOptons($agente);
+    $options = createOptons($agente,$row[0]);
     $textoMensajeria = "Abrir aplicación de Logística";
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
     if(($_POST['id']) != 'new')
@@ -153,14 +160,18 @@ if(sizeof($rows) > 0){
       $btnDestinoPress = 'active-city-press';
     $destino = $row[2];
     $origen = '<span id="origen'.$row[0].'" >'.$row[1].'</span>';
-    $destinoSpan = '<span id="destinoBtn'.$row[0].'" class="'.$btnDestinoPress.'">'.$destino.'</span>';
+    $destinoSpan = '<span id="destinoBtn'.$row[0].'" class="'.$btnDestinoPress.'" style="cursor: initial">'.$destino.'</span>';
     $classDelete = '';
     $classSend = '';
+    $cursor = 'style="cursor: initial"';
     if($puesto == 'ADV'){
-      $destinoSpan = '<span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'">'.$destino.'</span>';
+      $destinoSpan = '<span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'" >'.$destino.'</span>';
       $classSend = 'class="send"';
       $classDelete = 'class="delete"';
       $btnEnviar = '<span title="Enviar Cesión" id="send'.$row[0].'">📩</span>';
+      $cursor = 'style="cursor:pointer"';
+    }
+    if($puesto == 'ADV' || $agente == ''){
       $origen = createOptions($row[0],$row[1],$row[12]);
     }
     if($row[10] != $user[0][1])
@@ -176,7 +187,7 @@ if(sizeof($rows) > 0){
       $nfmChecked = 'checked="checked"';
     }
 
-    $rutasDirectas = ["6251-2","78709-1","12752-1","105252-1","105342-1","14075-1","7545-1","78766-1"];
+    $rutasDirectas = ["6251-2","78709-1","12752-1","105252-1","105342-1","14075-1"];
     $rutasPreguntar = ["6254-1","78713-1"];
     $rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"];
 
@@ -193,7 +204,7 @@ if(sizeof($rows) > 0){
     
     $lists .= '
     <ul class="assignPendingAdv" title="'.++$contador.'" style="'.$rechazadoStyle.'">
-    <li><span class="ledOff '.$btnOrigenPress.'" title="'.$contador.'">'.$contador.'</span></li>
+    <li><span class="ledOff '.$btnOrigenPress.'" '.$cursor.' title="'.$contador.'">'.$contador.'</span></li>
     <li title="Copiar: Origen > Destino" class="origenCesion">
       '.$origen.$destinoSpan.'
         <span class="copy '.$important.'" style="grid-column: 1 / 4;font-size: medium;">'.$numPie.'</span>
@@ -209,9 +220,7 @@ if(sizeof($rows) > 0){
       <li title="Frágil: "><input type="checkbox" '.$fragChecked.' name="fragil"></input></li>
       <li title="Disgon: ">'.$disgon.'</li>
       <li title="agente">
-        <select name="agente" id="agente'.$row[0].'">
         '.$options.'
-        </select>
       </li>
       <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"><span title="'.$row[24].'">'.$rechazado.'</span></li>
       <li '.$classSend.' >'.$btnEnviar.'<span title="'.$textoMensajeria.'" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>

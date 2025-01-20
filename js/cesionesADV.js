@@ -1,6 +1,6 @@
 'use strict';
 import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?110"
-import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?103"
+import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?104"
 import contadores from "./updateCounter.js?101"
 
 const setCounters = setInterval(() =>{contadores()},1000)
@@ -154,7 +154,7 @@ const showAssig = () =>{
           })
         }
         if($('cesiones').childNodes[i].localName == 'ul' && $('cesiones').childNodes[i].localName != undefined)
-          pedido.addEventListener('keyup', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
+          pedido.addEventListener('blur', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
 
         nfm.addEventListener('change', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
         fragil.addEventListener('change', () => refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent))
@@ -180,17 +180,21 @@ const showAssig = () =>{
           clearRowsMark(ul, texto)
         })
         
-        if(user.puesto == 'ADV'){
+        if(user.puesto == 'ADV' || tratado.value == ''){
           origen.addEventListener('change', (e) => {
             refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
             })
           origenLed.addEventListener('click', (e) => {
-            e.target.classList.toggle('ledOn')
-            updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+            if(user.puesto == 'ADV'){
+              e.target.classList.toggle('ledOn')
+              updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+            }
           })
           destino.addEventListener('click', () => {
-            destino.classList.toggle('active-city-press')
-            updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+            if(user.puesto == 'ADV'){
+              destino.classList.toggle('active-city-press')
+              updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
+            }
           })
         }
 
@@ -292,6 +296,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
   dataName.append('comentario', comentario)
   dataName.append('misterauto', refCliente)
   dataName.append('correo', correo_proveedor)
+  dataName.append('puesto', user.puesto)
   fetch('../api/isSend.php',{
     method: 'POST',
     body: dataName
@@ -412,10 +417,7 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   data.append('origenBtn', origenBtn)
   data.append('destinoBtn', destinoBtn)
   data.append('origen', origen)
-  fetch('../api/updateAssignADV2023.php',{
-    method: 'POST',
-    body: data
-  })
+  data.append('puesto', user.puesto)
   const disgonLi = $(`${id}`).parentNode.childNodes[23]
   const disgonSend = $(`disgon${id}`)
   if(fragil && disgonLi.firstChild == undefined) {
@@ -442,6 +444,12 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
     disgonLi.firstChild.remove()
     disgonSend.innerHTML = ''
   }
+  fetch('../api/updateAssignADV2023.php',{
+    method: 'POST',
+    body: data
+  })
+  .then(response => response.text())
+  .then(item => showAssig())
 }
 
 const updateAssig = (id,values) => {

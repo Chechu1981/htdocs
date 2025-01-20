@@ -92,7 +92,7 @@ export const eliminarLinea = (id,referencia,tratado) =>{
     .then(consulta =>{
       const origenActivo = parseInt(consulta.emisor)
       const destinoActivo = parseInt(consulta.receptor)
-      if(origenActivo || destinoActivo){
+      if(origenActivo || destinoActivo || (tratado != '' && user.puesto != 'ADV')){
         customAlert("Ya está en curso. Habla con ADV si quieres eliminar.")
         showAssig()
         return true

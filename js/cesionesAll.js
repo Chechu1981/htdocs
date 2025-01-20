@@ -203,10 +203,6 @@ const showAssig = () =>{
           if(btnSendMailDisgon != null)
             btnSendMailDisgon.addEventListener('click',() => enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id))
         }
-        origenLed.addEventListener('click', (e) => {
-          e.target.classList.toggle('ledOn')
-          updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
-        })
         btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
         if(lineaMarcada > 0)
           markLines($('cesiones').getElementsByTagName('ul')[lineaMarcada])
