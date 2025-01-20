@@ -29,11 +29,15 @@ export const createMail = (cantidad, origen, destino, referencia, cliente, pedid
     `);
   }
   if (nfm)
-    strNfm = `La entrada en Geode debe ser realizada como entrada 109. PIEZA SIN SOLUCIÓN DE REEMPLAZO.   `;
+    strNfm = `La entrada en Geode debe ser realizada como entrada 109. PIEZA SIN SOLUCIÓN DE REEMPLAZO. `
   if (origen == 'SANTIAGO')
     origen = 'GALICIA';
   if (destino == 'SANTIAGO')
     destino = 'GALICIA';
+  if(origen == 'VALENCIA' && destino == 'PALMA'){
+    strNfm += `Por favor, dfs ¿podéis añadir esta referencia a la ruta dedicada? `
+    mailDestino += ';dfs1@stellantis.com'
+  }
   const fecha = new Date();
   const mailSub = `${asuntoDisgon} CESION ${origen} -> ${destino}`;
   const mailSaludo = fecha.getHours() > 14 ? `${strDisgon}${mailFragil}Buenas tardes: ` : `${strDisgon}${mailFragil}Buenos días: `;
