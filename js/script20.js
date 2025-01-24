@@ -67,6 +67,17 @@ const sendMail = (placa) =>{
   window.location.href = `mailto:${destino[placa]}?subject=Pedido de mostrador&body=${saludo} %0A${cuerpo}%0A%0AUn saludo.`  
 }
 
+$('mailBParts').addEventListener('click',(e) => {
+  fetch('../../helper/sendMailClient.php')
+  .then(response => response.text())
+  .then(response => {
+    modal(response,"Seleciona cliente")
+    const script = document.createElement('script')
+    script.src = '../js/formSearchClient.js'
+    document.head.appendChild(script)
+  })
+})
+
 $('mailMostrador').addEventListener('click',(e) => {
   $('submenu').classList.toggle('submenu_hidden')
 })

@@ -76,6 +76,7 @@ $nuevas = $contacts->getAssigCountNew($usuario,$usuario,'ready')[0][0];
     <span id="referencia" ></span>
 </div>
 <div class="note">
+    <img alt="Enviar correo de B-parts a la placa de Madrid" src="<?php echo $src."/img/b-parts-brand-logo.png"; ?>" id="mailBParts" title="Enviar un correo a la placa de Madrid indicando que llega un B-Parts">
     <span id="mailMostrador">
       <img alt="Enviar correo al mostrador" src="<?php echo $src."/img/moving_ministry_24dp_FILL0_wght400_GRAD0_opsz24.png"; ?>" id="mailMostrador" title="Enviar un correo al mostrador">
       <menu name="submenuSendMailTo" id="submenu" class="submenu submenu_hidden">
