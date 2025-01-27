@@ -71,8 +71,9 @@ $('mailBParts').addEventListener('click',(e) => {
   fetch('../../helper/sendMailClient.php')
   .then(response => response.text())
   .then(response => {
-    modal(response,"Seleciona cliente")
+    modal(response,"Selecciona cliente")
     const script = document.createElement('script')
+    script.type = 'module'
     script.src = '../js/formSearchClient.js'
     document.head.appendChild(script)
   })

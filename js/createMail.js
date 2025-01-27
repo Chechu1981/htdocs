@@ -171,3 +171,17 @@ ${numero}  ${referencia.toUpperCase()}   %0APVP:${tarifa.precio}€  DTO:${tarif
     $(`disgon${id}`).innerHTML = "✅"
   })
 }
+
+export const createMailBparts = (client) => {
+  const hora = new Date()
+  console.log(client)
+  const destinatarios = "placamadridadministracion@stellantis.com"
+  const cc = ""
+  const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
+  const asunto = `Pedido de B-Parts para el cliente ${client.code}`
+  const mensaje = `%0APor favor, hay que crear la referencia y cargarlo al cliente ${client.code} (${client.cliente}). La pieza va directamente al cliente.
+  %0A%0A%0A%0A
+  Muchas gracias.
+`
+  window.location.href = `mailto:${destinatarios}?subject=${asunto}&body=${saludo}${mensaje}` //
+}

@@ -207,6 +207,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getClientById($id){
+        $sql = "SELECT * FROM `clientes` WHERE id = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function getRepereHTML($ref){
         $ref = ltrim($ref,"0");
         $sql = "SELECT DISTINCT * FROM `repere` WHERE REPLACE(LTRIM(REPLACE(`Referencia_fabricación`,'0',' ')),' ','0') = '".$ref."'";

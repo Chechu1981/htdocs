@@ -1,4 +1,5 @@
 'use strict';
+import { createMailBparts } from "./createMail.js"
 const btnBuscar = document.getElementById("btnBuscar")
 
 btnBuscar.addEventListener('click', e => {
@@ -22,10 +23,22 @@ btnBuscar.addEventListener('click', e => {
         <li>${item.cliente}</li>
         <li>${item.direccion}</li>
         <li>${item.poblacion}</li>
-        <li class="send" style="cursor:pointer" id="id${item.id}">📨</li>
+        <li class="send" style="cursor:pointer" id="id${item.id}" title="Enviar correo a placa de Madrid para notificar B-Parts del cliente ${item.code}">📨</li>
       </ul>`
     })
     $('resultado').innerHTML = resultado + '</section>'
-    
   })
+})
+
+$('resultado').addEventListener('click', e => {
+  if(e.target.id.startsWith('id')){
+    const id = e.target.id.split('id')[1]
+    const data = new FormData()
+    data.append('id',id)
+    fetch('../api/getClientById.php', {
+      method: 'POST',
+      body: data
+    }).then(response => response.json())
+    .then(client => {createMailBparts(client[0])})
+  }
 })
