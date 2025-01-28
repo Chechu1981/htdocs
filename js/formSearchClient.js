@@ -39,6 +39,6 @@ $('resultado').addEventListener('click', e => {
       method: 'POST',
       body: data
     }).then(response => response.json())
-    .then(client => {createMailBparts(client[0])})
+    .then(client => {createMailBparts(client[0]),location.reload()})
   }
 })
