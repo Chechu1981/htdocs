@@ -142,6 +142,10 @@ if(sizeof($rows) > 0){
       }
       if($row[18] == 1 && $puesto == 'ADV' && $row[1] != 'MAT'){
         $envioDisgon = '📦';
+        if($row[1] == 'SANTIAGO'){
+          $envioDisgon = '🚚';
+          $textoMensajeria = "Enviar correo a Disgon";
+        }
         if($row[1] == 'VALENCIA')
           $envioDisgon = '';
         if($row[22] == 1)

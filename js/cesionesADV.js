@@ -166,6 +166,7 @@ const showAssig = () =>{
           let fragilTxt = ''
           if(disgon != null){
             disgon.checked && $(`disgon${id}`).innerHTML == '📦' ? fragilTxt += 'Recoge LOGISTICA. ' : ''
+            disgon.checked && $(`disgon${id}`).innerHTML == '🚚' ? fragilTxt += 'Recoge DISGON. ' : ''
           }
           fragil.checked ? fragilTxt += '..~** ¡¡MATERIAL FRÁGIL!! **~..REFORZAR EMBALAJE;' : ''
           clearRowsMark(ul,`Cesión ${origen.value}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
@@ -249,7 +250,9 @@ const showAssig = () =>{
           btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente.innerText,comentario.firstChild.innerHTML, correo_proveedor))
           if(btnSendMailDisgon != null)
             btnSendMailDisgon.addEventListener('click',(e) => {
-              if(e.target.innerHTML == '🏬')
+              if(e.target.innerHTML == '🚚')
+                enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id,comentario.firstChild.innerHTML)
+              else if(e.target.innerHTML == '🏬')
                 createMailProv(id,cantidad,refCliente,destino.textContent,referencia.firstChild.textContent.replaceAll(' ',''),cliente.firstChild.textContent,correo_proveedor)
               else if(e.target.innerHTML == '📦')
                 window.open("https://recambios.logistica.com/page/index.aspx"),$(`disgon${id}`).innerHTML = "✅"
@@ -262,8 +265,8 @@ const showAssig = () =>{
 }
 
 const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, id, cantidad, nfm, tratado, refCliente,comentario, correo_proveedor) =>{
-  if($(`disgon${id}`).innerHTML == "📦"){
-    customAlert("Debes enviar primero el correo a Logistica")
+  if($(`disgon${id}`).innerHTML == "🚚" || $(`disgon${id}`).innerHTML == "📦"){
+    customAlert("Debes enviar primero el correo a Disgón o Logistica")
     return false
   }
   if($(`disgon${id}`).innerHTML == "🏬"){
@@ -429,6 +432,8 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   if(disgonSend != null && user.puesto == 'ADV' && fragil && origen != 'EXT'){
     if(disgonLi.childNodes[0].checked){
       disgonSend.innerText = '📦'
+      if(origen == 'SANTIAGO')
+        disgonSend.innerText = '🚚'
       if(origen == 'VALENCIA' || origen == 'MAT')
         disgonSend.innerText = ''
     }
