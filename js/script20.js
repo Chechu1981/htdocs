@@ -3,21 +3,21 @@ const $ = (id) => document.getElementById(id)
 const $$ = (tagName) => document.getElementsByTagName(tagName)
 
 const ruta = {
+  0 : './',
   1 : './',
-  2 : './',
-  3 : '../',
-  4 : '../../',
-  5 : '../../'
+  2 : '../',
+  3 : '../../',
+  4 : '../../../'
 }
+
+const src = ruta[window.location.pathname.split('/').length]
 
 $$('input')[0].addEventListener('keyup', (e) => {
   $('repere').value != '' ? $('referencia').classList.add('is_repere') : $('referencia').classList.remove('is_repere')
   $('referencia').classList.add('spinner');
-  let src = ''
-  src = ruta[window.location.pathname.split('/').length] + 'api/getRepere.php'
   let data = new FormData();
   data.append('search', e.target.value)
-  fetch(src,{
+  fetch(`${src}api/getRepere.php`,{
     method: 'POST',
     body: data})
   .then(response => response.text())
@@ -35,7 +35,7 @@ const modal = (params,title) =>{
   box.className = 'note-active'
   let contentBox = document.createElement('div')
   contentBox.className = 'note-body'
-  box.innerHTML = `<img class='note-btn' id='close' src='${ruta[window.location.pathname.split('/').length]}img/close_FILL0_wght400_GRAD0_opsz24.png'></img>`
+  box.innerHTML = `<img class='note-btn' id='close' src='${src}img/close_FILL0_wght400_GRAD0_opsz24.png'></img>`
   contentBox.innerHTML = `<h2>${title}</h2>`
   contentBox.innerHTML += params
   box.append(contentBox)
@@ -45,7 +45,7 @@ const modal = (params,title) =>{
     e.target.parentNode.classList.add('note-desactive')
     for(let i = 0; i < document.getElementsByTagName('script').length; i++){
       let item = document.getElementsByTagName('script')[i].src.split('/')[4]
-      if(item == 'formNotebook.js' || item == 'form.js'){
+      if(item == 'formNotebook.js' || item == 'form.js' || item == 'formSearchClient.js'){
         document.getElementsByTagName('script')[i].remove()
         window.location.reload()
       }
@@ -68,13 +68,13 @@ const sendMail = (placa) =>{
 }
 
 $('mailBParts').addEventListener('click',(e) => {
-  fetch('../../helper/sendMailClient.php')
+  fetch(`${src}helper/sendMailClient.php`)
   .then(response => response.text())
   .then(response => {
-    modal(response,"Selecciona cliente")
+    const ventana = modal(response,"Selecciona cliente")
     const script = document.createElement('script')
     script.type = 'module'
-    script.src = '../js/formSearchClient.js'
+    script.src = `${src}js/formSearchClient.js`
     document.head.appendChild(script)
   })
 })
@@ -96,7 +96,7 @@ $('malaga').addEventListener('click',(e) => {
 })
 
 $('notes').addEventListener('click',(e) => {
-  let src = ruta[window.location.pathname.split('/').length] + 'api/getNotes.php'
+  let src = src + 'api/getNotes.php'
   fetch(src)
   .then((response) => response.text())
   .then((notes) => {
@@ -105,13 +105,13 @@ $('notes').addEventListener('click',(e) => {
 })
 
 $('calc').addEventListener('click',(e) => {
-  let src = ruta[window.location.pathname.split('/').length] + 'api/calc.php'
+  let src = src + 'api/calc.php'
   fetch(src)
   .then((response) => response.text())
   .then((notes) => {
     modal(notes,'Calculador')
     const script = document.createElement('script')
-    script.src = `${ruta[window.location.pathname.split('/').length]}/js/calc.js`
+    script.src = `${src}/js/calc.js`
     document.getElementsByClassName('note-active')[0].appendChild(script)
   })
 })
@@ -121,7 +121,7 @@ document.addEventListener('click',(e)=>{
     const txt = $('txtNotes').value;
     const data = new FormData()
     data.append('txt',txt)
-    let src = ruta[window.location.pathname.split('/').length] + 'api/updateNotes.php'
+    let src = src + 'api/updateNotes.php'
     fetch(src,{
       method: 'POST',
       body: data
@@ -143,11 +143,10 @@ setInterval(() => {
 
 $('menu').childNodes[7].addEventListener('click',(e) => {
   if(e.target.title == "Configuración"){
-    let src = ''
     let id = document.location.search.split('=')[1]
     let data = new FormData()
     data.append('id',id)
-    src = ruta[window.location.pathname.split('/').length] + '../helper/modalConfig.php'
+    src = src + '../helper/modalConfig.php'
     fetch(src,{
       method: 'POST',
       body: data
@@ -175,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const id = window.location.search.split('=')[1].split('&')[0]
   const data = new FormData()
   data.append('id', id)
-  fetch(`${ruta[window.location.pathname.split('/').length]}api/getUserById.php`,{
+  fetch(`${src}api/getUserById.php`,{
     method: 'POST',
     body: data
   })
@@ -340,7 +339,7 @@ const newAssigns = setInterval(() => {
   countUserAssign.append('usuario',user.nombre)
   countUserAssign.append('puesto',user.nombre)
   countUserAssign.append('status','ready')
-  fetch(ruta[window.location.pathname.split('/').length] + "./api/getCountAssigns.php",{
+  fetch(src + "./api/getCountAssigns.php",{
     method: 'POST',
     body: countUserAssign
   })
@@ -358,7 +357,7 @@ const newAssigns = setInterval(() => {
   data.append('usuario',user.nombre)
   data.append('puesto',user.puesto)
   data.append('status','all')
-  fetch(ruta[window.location.pathname.split('/').length] + "./api/getCountAssigns.php",{
+  fetch(src + "./api/getCountAssigns.php",{
     method: 'POST',
     body: data
   })
@@ -369,7 +368,7 @@ const newAssigns = setInterval(() => {
       $('cesionesActivas').childNodes[1].title = `${valor}`
       const dataAssign = new FormData()
       dataAssign.append('usr',user.nombre)
-      fetch(ruta[window.location.pathname.split('/').length] + "./api/getAssigLast.php",{
+      fetch(src + "./api/getAssigLast.php",{
         method: 'POST',
         body: dataAssign
       })

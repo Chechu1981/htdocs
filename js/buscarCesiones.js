@@ -33,9 +33,13 @@ document.getElementById('status').addEventListener('click',()=>{
 })
 
 //Código de la búsqueda  
-const seacrhRef = (e) => {
+const seacrhRef = () => {
   e.preventDefault()
   e.stopImmediatePropagation()
+  let referencia = $('search-ref').value()
+  let origen = $('origen').value()
+  let destino = $('destino').value()
+  let asegurado = $('seguro').checked()
   const uriData = new FormData()
   uriData.append('subfolder',id)
   fetch('../../api/spinner.php',{
@@ -47,7 +51,10 @@ const seacrhRef = (e) => {
   const section = document.getElementById('cesiones')
   const ref = document.getElementById('refAssig').value.replaceAll(' ','')
   const data = new FormData()
-  data.append('id',ref)
+  data.append('id',referencia)
+  data.append('origen',origen)
+  data.append('destino',destino)
+  data.append('asegurado',asegurado)
   data.append('session',id)
   fetch('./../../api/getAssig.php',{
     method: 'POST',
@@ -89,7 +96,7 @@ const seacrhRef = (e) => {
   })
 }
 
-document.getElementById('search-ref').addEventListener('submit',e => seacrhRef(e))
+document.getElementById('search-ref').addEventListener('submit',() => seacrhRef())
 
 window.addEventListener('load',()=>{
   document.getElementById('refAssig').focus()

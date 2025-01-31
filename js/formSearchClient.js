@@ -1,5 +1,5 @@
 'use strict';
-import { createMailBparts } from "./createMail.js"
+import { createMailBparts } from "./createMail.js?100"
 const btnBuscar = document.getElementById("btnBuscar")
 
 btnBuscar.addEventListener('click', e => {
@@ -8,7 +8,7 @@ btnBuscar.addEventListener('click', e => {
   const data = new FormData()
   data.append('search',nCliente)
   data.append('placa','MAD')
-  fetch('../api/getClientName.php', {
+  fetch(`${src}api/getClientName.php`, {
     method: 'POST',
     body: data
   })
@@ -35,10 +35,12 @@ $('resultado').addEventListener('click', e => {
     const id = e.target.id.split('id')[1]
     const data = new FormData()
     data.append('id',id)
-    fetch('../api/getClientById.php', {
+    fetch(`${src}api/getClientById.php`, {
       method: 'POST',
       body: data
     }).then(response => response.json())
     .then(client => {createMailBparts(client[0]),location.reload()})
   }
 })
+
+clientNumber.focus()
