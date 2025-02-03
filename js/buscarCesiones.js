@@ -33,13 +33,13 @@ document.getElementById('status').addEventListener('click',()=>{
 })
 
 //Código de la búsqueda  
-const seacrhRef = () => {
+const seacrhRef = e => {
   e.preventDefault()
   e.stopImmediatePropagation()
-  let referencia = $('search-ref').value()
-  let origen = $('origen').value()
-  let destino = $('destino').value()
-  let asegurado = $('seguro').checked()
+  let referencia = $('refAssig').value
+  let origen = $('origen').value
+  let destino = $('destino').value
+  let asegurado = $('seguro').checked
   const uriData = new FormData()
   uriData.append('subfolder',id)
   fetch('../../api/spinner.php',{
@@ -96,7 +96,7 @@ const seacrhRef = () => {
   })
 }
 
-document.getElementById('search-ref').addEventListener('submit',() => seacrhRef())
+document.getElementById('search-ref').addEventListener('submit',e => seacrhRef(e))
 
 window.addEventListener('load',()=>{
   document.getElementById('refAssig').focus()

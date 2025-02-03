@@ -392,19 +392,21 @@ class Contacts
         return $sql;
     }
 
-    public function getAssig($all,$usr,$puesto = null){
+    public function getAssig($all,$usr,$puesto = null,$origen,$destino,$asegurado){
         $order = " ORDER BY `id` DESC LIMIT 100";
-
-        $sql = "SELECT * FROM `cesiones` WHERE 
-        REPLACE(`ref`,' ','') LIKE '%$all%' OR
-        `origen` LIKE '%$all%' OR
-        `destino` LIKE '%$all%' OR
-        `refClient` LIKE '%$all%' OR
-        `cliente` LIKE '%$all%'OR
-        `comentario` LIKE '%$all%'OR
-        `pedido` LIKE '%$all%' AND
-        `rechazado` = false AND
-        (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";
+        $asegurado === 'true' ? $asegurado = "`disgon` = 1 AND ": $asegurado = "";
+        $origen != '' ? $origen = "`origen` = '$origen' AND ": $origen = "";
+        $destino != '' ? $destino = "`destino` = '$destino' AND ": $destino = "";
+        $sql = "SELECT * FROM `cesiones` WHERE (
+                $origen
+                $destino
+                $asegurado
+                `rechazado` = false) AND (
+                REPLACE(`ref`,' ','') LIKE '%$all%' OR
+                `refClient` LIKE '%$all%' OR
+                `cliente` LIKE '%$all%' OR
+                `comentario` LIKE '%$all%' OR
+                `pedido` LIKE '%$all%')";
 
         if($all == 'all')
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr')";

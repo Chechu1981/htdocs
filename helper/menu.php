@@ -83,6 +83,7 @@ $nuevas = $contacts->getAssigCountNew($usuario,$usuario,'ready')[0][0];
         <p id="madrid" title="Enviar correo al mostrador de Madrid">MADRID</p>
         <p id="santiago" title="Enviar correo al mostrador de Santiago">SANTIAGO</p>
         <p id="malaga" title="Enviar correo al mostrador de Málaga (628 620 699)">MÁLAGA</p>
+        <p id="zaragoza" title="Enviar correo al mostrador de Zaragoza">ZARAGOZA</p>
       </menu>
     </span>
     <span id="notes">

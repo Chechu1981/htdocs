@@ -60,7 +60,8 @@ const sendMail = (placa) =>{
   const destino = {
     'madrid' : ["armando.sanz@external.stellantis.com;placamadridcalldesplazado@stellantis.com;"],
     'santiago' : ["marcos.rodriguez@stellantis.com;jorge.ferreiro@stellantis.com;damian.bello@stellantis.com;ivan.huertas@stellantis.com;"],
-    'malaga' : ["Isabel.villalon@stellantis.com;Alejandro.bujalance@stellantis.com;Javier.cespedes@stellantis.com;Arielhernan.agulenca@stellantis.com;"]
+    'malaga' : ["Isabel.villalon@stellantis.com;Alejandro.bujalance@stellantis.com;Javier.cespedes@stellantis.com;Arielhernan.agulenca@stellantis.com;"],
+    'zaragoza' : ["sandra.burriel-marteles@cevalogistics.com;EXT.antonio.miralles@cevalogistics.com;EXT.pedro.gracia-serrano@cevalogistics.com;joseluis.fernandez2@stellantis.com;luis.dominguez@stellantis.com"]
   }
   const saludo = Date().split(' ')[4].split(':')[0] < 14 ? `Buenos días: `: `Buenas tardes`
   const cuerpo = `Un cliente va a pasar a recoger este pedido por el mostrador: `
@@ -94,10 +95,12 @@ $('santiago').addEventListener('click',(e) => {
 $('malaga').addEventListener('click',(e) => {
   sendMail("malaga")
 })
+$('zaragoza').addEventListener('click',(e) => {
+  sendMail("zaragoza")
+})
 
 $('notes').addEventListener('click',(e) => {
-  let src = src + 'api/getNotes.php'
-  fetch(src)
+  fetch(`${src}api/getNotes.php`)
   .then((response) => response.text())
   .then((notes) => {
     modal(notes,'Notas')
@@ -105,8 +108,7 @@ $('notes').addEventListener('click',(e) => {
 })
 
 $('calc').addEventListener('click',(e) => {
-  let src = src + 'api/calc.php'
-  fetch(src)
+  fetch(`${src}api/calc.php`)
   .then((response) => response.text())
   .then((notes) => {
     modal(notes,'Calculador')
@@ -146,8 +148,7 @@ $('menu').childNodes[7].addEventListener('click',(e) => {
     let id = document.location.search.split('=')[1]
     let data = new FormData()
     data.append('id',id)
-    src = src + '../helper/modalConfig.php'
-    fetch(src,{
+    fetch(`${src}/helper/modalConfig.php`,{
       method: 'POST',
       body: data
     })
@@ -339,7 +340,7 @@ const newAssigns = setInterval(() => {
   countUserAssign.append('usuario',user.nombre)
   countUserAssign.append('puesto',user.nombre)
   countUserAssign.append('status','ready')
-  fetch(src + "./api/getCountAssigns.php",{
+  fetch(`${src}api/getCountAssigns.php`,{
     method: 'POST',
     body: countUserAssign
   })
@@ -357,7 +358,7 @@ const newAssigns = setInterval(() => {
   data.append('usuario',user.nombre)
   data.append('puesto',user.puesto)
   data.append('status','all')
-  fetch(src + "./api/getCountAssigns.php",{
+  fetch(`${src}api/getCountAssigns.php`,{
     method: 'POST',
     body: data
   })
@@ -368,7 +369,7 @@ const newAssigns = setInterval(() => {
       $('cesionesActivas').childNodes[1].title = `${valor}`
       const dataAssign = new FormData()
       dataAssign.append('usr',user.nombre)
-      fetch(src + "./api/getAssigLast.php",{
+      fetch(`${src}api/getAssigLast.php`,{
         method: 'POST',
         body: dataAssign
       })

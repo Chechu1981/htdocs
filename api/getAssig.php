@@ -5,11 +5,14 @@ $contacts = new Contacts();
 $user = $contacts->getUserBySessid($_POST['session']);
 
 $puesto = $user[0][4];
+$origen = @$_POST['origen'];
+$destino = @$_POST['destino'];
+$asegurado = @$_POST['asegurado'];
 
 if($puesto == 'ADV' || $puesto == 'DESBORDE')
   $puesto = $user[0][1];
 
-$rows = $contacts->getAssig(str_replace(' ','',ltrim($_POST['id'],'0')),$puesto,@$_POST['puesto']);
+$rows = $contacts->getAssig(str_replace(' ','',ltrim($_POST['id'],'0')),$puesto,@$_POST['puesto'],@$origen, @$destino, @$asegurado);
 
 function getCliente($cliente,$placa){
   $contacts = new Contacts();
