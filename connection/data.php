@@ -394,7 +394,7 @@ class Contacts
 
     public function getAssig($all,$usr,$puesto = null,$origen,$destino,$asegurado){
         $order = " ORDER BY `id` DESC LIMIT 100";
-        $asegurado === 'true' ? $asegurado = "`disgon` = 1 AND ": $asegurado = "";
+        $asegurado === 'true' ? $asegurado = "(`disgon` = 1 OR `disgon` = 2) AND ": $asegurado = "";
         $origen != '' ? $origen = "`origen` = '$origen' AND ": $origen = "";
         $destino != '' ? $destino = "`destino` = '$destino' AND ": $destino = "";
         $sql = "SELECT * FROM `cesiones` WHERE (
@@ -407,7 +407,6 @@ class Contacts
                 `cliente` LIKE '%$all%' OR
                 `comentario` LIKE '%$all%' OR
                 `pedido` LIKE '%$all%')";
-
         if($all == 'all')
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         elseif($all == 'new')
@@ -517,6 +516,13 @@ class Contacts
             WHERE `usuario` LIKE '$user' 
             GROUP BY  YEAR(envio),MONTH(envio), DAY(envio) 
             ORDER BY `id` DESC LIMIT 90";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function assignStatusByPlate(){
+        $sql = "SELECT COUNT(`origen`) AS `vol`,`origen` FROM `cesiones` GROUP BY `origen` ORDER BY `id` DESC";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
