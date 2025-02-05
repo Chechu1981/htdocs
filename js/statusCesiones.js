@@ -136,7 +136,7 @@ window.addEventListener('load',()=>{
       backgroundColor: colorArray,
       stack: 'Stack 0',
     }]
-
+    
     window.graph = new Chart("myChart", {
       type: 'bar',
       data: data,

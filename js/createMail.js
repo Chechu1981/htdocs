@@ -49,18 +49,19 @@ Saludos.`);
   window.open(`mailto:${destinoFragil};${mailDestino};${mailOrigen}?subject=${mailSub}&cc=${bcc}&body=${mailSaludo + mailTarget}`);
 }
 
+const direcciones = {
+  MADRID: 'Carretera de Seseña a Esquivias, Km 0,8 - 45224 Seseña Nuevo (Toledo)',
+  VALENCIA: 'Carrer dels Bombers, 20 - 46980 PATERNA - VALENCIA',
+  GALICIA: 'Vía Pasteur 41, CP:15898 Santiago de Compostela (A CORUÑA)',
+  BARCELONA: 'Calle D, nº 41 - Polig. Ind. Zona Franca - 08040 BARCELONA',
+  ZARAGOZA: 'C/ Río de Janeiro, 3 Polígono Industrial Centrovia 50198 - La Muela - ZARAGOZA',
+  GRANADA: 'Polígono Industrial Huerta Ardila - Ctra. A-92 Km 6 - 18320 SANTA FE - GRANADA',
+  SEVILLA: 'Parque Logístico de Carmona - MANZANA B, NAVE 1.Autovía A-4 Km. 521    41410 Carmona - Sevilla',
+  PALMA:'Avda. 16 de Julio, 5 - 07009 SON CASTELLO- PALMA DE MALLORCA'
+}
+
 export const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
   $(`disgon${id}`).className = "wait"
-  const direcciones = {
-    MADRID: 'Carretera de Seseña a Esquivias, Km 0,8 - 45224 Seseña Nuevo (Toledo)',
-    VALENCIA: 'Carrer dels Bombers, 20 - 46980 PATERNA - VALENCIA',
-    GALICIA: 'Vía Pasteur 41, CP:15898 Santiago de Compostela (A CORUÑA)',
-    BARCELONA: 'Calle D, nº 41 - Polig. Ind. Zona Franca - 08040 BARCELONA',
-    ZARAGOZA: 'C/ Río de Janeiro, 3 Polígono Industrial Centrovia 50198 - La Muela - ZARAGOZA',
-    GRANADA: 'Polígono Industrial Huerta Ardila - Ctra. A-92 Km 6 - 18320 SANTA FE - GRANADA',
-    SEVILLA: 'Parque Logístico de Carmona - MANZANA B, NAVE 1.Autovía A-4 Km. 521    41410 Carmona - Sevilla',
-    PALMA:'Avda. 16 de Julio, 5 - 07009 SON CASTELLO- PALMA DE MALLORCA'
-  }
 
   const hora = new Date().getHours()
   let saludo = `Buenos días:`
@@ -165,6 +166,7 @@ export const createMailProv = (id,cantidad,placaExterna,destino,referencia,clien
     let mensaje = `%0AProveedor: ${placaExterna.innerText}
 %0ASolicito 
 ${numero}  ${referencia.toUpperCase()}   %0APVP:${tarifa.precio}€  DTO:${tarifa.descuento - 3}% 
+%0AEnvío a la placa de ${destino} [${direcciones[destino]}]
 %0ACliente: ${cliente}%0A⚠️Por favor enviadnos el albarán respondiendo a este correo⚠️`
     window.location.href = `mailto:${correo_proveedor}?cc=${bcc}&subject=Compra externa - PPCR ${destino}&body=${saludo}${mensaje}`
     $(`disgon${id}`).classList.remove("wait")
