@@ -18,7 +18,6 @@ $('nfm').addEventListener('change', (e) => {
     return null
   }else if(origen == 'EXT'){
     pclient.innerHTML = createInputExt($('destino').value)
-    refMat.addEventListener('blur',() => buscar_ultimo_correo($('refMat').value))
     return null
   }
   cesiones(origen,inputDestino.value,e.target.checked,disgon.checked)
@@ -34,8 +33,7 @@ inputOrigen.addEventListener('change',()=>{
     return null
   }
   if(origen == 'EXT'){
-    pclient.innerHTML = createInputExt($('destino').value)
-    refMat.addEventListener('blur',() => buscar_ultimo_correo($('refMat').value))
+    createInputExt($('destino').value)
     return null
   }
   if(origen != inputDestino.value){
@@ -487,7 +485,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   const ref = $('ref').value.replaceAll(/\t/g, '')
   const cantidad = $('units').value
   const nfm = $('nfm').checked
-  const correo_proveedor = $('mailExt') == null ? '' : $('mailExt').value
+  const correo_proveedor = $('mailExt') == null ? '' : $('mailExt').innerText
   let refMat = ''
   if(origen == 'MAT'){
     refMat = $('refMat').value
@@ -500,7 +498,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   }
   if(origen == 'EXT'){
     refMat = $('refMat').value
-    if(refMat == ''){
+    if(refMat == 'Nombre de la placa'){
       customAlert('Falta indicar el nombre del proveedor')
       $('refMat').style.backgroundColor = 'red';
       document.getElementsByTagName('form')[0].getElementsByTagName('input')[6].disabled = false

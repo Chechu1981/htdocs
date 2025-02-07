@@ -59,15 +59,19 @@ export const createInputMat = (ref) => {
 }
 
 export const createInputExt = (placa) => {
-  if(placa == 'MADRID')
-    return `<input type="text" id="refMat" 
-      style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
-      value="" placeholder="Nombre proveedor"></input>
-      <input id="mailExt" style="width:141px;font-size:15px;" value="" placeholder="Correo@proveedor.com"></input>`
-  return `<input type="text" id="refMat" 
-    style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
-    value=""></input>
-    <span style="font-size: small;line-height: 7;">Nnobre placa externa</span>`
+  let inputs = `<select id="refMat" style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;">
+            <option value="Nombre de la placa" label=""></option>`
+  fetch('../api/getProvExt.php',{
+    method: 'POST'
+  })
+  .then(e => e.json())
+  .then(proveedores => {
+    proveedores.map(proveedor => {
+      inputs +=  `<option value="${proveedor.mail}" label="${proveedor.nombre}">${proveedor.nombre}</option>`
+    })
+    pclient.innerHTML = `${inputs}</select><span id="mailExt" style="font-size: small;line-height: 7;">Nombre de la placa</span>`
+    pclient.querySelector('#refMat').addEventListener('change',(e) => mailExt.innerHTML = e.target.value)
+  })
 }
 
 export const eliminarLinea = (id,referencia,tratado) =>{
@@ -110,7 +114,6 @@ export const eliminarLinea = (id,referencia,tratado) =>{
       .then(e => e.text())
       .then(()=>{
         $(id).parentNode.remove()
-        console.log("updateBubble('-')")
       })
     })
   })

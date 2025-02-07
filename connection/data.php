@@ -49,6 +49,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getProvById($id){
+        $sql = "SELECT * FROM `proveedores` WHERE `id` LIKE '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function getMailByUsername($userName){
         $sql = "SELECT DISTINCT `mail` FROM `usuarios` WHERE `nombre` = '$userName'";
         $query = $this->db->prepare($sql);
@@ -77,6 +84,20 @@ class Contacts
         return 'ok';
     }
 
+    public function deleteProv($id){
+        $sql = "DELETE FROM `proveedores` WHERE id = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return 'ok';
+    }
+
+    public function addNewProv($name,$addres,$nprov,$email){
+        $sql = "INSERT INTO `proveedores` (`nombre`, `direccion`, `mail`,`nprov`) VALUES 
+            ('$name', '$addres', '$email','$nprov')";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
+
     public function addNewUser($user,$pass,$puesto,$email){
         $sql = "INSERT INTO `usuarios` (`nombre`, `clave`, `puesto`,`theme`,`mail`) VALUES ('$user', '$pass', '$puesto','blue','$email')";
         $query = $this->db->prepare($sql);
@@ -88,6 +109,17 @@ class Contacts
         `nombre` = '$user', 
         `clave` = '$pass', 
         `puesto` = '$puesto',
+        `mail` = '$email' 
+        WHERE `id` = $id";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
+
+    public function updateProv($id,$name,$addres,$nprov,$email){
+        $sql = "UPDATE `proveedores` SET 
+        `nombre` = '$name', 
+        `nprov` = '$nprov', 
+        `direccion` = '$addres',
         `mail` = '$email' 
         WHERE `id` = $id";
         $query = $this->db->prepare($sql);
@@ -736,6 +768,20 @@ class Contacts
 
     public function getTheme($usr){
         $sql = "SELECT DISTINCT theme FROM `usuarios` WHERE nombre LIKE '$usr'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getProvExt(){
+        $src = "SELECT * FROM `proveedores` ORDER BY `nombre` ASC";
+        $query = $this->db->prepare($src);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getProvList(){
+        $sql = "SELECT * FROM `proveedores` ORDER BY `nombre` ASC";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
