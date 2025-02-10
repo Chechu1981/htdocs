@@ -23,7 +23,7 @@
             <label for="nombre">NOMBRE DE LA PLACA</label>
               <input type="username" id="nombre" placeholder="Nombre de la placa" value="">
             <label for="email">CORREO ELECTRÓNICO</label>
-              <input type="email" id="email" placeholder="Correo electrónico" value="" autocomplete="off">
+              <input type="text" id="email" placeholder="Correo electrónico" value="" autocomplete="off">
             <label for="direccion">DIRECCIÓN</label>
                 <input name="direccion" id="direccion" placeholder="Dirección"></input>
             <label for="nprov">NÚMERO DE PROVEEDOR</label>

@@ -37,7 +37,7 @@
             <label for="nombre">NOMBRE DE USUARIO</label>
               <input type="username" id="nombre" placeholder="Nombre de proveedor" value="<?= $userData[0][2] ?>">
             <label for="email">CORREO ELECTRÓNICO</label>
-              <input type="email" id="email" placeholder="Correo electrónico" value="<?= $userData[0][4] ?>" autocomplete="off">
+              <input type="text" id="email" placeholder="Correo electrónico" value="<?= $userData[0][4] ?>" autocomplete="off">
             <label for="direccion">DIRECCIÓN</label>
                 <input name="direccion" id="direccion" value="<?= $userData[0][3] ?>">
             <label for="nprov">Número de proveedor</label>

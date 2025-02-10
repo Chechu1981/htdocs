@@ -497,7 +497,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
     }
   }
   if(origen == 'EXT'){
-    refMat = $('refMat').value
+    refMat = $('refMat').value.split('~')[0]
     if(refMat == 'Nombre de la placa'){
       customAlert('Falta indicar el nombre del proveedor')
       $('refMat').style.backgroundColor = 'red';

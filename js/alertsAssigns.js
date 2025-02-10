@@ -67,10 +67,12 @@ export const createInputExt = (placa) => {
   .then(e => e.json())
   .then(proveedores => {
     proveedores.map(proveedor => {
-      inputs +=  `<option value="${proveedor.mail}" label="${proveedor.nombre}">${proveedor.nombre}</option>`
+      inputs +=  `<option value="${proveedor.nombre}~${proveedor.mail}" label="${proveedor.nombre}">${proveedor.nombre}</option>`
     })
-    pclient.innerHTML = `${inputs}</select><span id="mailExt" style="font-size: small;line-height: 7;">Nombre de la placa</span>`
-    pclient.querySelector('#refMat').addEventListener('change',(e) => mailExt.innerHTML = e.target.value)
+    pclient.innerHTML = `${inputs}</select><span id="mailExt" style="font-size: x-small;line-height: 7;">Nombre de la placa</span>`
+    pclient.querySelector('#refMat').addEventListener('change',(e) => {
+      $('mailExt').innerHTML = e.target.value.split('~')[1]
+    })
   })
 }
 

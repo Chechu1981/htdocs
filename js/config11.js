@@ -15,6 +15,7 @@ if(typeof(href) != "object"){
   "clientes": "update/configClient.php",
   "usuarios": "update/configUsers.php",
   "repere": "update/configRepere.php",
+  "proveedores": "update/configProv.php",
   "alertas": "api/getAlertEdition.php"
   }
 
@@ -93,7 +94,7 @@ if(typeof(href) != "object"){
             window.location.reload(true)
           })
         })
-      }else if(e.target.title == 'usuarios' || e.target.title == 'pending' || e.target.title == 'rutas' || e.target.title == 'repere' || e.target.title == 'soc' || e.target.title == 'clientes' || e.target.title == 'tarifa'){
+      }else if(e.target.title == 'usuarios' || e.target.title == 'pending' || e.target.title == 'rutas' || e.target.title == 'repere' || e.target.title == 'soc' || e.target.title == 'clientes' || e.target.title == 'tarifa' || e.target.title == 'proveedores'){
         window.location.href = src + href[e.target.title] + window.location.search
       }else{
         data.append('title',e.target.innerHTML)
