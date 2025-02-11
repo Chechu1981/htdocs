@@ -152,7 +152,7 @@ if(sizeof($rows) > 0){
           $envioDisgon = "✅";
       }
     }
-    if($row[26] != ''){
+    if($row[1] == 'EXT' && $row[2] == 'MADRID'){
       $textoMensajeria = "Enviar correo a ".ucwords($row[12]);
       $envioDisgon = "🏬";
     }
