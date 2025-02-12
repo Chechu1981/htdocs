@@ -88,7 +88,7 @@ export const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
     const importe = Math.ceil(result.pvp * ((100 - result.dtoNum) / 100))
     const asunto = "RECOGIDA PPCR - DISGON"
     const mail = encodeURIComponent(`${saludo}
-    Necesitamos recoger la referencia ${result.referencia} cantidad ${cantidad} ${descRef} en PPCR ${origen}
+    Necesitamos recoger la referencia ${result.referencia.toUpperCase()} cantidad ${cantidad} ${descRef} en PPCR ${origen}
     ${dirOrigen}
     
     Para enviarlo a PPCR ${destino}
@@ -124,12 +124,12 @@ export const createMailMat = (cantidad,misterauto,destino,referencia,cliente,ped
     %0AUsuario: ${credential.usuario}
     %0AContraseña: ${credential.pass}
 
-    %0AAprovisionamiento, por favor ¿podríais crear la referencia indicada?
+    %0APor favor, cuando podáis ¿podríais crear la referencia indicada?
 
     %0A%0AMuchas gracias.
   `
 
-    window.location.href = `mailto:${destinatarios}?cc=dfs1@stellantis.com&subject=Compra Mister-Auto ${destino}&body=${saludo}${mensaje}` //
+    window.location.href = `mailto:${destinatarios}?subject=Compra Mister-Auto ${destino}&body=${saludo}${mensaje}` //
   })
 }
 
