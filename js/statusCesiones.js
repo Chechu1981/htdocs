@@ -48,7 +48,6 @@ window.addEventListener('load',()=>{
   const divContainer = document.createElement('div')
   divContainer.style.margin = "auto"
   divContainer.style.height = `calc(70vh - (${$('menu').offsetHeight}px + ${$('contacts').offsetHeight}px))`
-  divContainer.style.maxWidth = "700px"
   $('cesiones').innerHTML = ''
   const chart = document.createElement('script')
   chart.src = "https://cdn.jsdelivr.net/npm/chart.js"
@@ -63,8 +62,8 @@ window.addEventListener('load',()=>{
   fetch('../../api/getAssigStatus.php',{
     method: 'POST'
   })
-  .then((e) => e.json())
-  .then((res) => {
+  .then(e => e.json())
+  .then(res => {
     const input = document.createElement('select')
     input.name = "Users"
     input.style = "width: 150px;border: 2px solid var(--main-font-color);border-radius: 8px;font-size: 2em; text-transform: uppercase;height: fit-content;"
@@ -161,53 +160,54 @@ window.addEventListener('load',()=>{
         }
       }
     })
-  })
-
-  //Cesiones por placa
-  const divChartPlacas = document.createElement('div')
-  divChartPlacas.style.margin = "auto"
-  divChartPlacas.style.height = `calc(70vh - (${$('menu').offsetHeight}px + ${$('contacts').offsetHeight}px))`
-  divChartPlacas.style.maxWidth = "700px"
-  const canvasPlacas = document.createElement('canvas')
-  canvasPlacas.id = "chartPlacas"
-  divChartPlacas.appendChild(canvasPlacas)
-  $('cesiones').appendChild(divChartPlacas)
-  fetch('../../api/getAssigStatusByPlate.php',{
-    method: 'POST'
-  })
-  .then((e) => e.json())
-  .then((res) => {
-    const allPlatesData = {datasets: []}
-
-    allPlatesData.datasets.push({
-      data: res[0].vol,
-      backgroundColor: colorArray,
-      stack: 'Stack 0',
+    //Cesiones por placa
+    const divChartPlacas = document.createElement('div')
+    divChartPlacas.style.margin = "auto"
+    divChartPlacas.style.height = `calc(70vh - (${$('menu').offsetHeight}px + ${$('contacts').offsetHeight}px))`
+    const canvasPlacas = document.createElement('canvas')
+    canvasPlacas.id = "chartPlacas"
+    divChartPlacas.appendChild(canvasPlacas)
+    $('cesiones').appendChild(divChartPlacas)
+    fetch('../../api/getAssigStatusByPlate.php',{
+      method: 'POST'
     })
-
-    window.graph = new Chart("chartPlacas", {
-      type: 'bar',
-      data: allPlatesData,
-      options: {
-        plugins: {
-          title: {
-            display: true,
-            text: 'Cesiones diarias por placa'
-          },
+    .then(e => e.json())
+    .then(res => {  
+      let datos = []
+      let etiquetas = []
+      res[0].map(volumen => {
+        datos.push(volumen.vol)
+        etiquetas.push(volumen.origen)
+      })
+      window.graph1 = new Chart("chartPlacas", {
+        type: 'polarArea',
+        data: {
+          datasets:[{
+            data: datos,
+            backgroundColor: colorArray,
+          }],
+          labels: etiquetas,
+          hoverOffset: 4
         },
-        responsive: true,
-        interaction: {
-          intersect: false,
-        },
-        scales: {
-          x: {
-            stacked: true,
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: 'Cesiones totales por placa origen'
+            },
           },
-          y: {
-            stacked: true
+          responsive: true,
+          interaction: {
+            intersect: false,
+          },
+          scales: {
+            y: {
+              stacked: true
+            }
           }
         }
-      }
-    })
+      })
+  })
+
   })
 })
