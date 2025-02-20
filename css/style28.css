@@ -1044,6 +1044,13 @@ input[type="color"]::-webkit-color-swatch {
     color: var(--bg-font-color);
 }
 
+.ledRed{
+    background-color: #ff0000;
+    box-shadow: 0 0 10px rgb(0 103 /0 70%);
+    border: 2px solid #660000;
+    color: var(--bg-font-color);
+}
+
 .ledOff:hover,
 .ledOn:hover{
     filter: brightness(1.3);

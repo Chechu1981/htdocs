@@ -182,6 +182,8 @@ if(sizeof($rows) > 0){
     }
     if($row[15] == 1)
       $btnOrigenPress = 'ledOn';
+    if($row[15] == 2)
+      $btnOrigenPress = 'ledRed';
     if($row[14] == 1){
       $nfm = 'NM';
       $nfmChecked = 'checked="checked"';

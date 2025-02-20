@@ -183,8 +183,16 @@ const showAssig = () =>{
             refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
             })
           origenLed.addEventListener('click', (e) => {
+            const classLed = ['','ledOn','ledRed']
+            let numClassLed = classLed.indexOf(e.target.classList[1] == undefined ? '' : e.target.classList[1])
+            numClassLed = numClassLed == 2 ? 0 : numClassLed + 1
             if(user.puesto == 'ADV'){
-              e.target.classList.toggle('ledOn')
+              if(numClassLed != 0)
+                e.target.classList.add(classLed[numClassLed])
+                if(numClassLed == 2)
+                  e.target.classList.remove(classLed[numClassLed - 1])
+              if(numClassLed == 0)
+                e.target.classList.remove(classLed[2])
               updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value,destino.textContent)
             }
           })
@@ -399,7 +407,9 @@ const updateBubble = (operador) =>{
 
 const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   const disgon = $(id).parentNode.childNodes[23].firstChild == null ? false : $(id).parentNode.childNodes[23].firstChild.checked
-  const origenBtn = $(id).parentNode.childNodes[1].firstChild.className.includes('ledOn') ? '1':'0'
+  const ledStatus = [undefined,'ledOn','ledRed']
+  const ledStatusDestino = $(id).parentNode.childNodes[1].firstChild.className.split(' ')[1]
+  const origenBtn = ledStatus.indexOf(ledStatusDestino)
   const destinoBtn = $(`destinoBtn${id}`).className.includes('press') ? '1':'0'
   const origen = $(`origen${id}`).nodeName == 'SELECT' ? $(`origen${id}`).value : $(`origen${id}`).innerHTML
   const comentario = $(`coment${id}`).value
