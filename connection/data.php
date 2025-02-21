@@ -553,8 +553,15 @@ class Contacts
         return $query->fetchAll();
     }
 
-    public function assignStatusByPlate(){
-        $sql = "SELECT COUNT(`origen`) AS `vol`,`origen` FROM `cesiones` GROUP BY `origen` ORDER BY `id` DESC";
+    public function assignStatusByPlate($dateIn, $dateOut){
+        $sql = "SELECT COUNT(`origen`) AS `vol`,`origen` FROM `cesiones` WHERE `envio` BETWEEN '$dateIn' AND '$dateOut' GROUP BY `origen` ORDER BY `id` DESC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getAssigStatusByPlateDestination($dateIn, $dateOut){
+        $sql = "SELECT COUNT(`destino`) AS `vol`,`destino` FROM `cesiones` WHERE `envio` BETWEEN '$dateIn' AND '$dateOut' GROUP BY `destino` ORDER BY `id` DESC";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

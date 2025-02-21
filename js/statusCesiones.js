@@ -43,6 +43,7 @@ const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
   '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
 
 window.addEventListener('load',()=>{
+  let barras = window.graph
   if(document.getElementsByTagName('select').length > 0)
     return false
   const divContainer = document.createElement('div')
@@ -68,9 +69,9 @@ window.addEventListener('load',()=>{
     input.name = "Users"
     input.style = "width: 150px;border: 2px solid var(--main-font-color);border-radius: 8px;font-size: 2em; text-transform: uppercase;height: fit-content;"
     input.addEventListener("change",(e)=>{
-      if(window.graph){
-        window.graph.clear()
-        window.graph.destroy()
+      if(barras){
+        barras.clear()
+        barras.destroy()
       }
       if(res[e.target.value][1].length > 0){
         let sum = res[e.target.value][1].slice(0,20).reduce((previous, current) => parseInt(current) + parseInt(previous));
@@ -84,7 +85,7 @@ window.addEventListener('load',()=>{
         backgroundColor: colorArray,
         stack: 'Stack 0',
       }]
-      window.graph = new Chart("myChart", {
+      barras = new Chart("myChart", {
         type: 'bar',
         data: data,
         options: {
@@ -136,7 +137,7 @@ window.addEventListener('load',()=>{
       stack: 'Stack 0',
     }]
     
-    window.graph = new Chart("myChart", {
+    barras = new Chart("myChart", {
       type: 'bar',
       data: data,
       options: {
@@ -160,62 +161,103 @@ window.addEventListener('load',()=>{
         }
       }
     })
-    //Cesiones por placa
+    //Los que más piden
+    let graphics1 = window.graph
     const divChartPlacas = document.createElement('div')
     divChartPlacas.style.margin = "auto"
     divChartPlacas.style.height = `calc(70vh - (${$('menu').offsetHeight}px + ${$('contacts').offsetHeight}px))`
     const canvasPlacas = document.createElement('canvas')
-    canvasPlacas.id = "chartPlacas"
+    canvasPlacas.id = "chartPiden"
+    divChartPlacas.appendChild(document.createElement('hr'))
     divChartPlacas.appendChild(canvasPlacas)
     $('cesiones').appendChild(divChartPlacas)
-    fetch('../../api/getAssigStatusByPlate.php',{
-      method: 'POST'
+    cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{dateIn:'',dateOut:''},graphics1,'Los que más piden')
+    
+
+    //Los que más ceden
+    let graphics = window.graph
+    const divChartPlacas1 = document.createElement('div')
+    const selectDateInto = document.createElement('input')
+    selectDateInto.type = "date"
+    selectDateInto.addEventListener("change", () => {
+      cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"cartCeden",{
+        dateIn: selectDateInto.value,
+        dateOut: selectDateFinal.value
+      },graphics,'Los que más ceden')
     })
-    .then(e => e.json())
-    .then(res => {  
-      let datos = []
-      let etiquetas = []
-      res[0].map(volumen => {
-        datos.push(volumen.vol)
-        etiquetas.push(volumen.origen)
-      })
-      window.graph1 = new Chart("chartPlacas", {
-        type: 'polarArea',
-        data: {
-          datasets:[{
-            data: datos,
-            backgroundColor: colorArray,
-          }],
-          labels: etiquetas,
-          hoverOffset: 4
-        },
-        options: {
-          actions:[{
-            name: 'Randomize',
-            handler(chart) {
-              chart.data.datasets.forEach(dataset => {
-                dataset.data = Utils.numbers({count: chart.data.labels.length, min: -100, max: 100});
-              });
-              chart.update();
-            }
-          }],
-          plugins: {
-            title: {
-              display: true,
-              text: 'Cesiones totales por placa origen'
-            },
-          },
-          responsive: true,
-          interaction: {
-            intersect: false,
-          },
-          scales: {
-            y: {
-              stacked: true
-            }
-          }
-        },
-      })
+    const selectDateFinal = document.createElement('input')
+    let value = new Date()
+    selectDateFinal.type = "date"
+    selectDateFinal.value = value.toISOString().split('T')[0]
+    selectDateFinal.addEventListener('change',()=>{
+      cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"cartCeden",{
+        dateIn: selectDateInto.value,
+        dateOut: selectDateFinal.value
+      },graphics,'Los que más ceden')
     })
+    divChartPlacas1.style.margin = "auto"
+    divChartPlacas1.style.height = `calc(70vh - (${$('menu').offsetHeight}px + ${$('contacts').offsetHeight}px))`
+    const canvasPlacas1 = document.createElement('canvas')
+    canvasPlacas1.id = "cartCeden"
+    divChartPlacas1.appendChild(document.createElement('hr'))
+    divChartPlacas1.appendChild(selectDateInto)
+    divChartPlacas1.appendChild(selectDateFinal)
+    divChartPlacas1.appendChild(canvasPlacas1)
+    $('cesiones').appendChild(divChartPlacas1)
+    cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"cartCeden",{dateIn:'2025-01-01',dateOut:'2025-02-21'}, graphics, 'Los que más ceden')
   })
 })
+
+const cargarGrafico = (url,cartId,post,graph,title) => {   
+  if(graph) {
+    graph.clear()
+    graph.destroy()
+  }
+  const data =  new FormData()
+  data.append('dateIn',post.dateIn)
+  data.append('dateOut',post.dateOut)
+  fetch(url,{
+    method: 'POST',
+    body: data
+  })
+  .then(e => e.json())
+  .then(res => {  
+    let datos = []
+    let etiquetas = []
+    res[0].map(volumen => {
+      datos.push(volumen.vol)
+      if(cartId == 'chartPiden')
+        etiquetas.push(volumen.origen)
+      else
+        etiquetas.push(volumen.destino)
+    })
+    graph = new Chart(cartId, {
+      type: 'polarArea',
+      data: {
+        datasets:[{
+          data: datos,
+          backgroundColor: colorArray,
+        }],
+        labels: etiquetas,
+        hoverOffset: 4
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: title
+          },
+        },
+        responsive: true,
+        interaction: {
+          intersect: false,
+        },
+        scales: {
+          y: {
+            stacked: true
+          }
+        }
+      },
+    })
+  })
+}

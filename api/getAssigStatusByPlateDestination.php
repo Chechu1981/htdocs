@@ -4,7 +4,7 @@ $contacts = new Contacts();
 
 $allData = array();
 
-$rows = $contacts->assignStatusByPlate($_POST['dateIn'], $_POST['dateOut']);  
+$rows = $contacts->getAssigStatusByPlateDestination($_POST['dateIn'], $_POST['dateOut']);  
 
 array_push($allData,$rows);
 echo json_encode($allData);
