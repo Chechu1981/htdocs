@@ -5,6 +5,7 @@ setInterval(() =>{contadores()},1000)
 const id = window.location.search.split('?id=')[1]
 const btnAll = document.getElementById('all') ?? 0
 
+
 if(btnAll){
   btnAll.addEventListener('click',()=>{
     document.location = `../cesionesAll.php?id=${id}`
@@ -42,21 +43,10 @@ const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
   '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
   '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
 
-window.addEventListener('load',()=>{
-  let barras = window.graph
+let barras, chartOrigen, chartDestino = window.graph
+window.addEventListener('load',() => {
   if(document.getElementsByTagName('select').length > 0)
     return false
-  const divContainer = document.createElement('div')
-  divContainer.style.margin = "auto"
-  divContainer.style.height = `calc(70vh - (${$('menu').offsetHeight}px + ${$('contacts').offsetHeight}px))`
-  $('cesiones').innerHTML = ''
-  const chart = document.createElement('script')
-  chart.src = "https://cdn.jsdelivr.net/npm/chart.js"
-  document.head.appendChild(chart)
-  const canvas = document.createElement('canvas')
-  canvas.id = "myChart"
-  divContainer.appendChild(canvas)
-  $('cesiones').appendChild(divContainer)
   let data = {
     datasets: []
   }
@@ -110,7 +100,6 @@ window.addEventListener('load',()=>{
         }
       })
     })    
-
     // Creo los usuarios en un selection
     let usuario = 0
     for(let i = 0; i < res.length; i++) {
@@ -161,58 +150,45 @@ window.addEventListener('load',()=>{
         }
       }
     })
-    //Los que más piden
-    let graphics1 = window.graph
-    const divChartPlacas = document.createElement('div')
-    divChartPlacas.style.margin = "auto"
-    divChartPlacas.style.height = `calc(70vh - (${$('menu').offsetHeight}px + ${$('contacts').offsetHeight}px))`
-    const canvasPlacas = document.createElement('canvas')
-    canvasPlacas.id = "chartPiden"
-    divChartPlacas.appendChild(document.createElement('hr'))
-    divChartPlacas.appendChild(canvasPlacas)
-    $('cesiones').appendChild(divChartPlacas)
-    cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{dateIn:'',dateOut:''},graphics1,'Los que más piden')
-    
+  }) 
 
-    //Los que más ceden
-    let graphics = window.graph
-    const divChartPlacas1 = document.createElement('div')
-    const selectDateInto = document.createElement('input')
-    selectDateInto.type = "date"
-    selectDateInto.addEventListener("change", () => {
-      cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"cartCeden",{
-        dateIn: selectDateInto.value,
-        dateOut: selectDateFinal.value
-      },graphics,'Los que más ceden')
-    })
-    const selectDateFinal = document.createElement('input')
-    let value = new Date()
-    selectDateFinal.type = "date"
-    selectDateFinal.value = value.toISOString().split('T')[0]
-    selectDateFinal.addEventListener('change',()=>{
-      cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"cartCeden",{
-        dateIn: selectDateInto.value,
-        dateOut: selectDateFinal.value
-      },graphics,'Los que más ceden')
-    })
-    divChartPlacas1.style.margin = "auto"
-    divChartPlacas1.style.height = `calc(70vh - (${$('menu').offsetHeight}px + ${$('contacts').offsetHeight}px))`
-    const canvasPlacas1 = document.createElement('canvas')
-    canvasPlacas1.id = "cartCeden"
-    divChartPlacas1.appendChild(document.createElement('hr'))
-    divChartPlacas1.appendChild(selectDateInto)
-    divChartPlacas1.appendChild(selectDateFinal)
-    divChartPlacas1.appendChild(canvasPlacas1)
-    $('cesiones').appendChild(divChartPlacas1)
-    cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"cartCeden",{dateIn:'2025-01-01',dateOut:'2025-02-21'}, graphics, 'Los que más ceden')
+   //Los que más piden
+  let value = new Date()
+  const selectDateInit = document.createElement('input')
+  const selectDateFinal = document.createElement('input')
+  selectDateFinal.type = "date"
+  selectDateFinal.value = value.toISOString().split('T')[0]
+  selectDateInit.type = "date"
+  $('ceden').appendChild(selectDateInit)
+  $('ceden').appendChild(selectDateFinal)
+  
+  selectDateInit.addEventListener("change", e => {
+    if(chartOrigen){
+      chartOrigen.clear()
+      chartOrigen.destroy()
+    }
+    cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"chartCeden",{
+      dateIn: e.target.value,
+      dateOut: selectDateFinal.value
+    },'Los que más ceden',chartOrigen)
   })
-})
+  
+  selectDateFinal.addEventListener('change',e => {
+    if(chartOrigen){
+      chartOrigen.clear()
+      chartOrigen.destroy()
+    }
+    cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"chartCeden",{
+      dateIn: selectDateInit.value,
+      dateOut: e.target.value
+    },'Los que más ceden',chartOrigen)
+  })
 
-const cargarGrafico = (url,cartId,post,graph,title) => {   
-  if(graph) {
-    graph.clear()
-    graph.destroy()
-  }
+  cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{dateIn:'',dateOut:''},'Los que más piden', chartDestino)
+  cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"chartCeden",{dateIn:'2025-01-01',dateOut:'2025-02-21'}, 'Los que más ceden',chartOrigen)
+  
+})
+const cargarGrafico = (url,cartId,post,title, chartId) => {   
   const data =  new FormData()
   data.append('dateIn',post.dateIn)
   data.append('dateOut',post.dateOut)
@@ -221,7 +197,7 @@ const cargarGrafico = (url,cartId,post,graph,title) => {
     body: data
   })
   .then(e => e.json())
-  .then(res => {  
+  .then(res => {
     let datos = []
     let etiquetas = []
     res[0].map(volumen => {
@@ -231,7 +207,7 @@ const cargarGrafico = (url,cartId,post,graph,title) => {
       else
         etiquetas.push(volumen.destino)
     })
-    graph = new Chart(cartId, {
+    chartId = new Chart(cartId, {
       type: 'polarArea',
       data: {
         datasets:[{

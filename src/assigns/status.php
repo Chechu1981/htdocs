@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <?php include('../../helper/logon.php'); ?>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <?php include_once '../../helper/alert.php'; ?>
@@ -13,7 +14,19 @@
       <h1>Cesiones - Estadística</h1>
       <?php include_once '../../helper/menuCesiones.php'; ?>
     </div>
-    <div id="cesiones" style="display: block;"></div>
+    <div id="cesiones" style="display: block;">
+      <div style="margin: auto;height: calc(70vh - 100px);width: calc(100% - 100px);">
+        <canvas id="myChart"></canvas>
+      </div>
+      <hr>
+      <div id="piden" style="margin: auto;height: calc(70vh - 100px);width: calc(100% - 100px);">
+        <canvas id="chartPiden"></canvas>
+      </div>
+      <hr>
+      <div id="ceden" style="margin: auto;height: calc(70vh - 100px);width: calc(100% - 100px);">
+        <canvas id="chartCeden"></canvas>
+      </div>
+    </div>
   </div>
   <?php include('./../../helper/footer.php'); ?>
 </body>
