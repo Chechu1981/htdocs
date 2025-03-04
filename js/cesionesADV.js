@@ -1,5 +1,5 @@
 'use strict';
-import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?110"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?111"
 import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?104"
 import contadores from "./updateCounter.js?101"
 
@@ -253,7 +253,7 @@ const showAssig = () =>{
         }
 
         if(btnSendMail != null){
-          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente.innerText,comentario.firstChild.innerHTML, correo_proveedor))
+          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente.innerText,comentario.textContent, correo_proveedor))
           if(btnSendMailDisgon != null)
             btnSendMailDisgon.addEventListener('click',(e) => {
               if(e.target.innerHTML == '🚚')
@@ -331,7 +331,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
             createMailMat(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'])
           }else if(origen == 'EXT'){
             let mail_proveedor = $('mailExt') == null ? '' : $('mailExt').value
-            createMailExt(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'],res['conCopia'], correo_proveedor)
+            createMailExt(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'],res['conCopia'], correo_proveedor, comentario)
           }else{
             let destinoFragil = ''
             if(fragil){

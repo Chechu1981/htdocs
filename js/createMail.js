@@ -133,16 +133,24 @@ export const createMailMat = (cantidad,misterauto,destino,referencia,cliente,ped
   })
 }
 
-export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,pedido,nfm,fragil,destinatarios,bcc) => {
+export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,pedido,nfm,fragil,destinatarios,bcc, correo_proveedor, comentario) => {
   const hora = new Date()
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
   const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
   let strNfm = 'La entrada en Geode debe ser realizada como entrada 109.'
+  let placas = `desde la placa de ${placaExterna} a la`
   if (nfm)
     strNfm += ` PIEZA SIN SOLUCIÓN DE REEMPLAZO.`
+  if (placaExterna === 'OTRAS MARCAS'){
+    placas = 'desde proveedor externo en la'
+    comentario != '' ? comentario = `Por favor, incluid en el pedido la referencia cliente "${comentario}"` : comentario = ''
+  }else{
+    comentario = ''
+  }
 
-  const mensaje = `%0ASe va a recibir ${numero} ${referencia.toUpperCase()} desde la placa de ${placaExterna} a la placa de ${destino} para el cliente ${cliente.replaceAll('&','and')}.
+  const mensaje = `%0ASe va a recibir ${numero} ${referencia.toUpperCase()} ${placas} placa de ${destino} para el cliente ${cliente.replaceAll('&','and')}.
   %0A${strNfm}
+  %0A${comentario}
   %0A%0AMuchas gracias.
 `
   window.location.href = `mailto:${destinatarios}?cc=${bcc}&subject=Compra externa - ${placaExterna}&body=${saludo}${mensaje}` //
