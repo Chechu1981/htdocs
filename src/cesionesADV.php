@@ -10,7 +10,7 @@
   </div>
   <div class="search-table">
     <div id="contacts" class="contacts">
-    <h1 class="delete">Cesiones <span id="openAssignPicture">🚩</span></h1>
+    <h1 class="delete">Cesiones <span id="openAssignPicture" title="Cesiones disponibles de placas externas">🚩</span></h1>
       <?php include_once '../helper/menuCesiones.php'; ?>
     </div>
     <section class="assig-cpy" id="newTitle">Nueva cesión</section>
