@@ -234,6 +234,7 @@ export const updateCounterAssignment = (id,comentario) => {
   const data = new FormData()
   data.append('id',id)
   data.append('comentario',comentario)
+  data.append('puesto',user.puesto)
   fetch('../api/updateAssignADV2023.php',{
     method: 'POST',
     body: data

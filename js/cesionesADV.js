@@ -648,5 +648,5 @@ $$('form')[0].addEventListener('keyup',(e)=>{
 })
 
 $('openAssignPicture').addEventListener('click',()=>{
-  modal(`<div style="text-align:center"><img src="./../img/placasExternas.png" /></div>`,"Cesiones dsiponibles entre placas externas")
+  modal(`<div style="text-align:center"><img src="./../img/placasExternas.png?1001" /></div>`,"Cesiones dsiponibles entre placas externas")
 })

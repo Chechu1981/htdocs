@@ -1,6 +1,9 @@
 import contadores from "./updateCounter.js"
 
 setInterval(() =>{contadores()},1000)
+let barras =window.graph
+let chartOrigen = window.graph
+let chartDestino = window.graph
 
 const id = window.location.search.split('?id=')[1]
 const btnAll = document.getElementById('all') ?? 0
@@ -43,7 +46,6 @@ const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
   '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
   '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
 
-let barras, chartOrigen, chartDestino = window.graph
 window.addEventListener('load',() => {
   if(document.getElementsByTagName('select').length > 0)
     return false
@@ -188,7 +190,7 @@ window.addEventListener('load',() => {
   cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"chartCeden",{dateIn:'2025-01-01',dateOut:'2025-02-21'}, 'Los que más ceden',chartOrigen)
   
 })
-const cargarGrafico = (url,cartId,post,title, chartId) => {   
+const cargarGrafico = (url,cartId,post,title, chartId) => { 
   const data =  new FormData()
   data.append('dateIn',post.dateIn)
   data.append('dateOut',post.dateOut)
@@ -200,40 +202,45 @@ const cargarGrafico = (url,cartId,post,title, chartId) => {
   .then(res => {
     let datos = []
     let etiquetas = []
-    res[0].map(volumen => {
+    res.map(volumen => {
       datos.push(volumen.vol)
       if(cartId == 'chartPiden')
         etiquetas.push(volumen.origen)
       else
         etiquetas.push(volumen.destino)
     })
-    chartId = new Chart(cartId, {
-      type: 'polarArea',
-      data: {
-        datasets:[{
-          data: datos,
-          backgroundColor: colorArray,
-        }],
-        labels: etiquetas,
-        hoverOffset: 4
-      },
-      options: {
-        plugins: {
-          title: {
-            display: true,
-            text: title
+    if(chartId != undefined){
+      chartId.destroy()
+      chartId.clear()
+    }else{
+      chartId = new Chart(cartId, {
+        type: 'polarArea',
+        data: {
+          datasets:[{
+            data: datos,
+            backgroundColor: colorArray,
+          }],
+          labels: etiquetas,
+          hoverOffset: 4
+        },
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: title
+            },
           },
-        },
-        responsive: true,
-        interaction: {
-          intersect: false,
-        },
-        scales: {
-          y: {
-            stacked: true
+          responsive: true,
+          interaction: {
+            intersect: false,
+          },
+          scales: {
+            y: {
+              stacked: true
+            }
           }
-        }
-      },
-    })
+        },
+      })
+    }
   })
 }
