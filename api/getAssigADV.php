@@ -224,7 +224,7 @@ if(sizeof($rows) > 0){
       <li title="agente">
         '.$options.'
       </li>
-      <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"><span title="'.$row[24].'">'.$rechazado.'</span></li>
+      <li title="Acciones: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar" title="Eliminar"><img src="../img/pause24x24.png" alt="Detener" title="Detener la cesión. No se envía a ADV."><span title="'.$row[24].'">'.$rechazado.'</span></li>
       <li '.$classSend.' >'.$btnEnviar.'<span title="'.$textoMensajeria.'" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
       <li '.$classDelete.' style="text-align:center;font-size:small" title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuarioCesion.'</li>
     </ul>';

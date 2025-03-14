@@ -122,7 +122,7 @@ const showAssig = () =>{
       $('cesiones').style = ''
       $('cesiones').innerHTML = response
       for(let i = 2; i < $('cesiones').childNodes.length; i = i+2){
-        let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar, origenLed, rechazo, usuario, btnSendMailDisgon, correo_proveedor = ''
+        let ul, id, origen, destino, cliente, refCliente, comentario, referencia, cantidad, pedido, fragil, pvp, tratado, nfm, disgon, btnSendMail, btnEliminar, origenLed, rechazo, usuario, btnSendMailDisgon, correo_proveedor, btnPause = ''
         ul = $('cesiones').childNodes[i]
         id = ul.childNodes[27].id
         origenLed = ul.childNodes[1].childNodes[0]
@@ -145,6 +145,7 @@ const showAssig = () =>{
         btnSendMailDisgon = ul.childNodes[29] != undefined ? ul.childNodes[29].childNodes[1] : null
         btnEliminar = ul.childNodes[27].firstChild
         correo_proveedor = refCliente.childNodes.length > 1 ? refCliente.childNodes[1].innerText : ''
+        btnPause = ul.childNodes[27].childNodes[1]
         if(disgon != null){
           disgon.addEventListener('change',(e) => {
             updateChkbx(id,nfm.checked,fragil.checked,pedido.value,tratado.value, destino.textContent),
@@ -264,6 +265,10 @@ const showAssig = () =>{
                 window.open("https://recambios.logistica.com/page/index.aspx"),$(`disgon${id}`).innerHTML = "✅"
             })
           }
+
+          btnPause.addEventListener('click', e => {
+            e.target.classList.toggle('pause')
+          })
           btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
         }
     })

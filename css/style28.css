@@ -1678,6 +1678,17 @@ span.button:active{
     color: var(--bg-body-color);
 }
 
+.pause{
+    background-color: var(--bg-body-color);
+    color: var(--main-font-color);
+    animation: pause_tilt .6s infinite alternate;
+}
+
+@keyframes pause_tilt{
+    0%{transform: scale(1);}
+    100%{transform: scale(1.1);background-color: #12ff00;}
+}
+
 .important{
     border-radius: 4px;
     padding: 0 4px;
