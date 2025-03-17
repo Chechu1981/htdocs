@@ -1,5 +1,5 @@
 'use strict';
-import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?111"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?112"
 import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?104"
 import contadores from "./updateCounter.js?101"
 
@@ -267,7 +267,23 @@ const showAssig = () =>{
           }
 
           btnPause.addEventListener('click', e => {
-            e.target.classList.toggle('pause')
+            let datosPaused = new FormData()
+            datosPaused.append('id',id)
+            fetch('../api/getPauseAssign.php',{
+              method: 'POST',
+              body: datosPaused
+            }).then(assign => assign.json())
+            .then(assingLine =>{
+              if(assingLine.tratado != ''){
+                customAlert("Esta cesión ya se está tratando y no se puede pausar")
+                return
+              }
+              e.target.classList.toggle('pause')
+              fetch('../api/pauseAssign.php',{
+                method: 'POST',
+                body: datosPaused
+              })
+            })
           })
           btnEliminar.addEventListener('click', () => eliminarLinea(id,referencia.firstChild.textContent.replaceAll(' ',''),tratado.value))
         }

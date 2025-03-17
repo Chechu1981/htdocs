@@ -1110,6 +1110,28 @@ class Contacts
       echo "OK";
     }
 
+    public function getPauseAssign($id){
+        $sql = "SELECT * FROM `cesiones` WHERE `id`='$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function updatePauseAssign($id){
+        $oldSql = "SELECT `pause` FROM `cesiones` WHERE `id`='$id'";
+        $oldQuery = $this->db->prepare($oldSql);
+        $oldQuery->execute();
+        $oldPause = $oldQuery->fetchAll();
+        $oldPause = $oldPause[0]['pause'];
+        if($oldPause == 1)
+            $sql = "UPDATE `cesiones` SET `pause`=0 WHERE `id`='$id'";
+        else
+            $sql = "UPDATE `cesiones` SET `pause`=1 WHERE `id`='$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        echo "OK";
+    }
+
     public function getLastFile($placa,$ref){
         $referencia = '';
         if($ref != '')

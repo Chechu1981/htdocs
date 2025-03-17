@@ -127,8 +127,16 @@ if(sizeof($rows) > 0){
     $rechazadoStyle = '';
     $usuarioCesion = '';
     $seguro = '';
+    $pause = $row[27];
+    $pauseClass = "";
+    $visible = '';
     $options = createOptons($agente,$row[0]);
     $textoMensajeria = "Abrir aplicación de Logística";
+    if($pause == 1){
+      $pauseClass = "pause";
+      if($puesto == 'ADV' && $user[0][1] != $row[10])
+        $visible = 'style="display:none"';
+    }
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
     if(($_POST['id']) != 'new')
       $li = '<li title="Envío: ">'.$fechaR[2].'/'.$fechaR[1].'/'.$fechaR[0].'</li>';
@@ -205,7 +213,7 @@ if(sizeof($rows) > 0){
     }
     
     $lists .= '
-    <ul class="assignPendingAdv" title="'.++$contador.'" style="'.$rechazadoStyle.'">
+    <ul class="assignPendingAdv" '.$visible.' title="'.++$contador.'" style="'.$rechazadoStyle.'">
     <li><span class="ledOff '.$btnOrigenPress.'" '.$cursor.' title="'.$contador.'">'.$contador.'</span></li>
     <li title="Copiar: Origen > Destino" class="origenCesion">
       '.$origen.$destinoSpan.'
@@ -224,7 +232,7 @@ if(sizeof($rows) > 0){
       <li title="agente">
         '.$options.'
       </li>
-      <li title="Acciones: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar" title="Eliminar"><img src="../img/pause24x24.png" alt="Detener" title="Detener la cesión. No se envía a ADV."><span title="'.$row[24].'">'.$rechazado.'</span></li>
+      <li title="Acciones: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar" title="Eliminar"><img src="../img/pause24x24.png" class="'.$pauseClass.'" alt="Detener" title="Detener la cesión. No se envía a ADV."><span title="'.$row[24].'">'.$rechazado.'</span></li>
       <li '.$classSend.' >'.$btnEnviar.'<span title="'.$textoMensajeria.'" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
       <li '.$classDelete.' style="text-align:center;font-size:small" title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuarioCesion.'</li>
     </ul>';

@@ -173,7 +173,7 @@ export const createMailProv = (id,cantidad,placaExterna,destino,referencia,clien
   .then(tarifa => {
     let mensaje = `%0AProveedor: ${placaExterna.innerText}
 %0ASolicito 
-${numero}  ${referencia.toUpperCase()}   %0APVP:${tarifa.precio}€  DTO:${tarifa.descuento - 3}% 
+${numero}  ${referencia.toUpperCase()}   %0APVP:${tarifa.precio}€  DTO:${parseFloat(tarifa.descuento) - 3}% 
 %0AEnvío a la placa de ${destino} [${direcciones[destino]}]
 %0ACliente: ${cliente}%0A⚠️Por favor enviadnos el albarán respondiendo a este correo⚠️`
     window.location.href = `mailto:${correo_proveedor}?cc=${bcc}&subject=Compra externa - PPCR ${destino}&body=${saludo}${mensaje}`

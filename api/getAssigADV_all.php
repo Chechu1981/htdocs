@@ -117,6 +117,11 @@ if(sizeof($rows) > 0){
     $btnOrigenPress = '';
     $rechazado = '❌';
     $seguro = '';
+    $pause = $row[27];
+    $visible = '';
+    if($pause == 1 && strtoupper($user[0][1]) != $usuario && $agente == ''){
+      $visible = 'style="display:none"';
+    }
     $li = '<li class="delete" title="Marcar como cesión recibida"><img id="'.$row[0].'" alt="tick" src="../img/done_FILL0_wght400_GRAD0_opsz24.png"></li>';
     if(($_POST['id']) != 'new')
       $li = '<li title="Envío: ">'.$fechaR[2].'/'.$fechaR[1].'/'.$fechaR[0].'</li>';
@@ -182,7 +187,7 @@ if(sizeof($rows) > 0){
     $fechaS = explode("-", $row[25]);
     $fechaSHora = explode(".",explode(" ", $row[25])[1]);
     $lists .= '
-    <ul class="assignPendingAdv '.$libre.'" title="'.$contador++.'">
+    <ul '.$visible.' class="assignPendingAdv '.$libre.'" title="'.$contador++.'">
     <li><span class="ledOff '.$btnOrigenPress.'" style="cursor:initial"></span></li>
       <li title="Copiar: Origen > Destino" class="origenCesion">
         '.$origen.'
