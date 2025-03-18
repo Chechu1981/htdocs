@@ -1,6 +1,6 @@
 'use strict';
 import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?112"
-import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?104"
+import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?105"
 import contadores from "./updateCounter.js?101"
 
 const setCounters = setInterval(() =>{contadores()},1000)

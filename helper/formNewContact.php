@@ -44,7 +44,7 @@ $ENTIDAD = [
   "PPCR",
   "GECOINSA",
   "CEVA",
-  "TRASNPORTE",
+  "TRANSPORTE",
   "NORTEMPO",
   "FOMINTER",
   "PCAE",

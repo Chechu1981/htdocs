@@ -121,7 +121,7 @@ const showAssig = () =>{
         pvp = ul.childNodes[13].childNodes[1].textContent
         tratado = $(`agente${id}`)
         nfm = ul.childNodes[19].firstChild
-        btnEliminar = ul.childNodes[29]
+        btnEliminar = ul.childNodes[27]
         rechazo = $(`rechazo${id}`)
         usuario = ul.childNodes[29].childNodes[0].data
         puesto = ul.childNodes[29].childNodes[2].nodeValue.replaceAll('(','').replaceAll(')','')
