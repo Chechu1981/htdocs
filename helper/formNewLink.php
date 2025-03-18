@@ -59,8 +59,8 @@ $GRUPOS = [
       <?php } ?>
     </select>
   <label></label><input type='text' placeholder='Cuenta' id='cuenta' value="<?= @$link[0][3] ?>">
-  <label></label><input type='text' placeholder='Usuario' id='usuario' value="<?= @$link[0][4] ?>">
-  <label></label><input type='text' placeholder='Contrsaeña' id='paswd' value="<?= @$link[0][5] ?>">
+  <label></label><input type='text' placeholder='Usuario' id='usuario' value="<?= base64_decode(@$link[0][4]) ?>">
+  <label></label><input type='text' placeholder='Contrsaeña' id='paswd' value="<?= base64_decode(@$link[0][5]) ?>">
   <label></label><input type='text' placeholder='Teléfono' id='phone' value="<?= @$link[0][8] ?>">
   <label></label><div class="formPrivatePass"><label>Privado</label><input type='checkbox' id='private' <?= $private ?> title="Contraseña privada"></div>
   <label></label><input type='submit' id="<?= $id ?>" value='añadir'>

@@ -26,8 +26,8 @@ if(sizeof($rows) > 0 && $search != ''){
             <li><a href="'. $row[9].'" target="_blank">'.strtoupper($row[1]).'</a></li>
             <li>'.$row[2].'</li>
             <li class="copy" title="copiar">'.$row[3].'</li>
-            <li class="copy" title="copiar">'.$row[4].'</li>
-            <li class="copy" title="copiar">'.$row[5].'</li>
+            <li class="copy" title="copiar">'.base64_decode($row[4]).'</li>
+            <li class="copy" title="copiar">'.base64_decode($row[5]).'</li>
             <li class="delete">
                 <span title="eliminar registro '.$row[1].'" id="'.$row[0].'">
                     <img id="delete" alt="eliminar" src="../img/delete_FILL0_wght400_GRAD0_opsz24.png">
