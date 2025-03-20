@@ -2,34 +2,32 @@
 
 require('./phpMailer/phpMailer.php');
 require('./phpMailer/SMTP.php');
-//require('./phpMailer/OAuth.php');
-//require('./phpMailer/OAuthTokenProvider.php');
 
 $mail = new PHPMailer();
 $mail->CharSet = 'UTF-8';
 
-$body = 'Cuerpo del correo de prueba';
+$body = $_POST['mensaje'];
 
 $mail->IsSMTP();
-$mail->Host       = 'ppcr.es';
-$mail->SMTPSecure = 'tls';
-$mail->Port       = 993;
+$mail->Host       = 'smtp.ppcr.es';
+$mail->Port       = 587;
 $mail->SMTPDebug  = 1;
 $mail->SMTPAuth   = true;
-$mail->Username   = 'test@ppcr.es';
-$mail->Password   = 'Sd32391Laguna*';
-$mail->SMTPOptions = [
-  'ssl' => [
-      'verify_peer' => false,
-      'verify_peer_name' => false,
-      'allow_self_signed' => true,
-  ]
-];
-$mail->SetFrom('test@ppcr.es', "Chechu");
-$mail->AddReplyTo('no-reply@mycomp.com','no-reply');
-$mail->Subject    = 'Correo de prueba PHPMailer';
+$mail->Username   = 'info@ppcr.es';
+$mail->Password   = 'd+#Po)w{ve4jd-';
+$mail->SMTPOptions = array(
+    'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+    )
+);
+$mail->SetFrom('info@ppcr.es', "ChechuParts");
+$mail->AddReplyTo('no-reply@ppcr.es','no-reply');
+$mail->Subject    = $_POST['asunto'];
 $mail->MsgHTML($body);
 
-$mail->AddAddress('jjchechu@hotmail.com', 'Jesús');
+$mail->AddAddress('jesusjulian.martin@stellantis.com', 'Jesús');
+
 $mail->send();
 ?>

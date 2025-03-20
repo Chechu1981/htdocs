@@ -170,14 +170,21 @@ const showAssig = () =>{
           fragil.checked ? fragilTxt += '..~** ¡¡MATERIAL FRÁGIL!! **~..REFORZAR EMBALAJE;' : ''
           clearRowsMark(ul,`Cesión ${origen.value}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
         })
-        refCliente.addEventListener('click', () => {
-          let texto = `Cliente: ${cliente.childNodes[0].textContent}`
-          if(origen.value == 'MAT')
-            texto = $(`origen${id}`).parentNode.childNodes[6].innerText
-          if(origen.value == 'EXT')
-            texto = 'Cesión externa'
-          clearRowsMark(ul, texto)
-        })
+        if(origen.value == 'EXT'){
+          refCliente.addEventListener('change', () => {
+            refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
+          })
+        }else{
+          refCliente.addEventListener('click', () => {
+              let texto = `Cliente: ${cliente.childNodes[0].textContent}`
+              if(origen.value == 'MAT'){
+                texto = $(`origen${id}`).parentNode.childNodes[6].innerText
+                clearRowsMark(ul, texto)
+              }else{
+                clearRowsMark(ul, texto)
+              }
+          })
+        }
         
         if(user.puesto == 'ADV' || tratado.value == ''){
           origen.addEventListener('change', (e) => {
@@ -386,7 +393,7 @@ const refreshInputs = (id,fragil,pedido,tratado,origen,destino) => {
     .then(response => {
       response[cesion] != undefined ? code.innerHTML = response[cesion] : code.innerHTML = ""
     })
-  }else{
+  }else if(origen == 'MAT'){
     const session = window.location.search.split('?id=')[1]
     const data = new FormData()
     data.append('id', id)
@@ -402,6 +409,8 @@ const refreshInputs = (id,fragil,pedido,tratado,origen,destino) => {
       if(ext != 'EXT' || ext != 'MAT')
         refZZMAT.innerHTML = `<span class="copy " style="grid-column: 1 / 4;font-size: medium;">${response.refClient}</span>`
     })
+  }else{
+
   }
   updateChkbx(id,nfm,fragil,pedido,tratado,destino)
 }
@@ -434,6 +443,7 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   const destinoBtn = $(`destinoBtn${id}`).className.includes('press') ? '1':'0'
   const origen = $(`origen${id}`).nodeName == 'SELECT' ? $(`origen${id}`).value : $(`origen${id}`).innerHTML
   const comentario = $(`coment${id}`).value
+  const proveedorExterno = $(`proveedorExterno${id}`) == null ? '' : $(`proveedorExterno${id}`).value
   const data = new FormData()
   data.append('id', id)
   data.append('nfm',nfm)
@@ -447,6 +457,7 @@ const updateChkbx = (id,nfm,fragil,pedido,tratado,destino) => {
   data.append('destinoBtn', destinoBtn)
   data.append('origen', origen)
   data.append('puesto', user.puesto)
+  data.append('proveedorExterno', proveedorExterno)
   const disgonLi = $(`${id}`).parentNode.childNodes[23]
   const disgonSend = $(`disgon${id}`)
   if(fragil && disgonLi.firstChild == undefined) {

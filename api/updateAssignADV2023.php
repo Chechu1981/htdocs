@@ -18,6 +18,7 @@ if($update){
     $_POST['origenBtn'],
     $_POST['destinoBtn'],
     $_POST['origen'],
+    $_POST['proveedorExterno'],
     @$_POST['disgon'],
     str_replace("'","\"",@$_POST['comentario']));
 }else{

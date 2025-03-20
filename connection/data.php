@@ -622,12 +622,15 @@ class Contacts
         return $query->fetchAll();
     }
 
-    public function updateAssigADV2023($id,$fragil,$envio,$nfm,$pedido,$tratado,$origenBtn,$destinoBtn,$origen,$disgon,$comentario){
+    public function updateAssigADV2023($id,$fragil,$envio,$nfm,$pedido,$tratado,$origenBtn,$destinoBtn,$origen,$proveedorExterno,$disgon,$comentario){
         $fecha = date("Y-m-d H:i:s");
-        if($envio == 'true')
+        if($proveedorExterno != '')
+            $sql = "UPDATE `cesiones` SET `origen` = '$origen', `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `emisor` = $origenBtn, `receptor` = $destinoBtn, `pedido` = '$pedido', `tratado` = '$tratado', `comentario` = '$comentario', `refClient` = '$proveedorExterno' WHERE `id` LIKE '$id'";
+        else if($envio == 'true')
             $sql = "UPDATE `cesiones` SET `origen` = '$origen', `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `envio` = '$fecha', `emisor` = $origenBtn, `receptor` = $destinoBtn, `pedido` = '$pedido', `tratado` = '$tratado', `comentario` = '$comentario' WHERE `id` LIKE '$id'";
         else
             $sql = "UPDATE `cesiones` SET `origen` = '$origen', `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `pedido` = '$pedido', `emisor` = $origenBtn, `receptor` = $destinoBtn, `tratado` = '$tratado', `comentario` = '$comentario' WHERE `id` LIKE '$id'";
+        echo $sql;
         $query = $this->db->prepare($sql);
         $query->execute();
     }

@@ -6,7 +6,7 @@ $user = $contacts->getUserBySessid($_POST['session']);
 $puesto = $user[0][4];
 
 $rows = $contacts->getAssigPending($_POST['id'],$user[0][1]);
-
+$proveedores = $contacts->getProvExt();
 $allUsers = $contacts->getAllUsers();
 
 function formatRef($referencia){
@@ -81,6 +81,20 @@ function createOptions($id,$placa,$proveedor){
   }
   $select .= '</select>';
   return $select;
+}
+
+function createOptionProvExt($id,$select){
+  global $proveedores;
+  $optionsList = '<select name="proveedor" id="proveedorExterno'.$id.'" style="width: 100%">';
+  foreach ($proveedores as $key) {
+    if($key['nombre'] == $select)
+      $optionsList.= '<option value="'.$key['nombre'].'" selected>'.$key['nombre'].'</option>';
+    else
+      $optionsList.= '<option value="'.$key['nombre'].'">'.$key['nombre'].'</option>';
+  }
+  $optionsList.= '</select>';
+  return $optionsList;
+
 }
 
 if(sizeof($rows) > 0){
@@ -208,8 +222,10 @@ if(sizeof($rows) > 0){
         $important = 'route';
       $numPie = $codgClient[$row[1].$row[2].$seguro.$nfm];
     }
-    if($row[1] == 'MAT' || $row[1] == 'EXT'){
+    if($row[1] == 'MAT'){
       $numPie = "$row[12] <p hidden>$row[26]</p>";
+    }elseif($row[1] == 'EXT'){
+      $numPie = createOptionProvExt($row[0],$row[12]) . "<p hidden>$row[26]</p>";
     }
     
     $lists .= '
