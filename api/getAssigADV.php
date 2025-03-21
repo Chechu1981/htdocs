@@ -86,13 +86,16 @@ function createOptions($id,$placa,$proveedor){
 function createOptionProvExt($id,$select){
   global $proveedores;
   $optionsList = '<select name="proveedor" id="proveedorExterno'.$id.'" style="width: 100%">';
+  $mail = '';
   foreach ($proveedores as $key) {
-    if($key['nombre'] == $select)
+    if($key['nombre'] == $select){
       $optionsList.= '<option value="'.$key['nombre'].'" selected>'.$key['nombre'].'</option>';
+      $mail = $key['mail'];
+    }
     else
       $optionsList.= '<option value="'.$key['nombre'].'">'.$key['nombre'].'</option>';
   }
-  $optionsList.= '</select>';
+  $optionsList.= '</select><p hidden>'.$mail.'</p>';
   return $optionsList;
 
 }
@@ -174,7 +177,7 @@ if(sizeof($rows) > 0){
           $envioDisgon = "✅";
       }
     }
-    if($row[1] == 'EXT' && $row[2] == 'MADRID'){
+    if($row[1] == 'EXT'){
       $textoMensajeria = "Enviar correo a ".ucwords($row[12]);
       $envioDisgon = "🏬";
     }
@@ -225,7 +228,7 @@ if(sizeof($rows) > 0){
     if($row[1] == 'MAT'){
       $numPie = "$row[12] <p hidden>$row[26]</p>";
     }elseif($row[1] == 'EXT'){
-      $numPie = createOptionProvExt($row[0],$row[12]) . "<p hidden>$row[26]</p>";
+      $numPie = createOptionProvExt($row[0],$row[12]);
     }
     
     $lists .= '

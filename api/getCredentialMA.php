@@ -9,5 +9,7 @@ if($_POST['placa'] == 'SANTIAGO')
   $placa = 'GALICIA';
 
 $rows = $methods->getCredentialsMA($placa);
+$user = base64_decode($rows[0][4]);
+$pass = base64_decode($rows[0][5]);
 
-echo json_encode($rows[0]);
+echo json_encode([$user, $pass]);

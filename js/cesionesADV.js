@@ -1,6 +1,6 @@
 'use strict';
-import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?112"
-import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?105"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?114"
+import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?106"
 import contadores from "./updateCounter.js?101"
 
 const setCounters = setInterval(() =>{contadores()},1000)
@@ -129,7 +129,7 @@ const showAssig = () =>{
         origen = ul.childNodes[3].childNodes[1]
         destino = ul.childNodes[3].childNodes[2]
         cliente = ul.childNodes[7]
-        refCliente = ul.childNodes[3].childNodes[4]
+        refCliente = ul.childNodes[3].childNodes[4].childNodes[0].name === undefined ? ul.childNodes[3].childNodes[4] : $(`proveedorExterno${id}`).value
         comentario = ul.childNodes[11]
         referencia = ul.childNodes[13]
         cantidad = ul.childNodes[15].textContent
@@ -144,7 +144,7 @@ const showAssig = () =>{
         btnSendMail = ul.childNodes[29] != undefined ? ul.childNodes[29].childNodes[0] : null
         btnSendMailDisgon = ul.childNodes[29] != undefined ? ul.childNodes[29].childNodes[1] : null
         btnEliminar = ul.childNodes[27].firstChild
-        correo_proveedor = refCliente.childNodes.length > 1 ? refCliente.childNodes[1].innerText : ''
+        correo_proveedor = ul.childNodes[3].childNodes[4].childNodes.length > 1 ? ul.childNodes[3].childNodes[4].childNodes[1].innerText : ''
         btnPause = ul.childNodes[27].childNodes[1]
         if(disgon != null){
           disgon.addEventListener('change',(e) => {
@@ -171,7 +171,7 @@ const showAssig = () =>{
           clearRowsMark(ul,`Cesión ${origen.value}>${destino.textContent} - Cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent}) ${fragilTxt}`)
         })
         if(origen.value == 'EXT'){
-          refCliente.addEventListener('change', () => {
+          ul.childNodes[3].childNodes[4].addEventListener('change', () => {
             refreshInputs(id,fragil.checked,pedido.value,tratado.value,origen.value,destino.textContent)
           })
         }else{
@@ -261,13 +261,29 @@ const showAssig = () =>{
         }
 
         if(btnSendMail != null){
-          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente.innerText,comentario.textContent, correo_proveedor))
+          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente,comentario.textContent, correo_proveedor))
           if(btnSendMailDisgon != null)
             btnSendMailDisgon.addEventListener('click',(e) => {
               if(e.target.innerHTML == '🚚')
                 enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id,comentario.firstChild.innerHTML)
-              else if(e.target.innerHTML == '🏬')
-                createMailProv(id,cantidad,refCliente,destino.textContent,referencia.firstChild.textContent.replaceAll(' ',''),cliente.firstChild.textContent,correo_proveedor)
+              else if(e.target.innerHTML == '🏬'){
+                refCliente = refCliente.innerText
+                const dataName = new FormData()
+                dataName.append('origen', origen.value)
+                dataName.append('destino', destino.textContent)
+                dataName.append('destinoC', `${destino.textContent}C`)
+                dataName.append('origenF', `${origen.value}F`)
+                if(origen.value === 'EXT')
+                  refCliente = $(`proveedorExterno${id}`).value
+                fetch('../api/getBccMails.php',{
+                  method: 'POST',
+                  body: dataName
+                })
+                .then(response => response.json())
+                .then(res => {
+                  createMailProv(id,cantidad,refCliente,destino.textContent,referencia.firstChild.textContent.replaceAll(' ',''),cliente.firstChild.textContent,correo_proveedor,res['destino'])
+                })
+              }
               else if(e.target.innerHTML == '📦')
                 window.open("https://recambios.logistica.com/page/index.aspx"),$(`disgon${id}`).innerHTML = "✅"
             })
@@ -356,7 +372,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
         .then(response => response.json())
         .then(res => {
           if(origen == 'MAT'){
-            createMailMat(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'])
+            createMailMat(cantidad,refCliente.textContent,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'])
           }else if(origen == 'EXT'){
             let mail_proveedor = $('mailExt') == null ? '' : $('mailExt').value
             createMailExt(cantidad,refCliente,destino,referencia,cliente,pedido,nfm,fragil,res['fragil'],res['conCopia'], correo_proveedor, comentario)

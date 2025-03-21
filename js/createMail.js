@@ -121,8 +121,8 @@ export const createMailMat = (cantidad,misterauto,destino,referencia,cliente,ped
 
     %0APodéis descargar la factura desde el portal de M.A. https://www.mister-auto.es/
 
-    %0AUsuario: ${credential.usuario}
-    %0AContraseña: ${credential.pass}
+    %0AUsuario: ${credential[0]}
+    %0AContraseña: ${credential[1]}
 
     %0APor favor, cuando podáis ¿podríais crear la referencia indicada?
 
@@ -156,14 +156,15 @@ export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,p
   window.location.href = `mailto:${destinatarios}?cc=${bcc}&subject=Compra externa - ${placaExterna}&body=${saludo}${mensaje}` //
 }
 
-export const createMailProv = (id,cantidad,placaExterna,destino,referencia,cliente,correo_proveedor) =>{
+export const createMailProv = (id,cantidad,placaExterna,destino,referencia,cliente,correo_proveedor,bcc) =>{
   $(`disgon${id}`).className = "wait"
   const hora = new Date()
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
   const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
   const src = '../api/getDescRefer.php'
   const data = new FormData()
-  const bcc = "placamadridadministracion@stellantis.com;natalia.diez@external.stellantis.com;lisbethnataly.aguilar1@stellantis.com;silvia.parro@stellantis.com;maria.sanchez@stellantis.com;jacqueline.perez@stellantis.com;emilio.crespo@stellantis.com"
+  if(destino == 'MADRID')
+    bcc = "placamadridadministracion@stellantis.com;natalia.diez@external.stellantis.com;lisbethnataly.aguilar1@stellantis.com;silvia.parro@stellantis.com;maria.sanchez@stellantis.com;jacqueline.perez@stellantis.com;emilio.crespo@stellantis.com"
   data.append('referencia',referencia)
   fetch(src,{
     method: 'POST',
@@ -171,9 +172,12 @@ export const createMailProv = (id,cantidad,placaExterna,destino,referencia,clien
   })
   .then(items => items.json())
   .then(tarifa => {
-    let mensaje = `%0AProveedor: ${placaExterna.innerText}
+    let pvp = `PVP:${tarifa.precio}€  DTO:${parseFloat(tarifa.descuento) - 3}%`
+    if(placaExterna.includes('OTRAS'))
+      pvp = ''
+    let mensaje = `%0AProveedor: ${placaExterna}
 %0ASolicito 
-${numero}  ${referencia.toUpperCase()}   %0APVP:${tarifa.precio}€  DTO:${parseFloat(tarifa.descuento) - 3}% 
+${numero}  ${referencia.toUpperCase()}   %0A${pvp} 
 %0AEnvío a la placa de ${destino} [${direcciones[destino]}]
 %0ACliente: ${cliente}%0A⚠️Por favor enviadnos el albarán respondiendo a este correo⚠️`
     window.location.href = `mailto:${correo_proveedor}?cc=${bcc}&subject=Compra externa - PPCR ${destino}&body=${saludo}${mensaje}`
