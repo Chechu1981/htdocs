@@ -1,5 +1,5 @@
 'use strict';
-import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?114"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?115"
 import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?106"
 import contadores from "./updateCounter.js?101"
 

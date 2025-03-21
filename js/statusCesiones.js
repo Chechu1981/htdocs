@@ -102,7 +102,7 @@ window.addEventListener('load',() => {
         }
       })
     })    
-    // Creo los usuarios en un selection
+    // Creo los usuarios en un select
     let usuario = 0
     for(let i = 0; i < res.length; i++) {
       let name = res[i][0]
@@ -117,7 +117,6 @@ window.addEventListener('load',() => {
     }
     $('contacts').appendChild(input)
 
-    
     let sum = res[usuario][1].slice(0,20).reduce((previous, current) => parseInt(current) + parseInt(previous));
     let avg = Math.round((sum / res[usuario][1].slice(0,20).length) * 100)/100;
     data.labels = res[usuario][2]

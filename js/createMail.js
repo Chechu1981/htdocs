@@ -53,6 +53,7 @@ const direcciones = {
   MADRID: 'Carretera de Seseña a Esquivias, Km 0,8 - 45224 Seseña Nuevo (Toledo)',
   VALENCIA: 'Carrer dels Bombers, 20 - 46980 PATERNA - VALENCIA',
   GALICIA: 'Vía Pasteur 41, CP:15898 Santiago de Compostela (A CORUÑA)',
+  SANTIAGO: 'Vía Pasteur 41, CP:15898 Santiago de Compostela (A CORUÑA)',
   BARCELONA: 'Calle D, nº 41 - Polig. Ind. Zona Franca - 08040 BARCELONA',
   ZARAGOZA: 'C/ Río de Janeiro, 3 Polígono Industrial Centrovia 50198 - La Muela - ZARAGOZA',
   GRANADA: 'Polígono Industrial Huerta Ardila - Ctra. A-92 Km 6 - 18320 SANTA FE - GRANADA',
@@ -141,7 +142,7 @@ export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,p
   let placas = `desde la placa de ${placaExterna} a la`
   if (nfm)
     strNfm += ` PIEZA SIN SOLUCIÓN DE REEMPLAZO.`
-  if (placaExterna === 'OTRAS MARCAS'){
+  if (placaExterna.includes('OTRAS')){
     placas = 'desde proveedor externo en la'
     comentario != '' ? comentario = `Por favor, incluid en el pedido la referencia cliente "${comentario}"` : comentario = ''
   }else{
