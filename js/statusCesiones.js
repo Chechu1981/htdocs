@@ -175,7 +175,9 @@ window.addEventListener('load',() => {
     .then(res => {
       let datos = []
       let etiquetas = []
+      let total = 0
       res.map(volumen => {
+        total += parseInt(volumen.vol)
         datos.push(volumen.vol)
         if(cartId == 'chartPiden')
           etiquetas.push(volumen.origen)
@@ -200,7 +202,7 @@ window.addEventListener('load',() => {
             plugins: {
               title: {
                 display: true,
-                text: title
+                text: `${title}. Total:  ${total}`
               },
             },
             responsive: true,
@@ -252,14 +254,14 @@ window.addEventListener('load',() => {
     cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{
       dateIn: e.target.value,
       dateOut: selectDateFinalPiden.value
-    },'Los que más ceden',chartDestino)
+    },'Los que más piden',chartDestino)
   })
   
   selectDateFinalPiden.addEventListener('change',e => {
     cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{
       dateIn: selectDateInitPiden.value,
       dateOut: e.target.value
-    },'Los que más ceden',chartDestino)
+    },'Los que más piden',chartDestino)
   })
 
   cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{dateIn:'',dateOut:''},'Los que más piden', chartDestino)

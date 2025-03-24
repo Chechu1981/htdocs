@@ -828,7 +828,7 @@ input[type="color"]::-webkit-color-swatch {
 
 #contacts{
     display: grid;
-    grid-template-columns:20% 40% 40%;
+    grid-template-columns:20% 70%;
     position: sticky;
     background-color: var(--bg-body-color);
     z-index: 3;
@@ -1761,6 +1761,40 @@ span.button:active{
     width: 100%;
     display: flex;
     justify-content: space-around;
+}
+
+/* COMPRAS EXTERNAS */
+
+.form-extBuy{
+    display: grid;
+    grid-template-columns: 12% 12% 12% 10% 5% 15%;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
+    input,select, textarea{
+        width: 100%;
+        text-align: center;
+        border-radius: 8px;
+        border: 2px solid var(--main-font-color);
+        color: var(--main-font-color);
+    }
+}
+
+.form-extLine{
+    display: grid;
+    grid-template-columns: 25% 6% 35%;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    border-radius: 8px;
+    input, textarea{
+        width: 100%;
+        border-radius: 8px;
+        padding: 5px;
+        border: 2px solid var(--main-font-color);
+        color: var(--main-font-color);
+    }
 }
 
 /* CESIONES */

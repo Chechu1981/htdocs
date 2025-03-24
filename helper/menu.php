@@ -36,6 +36,7 @@ $nuevas = $contacts->getAssigCountNew($usuario,$usuario,'ready')[0][0];
         <li style="width:82px;display:grid;grid-template-columns:84% 16%" id="cesionesActivas">
             <a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>" title="<?php echo $allAssigns; ?>">Cesiones</a><span id="userAssignsready" class="round heart" title="<?php echo $nuevas; ?>"><?php echo $nuevas > 100 ? '+99' : $nuevas; ?></span>
             <ul>
+                <li><a href="<?php echo $src.'/src/extbrand.php?id='.$id ?>">Otras marcas</a></li>
                 <?php echo $menuTodas; ?>
                 <li><a href="<?php echo $src.'/src/assigns/buscar.php?id='.$id ?>">Buscar</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/ready.php?id='.$id ?>">En curso</a></li>
