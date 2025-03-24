@@ -1,7 +1,7 @@
 import contadores from "./updateCounter.js"
 
 setInterval(() =>{contadores()},1000)
-let barras =window.graph
+let barras = window.graph
 let chartOrigen = window.graph
 let chartDestino = window.graph
 
@@ -58,7 +58,7 @@ window.addEventListener('load',() => {
   .then(e => e.json())
   .then(res => {
     const input = document.createElement('select')
-    input.name = "Users"
+    input.name = "users"
     input.style = "width: 150px;border: 2px solid var(--main-font-color);border-radius: 8px;font-size: 2em; text-transform: uppercase;height: fit-content;"
     input.addEventListener("change",(e)=>{
       if(barras){
@@ -152,22 +152,89 @@ window.addEventListener('load',() => {
       }
     })
   }) 
-
+  
+  const cargarGrafico = (url,cartId,post,title, chartId) => {
+    let graphOrigen = Chart.getChart('chartCeden')
+    let graphDestino = Chart.getChart('chartPiden')
+    if(cartId == 'chartCeden' && graphOrigen != undefined){
+      graphOrigen.clear()
+      graphOrigen.destroy()
+    }
+    if(cartId == 'chartPiden' && graphDestino != undefined){
+      graphDestino.clear()
+      graphDestino.destroy()
+    }
+    const data =  new FormData()
+    data.append('dateIn',post.dateIn)
+    data.append('dateOut',post.dateOut)
+    fetch(url,{
+      method: 'POST',
+      body: data
+    })
+    .then(e => e.json())
+    .then(res => {
+      let datos = []
+      let etiquetas = []
+      res.map(volumen => {
+        datos.push(volumen.vol)
+        if(cartId == 'chartPiden')
+          etiquetas.push(volumen.origen)
+        else
+          etiquetas.push(volumen.destino)
+      })
+      if(chartId != undefined){
+        chartId.destroy()
+        chartId.clear()
+      }else{
+        chartId = new Chart(cartId, {
+          type: 'polarArea',
+          data: {
+            datasets:[{
+              data: datos,
+              backgroundColor: colorArray,
+            }],
+            labels: etiquetas,
+            hoverOffset: 4
+          },
+          options: {
+            plugins: {
+              title: {
+                display: true,
+                text: title
+              },
+            },
+            responsive: true,
+            interaction: {
+              intersect: false,
+            },
+            scales: {
+              y: {
+                stacked: true
+              }
+            }
+          },
+        })
+      }
+    })
+  }
    //Los que más piden
   let value = new Date()
   const selectDateInit = document.createElement('input')
   const selectDateFinal = document.createElement('input')
+  const selectDateInitPiden = document.createElement('input')
+  const selectDateFinalPiden = document.createElement('input')
   selectDateFinal.type = "date"
   selectDateFinal.value = value.toISOString().split('T')[0]
   selectDateInit.type = "date"
   $('ceden').appendChild(selectDateInit)
   $('ceden').appendChild(selectDateFinal)
+  selectDateFinalPiden.type = "date"
+  selectDateFinalPiden.value = value.toISOString().split('T')[0]
+  selectDateInitPiden.type = "date"
+  $('piden').appendChild(selectDateInitPiden)
+  $('piden').appendChild(selectDateFinalPiden)
   
   selectDateInit.addEventListener("change", e => {
-    if(chartOrigen){
-      chartOrigen.clear()
-      chartOrigen.destroy()
-    }
     cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"chartCeden",{
       dateIn: e.target.value,
       dateOut: selectDateFinal.value
@@ -175,71 +242,27 @@ window.addEventListener('load',() => {
   })
   
   selectDateFinal.addEventListener('change',e => {
-    if(chartOrigen){
-      chartOrigen.clear()
-      chartOrigen.destroy()
-    }
     cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"chartCeden",{
       dateIn: selectDateInit.value,
       dateOut: e.target.value
     },'Los que más ceden',chartOrigen)
   })
 
+  selectDateInitPiden.addEventListener("change", e => {
+    cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{
+      dateIn: e.target.value,
+      dateOut: selectDateFinalPiden.value
+    },'Los que más ceden',chartDestino)
+  })
+  
+  selectDateFinalPiden.addEventListener('change',e => {
+    cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{
+      dateIn: selectDateInitPiden.value,
+      dateOut: e.target.value
+    },'Los que más ceden',chartDestino)
+  })
+
   cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{dateIn:'',dateOut:''},'Los que más piden', chartDestino)
   cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"chartCeden",{dateIn:'2025-01-01',dateOut:'2025-02-21'}, 'Los que más ceden',chartOrigen)
   
 })
-const cargarGrafico = (url,cartId,post,title, chartId) => { 
-  const data =  new FormData()
-  data.append('dateIn',post.dateIn)
-  data.append('dateOut',post.dateOut)
-  fetch(url,{
-    method: 'POST',
-    body: data
-  })
-  .then(e => e.json())
-  .then(res => {
-    let datos = []
-    let etiquetas = []
-    res.map(volumen => {
-      datos.push(volumen.vol)
-      if(cartId == 'chartPiden')
-        etiquetas.push(volumen.origen)
-      else
-        etiquetas.push(volumen.destino)
-    })
-    if(chartId != undefined){
-      chartId.destroy()
-      chartId.clear()
-    }else{
-      chartId = new Chart(cartId, {
-        type: 'polarArea',
-        data: {
-          datasets:[{
-            data: datos,
-            backgroundColor: colorArray,
-          }],
-          labels: etiquetas,
-          hoverOffset: 4
-        },
-        options: {
-          plugins: {
-            title: {
-              display: true,
-              text: title
-            },
-          },
-          responsive: true,
-          interaction: {
-            intersect: false,
-          },
-          scales: {
-            y: {
-              stacked: true
-            }
-          }
-        },
-      })
-    }
-  })
-}

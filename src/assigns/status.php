@@ -18,11 +18,11 @@
       <div style="margin: auto;height: calc(70vh - 100px);width: calc(100% - 100px);">
         <canvas id="myChart"></canvas>
       </div>
-      <hr>
+      <hr style="margin-top: 40px;">
       <div id="piden" style="margin: auto;height: calc(70vh - 100px);width: calc(100% - 100px);">
         <canvas id="chartPiden"></canvas>
       </div>
-      <hr>
+      <hr style="margin-top: 40px;">
       <div id="ceden" style="margin: auto;height: calc(70vh - 100px);width: calc(100% - 100px);">
         <canvas id="chartCeden"></canvas>
       </div>
