@@ -5,8 +5,8 @@ $contacts = new Contacts();
 
 $charsetExtract = array("'");
 
-$username = str_replace($charsetExtract, "",$_POST['usr']);
-$userpsw = str_replace($charsetExtract, "",$_POST['psw']);
+$username = str_replace($charsetExtract, "",@$_POST['usr']);
+$userpsw = str_replace($charsetExtract, "",@$_POST['psw']);
 
 $rows = $contacts->getUser($username,$userpsw);
 

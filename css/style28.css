@@ -157,6 +157,15 @@ button:active{
     transform: translate(1px, 1px);
 }
 
+button:disabled{
+    background-color: var(--cards-border-color);
+    color: var(--cards-active-color);
+    border: 1px solid var(--cards-active-color);
+    cursor: not-allowed;
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+
 select, input{
   font-family: nunito, Arial, Helvetica, sans-serif;
 }
@@ -1797,6 +1806,12 @@ span.button:active{
         border: 2px solid var(--main-font-color);
         color: var(--main-font-color);
     }
+}
+
+.clientNameExt{
+    font-size: 2.2em;
+    margin: auto;
+    height: 24px;
 }
 
 /* CESIONES */

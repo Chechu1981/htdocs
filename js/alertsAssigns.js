@@ -98,7 +98,7 @@ export const eliminarLinea = (id,referencia,tratado) =>{
     .then(consulta =>{
       const origenActivo = parseInt(consulta.emisor)
       const destinoActivo = parseInt(consulta.receptor)
-      if(origenActivo > 0 || destinoActivo || (tratado != '' && user.puesto != 'ADV')){
+      if(origenActivo > 0 || destinoActivo || (consulta.tratado != '' && user.puesto != 'ADV')){
         customAlert("Ya está en curso. Habla con ADV si quieres eliminar.")
         showAssig()
         return true
@@ -163,7 +163,7 @@ export const buscarCliente = (placa,cliente) => {
   const section = $('envio').parentNode
   data.append('search',cliente != '' ? cliente : null)
   data.append('placa', placa.toUpperCase())
-  fetch('../api/getClientName.php',{method: 'POST', body:data})
+  fetch('../../api/getClientName.php',{method: 'POST', body:data})
   .then(respose => respose.json())
   .then((res) => {
     if(res[0].cliente == undefined){

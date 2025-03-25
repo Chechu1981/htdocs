@@ -1,4 +1,5 @@
 'use strict'
+import { buscarCliente } from "./alertsAssigns.js?106"
 const id = window.location.search.split('?id=')[1]
 const btnAll = document.getElementById('all') ?? 0
 
@@ -49,4 +50,24 @@ $('addLine').addEventListener('click',()=>{
   section.appendChild(inputDesc)
   div.appendChild(section)
   $('contacts-items').getElementsByTagName('form')[0].appendChild(div)
+})
+
+$('client').addEventListener('blur',(e)=>{
+  buscarCliente($('destino').value.substring(0,3),$('client').value.split('-')[0])
+})
+
+$('sendProv').addEventListener('click',(e)=>{
+  e.target.disabled = true
+  e.preventDefault()
+  $('senMail').disabled = false
+  const data = new FormData()
+  data.append('id',id)
+  /*fetch('../api/sendProv.php',{
+    method: 'POST',
+    body: data
+  })
+  .then(e => e.text())
+  .then(()=>{
+    document.location.reload()
+  })*/
 })

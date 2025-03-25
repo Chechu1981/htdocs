@@ -14,6 +14,7 @@
       <?php include_once '../../helper/menuCesiones.php'; ?>
     </div>
     <div id="contacts-items">
+      <div id="clientName" class="clientNameExt"></div>
         <form>
             <div class="form-extBuy">
               <section>
@@ -25,8 +26,8 @@
                 </select>
               </section>
               <section>
-                <label for="destino">*Marca</label>
-                <select name="" id="destino">
+                <label for="marca">*Marca</label>
+                <select name="" id="marca">
                   <option value="" ></option>
                   <option value="ROU" >CROU . ORENSE</option>
                   <option value="REC" >RECALVI</option>
@@ -94,7 +95,6 @@
               <section>
                 <label for="client">*Cliente</label>
                 <input type="text" name="cliente" id="client">
-                <div id="clientName" class="clientNameAssign"></div>
               </section>
               <section>
                 <label for="pedido">*Envío</label>
@@ -124,8 +124,8 @@
             <button id="addLine">Añadir línea</button>
           </div>
           <div>
-            <button id="send">Enviar al proveedor</button>
-            <button id="cancel">Enviar a la placa</button>
+            <button id="sendProv">Enviar al proveedor</button>
+            <button id="senMail" disabled="disabled">Enviar a la placa</button>
           </div>
             <div id="cesiones"></div>
     </div>
