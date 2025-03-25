@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <?php include('./../helper/logon.php'); ?>
+  <?php include('../../helper/logon.php'); ?>
 </head>
 <body>
-  <?php include_once '../helper/alert.php'; ?>
+  <?php include_once '../../helper/alert.php'; ?>
   <div id="menu">
-    <?php include_once '../helper/menu.php'; ?>
+    <?php include_once '../../helper/menu.php'; ?>
   </div>
   <div class="search-table">
     <div id="contacts" class="contacts">
     <h1>Compra externa - Otras marcas</h1>
-      <?php include_once '../helper/menuCesiones.php'; ?>
+      <?php include_once '../../helper/menuCesiones.php'; ?>
     </div>
     <div id="contacts-items">
         <form>
@@ -107,38 +107,29 @@
             </div>
             <div class="form-extLine">
               <section>
+                <span></span>
                 <label for="ref">*Referencia PR</label>
-                <input type="text" name="Referencia" id="ref">
-                <div id="descRef" class="clientNameAssign"></div>
-              </section>
-              <section>
                 <label for="units">*Cant</label>
-                <input type="text" name="Cantidad" id="units">
-              </section>
-              <section>
                 <label for="comentLine">Descripción</label>
-                <input type="text" name="comentline" id="comentLine">
               </section>
-            </div>
-            <div class="form-extLine">
               <section>
-                <label for="ref">*Referencia PR</label>
+                <span>1</span>
                 <input type="text" name="Referencia" id="ref">
-                <div id="descRef" class="clientNameAssign"></div>
-              </section>
-              <section>
-                <label for="units">*Cant</label>
                 <input type="text" name="Cantidad" id="units">
-              </section>
-              <section>
-                <label for="comentLine">Descripción</label>
                 <input type="text" name="comentline" id="comentLine">
               </section>
             </div>
           </form>
-        <div id="cesiones"></div>
+          <div style="text-align:right">
+            <button id="addLine">Añadir línea</button>
+          </div>
+          <div>
+            <button id="send">Enviar al proveedor</button>
+            <button id="cancel">Enviar a la placa</button>
+          </div>
+            <div id="cesiones"></div>
     </div>
   </div>
-  <?php include('../helper/footer.php'); ?>
+  <?php include('../../helper/footer.php'); ?>
 </body>
 </html>

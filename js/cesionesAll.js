@@ -351,3 +351,7 @@ document.getElementById('finish').addEventListener('click',()=>{
 document.getElementById('status').addEventListener('click',()=>{
   document.location = `./assigns/status.php?id=${id}`
 })
+
+document.getElementById('extBrand').addEventListener('click',()=>{
+  document.location = `./assigns/extBrand.php?id=${id}`
+})

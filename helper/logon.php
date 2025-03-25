@@ -5,6 +5,7 @@ $src = ".";
 !strstr("$uri",'home') == '/home.php' ? $src = ".." : '';
 strpos($uri,'center') > 0 ? $src = "../.." : '';
 strpos($uri,'buscar') > 0 ? $src = "../.." : '';
+strpos($uri,'extBrand') > 0 ? $src = "../.." : '';
 strpos($uri,'ready') > 0 ? $src = "../.." : '';
 strpos($uri,'finish') > 0 ? $src = "../.." : '';
 strpos($uri,'status') > 0 ? $src = "../.." : '';

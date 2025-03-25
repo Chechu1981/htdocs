@@ -35,8 +35,8 @@ $titulo = "Cesiones de " . $usuario;
 ?>
 <section class="subButtons">
   <button id="new"><?php echo $nuevas; ?> Nuevas Cesiones</button>
-  <button id="extBrand">Otras Marcas</button>
   <?php echo $btnAll; ?>
+  <button id="extBrand">Otras Marcas</button>
   <button id="find">Buscar</button>
   <button id="ready"><?php echo $enCurso; ?> En curso</button>
   <button id="finish">Rechazadas</button>

@@ -32,6 +32,10 @@ document.getElementById('status').addEventListener('click',()=>{
   document.location = `./status.php?id=${id}`
 })
 
+document.getElementById('extBrand').addEventListener('click',()=>{
+  document.location = `./extBrand.php?id=${id}`
+})
+
 window.addEventListener('load',()=>{
   const uriData = new FormData()
   uriData.append('subfolder',id)

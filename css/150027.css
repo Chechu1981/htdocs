@@ -83,7 +83,7 @@
 
     #contacts{
         top: 72px;
-        grid-template-columns: 21% 67% 11%;
+        grid-template-columns: 17% 73% 10%;
     }
 
     .heading{
