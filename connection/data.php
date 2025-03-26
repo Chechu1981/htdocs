@@ -624,8 +624,11 @@ class Contacts
 
     public function updateAssigADV2023($id,$fragil,$envio,$nfm,$pedido,$tratado,$origenBtn,$destinoBtn,$origen,$proveedorExterno,$disgon,$comentario){
         $fecha = date("Y-m-d H:i:s");
-        if($proveedorExterno != '')
+        if($proveedorExterno != ''){
             $sql = "UPDATE `cesiones` SET `origen` = '$origen', `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `emisor` = $origenBtn, `receptor` = $destinoBtn, `pedido` = '$pedido', `tratado` = '$tratado', `comentario` = '$comentario', `refClient` = '$proveedorExterno' WHERE `id` LIKE '$id'";
+            if($envio == 'true')
+                $sql = "UPDATE `cesiones` SET `origen` = '$origen', `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `envio` = '$fecha', `emisor` = $origenBtn, `receptor` = $destinoBtn, `pedido` = '$pedido', `tratado` = '$tratado', `comentario` = '$comentario', `refClient` = '$proveedorExterno' WHERE `id` LIKE '$id'";
+        }
         else if($envio == 'true')
             $sql = "UPDATE `cesiones` SET `origen` = '$origen', `disgon` = $disgon, `nfm` = $nfm, `fragil` = $fragil, `envio` = '$fecha', `emisor` = $origenBtn, `receptor` = $destinoBtn, `pedido` = '$pedido', `tratado` = '$tratado', `comentario` = '$comentario' WHERE `id` LIKE '$id'";
         else

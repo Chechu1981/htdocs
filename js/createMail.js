@@ -154,18 +154,19 @@ export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,p
   %0A${comentario}
   %0A%0AMuchas gracias.
 `
-  window.location.href = `mailto:${destinatarios}?cc=${bcc}&subject=Compra externa - ${placaExterna}&body=${saludo}${mensaje}` //
+  window.location.href = `mailto:${destinatarios}?cc=${bcc}&subject=Compra externa - ${placaExterna}&body=${saludo}${mensaje}` 
 }
 
-export const createMailProv = (id,cantidad,placaExterna,destino,referencia,cliente,correo_proveedor,bcc) =>{
+export const createMailProv = (id,cantidad,placaExterna,destino,referencia,cliente,correo_proveedor,bcc,comentario) =>{
   $(`disgon${id}`).className = "wait"
+  comentario == '' ? comentario = '' : comentario = `Referencia cliente: ${comentario}`
   const hora = new Date()
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
   const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
   const src = '../api/getDescRefer.php'
   const data = new FormData()
   if(destino == 'MADRID')
-    bcc = "placamadridadministracion@stellantis.com;natalia.diez@external.stellantis.com;lisbethnataly.aguilar1@stellantis.com;silvia.parro@stellantis.com;maria.sanchez@stellantis.com;jacqueline.perez@stellantis.com;emilio.crespo@stellantis.com"
+    bcc = "placamadridadministracion@stellantis.com;jacqueline.perez@stellantis.com;emilio.crespo@stellantis.com;juanantonio.palomo@external.stellantis.com"
   data.append('referencia',referencia)
   fetch(src,{
     method: 'POST',
@@ -180,10 +181,14 @@ export const createMailProv = (id,cantidad,placaExterna,destino,referencia,clien
 %0ASolicito 
 ${numero}  ${referencia.toUpperCase()}   %0A${pvp} 
 %0AEnvío a la placa de ${destino} [${direcciones[destino]}]
-%0ACliente: ${cliente}%0A⚠️Por favor enviadnos el albarán respondiendo a este correo⚠️`
+%0ACliente: ${cliente}
+%0A ${comentario}
+%0A⚠️Por favor enviadnos el albarán respondiendo a este correo⚠️`
     window.location.href = `mailto:${correo_proveedor}?cc=${bcc}&subject=Compra externa - PPCR ${destino}&body=${saludo}${mensaje}`
-    $(`disgon${id}`).classList.remove("wait")
-    $(`disgon${id}`).innerHTML = "✅"
+    if($(`disgon${id}`) != null){
+      $(`disgon${id}`).classList.remove("wait")
+      $(`disgon${id}`).innerHTML = "✅"
+    }
   })
 }
 

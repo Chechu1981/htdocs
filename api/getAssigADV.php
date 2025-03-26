@@ -177,10 +177,6 @@ if(sizeof($rows) > 0){
           $envioDisgon = "✅";
       }
     }
-    if($row[1] == 'EXT'){
-      $textoMensajeria = "Enviar correo a ".ucwords($row[12]);
-      $envioDisgon = "🏬";
-    }
     if($row[16] == 1)
       $btnDestinoPress = 'active-city-press';
     $destino = $row[2];
@@ -195,6 +191,14 @@ if(sizeof($rows) > 0){
       $classDelete = 'class="delete"';
       $btnEnviar = '<span title="Enviar Cesión" id="send'.$row[0].'">📩</span>';
       $cursor = 'style="cursor:pointer"';
+      if($row[1] == 'EXT'){
+        $textoMensajeria = "Enviar correo a ".ucwords($row[12]);
+        $envioDisgon = "🏬";
+        if($row[2] == 'MADRID'){
+          $textoMensajeria = "Enviar correo a ".ucwords($row[12])." y placa de Madrid";
+          $btnEnviar = '<span title="Enviar Cesión" id="send'.$row[0].'"></span>';
+        }
+      }
     }
     if($puesto == 'ADV' || $agente == ''){
       $origen = createOptions($row[0],$row[1],$row[12]);

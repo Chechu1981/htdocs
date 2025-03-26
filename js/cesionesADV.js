@@ -261,7 +261,7 @@ const showAssig = () =>{
         }
 
         if(btnSendMail != null){
-          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente,comentario.textContent, correo_proveedor))
+          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente,comentario.innerText, correo_proveedor))
           if(btnSendMailDisgon != null)
             btnSendMailDisgon.addEventListener('click',(e) => {
               if(e.target.innerHTML == '🚚')
@@ -281,7 +281,40 @@ const showAssig = () =>{
                 })
                 .then(response => response.json())
                 .then(res => {
-                  createMailProv(id,cantidad,refCliente,destino.textContent,referencia.firstChild.textContent.replaceAll(' ',''),cliente.firstChild.textContent,correo_proveedor,res['destino'])
+                  if(destino.textContent == 'MADRID'){
+                    let enviar = confirm('¿Enviar correo al proveedor y a la placa de Madird?')
+                    if(!enviar)
+                      return
+                    createMailProv(id,cantidad,refCliente,destino.textContent,referencia.firstChild.textContent.replaceAll(' ',''),cliente.firstChild.textContent,correo_proveedor,res['destino'],comentario.textContent,comentario.firstChild.textContent)
+                    dataName.append('id', id)
+                    dataName.append('nfm',nfm.checked)
+                    dataName.append('fragil',fragil.checked)
+                    dataName.append('pedido',pedido.value)
+                    dataName.append('tratado',tratado.value)
+                    dataName.append('envio', true)
+                    dataName.append('disgon', disgon)
+                    dataName.append('origenBtn', '1')
+                    dataName.append('destinoBtn', '1')
+                    dataName.append('origen', origen.value)
+                    dataName.append('destino', destino.textContent)
+                    dataName.append('destinoC', `${destino.textContent}C`)
+                    dataName.append('origenF', `${origen.value}F`)
+                    dataName.append('comentario', comentario.innerText)
+                    dataName.append('misterauto', '')
+                    dataName.append('correo', correo_proveedor)
+                    dataName.append('puesto', user.puesto)
+                    dataName.append('proveedorExterno', refCliente)
+                    fetch('../api/updateAssignADV2023.php', {
+                      method: 'POST',
+                      body:dataName
+                    })
+                    .then(itemupdate => {
+                      $(`send${id}`).parentNode.parentNode.remove()
+                      updateBubble('-')
+                    })
+                  }else{
+                    createMailProv(id,cantidad,refCliente,destino.textContent,referencia.firstChild.textContent.replaceAll(' ',''),cliente.firstChild.textContent,correo_proveedor,res['destino'],comentario.textContent,comentario.firstChild.textContent)
+                  }
                 })
               }
               else if(e.target.innerHTML == '📦')
