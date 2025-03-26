@@ -292,7 +292,7 @@ const showAssig = () =>{
                     dataName.append('pedido',pedido.value)
                     dataName.append('tratado',tratado.value)
                     dataName.append('envio', true)
-                    dataName.append('disgon', disgon)
+                    dataName.append('disgon', false)
                     dataName.append('origenBtn', '1')
                     dataName.append('destinoBtn', '1')
                     dataName.append('origen', origen.value)
