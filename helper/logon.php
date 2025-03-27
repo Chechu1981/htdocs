@@ -12,21 +12,33 @@ strpos($uri,'status') > 0 ? $src = "../.." : '';
 strpos($uri,'test') > 0 ? $src = ".." : '';
 
 include_once($src.'/helper/head.php'); 
-$contacts = new Contacts();
 
-if($_GET['id'] == '')
-  header('Location: ../../../index.html');
+$user = [];
 
-$userBdd = $contacts->getUserBySessid($_GET['id']);
+function getUser($user, $pass){
+  $contacts = new Contacts();
+  $charsetExtract = array("'");
 
-$usrOk = false;
+  $username = str_replace($charsetExtract, "",@$user);
+  $userpsw = str_replace($charsetExtract, "",@$pass);
 
-for($i = 0; $i < count($userBdd); $i++){
-    if($userBdd[0][5] == $_GET['id'])
-      $usrOk = true;
+  $rows = $contacts->getUser($username,$userpsw);
+  return count($rows) === 1 ? $rows[0] : "false";
 }
 
-if(!$usrOk)
-  header('Location: ../../../index.html');
+
+if(!isset($_COOKIE['user']) && isset($_POST['usr']) && isset($_POST['psw'])){
+  $user = getUser(@$_POST['usr'], @$_POST['psw']);
+  if($user != "false"){
+    setcookie('user', $user[1]);
+    setcookie('puesto', $user[4]);
+    setcookie('id', $user[5]);	
+    $usrOk = true;
+  }
+}else if($_COOKIE['user'] == ''){
+  header('Location: ../../../index.php');
+}else{
+  header('Location: ../../../index.php');
+} 
 
 ?>

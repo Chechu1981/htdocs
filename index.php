@@ -14,14 +14,15 @@
         <div class="logoBox"><img src="./img/Logo-PPCR-2022.png" alt="Logo PPCR"></div>
         <div class="loginBox">
             <h1>Bienvenido</h1>
-            <form action="./php/login.php" method="POST" id="loginForm">
-                <input type="text" name="user" id="user" placeholder="Usuario" required>
-                <input type="password" name="password" id="password" placeholder="Contraseña" required>
+            <form action="./home.php" method="POST" id="loginForm">
+                <input type="text" name="usr" id="usr" placeholder="Usuario" required>
+                <input type="password" name="psw" id="psw" placeholder="Contraseña" required>
                 <input type="submit" value="Iniciar Sesión">
             </form>
             <div class="errorBox" id="errorBox">
                 <p id="errorText"></p>
             </div>
+            <a href="http://" target="_blank" rel="noopener noreferrer">He olvidado mi contraseña</a>
         </div>
     </div>
 </body>
