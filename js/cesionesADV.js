@@ -720,7 +720,7 @@ document.getElementById('status').addEventListener('click',()=>{
 })
 
 document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./assigns/extBrand.php?id=${id}`
+  document.location = `./assigns/extbrand.php?id=${id}`
 })
 
 /* Se colorea los fondos de los input cuando hay algo escrito */

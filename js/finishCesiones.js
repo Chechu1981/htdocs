@@ -32,7 +32,7 @@ document.getElementById('status').addEventListener('click',()=>{
 })
 
 document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./extBrand.php?id=${id}`
+  document.location = `./extbrand.php?id=${id}`
 })
 
 setTimeout(()=>{

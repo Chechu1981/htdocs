@@ -12,8 +12,7 @@ $rows = $contacts->getUser($username,$userpsw);
 
 
 if(count($rows) === 1){
-    echo $rows[0][5];
+    echo $rows[0];
 }
 else
     echo "false";
-    

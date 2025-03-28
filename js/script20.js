@@ -172,7 +172,7 @@ let user = ''
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const id = window.location.search.split('=')[1].split('&')[0]
+  const id = document.cookie.split(';')[2].split('=')[1]
   const data = new FormData()
   data.append('id', id)
   fetch(`${src}api/getUserById.php`,{
@@ -335,7 +335,7 @@ const notificacion = (titulo, texto) => {
 
 const newAssigns = setInterval(() => {
   const dataUser = new FormData()
-  dataUser.append('id',window.location.search.split('=')[1].split('&')[0])
+  dataUser.append('id',document.cookie.split(';')[2].split('=')[1])
   const countUserAssign = new FormData()
   countUserAssign.append('usuario',user.nombre)
   countUserAssign.append('puesto',user.nombre)

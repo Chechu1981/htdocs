@@ -36,7 +36,7 @@ document.getElementById('status').addEventListener('click',()=>{
 })
 
 document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./extBrand.php?id=${id}`
+  document.location = `./extbrand.php?id=${id}`
 })
 
 const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 

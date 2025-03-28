@@ -1,4 +1,3 @@
-<?php include_once("./helper/logon.php"); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

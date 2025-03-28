@@ -1,10 +1,21 @@
 <?php
+$uri = $_SERVER['PHP_SELF'];
+
 $src = ".";
+!strstr("$uri",'home') == '/home.php' ? $src = ".." : '';
+strpos($uri,'center') > 0 ? $src = "../.." : '';
+strpos($uri,'buscar') > 0 ? $src = "../.." : '';
+strpos($uri,'extbrand') > 0 ? $src = "../.." : '';
+strpos($uri,'ready') > 0 ? $src = "../.." : '';
+strpos($uri,'finish') > 0 ? $src = "../.." : '';
+strpos($uri,'status') > 0 ? $src = "../.." : '';
+strpos($uri,'test') > 0 ? $src = ".." : '';
 !strstr("$uri",'home') == '/home.php' || strpos($uri,'test') > 0 ? $src = ".." : '.';
 strpos($uri,'center') > 0 ? $src = "../.." : '.';
 strpos($uri,'assigns') > 0 ? $src = "../.." : '.';
 
-include_once $src . '/connection/data.php';
+include_once $uri . '/helper/logon.php';
+
 $contacts = new Contacts();
 
 $scripts = (object)[
@@ -19,7 +30,7 @@ $scripts = (object)[
   'VIGO' => "/js/center3.js",
   'CENTROS' => "/js/center3.js?102",
   'CESIONES1' => "/js/cesiones202312.js?1235",
-  'EXTBRAND' => "/js/extBrand.js?101",
+  'EXTBRAND' => "/../js/extBrand.js?101",
   'CESIONESALL' => "/js/cesionesAll.js?209",
   'CESIONESADV' => "/js/cesionesADV.js?250",
   'BUSCAR' => "/../js/buscarCesiones.js?108",
@@ -61,7 +72,9 @@ $usr = $contacts->getAllUsers();
 
 $uri = $_SERVER['PHP_SELF'];
 $page = strtoupper(substr(explode("/",$uri)[count(explode("/",$uri))-1],0,-4));
-
+$user = isset($_COOKIE['user']) ? $_COOKIE['user'] : $user[1];
+$puesto = isset($_COOKIE['puesto']) ? $_COOKIE['puesto'] : $user[4];
+$id = isset($_COOKIE['id']) ? $_COOKIE['id'] : $user[5];
 ?>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -71,7 +84,7 @@ $page = strtoupper(substr(explode("/",$uri)[count(explode("/",$uri))-1],0,-4));
 <link rel="icon" href="<?= $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
 <link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1311" defer content="1">
 <link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1011" defer content="1">
-<link rel="stylesheet" href="<?= "$src/css/" . str_replace(" ","_",strtolower($user[1])).".css?" . rand(1,500); ?>" defer content="0">
+<link rel="stylesheet" href="<?= "$src/css/" . str_replace(" ","_",strtolower($user)).".css?" . rand(1,500); ?>" defer content="0">
 <script type="text/javascript" src="<?= $src; ?>/js/script20.js?1036" defer content='no-cache'></script>
 <script type="module" src="<?= $src . $scripts->$page; ?>" defer content="0"></script>
 <title>Chechu - <?= $page; ?></title>
