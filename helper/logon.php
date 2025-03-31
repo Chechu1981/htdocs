@@ -1,4 +1,18 @@
 <?php
+$src = ".";
+$uri = $_SERVER['PHP_SELF'];
+!strstr("$uri",'home') == '/home.php' ? $src = ".." : '';
+strpos($uri,'center') > 0 ? $src = "../.." : '';
+strpos($uri,'buscar') > 0 ? $src = "../.." : '';
+strpos($uri,'extbrand') > 0 ? $src = "../.." : '';
+strpos($uri,'ready') > 0 ? $src = "../.." : '';
+strpos($uri,'finish') > 0 ? $src = "../.." : '';
+strpos($uri,'status') > 0 ? $src = "../.." : '';
+strpos($uri,'test') > 0 ? $src = ".." : '';
+!strstr("$uri",'home') == '/home.php' || strpos($uri,'test') > 0 ? $src = ".." : '.';
+strpos($uri,'center') > 0 ? $src = "../.." : '.';
+strpos($uri,'assigns') > 0 ? $src = "../.." : '.';
+
 include_once $src . '/connection/data.php';
 $user;
 

@@ -2,7 +2,8 @@
 include_once '../connection/data.php';
 
 $contacts = new Contacts();
-$rows = $contacts->getUserBySessid($_POST['id']);
+$rows = $contacts->getUserBySessid($_COOKIE['id']);
+
 $privilegio = $rows[0][7];
 $opciones = '
 <section id="config">

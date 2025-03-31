@@ -1,7 +1,8 @@
+<?php include('../../helper/logon.php'); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <?php include('../../helper/logon.php'); ?>
+  <?php include('../../helper/head.php'); ?>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>

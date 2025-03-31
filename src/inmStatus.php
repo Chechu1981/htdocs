@@ -10,10 +10,11 @@ $botones = array(
   'ZARAGOZA'
 );
 ?>
+<?php include('./../helper/logon.php'); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <?php include('./../helper/logon.php'); ?>
+  <?php include('./../helper/head.php'); ?>
 </head>
 <body>
   <?php include_once '../helper/alert.php'; ?>

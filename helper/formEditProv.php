@@ -1,11 +1,9 @@
-
+<?php include_once ('./../helper/logon.php'); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <?php 
-  include('./../helper/logon.php');
-  include_once '../connection/data.php';
-  $contacts = new Contacts();
+  include('./../helper/head.php');
   $userData = $contacts->getProvById($_GET['userId']);
   $lista = [
     'ADV',

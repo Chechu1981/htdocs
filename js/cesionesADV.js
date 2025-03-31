@@ -261,7 +261,7 @@ const showAssig = () =>{
         }
 
         if(btnSendMail != null){
-          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente,comentario.innerText, correo_proveedor))
+          btnSendMail.addEventListener('click',() => enviarMail(pedido.value, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), `${cliente.firstChild.textContent} (${cliente.childNodes[1].textContent})`, fragil.checked, pvp, id, cantidad, nfm.checked, tratado.value, refCliente,comentario.firstChild.value, correo_proveedor))
           if(btnSendMailDisgon != null)
             btnSendMailDisgon.addEventListener('click',(e) => {
               if(e.target.innerHTML == '🚚')

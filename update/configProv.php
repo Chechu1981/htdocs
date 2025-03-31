@@ -1,13 +1,9 @@
 
+<?php include_once ('./../helper/logon.php'); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <?php 
-  include('./../helper/logon.php');
-  include_once '../connection/data.php';
-  $contacts = new Contacts();
-  //$rows = $contacts->newUser();
-  ?>
+  <?php include('./../helper/head.php'); ?>
 </head>
 <body>
   <?php include_once '../helper/alert.php'; ?>
