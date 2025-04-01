@@ -22,7 +22,7 @@
             <div class="errorBox" id="errorBox">
                 <p id="errorText"></p>
             </div>
-            <a href="http://" target="_blank" rel="noopener noreferrer">He olvidado mi contraseña</a>
+            <a href="./forgotPass.php" target="_blank" rel="noopener noreferrer">He olvidado mi contraseña</a>
         </div>
     </div>
 </body>
