@@ -32,7 +32,7 @@ if(!isset($_COOKIE['user']) && isset($_POST['usr']) && isset($_POST['psw'])){
   if($user != "false"){
     setcookie('user', $user[1]);
     setcookie('puesto', $user[4]);
-    setcookie('id', $user[5]);	
+    setcookie('id', $user[5]);
   }else{
     header('Location: ../../../index.php');
   }

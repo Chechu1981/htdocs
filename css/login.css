@@ -298,6 +298,15 @@ button:active{
     align-items: center;
     height: 320px;
     padding: 0 8%;
+    #passrecovery{
+        background-color: #e1e1e1;
+        border: 2px solid rgb(62, 143, 190);
+        margin: auto;
+        color: grey;
+        margin-top: 20px;
+        text-align: center;
+        padding: 8px;
+    }
     form{
         display: flex;
         flex-direction: column;
@@ -308,6 +317,11 @@ button:active{
             border: 0;
             border-bottom: 2px solid rgb(62, 143, 190);
             padding: 8px 16px;
+        }
+        input:focus-visible{
+            background-color: #d4d6b2;
+            outline: none;
+            border-bottom: 2px solid black;
         }
         input[type=submit]{
             background-color: rgb(62, 143, 190);

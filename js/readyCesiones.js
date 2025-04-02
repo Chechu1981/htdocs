@@ -3,21 +3,20 @@ import contadores from "./updateCounter.js"
 
 setInterval(() =>{contadores()},1000)
 
-const id = window.location.search.split('?id=')[1]
 const btnAll = document.getElementById('all') ?? 0
 
 if(btnAll){
   btnAll.addEventListener('click',()=>{
-    document.location = `../cesionesAll.php?id=${id}`
+    document.location = `../cesionesAll.php`
   })
 }
 
 document.getElementById('new').addEventListener('click',()=>{
-  document.location = `../cesionesADV.php?id=${id}`
+  document.location = `../cesionesADV.php`
 })
 
 document.getElementById('find').addEventListener('click',()=>{
-  document.location = `./buscar.php?id=${id}`
+  document.location = `./buscar.php`
 })
 
 document.getElementById('ready').addEventListener('click',()=>{
@@ -25,19 +24,20 @@ document.getElementById('ready').addEventListener('click',()=>{
 })
 
 document.getElementById('finish').addEventListener('click',()=>{
-  document.location = `./finish.php?id=${id}`
+  document.location = `./finish.php`
 })
 
 document.getElementById('status').addEventListener('click',()=>{
-  document.location = `./status.php?id=${id}`
+  document.location = `./status.php`
 })
 
 document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./extbrand.php?id=${id}`
+  document.location = `./extbrand.php`
 })
 
 window.addEventListener('load',()=>{
   const uriData = new FormData()
+  const id = document.cookie.split('id=')[1]
   uriData.append('subfolder',id)
   fetch('../../api/spinner.php',{
     method: 'POST',

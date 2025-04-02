@@ -3,17 +3,16 @@ import contadores from "./updateCounter.js"
 setInterval(() =>{contadores()},1000)
 
 // Accion de los botones de navegación
-const id = window.location.search.split('?id=')[1]
 const btnAll = document.getElementById('all') ?? 0
 
 if(btnAll){
   btnAll.addEventListener('click',()=>{
-    document.location = `../cesionesAll.php?id=${id}`
+    document.location = `../cesionesAll.php`
   })
 }
 
 document.getElementById('new').addEventListener('click',()=>{
-  document.location = `../cesionesADV.php?id=${id}`
+  document.location = `../cesionesADV.php`
 })
 
 document.getElementById('find').addEventListener('click',()=>{
@@ -21,19 +20,19 @@ document.getElementById('find').addEventListener('click',()=>{
 })
 
 document.getElementById('ready').addEventListener('click',()=>{
-  document.location = `./ready.php?id=${id}`
+  document.location = `./ready.php`
 })
 
 document.getElementById('finish').addEventListener('click',()=>{
-  document.location = `./finish.php?id=${id}`
+  document.location = `./finish.php`
 })
 
 document.getElementById('status').addEventListener('click',()=>{
-  document.location = `./status.php?id=${id}`
+  document.location = `./status.php`
 })
 
 document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./extbrand.php?id=${id}`
+  document.location = `./extbrand.php`
 })
 
 //Código de la búsqueda  

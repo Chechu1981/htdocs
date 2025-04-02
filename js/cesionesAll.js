@@ -326,10 +326,8 @@ const limpiarSpinner = () =>{
   $('cesiones').classList.remove('filter')
 }
 
-const id = window.location.search.split('?id=')[1]
-
 document.getElementById('new').addEventListener('click',()=>{
-  document.location = `./cesionesADV.php?id=${id}`
+  document.location = `./cesionesADV.php`
 })
 
 document.getElementById('all').addEventListener('click',()=>{
@@ -337,21 +335,21 @@ document.getElementById('all').addEventListener('click',()=>{
 })
 
 document.getElementById('find').addEventListener('click',()=>{
-  document.location = `./assigns/buscar.php?id=${id}`
+  document.location = `./assigns/buscar.php`
 })
 
 document.getElementById('ready').addEventListener('click',()=>{
-  document.location = `./assigns/ready.php?id=${id}`
+  document.location = `./assigns/ready.php`
 })
 
 document.getElementById('finish').addEventListener('click',()=>{
-  document.location = `./assigns/finish.php?id=${id}`
+  document.location = `./assigns/finish.php`
 })
 
 document.getElementById('status').addEventListener('click',()=>{
-  document.location = `./assigns/status.php?id=${id}`
+  document.location = `./assigns/status.php`
 })
 
 document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./assigns/extbrand.php?id=${id}`
+  document.location = `./assigns/extbrand.php`
 })

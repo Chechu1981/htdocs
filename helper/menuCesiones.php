@@ -1,9 +1,8 @@
 <?php
 $contacts = new Contacts();
-$user = $contacts->getUserBySessid($_GET['id']);
-$usuario = $user[0][1];
-$hash = $user[0][5];
-$puesto = $user[0][4];
+$usuario = $_COOKIE['user'];
+$hash = $_COOKIE['id'];
+$puesto = $_COOKIE['puesto'];
 $nuevas = $contacts->getAssigCountNew($usuario,$puesto,'')[0][0];
 $allAdvAssigns = $contacts->getAssigCountNew($usuario,$puesto,'all')[0][0];
 $enCurso = $contacts->getAssigCountNew($usuario, $puesto,'ready')[0][0];

@@ -11,7 +11,7 @@ export default function updateCounterAssignment(){
     CesReady = googles[3]
   }
   const data = new FormData()
-  data.append('id',window.location.search.split('?id=')[1])
+  data.append('id',document.cookie.split('id=')[1])
   fetch('../../api/updateCounterAssig.php',{
     method: 'POST',
     body: data

@@ -21,48 +21,48 @@ $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
 </picture>
 <nav id="menu-items">
     <ul>
-        <li><a href="<?php echo $src.'/home.php?id='.$id; ?>" >Enlaces</a></li>
-        <li><a href="<?php echo $src.'/src/routeTest.php?id='.$id; ?>">Rutas</a></li>
-        <li><a href="<?php echo $src.'/src/libreta.php?id='.$id; ?>">Libreta</a>
+        <li><a href="<?php echo $src.'/home.php'?>" >Enlaces</a></li>
+        <li><a href="<?php echo $src.'/src/routeTest.php'?>">Rutas</a></li>
+        <li><a href="<?php echo $src.'/src/libreta.php'?>">Libreta</a>
             <ul>
-                <li><a href="<?php echo $src.'/src/aceite.php?id='.$id; ?>">Aceite</a></li>
-                <li><a href="<?php echo $src.'/src/baterias.php?id='.$id; ?>">Baterías</a></li>
+                <li><a href="<?php echo $src.'/src/aceite.php'?>">Aceite</a></li>
+                <li><a href="<?php echo $src.'/src/baterias.php'?>">Baterías</a></li>
             </ul>
         </li>
         <li style="width:82px;display:grid;grid-template-columns:84% 16%" id="cesionesActivas">
-            <a href="<?php echo $src.'/src/cesionesADV.php?id='.$id ?>" title="<?php echo $allAssigns; ?>">Cesiones</a><span id="userAssignsready" class="round heart" title="<?php echo $nuevas; ?>"><?php echo $nuevas > 100 ? '+99' : $nuevas; ?></span>
+            <a href="<?php echo $src.'/src/cesionesADV.php' ?>" title="<?php echo $allAssigns; ?>">Cesiones</a><span id="userAssignsready" class="round heart" title="<?php echo $nuevas; ?>"><?php echo $nuevas > 100 ? '+99' : $nuevas; ?></span>
             <ul>
-                <li><a href="<?php echo $src.'/src/assigns/extbrand.php?id='.$id ?>">Otras marcas</a></li>
+                <li><a href="<?php echo $src.'/src/assigns/extbrand.php' ?>">Otras marcas</a></li>
                 <?php echo $menuTodas; ?>
-                <li><a href="<?php echo $src.'/src/assigns/buscar.php?id='.$id ?>">Buscar</a></li>
-                <li><a href="<?php echo $src.'/src/assigns/ready.php?id='.$id ?>">En curso</a></li>
-                <li><a href="<?php echo $src.'/src/assigns/finish.php?id='.$id ?>">Rechazadas</a></li>
-                <li><a href="<?php echo $src.'/src/assigns/status.php?id='.$id ?>">Estadísticas</a></li>
+                <li><a href="<?php echo $src.'/src/assigns/buscar.php' ?>">Buscar</a></li>
+                <li><a href="<?php echo $src.'/src/assigns/ready.php' ?>">En curso</a></li>
+                <li><a href="<?php echo $src.'/src/assigns/finish.php' ?>">Rechazadas</a></li>
+                <li><a href="<?php echo $src.'/src/assigns/status.php' ?>">Estadísticas</a></li>
             </ul>
         </li>    
         <li>
-            <a href="<?php echo $src.'/src/inmovilizados.php?id='.$id ?>">Inmovilizados</a>
+            <a href="<?php echo $src.'/src/inmovilizados.php' ?>">Inmovilizados</a>
             <ul>
                 <li>
-                    <a href="<?php echo $src.'/src/referenciados.php?id='.$id ?>">Referenciados</a>
+                    <a href="<?php echo $src.'/src/referenciados.php' ?>">Referenciados</a>
                 </li>
                 <li>
-                    <a href="<?php echo $src.'/src/inmStatus.php?id='.$id ?>">Datos</a>
+                    <a href="<?php echo $src.'/src/inmStatus.php' ?>">Datos</a>
                 </li>
             </ul>
         </li>
         <li>
-            <a href="<?php echo $src.'/src/centros.php?id='.$id ?>">Centros</a>
+            <a href="<?php echo $src.'/src/centros.php' ?>">Centros</a>
             <ul>
-                <li><a href="<?php echo $src.'/src/center/central.php?id='.$id ?>">Central</a></li>
-                <li><a href="<?php echo $src.'/src/center/madrid.php?id='.$id ?>">Madrid</a></li>
-                <li><a href="<?php echo $src.'/src/center/sevilla.php?id='.$id ?>">Sevilla</a></li>
-                <li><a href="<?php echo $src.'/src/center/vigo.php?id='.$id ?>">Santiago</a></li>
-                <li><a href="<?php echo $src.'/src/center/granada.php?id='.$id ?>">Granada</a></li>
-                <li><a href="<?php echo $src.'/src/center/zaragoza.php?id='.$id ?>">Zaragoza</a></li>
-                <li><a href="<?php echo $src.'/src/center/palma.php?id='.$id ?>">Palma</a></li>
-                <li><a href="<?php echo $src.'/src/center/paterna.php?id='.$id ?>">Paterna</a></li>
-                <li><a href="<?php echo $src.'/src/center/barcelona.php?id='.$id ?>">Barcelona</a></li>
+                <li><a href="<?php echo $src.'/src/center/central.php' ?>">Central</a></li>
+                <li><a href="<?php echo $src.'/src/center/madrid.php' ?>">Madrid</a></li>
+                <li><a href="<?php echo $src.'/src/center/sevilla.php' ?>">Sevilla</a></li>
+                <li><a href="<?php echo $src.'/src/center/vigo.php' ?>">Santiago</a></li>
+                <li><a href="<?php echo $src.'/src/center/granada.php' ?>">Granada</a></li>
+                <li><a href="<?php echo $src.'/src/center/zaragoza.php' ?>">Zaragoza</a></li>
+                <li><a href="<?php echo $src.'/src/center/palma.php' ?>">Palma</a></li>
+                <li><a href="<?php echo $src.'/src/center/paterna.php' ?>">Paterna</a></li>
+                <li><a href="<?php echo $src.'/src/center/barcelona.php' ?>">Barcelona</a></li>
             </ul>
         </li>
     </ul>

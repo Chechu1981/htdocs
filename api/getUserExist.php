@@ -5,7 +5,7 @@ $contacts = new Contacts();
 
 $rows = $contacts->getUserExist($_POST['usuario']);
 
-if(count($rows) > 0)
+if(count($rows) > 0){
     echo true;
-else
+}else
     echo false;

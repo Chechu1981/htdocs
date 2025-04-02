@@ -1,22 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link rel="stylesheet" href="./css/login.css">
+    <script type="text/javascript" src="./js/loginTest.js" defer></script>   
+    <title>PPCR (Placa de Piezas y Componentes de Recambio)</title>
 </head>
 <body>
-  <form action="confirmar_contraseña.php" method="post">
-    <label for="email">Correo electrónico:</label>
-    <input type="email" id="email" name="email" required><br><br>
-    
-    <label for="new_password">Nueva contraseña:</label>
-    <input type="password" id="new_password" name="new_password" required><br><br>
-    
-    <label for="confirm_password">Confirmar nueva contraseña:</label>
-    <input type="password" id="confirm_password" name="confirm_password" required><br><br>
-    
-    <input type="submit" value="Enviar">
-  </form>
+    <div class="mainBox">
+        <div class="logoBox"><img src="./img/Logo-PPCR-2022.png" alt="Logo PPCR"></div>
+        <div class="loginBox">
+            <h1>Recuperar contraseña</h1>
+            <form action="#">
+              <input type="text" name="mail" id="mail" placeholder="usuario@stellantis.com" required>
+              <input type="submit" value="Enviar contraseña provisional al correo">
+            </form>
+            <input type="text" name="passrecovery" id="passrecovery" placeholder="XXXXX" required>
+            <div class="errorBox" id="errorBox">
+                <p id="errorText"></p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

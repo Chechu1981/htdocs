@@ -690,12 +690,11 @@ $$('form')[0].addEventListener('submit',(e)=>{
 
 showAssig()
 
-const id = window.location.search.split('?id=')[1]
 const btnAll = document.getElementById('all') ?? 0
 
 if(btnAll){
   btnAll.addEventListener('click',()=>{
-    document.location = `./cesionesAll.php?id=${id}`
+    document.location = `./cesionesAll.php`
   })
 }
 
@@ -704,23 +703,23 @@ document.getElementById('new').addEventListener('click',()=>{
 })
 
 document.getElementById('find').addEventListener('click',()=>{
-  document.location = `./assigns/buscar.php?id=${id}`
+  document.location = `./assigns/buscar.php`
 })
 
 document.getElementById('ready').addEventListener('click',()=>{
-  document.location = `./assigns/ready.php?id=${id}`
+  document.location = `./assigns/ready.php`
 })
 
 document.getElementById('finish').addEventListener('click',()=>{
-  document.location = `./assigns/finish.php?id=${id}`
+  document.location = `./assigns/finish.php`
 })
 
 document.getElementById('status').addEventListener('click',()=>{
-  document.location = `./assigns/status.php?id=${id}`
+  document.location = `./assigns/status.php`
 })
 
 document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./assigns/extbrand.php?id=${id}`
+  document.location = `./assigns/extbrand.php`
 })
 
 /* Se colorea los fondos de los input cuando hay algo escrito */
@@ -733,5 +732,5 @@ $$('form')[0].addEventListener('keyup',(e)=>{
 })
 
 $('openAssignPicture').addEventListener('click',()=>{
-  modal(`<div style="text-align:center"><img src="./../img/placasExternas.png?1001" /></div>`,"Cesiones dsiponibles entre placas externas")
+  modal(`<div style="text-align:center"><img src="./../img/placasExternas.png?1002" /></div>`,"Cesiones dsiponibles entre placas externas")
 })

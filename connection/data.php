@@ -28,6 +28,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getMailExist($mail){
+        $sql = "SELECT * FROM `usuarios` WHERE mail LIKE '$mail'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function getUserList(){
         $sql = "SELECT * FROM `usuarios` ORDER BY `puesto`,`nombre`";
         $query = $this->db->prepare($sql);
