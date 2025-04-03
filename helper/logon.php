@@ -23,7 +23,7 @@ function getUser($user, $pass){
   $username = str_replace($charsetExtract, "",@$user);
   $userpsw = str_replace($charsetExtract, "",@$pass);
 
-  $rows = $contacts->getUser($username,$userpsw);
+  $rows = $contacts->getUser($username, base64_encode($userpsw));
   return count($rows) === 1 ? $rows[0] : "false";
 }
 
@@ -34,10 +34,10 @@ if(!isset($_COOKIE['user']) && isset($_POST['usr']) && isset($_POST['psw'])){
     setcookie('puesto', $user[4]);
     setcookie('id', $user[5]);
   }else{
-    header('Location: ../../../index.php');
+    header('Location: ../../../index.php?error=1');
   }
 }else if($_COOKIE['user'] == ''){
-  header('Location: ../../../index.php');
+  header('Location: ../../../index.php?error=1');
 }
 
 

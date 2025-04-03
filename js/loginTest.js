@@ -20,20 +20,22 @@ document.getElementsByTagName('form')[0].addEventListener('submit', function(e){
         errorText.innerHTML = "Correo no registrado"
         return
       }else{
-        data.append('cuerpo', `Hola, este es tu código de verificación: ${datos}`)
-        data.append('asunto', 'Código de verificación - Chechuparts')
+        data.append('key', datos)
         data.append('newpassword', datos)
-        fetch('../../helper/mail.php',{
+        fetch('./mailRecoveryTemplate.php',{
           method: 'POST',
           body: data
+        }).then(response => response.text())
+        .then(() => {
+          fetch('../../api/updateRecoveryPass.php',{
+            method: 'POST',
+            body: data
+          }).then(response => response.text())
+          .then(() => {
+            window.location.href = `./recuperarPass2.php?mail=${mail.value}`
+          })
         })
-        fetch('../../api/updatePassword.php',{
-          method: 'POST',
-          body: data
-        })
-        
-
-        errorText.innerHTML = "Comprueba tu correo electrónico e intruduce el código enviado en la casilla"
+        errorText.innerHTML = "Enviando correo electrónico"
       }
     }
   })

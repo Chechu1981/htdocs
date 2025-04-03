@@ -74,7 +74,7 @@ if(typeof(href) != "object"){
         $('changeColor').addEventListener('click', (e) =>{
           let colorHSL = hexToHSL($('color').value)
           let data = new FormData()
-          data.append('userId',window.location.search.split('=')[1])
+          data.append('userId',document.cookie.split('id=')[1])
           data.append('h', colorHSL.h * 360)
           data.append('s', colorHSL.s * 100)
           data.append('l', colorHSL.l * 100)

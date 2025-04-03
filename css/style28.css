@@ -2617,13 +2617,13 @@ margin: 0 10px;
 }
 
 .users{
-    width: 50%;
+    width: 80%;
     margin: 5% auto;
 }
 
 .user_list{
     display: grid;
-    grid-template-columns: 5% 22% 22% 29% 22%;
+    grid-template-columns: 4% 19% 10% 25% 10% 15% 11%;
     justify-items: center;
     list-style-type: none;
     align-items: center;
@@ -2652,7 +2652,7 @@ margin: 0 10px;
     cursor: pointer;
 }
 
-.header{
-    background-color:var(--bg-font-color) !important;
-    color:var(--bg-body-color) !important;
-}
+    .header{
+        background-color:var(--bg-font-color) !important;
+        color:var(--bg-body-color) !important;
+    }

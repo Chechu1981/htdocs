@@ -381,9 +381,6 @@ const newAssigns = setInterval(() => {
         if(cesion.puesto !== undefined && cesion.puesto != 'ADV'){
           notificacion(`Nueva cesión de ${cesion.usuario}.`,
           `referencia: ${cesion.ref} de ${cesion.origen} a ${cesion.destino}`)
-          const path = window.location.pathname
-          if(path.includes('cesiones') || path.includes('assigns'))
-            console.log("Entra!")
         }
       })
     }else if(parseInt(valor) < parseInt(actual))

@@ -81,7 +81,7 @@ const updateCounterAssignment = (id,comentario) => {
 const showAssig = () =>{
   const data = new FormData()
   data.append('id','new')
-  data.append('session',window.location.href.split('=')[1])
+  data.append('session',user.hash)
   data.append('sort', 'date')
   fetch('../api/getAssigADV_all.php',{
     method: 'POST',

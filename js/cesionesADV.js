@@ -655,7 +655,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   data.append('pedido',pedido)
   data.append('nfm',nfm)
   data.append('frag',$('frag').checked)
-  data.append('session',window.location.href.split('=')[1])
+  data.append('session',user.hash)
   data.append('correo',correo_proveedor)
   $('disgonBox') == null ? null : disgonStatus = $('disgonBox').checked
   data.append('disgon', disgonStatus)

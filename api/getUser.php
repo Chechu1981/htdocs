@@ -3,16 +3,13 @@ include_once '../connection/data.php';
 
 $contacts = new Contacts();
 
-$charsetExtract = array("'");
+$username = @$_POST['usr'];
+$userpsw = @$_POST['psw'];
 
-$username = str_replace($charsetExtract, "",@$_POST['usr']);
-$userpsw = str_replace($charsetExtract, "",@$_POST['psw']);
-
-$rows = $contacts->getUser($username,$userpsw);
-
+$rows = $contacts->getUser($username,base64_encode($userpsw));
 
 if(count($rows) === 1){
-    echo $rows[0];
+    echo "true";
 }
 else
     echo "false";

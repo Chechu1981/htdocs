@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link rel="stylesheet" href="./css/login.css">
-    <script type="text/javascript" src="./js/loginTest.js" defer></script>   
+    <script type="text/javascript" src="./js/login.js" defer></script>   
     <title>PPCR (Placa de Piezas y Componentes de Recambio)</title>
 </head>
 <body>
@@ -22,7 +22,7 @@
             <div class="errorBox" id="errorBox">
                 <p id="errorText"></p>
             </div>
-            <a href="./forgotPass.php" target="_self" rel="noopener noreferrer">He olvidado mi contraseña</a>
+            <a href="./login/forgotPass.php" target="_self" rel="noopener noreferrer">He olvidado mi contraseña</a>
         </div>
     </div>
 </body>

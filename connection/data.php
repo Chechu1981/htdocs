@@ -12,10 +12,10 @@ class Contacts
 
     public function getUser($usr, $psw){
         $hash = md5(strtotime("now"));
-        $sqlUpdate = "UPDATE `usuarios` SET `hash` = '$hash' WHERE nombre LIKE '$usr' AND clave LIKE '$psw'";
+        $sqlUpdate = "UPDATE `usuarios` SET `hash` = '$hash', `date` = now() WHERE nombre LIKE '$usr' AND clave LIKE '$psw'";
         $query = $this->db->prepare($sqlUpdate);
         $query->execute();
-        $sql = "SELECT DISTINCT * FROM `usuarios` WHERE nombre LIKE '$usr' AND clave LIKE '$psw'";
+        $sql = "SELECT DISTINCT * FROM `usuarios` WHERE `nombre` LIKE '$usr' AND `clave` LIKE '$psw'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -35,6 +35,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getMailKeyExist($key, $mail){
+        $sql = "SELECT * FROM `usuarios` WHERE `mail` LIKE '$mail' AND `passRecovery` LIKE '$key'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function getUserList(){
         $sql = "SELECT * FROM `usuarios` ORDER BY `puesto`,`nombre`";
         $query = $this->db->prepare($sql);
@@ -49,6 +56,20 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getUserBykeyMail($mail,$key){
+        $sql = "SELECT * FROM `usuarios` WHERE `mail` LIKE '$mail' AND `passRecovery` LIKE '$key'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function updateMailKeyExist($key, $mail, $password){
+        $sql = "UPDATE `usuarios` SET `clave` = '$password' WHERE `mail` LIKE '$mail' AND `passRecovery` LIKE '$key'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->rowCount();
+    }
+    
     public function getUserById($id){
         $sql = "SELECT * FROM `usuarios` WHERE `id` LIKE '$id'";
         $query = $this->db->prepare($sql);
@@ -326,6 +347,13 @@ class Contacts
             `tipo` = '$item[8]',
             `propietario` = '$item[9]'
             WHERE id LIKE $item[0]";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return "ok";
+    }
+
+    public function updatePassRecovery($mail,$pass){
+        $sql = "UPDATE `usuarios` SET `passRecovery` = '$pass' WHERE mail LIKE '$mail'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return "ok";
