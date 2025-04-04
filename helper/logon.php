@@ -14,16 +14,16 @@ strpos($uri,'center') > 0 ? $src = "../.." : '.';
 strpos($uri,'assigns') > 0 ? $src = "../.." : '.';
 
 include_once $src . '/connection/data.php';
+$contacts = new Contacts();
 $usuario;
-
+$privilegio = 0;
 function getUser($user, $pass){
-  $contacts = new Contacts();
   $charsetExtract = array("'");
 
   $username = str_replace($charsetExtract, "",@$user);
   $userpsw = str_replace($charsetExtract, "",@$pass);
 
-  $rows = $contacts->getUser($username, base64_encode($userpsw));
+  $rows = $GLOBALS['contacts']->getUser($username, base64_encode($userpsw));
   return count($rows) === 1 ? $rows[0] : "false";
 }
 
@@ -33,6 +33,7 @@ if(!isset($_COOKIE['user']) && isset($_POST['usr']) && isset($_POST['psw'])){
     setcookie('user', $usuario[1]);
     setcookie('puesto', $usuario[4]);
     setcookie('id', $usuario[5]);
+    $privilegio = $usuario[7];
   }else{
     header('Location: ../../../index.php?error=1');
   }

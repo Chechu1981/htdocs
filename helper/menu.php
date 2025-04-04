@@ -39,7 +39,7 @@ $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
                 <li><a href="<?php echo $src.'/src/assigns/finish.php' ?>">Rechazadas</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/status.php' ?>">Estadísticas</a></li>
             </ul>
-        </li>    
+        </li>
         <li>
             <a href="<?php echo $src.'/src/inmovilizados.php' ?>">Inmovilizados</a>
             <ul>

@@ -68,6 +68,16 @@ const sendMail = (placa) =>{
   window.location.href = `mailto:${destino[placa]}?subject=Pedido de mostrador&body=${saludo} %0A${cuerpo}%0A%0AUn saludo.`  
 }
 
+  const getIdByCookie = (cookie) => {
+    const allVars = cookie.split(';')
+    for(let i = 0; i < allVars.length; i++){
+      if(allVars[i].includes('id')){
+        const id = allVars[i].split('=')[1]
+        return id
+      }
+    }
+  }
+
 $('mailBParts').addEventListener('click',(e) => {
   fetch(`${src}helper/sendMailClient.php`)
   .then(response => response.text())
@@ -145,7 +155,7 @@ setInterval(() => {
 
 $('menu').childNodes[7].addEventListener('click',(e) => {
   if(e.target.title == "Configuración"){
-    let id = document.location.search.split('=')[1]
+    let id = getIdByCookie(document.cookie)
     let data = new FormData()
     data.append('id',id)
     fetch(`${src}/helper/modalConfig.php`,{
@@ -175,7 +185,7 @@ let user = ''
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const id = document.cookie.split(';')[2].split('=')[1]
+  const id = getIdByCookie(document.cookie)
   const data = new FormData()
   data.append('id', id)
   fetch(`${src}api/getUserById.php`,{
@@ -338,7 +348,8 @@ const notificacion = (titulo, texto) => {
 
 const newAssigns = setInterval(() => {
   const dataUser = new FormData()
-  dataUser.append('id',document.cookie.split(';')[2].split('=')[1])
+  let id = getIdByCookie(document.cookie)
+  dataUser.append('id',id)
   const countUserAssign = new FormData()
   countUserAssign.append('usuario',user.nombre)
   countUserAssign.append('puesto',user.nombre)
