@@ -14,7 +14,7 @@ strpos($uri,'center') > 0 ? $src = "../.." : '.';
 strpos($uri,'assigns') > 0 ? $src = "../.." : '.';
 
 include_once $src . '/connection/data.php';
-$user;
+$usuario;
 
 function getUser($user, $pass){
   $contacts = new Contacts();
@@ -28,11 +28,11 @@ function getUser($user, $pass){
 }
 
 if(!isset($_COOKIE['user']) && isset($_POST['usr']) && isset($_POST['psw'])){
-  $user = getUser(@$_POST['usr'], @$_POST['psw']);
-  if($user != "false"){
-    setcookie('user', $user[1]);
-    setcookie('puesto', $user[4]);
-    setcookie('id', $user[5]);
+  $usuario = getUser(@$_POST['usr'], @$_POST['psw']);
+  if($usuario != "false"){
+    setcookie('user', $usuario[1]);
+    setcookie('puesto', $usuario[4]);
+    setcookie('id', $usuario[5]);
   }else{
     header('Location: ../../../index.php?error=1');
   }

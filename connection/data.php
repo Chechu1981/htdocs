@@ -12,7 +12,7 @@ class Contacts
 
     public function getUser($usr, $psw){
         $hash = md5(strtotime("now"));
-        $sqlUpdate = "UPDATE `usuarios` SET `hash` = '$hash', `date` = now() WHERE nombre LIKE '$usr' AND clave LIKE '$psw'";
+        $sqlUpdate = "UPDATE `usuarios` SET `hash` = '$hash', `date` = now() WHERE `nombre` LIKE '$usr' AND `clave` LIKE '$psw'";
         $query = $this->db->prepare($sqlUpdate);
         $query->execute();
         $sql = "SELECT DISTINCT * FROM `usuarios` WHERE `nombre` LIKE '$usr' AND `clave` LIKE '$psw'";
