@@ -267,7 +267,7 @@ window.addEventListener('load',() => {
     },'Los que más piden',chartDestino)
   })
 
-  cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{dateIn:'',dateOut:''},'Los que más piden', chartDestino)
-  cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"chartCeden",{dateIn:'2025-01-01',dateOut:'2025-02-21'}, 'Los que más ceden',chartOrigen)
+  cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{dateIn:'',dateOut:''},'Los que más ceden', chartDestino)
+  cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"chartCeden",{dateIn:'2025-01-01',dateOut:'2025-02-21'}, 'Los que más piden',chartOrigen)
   
 })
