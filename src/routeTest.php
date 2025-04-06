@@ -1,5 +1,5 @@
 
-<?php include('./../helper/logon.php'); ?>
+<?php include('../helper/logon.php'); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
