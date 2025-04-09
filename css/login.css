@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url("https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600&display=swap");
+
 @font-face {
     font-family: nunito;
     src: url('./fonts/Nunito-VariableFont_wght.ttf');
@@ -276,6 +275,9 @@ button:active{
     background: linear-gradient(300deg,rgb(201, 220, 226),rgb(87, 198, 218),blue);
     background-size: 180% 180%;
     animation: gradient-animation 18s ease infinite;
+    img{
+        aspect-ratio: auto;
+    }
 }
 
 @keyframes gradient-animation{
@@ -291,7 +293,7 @@ button:active{
 }
 
 .loginBox{
-    background-color: #d4d6b2;
+    background-color: #dadbcb;
     border-radius: 0 24px 24px 0;
     display: flex;
     flex-direction: column;
@@ -299,7 +301,7 @@ button:active{
     height: 320px;
     padding: 0 8%;
     #passrecovery{
-        background-color: #e1e1e1;
+        background-color: #dadbcb;
         border: 2px solid rgb(62, 143, 190);
         margin: auto;
         color: grey;
@@ -311,7 +313,7 @@ button:active{
         display: flex;
         flex-direction: column;
         input{
-            background-color: #d4d6b2;
+            background-color: #dadbcb;
             font-size: large;
             margin: 1% 0;
             border: 0;
@@ -319,7 +321,7 @@ button:active{
             padding: 8px 16px;
         }
         input:focus-visible{
-            background-color: #d4d6b2;
+            background-color: #dadbcb;
             outline: none;
             border-bottom: 2px solid black;
         }
@@ -334,6 +336,6 @@ button:active{
     }
     a{
         font-size: small;
-        color: rgb(62, 143, 190);
+        color: rgb(16, 46, 63);
     }
 }

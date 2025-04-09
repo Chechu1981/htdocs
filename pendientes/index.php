@@ -16,7 +16,6 @@ $date = date_create($date[0][0]);
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="apple-touch-icon" sizes="57x57" href="../img/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="../img/favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="../img/favicon/apple-icon-72x72.png">
@@ -32,7 +31,7 @@ $date = date_create($date[0][0]);
     <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon/favicon-16x16.png">
     <link rel="manifest" href="../img/favicon/manifest.json" />
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-    <link rel="stylesheet" href="../css/login1.css?100">
+    <link rel="stylesheet" href="../css/login1.css?101">
     <script type="text/javascript" src="../js/pending.js?100" defer></script>   
     <title>PPCR (Placa de Piezas y Componentes de Recambio) Consulta de pendientes</title>
 </head>

@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap');
-@import url("https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600&display=swap");
-
-
+@font-face {
+    font-family: nunito;
+    src: url('./fonts/Nunito-VariableFont_wght.ttf');
+}
 :root{
     --main-font-color: hsl(99.05325443786982, 77.1689497716895%, 42.94117647058823%);
     --second-bg-color: hsl(99.05325443786982, 47.168949771689%, 67.941176470588%);
@@ -14,7 +14,7 @@
     }
 
 body{
-    font-family: Encode Sans Condensed, sans-serif;
+    font-family: nunito Encode Sans Condensed, sans-serif;
     background-color: #f1f1f1;
     background-image: url(../img/Logo-PPCR-2022.png);
     background-repeat: repeat;
