@@ -37,7 +37,7 @@ document.getElementById('extBrand').addEventListener('click',()=>{
 
 window.addEventListener('load',()=>{
   const uriData = new FormData()
-  const id = document.cookie.split('id=')[1]
+  const id = getIdByCookie(document.cookie)
   uriData.append('subfolder',id)
   fetch('../../api/spinner.php',{
     method: 'POST',

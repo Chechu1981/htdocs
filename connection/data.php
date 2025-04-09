@@ -477,9 +477,9 @@ class Contacts
         if($all == 'all')
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         elseif($all == 'new')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";            
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$puesto')";            
         elseif($all == 'stop' AND $puesto != 'ADV')
-            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$usr')";
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$puesto')";
         elseif($all == 'stop' AND $puesto == 'ADV')
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true";
         $sql .= $order;

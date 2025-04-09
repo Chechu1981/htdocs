@@ -39,6 +39,7 @@ document.getElementById('extBrand').addEventListener('click',()=>{
 const seacrhRef = e => {
   e.preventDefault()
   e.stopImmediatePropagation()
+  const id = getIdByCookie(document.cookie)
   let referencia = $('refAssig').value
   let origen = $('origen').value
   let destino = $('destino').value

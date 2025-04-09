@@ -1,7 +1,7 @@
 'use strict';
 import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?115"
 import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?107"
-import contadores from "./updateCounter.js?101"
+import contadores from "./updateCounter.js?102"
 
 const setCounters = setInterval(() =>{contadores()},1000)
 const pclient = $('pclient')
@@ -85,9 +85,10 @@ const showAssig = () =>{
   const divSpinner = document.createElement('div')
   $('descRef').innerHTML = ""
   $('clientName').innerHTML = ""
+  const id = getIdByCookie(document.cookie)
   const data = new FormData()
   data.append('id','new')
-  data.append('session',window.location.href.split('=')[1])
+  data.append('session',id)
   data.append('sort', 'date')
   fetch('../api/spinner.php')
   .then(fn => fn.text())
@@ -443,7 +444,7 @@ const refreshInputs = (id,fragil,pedido,tratado,origen,destino) => {
       response[cesion] != undefined ? code.innerHTML = response[cesion] : code.innerHTML = ""
     })
   }else if(origen == 'MAT'){
-    const session = window.location.search.split('?id=')[1]
+    const session = getIdByCookie(document.cookie)
     const data = new FormData()
     data.append('id', id)
     data.append('session', session)
@@ -655,7 +656,7 @@ $$('form')[0].addEventListener('submit',(e)=>{
   data.append('pedido',pedido)
   data.append('nfm',nfm)
   data.append('frag',$('frag').checked)
-  data.append('session',user.hash)
+  data.append('session',getIdByCookie(document.cookie))
   data.append('correo',correo_proveedor)
   $('disgonBox') == null ? null : disgonStatus = $('disgonBox').checked
   data.append('disgon', disgonStatus)
@@ -732,5 +733,5 @@ $$('form')[0].addEventListener('keyup',(e)=>{
 })
 
 $('openAssignPicture').addEventListener('click',()=>{
-  modal(`<div style="text-align:center"><img src="./../img/placasExternas.png?1002" /></div>`,"Cesiones dsiponibles entre placas externas")
+  modal(`<div style="text-align:center"><img src="./../img/placasExternas.png?1003" /></div>`,"Cesiones dsiponibles entre placas externas")
 })
