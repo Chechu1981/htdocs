@@ -502,7 +502,7 @@ class Contacts
         if($state == 'ready')
             $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `puesto` = '$puesto')";
         if($state == 'all')
-            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `rechazado` = false AND `recibido` LIKE '0000-00-00'";
+            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `rechazado` = false AND `recibido` LIKE '0000-00-00' AND `pause` = 0";
         if($state == 'ready' AND $puesto == 'ADV')
             $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         if($puesto == 'DESBORDE')
