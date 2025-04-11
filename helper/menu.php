@@ -8,8 +8,11 @@ strpos($uri,'assigns') > 0 ? $src = "../.." : '';
 include_once $src . '/connection/data.php';
 
 $menuTodas = '';
-if($puesto == 'ADV')
+$menuOtrasMarcas = '';
+if($puesto == 'ADV'){
     $menuTodas = '<li><a href="'.$src.'/src/cesionesAll.php?id='.$id.'">Todas</a></li>';
+    //$menuOtrasMarcas = '<li><a href="'.$src.'/src/assigns/extbrand.php">Otras marcas</a></li>';
+}
 $allAssigns = $contacts->getAssigCountNew($user, $puesto,'all')[0][0];
 $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
 ?>
@@ -32,8 +35,7 @@ $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
         <li style="width:82px;display:grid;grid-template-columns:84% 16%" id="cesionesActivas">
             <a href="<?php echo $src.'/src/cesionesADV.php' ?>" title="<?php echo $allAssigns; ?>">Cesiones</a><span id="userAssignsready" class="round heart" title="<?php echo $nuevas; ?>"><?php echo $nuevas > 100 ? '+99' : $nuevas; ?></span>
             <ul>
-                <li><a href="<?php echo $src.'/src/assigns/extbrand.php' ?>">Otras marcas</a></li>
-                <?php echo $menuTodas; ?>
+                <?= $menuOtrasMarcas . $menuTodas; ?>
                 <li><a href="<?php echo $src.'/src/assigns/buscar.php' ?>">Buscar</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/ready.php' ?>">En curso</a></li>
                 <li><a href="<?php echo $src.'/src/assigns/finish.php' ?>">Rechazadas</a></li>
