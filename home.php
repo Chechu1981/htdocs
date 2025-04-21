@@ -43,7 +43,7 @@
       <ul>    
           <li title="TRANSPORTE">TRANSPORTE</li>
           <li title="NEUMATICOS">NEUMATICOS</li>
-          <li title="CATALOGO">CATÁLOGOS</li>
+          <li title="CATALOGO">CATÁLOGOS</li>a
           <li title="PPCR">PPCR</li>
           <li title="STELLANTIS">STELLANTIS</li>
       </ul>

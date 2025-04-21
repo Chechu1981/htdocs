@@ -507,6 +507,8 @@ class Contacts
             $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         if($puesto == 'DESBORDE')
             $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `rechazado` = false AND `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
+        if($puesto == 'DESBORDE' AND $state == 'ready')
+            $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr')";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

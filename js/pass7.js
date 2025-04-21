@@ -35,8 +35,7 @@ $('center-items-pass').addEventListener('click', (e) => {
 })
 
 $('addLink').addEventListener('click',() =>{
-  let id = document.location.search.split('=')[1]
-  modal(`<iframe src='../helper/formNewLink.php?id=${id}' class='libreta'></iframe>`,"Nuevo enlace")
+  modal(`<iframe src='../helper/formNewLink.php' class='libreta'></iframe>`,"Nuevo enlace")
 })
 
 document.addEventListener('click', e => {

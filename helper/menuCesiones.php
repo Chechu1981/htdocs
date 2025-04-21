@@ -20,7 +20,7 @@ else
   $allAdvAssigns = "<span class='round'>0</span>";
 
 $btnAll = '';
-$btnOthersBrands = '';
+$btnOthersBrands = '<button id="extBrand" disabled="disabled">Otras Marcas</button>';
 if($puesto == 'ADV'){
   $btnAll = '<button id="all">'.$allAdvAssigns.' Todas</button>';
   $btnOthersBrands = '<button id="extBrand" disabled="disabled">Otras Marcas</button>';

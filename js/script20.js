@@ -133,8 +133,7 @@ document.addEventListener('click',(e)=>{
     const txt = $('txtNotes').value;
     const data = new FormData()
     data.append('txt',txt)
-    let src = src + 'api/updateNotes.php'
-    fetch(src,{
+    fetch(`${src}api/updateNotes.php`,{
       method: 'POST',
       body: data
     })
