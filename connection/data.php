@@ -496,7 +496,7 @@ class Contacts
     }
 
     public function getAssigCountNew($usr,$puesto,$state){
-        $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND `rechazado` = false AND`usuario` = '$usr'";
+        $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `recibido` LIKE '0000-00-00' AND `rechazado` = false AND `usuario` = '$usr'";
         if($puesto == 'ADV')
             $sql = "SELECT COUNT(*) FROM `cesiones` WHERE `envio` LIKE '0000-00-00 00:00:00' AND `rechazado` = false AND `recibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         if($state == 'ready')

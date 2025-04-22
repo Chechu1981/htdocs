@@ -1,7 +1,7 @@
 'use strict';
 
 const recargar = (destino,idUser = 0) =>{
-  const id = window.location.search.split('=')[1].split('&')[0]
+  const id = getIdByCookie(document.cookie)
   window.location.href = `${destino}?id=${id}&userId=${idUser}`
 }
 
