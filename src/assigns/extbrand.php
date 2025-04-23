@@ -118,6 +118,12 @@
                 <input type="text" name="Referencia" id="ref">
                 <input type="text" name="Cantidad" id="units">
                 <input type="text" name="comentline" id="comentLine">
+                <select name="familia" id="familyParts">
+                  <option value=""></option>
+                  <option value="CARROCERIA">Carrocería</option>
+                  <option value="MECANICA">Mecánica</option>
+                  <option value="REMAN">Cambio estádar</option>
+                </select>
               </section>
             </div>
           </form>

@@ -38,15 +38,33 @@ $('addLine').addEventListener('click',()=>{
   let inputRef = document.createElement('input')
   let inputUni = document.createElement('input')
   let inputDesc = document.createElement('input')
+  let familySelect = document.createElement('select')
+  let familyOpt1 = document.createElement('option')
+  let familyOpt2 = document.createElement('option')
+  let familyOpt3 = document.createElement('option')
+  let familyOpt4 = document.createElement('option')
   let span = document.createElement('span')
   let div = document.createElement('div')
   let section = document.createElement('section')
+  familyOpt1.value = ''
+  familyOpt1.innerText = ''
+  familyOpt2.innerText = 'Carrocería'
+  familyOpt3.innerText = 'Mecánica'
+  familyOpt4.innerText = 'Reman'
+  familyOpt2.value = 'CARROCERIA'
+  familyOpt3.value = 'MECANICA'
+  familyOpt4.value = 'REMAN'
+  familySelect.appendChild(familyOpt1)
+  familySelect.appendChild(familyOpt2)
+  familySelect.appendChild(familyOpt3)
+  familySelect.appendChild(familyOpt4)
   span.innerText = ++contadorLineas
   div.classList.add('form-extLine')
   section.appendChild(span)
   section.appendChild(inputRef)
   section.appendChild(inputUni)
   section.appendChild(inputDesc)
+  section.appendChild(familySelect)
   div.appendChild(section)
   $('contacts-items').getElementsByTagName('form')[0].appendChild(div)
 })
