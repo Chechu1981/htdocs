@@ -835,7 +835,7 @@ input[type="color"]::-webkit-color-swatch {
 
 #contacts{
     display: grid;
-    grid-template-columns:20% 70%;
+    grid-template-columns:20% 70% 10%;
     position: sticky;
     background-color: var(--bg-body-color);
     z-index: 3;
@@ -883,6 +883,15 @@ input[type="color"]::-webkit-color-swatch {
     margin-top: calc(100vh - 50%);
     letter-spacing: normal;
     animation: noAssigns 5s infinite ease-in-out;
+}
+
+.contacts select{
+    width: 150px;
+    border: 2px solid var(--main-font-color);
+    border-radius: 8px;
+    font-size: 2em;
+    text-transform: uppercase;
+    height: fit-content;
 }
 
 .libre textarea{

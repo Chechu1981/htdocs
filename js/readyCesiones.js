@@ -36,8 +36,20 @@ document.getElementById('extBrand').addEventListener('click',()=>{
 })
 
 window.addEventListener('load',()=>{
-  const uriData = new FormData()
   const id = getIdByCookie(document.cookie)
+  const user = document.getElementById('filterAssiigns').value
+  loadResults(id, user)
+})
+
+$('filterAssiigns').addEventListener('change',e =>{
+  const id = getIdByCookie(document.cookie)
+  const user = e.target.value
+  loadResults(id,user)
+})
+
+
+const loadResults = (id, user) =>{
+  const uriData = new FormData()
   uriData.append('subfolder',id)
   fetch('../../api/spinner.php',{
     method: 'POST',
@@ -50,6 +62,7 @@ window.addEventListener('load',()=>{
   data.append('id','new')
   data.append('session',id)
   data.append('sort','date')
+  data.append('user',user)
   fetch('../../api/getAssig.php',{
     method: 'POST',
     body: data
@@ -88,7 +101,7 @@ window.addEventListener('load',()=>{
       }
     }
   })
-})
+}
 
 const copyClipboard = (copiar) =>{
   navigator.clipboard.writeText(copiar)

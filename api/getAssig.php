@@ -5,7 +5,7 @@ $contacts = new Contacts();
 $user = $contacts->getUserBySessid($_POST['session']);
 
 $puesto = $user[0][4];
-$usuario = $user[0][1];
+$usuario = isset($_POST['user']) ? $_POST['user'] : $user[0][1];
 $origen = @$_POST['origen'];
 $destino = @$_POST['destino'];
 $asegurado = @$_POST['asegurado'];
