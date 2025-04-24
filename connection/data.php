@@ -585,7 +585,7 @@ class Contacts
     public function assigStatus($user){
         $sql = "SELECT COUNT(*),CONCAT(DAY(envio),'/',MONTH(envio),'/',YEAR(envio)) AS `fecha`, `usuario` 
             FROM `cesiones` 
-            WHERE `usuario` LIKE '$user' 
+            WHERE `usuario` LIKE '$user' AND `rechazado` LIKE 0
             GROUP BY  YEAR(envio),MONTH(envio), DAY(envio) 
             ORDER BY `id` DESC LIMIT 90";
         $query = $this->db->prepare($sql);

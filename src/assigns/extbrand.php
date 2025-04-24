@@ -124,6 +124,7 @@
                   <option value="MECANICA">Mecánica</option>
                   <option value="REMAN">Cambio estádar</option>
                 </select>
+                <img src="../../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar" title="Eliminar" class="deleteLine" id="delete1">
               </section>
             </div>
           </form>
