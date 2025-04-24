@@ -126,16 +126,16 @@ class Contacts
         $query->execute();
     }
 
-    public function addNewUser($user,$pass,$puesto,$email){
-        $sql = "INSERT INTO `usuarios` (`nombre`, `clave`, `puesto`,`theme`,`mail`) VALUES ('$user', '$pass', '$puesto','blue','$email')";
+    public function addNewUser($user,$priv,$puesto,$email){
+        $sql = "INSERT INTO `usuarios` (`nombre`, `privilegio`, `puesto`,`theme`,`mail`) VALUES ('$user', '$priv', '$puesto','blue','$email')";
         $query = $this->db->prepare($sql);
         $query->execute();
     }
 
-    public function updateUser($id,$user,$pass,$puesto,$email){
+    public function updateUser($id,$user,$priv,$puesto,$email){
         $sql = "UPDATE `usuarios` SET 
         `nombre` = '$user', 
-        `clave` = '$pass', 
+        `privilegio` = '$priv', 
         `puesto` = '$puesto',
         `mail` = '$email' 
         WHERE `id` = $id";

@@ -47,10 +47,7 @@
                     <?php } ?>
                 <?php } ?>
                 </select>
-            <label for="pass1">CONTRASEÑA</label>
-              <input type="password" id="pass1" placeholder="Contraseña" value="<?= $userData[0][2] ?>" autocomplete="off">
-            <label for="pass2">REPETIR CONTRASEÑA</label>
-              <input type="password" id="pass2" placeholder="Repetir contraseña" value="<?= $userData[0][2] ?>" autocomplete="off">
+            <label for="privilegio"></label><input type="number" id="privilegio" value="<?= $userData[0]['privilegio'] ?>" placeholder="Privilegio" min="1" max="100" required>
             <label for="btnform"></label><input type="submit" value="Modificar" id="btnform">
         </form>
     </div>

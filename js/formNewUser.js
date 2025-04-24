@@ -31,13 +31,8 @@ document.getElementsByTagName('form')[0].addEventListener('submit', (event) => {
   const nombre = $('nombre').value
   const email = $('email').value
   const puesto = $('puesto').value
-  const pass1 = $('pass1').value
-  const pass2 = $('pass2').value
-  if(pass1 != pass2){
-    customAlert("contraseñas no coinciden")
-    $('nombre').value = ""
-    return null
-  }
+  const priv = $('privilegio').value
+  
   if(nombre == ''){
     customAlert("El nombre no puede estar vacío")
     $('nombre').value = ""
@@ -47,7 +42,7 @@ document.getElementsByTagName('form')[0].addEventListener('submit', (event) => {
     datos.append('nombre', nombre)
     datos.append('email', email)
     datos.append('puesto', puesto)
-    datos.append('pass', pass1)
+    datos.append('priv', priv)
   if(method == 'new'){
     fetch('/../api/addNewUser.php',{
       method: 'POST',

@@ -34,11 +34,7 @@
                     <option value="DESBORDE">DESBORDE</option>
                     <option value="PLATAFORMAS">PLATAFORMAS</option>
                 </select>
-            <label for="pass1">CONTRASEÑA</label>
-              <input type="password" id="pass1" placeholder="Contraseña" value="" autocomplete="off">
-            <label for="pass2">REPETIR CONTRASEÑA</label>
-              <input type="password" id="pass2" placeholder="Repetir contraseña" value="" autocomplete="off">
-            <label for="btnform"></label><input type="submit" value="Crear" id="btnform">
+            <label for="privilegio"></label><input type="text" id="privilegio" value="" placeholder="Privilegio" min="1" max="100" required>            <label for="btnform"></label><input type="submit" value="Crear" id="btnform">
         </form>
     </div>
   </div>
