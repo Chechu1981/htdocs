@@ -18,7 +18,7 @@ $contacts = new Contacts();
 $usuario = [];
 $privilegio = 0;
 
-if(!isset($_COOKIE['user']) && isset($_POST['usr']) && isset($_POST['psw'])){
+if(!isset($_COOKIE['id']) && isset($_POST['usr']) && isset($_POST['psw'])){
   $usuario = $GLOBALS['contacts']->getUser($_POST['usr'], base64_encode($_POST['psw']));
 }else if(isset($_COOKIE['id'])){
   $usuario = $GLOBALS['contacts']->getUserByHash($_COOKIE['id']);
@@ -29,7 +29,8 @@ if(!isset($_COOKIE['id']) && count($usuario) === 1){
   setcookie('puesto', $usuario[0][4]);
   setcookie('id', $usuario[0][5]);
   $privilegio = $usuario[0][7];
-}else if($_COOKIE['id'] != $usuario[0][5]){
+}else if(@$_COOKIE['id'] != $usuario[0][5]){
+  setcookie('id', '', -1, '/');;
   header('Location: ../../../index.php?error=1');  
 }
 
