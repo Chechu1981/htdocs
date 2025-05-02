@@ -195,11 +195,11 @@ ${numero}  ${referencia.toUpperCase()}   %0A${pvp}
 export const createMailBparts = (client) => {
   const hora = new Date()
   console.log(client)
-  const destinatarios = "placamadridadministracion@stellantis.com"
+  const destinatarios = "placamadridadministracion@stellantis.com;recambios-ppcr@stellantis.com;juanantonio.palomo@external.stellantis.com;ppcrmadrid@gecoinsa.es"
   const cc = ""
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
-  const asunto = `Pedido de B-Parts para el cliente ${client.code}`
-  const mensaje = `%0APor favor, hay que crear la referencia y cargarlo al cliente ${client.code} (${client.cliente.replaceAll('&',' and ')}). La pieza va directamente al cliente.
+  const asunto = `Pedido de B-Parts que llega a Seseña para el cliente ${client.code}`
+  const mensaje = `%0AVa a llegar a Seseña este pedido de B-PArts para facturar y enviar al cliente ${client.code} (${client.cliente.replaceAll('&',' and ')}).
   %0A%0A%0A%0A
   Muchas gracias.
 `

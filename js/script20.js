@@ -85,7 +85,7 @@ $('mailBParts').addEventListener('click',(e) => {
     const ventana = modal(response,"Selecciona cliente")
     const script = document.createElement('script')
     script.type = 'module'
-    script.src = `${src}js/formSearchClient.js`
+    script.src = `${src}js/formSearchClient.js?101`
     document.head.appendChild(script)
   })
 })

@@ -1,5 +1,5 @@
 'use strict';
-import { createMailBparts } from "./createMail.js?100"
+import { createMailBparts } from "./createMail.js?101"
 const btnBuscar = document.getElementById("btnBuscar")
 
 btnBuscar.addEventListener('click', e => {
