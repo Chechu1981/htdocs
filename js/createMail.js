@@ -205,3 +205,17 @@ export const createMailBparts = (client) => {
 `
   window.location.href = `mailto:${destinatarios}?subject=${asunto}&body=${saludo}${mensaje}` //
 }
+
+export const createMailJumasa = (client) => {
+  const hora = new Date()
+  console.log(client)
+  const destinatarios = "placamadridcalldesplazado@stellantis.com;recambios-ppcr@stellantis.com;juanantonio.palomo@external.stellantis.com;ppcrmadrid@gecoinsa.es"
+  const cc = ""
+  const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
+  const asunto = `Pedido de Jumasa para el cliente ${client.code}`
+  const mensaje = `%0AVa a llegar a Seseña este pedido de Jumasa para facturar y enviar al cliente ${client.code} (${client.cliente.replaceAll('&',' and ')}).
+  %0A%0A%0A%0A
+  Muchas gracias.
+`
+  window.location.href = `mailto:${destinatarios}?subject=${asunto}&body=${saludo}${mensaje}` //
+}

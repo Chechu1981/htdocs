@@ -1,5 +1,5 @@
 'use strict';
-import { createMailBparts } from "./createMail.js?101"
+import { createMailBparts, createMailJumasa } from "./createMail.js?101"
 const btnBuscar = document.getElementById("btnBuscar")
 
 btnBuscar.addEventListener('click', e => {
@@ -31,6 +31,7 @@ btnBuscar.addEventListener('click', e => {
 })
 
 $('resultado').addEventListener('click', e => {
+  const proveedor = document.getElementsByClassName('note-body')[0].getElementsByTagName('h2')[0].textContent
   if(e.target.id.startsWith('id')){
     const id = e.target.id.split('id')[1]
     const data = new FormData()
@@ -39,7 +40,10 @@ $('resultado').addEventListener('click', e => {
       method: 'POST',
       body: data
     }).then(response => response.json())
-    .then(client => {createMailBparts(client[0]),location.reload()})
+    .then(client => {
+      proveedor == 'B-Parts' ? createMailBparts(client[0]) : createMailJumasa(client[0])
+      location.reload()
+    })
   }
 })
 
