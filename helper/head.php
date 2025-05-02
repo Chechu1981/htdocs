@@ -55,9 +55,9 @@ $usr = $contacts->getAllUsers();
 
 $uri = $_SERVER['PHP_SELF'];
 $page = strtoupper(substr(explode("/",$uri)[count(explode("/",$uri))-1],0,-4));
-$user = isset($_COOKIE['user']) ? $_COOKIE['user'] : $usuario[1];
-$puesto = isset($_COOKIE['puesto']) ? $_COOKIE['puesto'] : $usuario[4];
-$id = isset($_COOKIE['id']) ? $_COOKIE['id'] : $usuario[5];
+$user = isset($_COOKIE['user']) ? $_COOKIE['user'] : $usuario[0][1];
+$puesto = isset($_COOKIE['puesto']) ? $_COOKIE['puesto'] : $usuario[0][4];
+$id = isset($_COOKIE['id']) ? $_COOKIE['id'] : $usuario[0][5];
 $style = file_exists("$src/css/" . str_replace(" ","_",strtolower($user)).".css") ? "$src/css/" . str_replace(" ","_",strtolower($user)).".css?" . rand(1,500) : "$src/css/blue.css?" . rand(1,500);
 ?>
 <meta charset="UTF-8">

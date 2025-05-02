@@ -77,6 +77,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getUserByHash($hash){
+        $sql = "SELECT * FROM `usuarios` WHERE `hash` LIKE '$hash'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function getProvById($id){
         $sql = "SELECT * FROM `proveedores` WHERE `id` LIKE '$id'";
         $query = $this->db->prepare($sql);
