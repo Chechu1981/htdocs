@@ -6,10 +6,20 @@ const rutas = {
     new:'../api/addPass.php'
   }
 
+const getIdByCookie = (cookie) => {
+    const allVars = cookie.split(';')
+    for(let i = 0; i < allVars.length; i++){
+        if(allVars[i].includes('id')){
+        const id = allVars[i].split('=')[1]
+        return id
+        }
+    }
+}
+
 document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
     const src = window.location.href.includes('idItem=') ? rutas['update'] : rutas['new']
     const idItem = window.location.href.includes('idItem=') ? document.location.search.split('=')[2] :''
-    const id = window.location.href.includes('idItem=') ? document.location.search.split('=')[1].replace('&idItem','') : document.location.search.split('=')[1]
+    const id = getIdByCookie(document.cookie)
     e.preventDefault()
     e.stopImmediatePropagation()
     const data = new FormData()

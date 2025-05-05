@@ -69,6 +69,6 @@ $style = file_exists("$src/css/" . str_replace(" ","_",strtolower($user)).".css"
 <link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1312" defer content="1">
 <link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1011" defer content="1">
 <link rel="stylesheet" href="<?= $style ?>" defer content="0">
-<script type="text/javascript" src="<?= $src; ?>/js/script20.js?1037" defer content='no-cache'></script>
+<script type="text/javascript" src="<?= $src; ?>/js/script20.js?1038" defer content='no-cache'></script>
 <script type="module" src="<?= $src . $scripts->$page; ?>" defer content="0"></script>
 <title>Chechu - <?= $page; ?></title>
