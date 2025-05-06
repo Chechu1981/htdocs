@@ -184,7 +184,7 @@ $('menu').childNodes[7].addEventListener('click',(e) => {
   }
 })
 
-menu.childNodes[9].addEventListener('click',() => {
+menu.childNodes[7].childNodes[13].addEventListener('click',() => {
   document.cookie = 'id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
   document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/'
   document.cookie = 'puesto=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/'

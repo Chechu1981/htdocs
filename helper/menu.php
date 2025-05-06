@@ -93,5 +93,5 @@ $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
         <img alt="calc" src="<?php echo $src."/img/table_FILL0_wght400_GRAD0_opsz48.png" ?>" id="calc" title="OPR & CV>Kw">
     </span>
     <img alt="configuracion" src=<?php echo $src."/img/settings_FILL0_wght400_GRAD0_opsz24.png" ?> title="Configuración"></img>
+    <img alt="logout" src=<?php echo $src."/img/logout_FILL0_wght400_GRAD0_opsz48.png" ?> title="Salir"></img>
 </div>
-<img alt="logout" src=<?php echo $src."/img/logout_FILL0_wght400_GRAD0_opsz48.png" ?> title="Salir"></img>

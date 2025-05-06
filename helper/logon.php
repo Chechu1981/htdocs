@@ -32,6 +32,11 @@ if(!isset($_COOKIE['id']) && count($usuario) === 1){
 }else if(@$_COOKIE['id'] != $usuario[0][5]){
   setcookie('id', '', -1, '/');;
   header('Location: ../../../index.php?error=1');  
+}else if(!isset($_COOKIE['id']) || !isset($_COOKIE['user']) || !isset($_COOKIE['puesto'])){
+  setcookie('id', '', -1, '/');
+  setcookie('user', '', -1, '/');
+  setcookie('puesto', '', -1, '/');
+  header('Location: ../../../index.php?error=1');
 }
 
 ?>
