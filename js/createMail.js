@@ -188,6 +188,22 @@ ${numero}  ${referencia.toUpperCase()}   %0A${pvp}
     if($(`disgon${id}`) != null){
       $(`disgon${id}`).classList.remove("wait")
       $(`disgon${id}`).innerHTML = "✅"
+      fetch('../api/setMailProv.php',{
+        method: 'POST',
+        body: JSON.stringify({
+          referencia: referencia,
+          cantidad: cantidad,
+          placa: placaExterna,
+          destino: destino,
+          cliente: cliente,
+          correo_proveedor: correo_proveedor,
+          comentario: comentario
+        }),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(res => res.json())
     }
   })
 }
