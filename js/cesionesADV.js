@@ -267,7 +267,7 @@ const showAssig = () =>{
             btnSendMailDisgon.addEventListener('click',(e) => {
               if(e.target.innerHTML == '🚚')
                 enviarMailDisgon(cantidad, origen.value, destino.textContent, referencia.firstChild.textContent.replaceAll(' ',''), id,comentario.firstChild.innerHTML)
-              else if(e.target.innerHTML == '🏬'){
+              else if(e.target.innerHTML == '🏬' || e.target.innerHTML == '✅'){
                 refCliente = refCliente.innerText
                 const dataName = new FormData()
                 dataName.append('origen', origen.value)

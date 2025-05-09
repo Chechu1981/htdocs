@@ -199,6 +199,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function setMailProv($id){
+        $sql = "UPDATE `cesiones` SET `envioprov` = NOW() WHERE id = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return 'ok';
+    }
+
     public function updateRoute($id,$corte,$salida){
         $sql = "UPDATE rutas 
             SET `CORTE` = '$corte',

@@ -168,6 +168,7 @@ export const createMailProv = (id,cantidad,placaExterna,destino,referencia,clien
   if(destino == 'MADRID')
     bcc = "placamadridadministracion@stellantis.com;jacqueline.perez@stellantis.com;emilio.crespo@stellantis.com;juanantonio.palomo@external.stellantis.com"
   data.append('referencia',referencia)
+  data.append('idLine',id)
   fetch(src,{
     method: 'POST',
     body: data
@@ -190,20 +191,9 @@ ${numero}  ${referencia.toUpperCase()}   %0A${pvp}
       $(`disgon${id}`).innerHTML = "✅"
       fetch('../api/setMailProv.php',{
         method: 'POST',
-        body: JSON.stringify({
-          referencia: referencia,
-          cantidad: cantidad,
-          placa: placaExterna,
-          destino: destino,
-          cliente: cliente,
-          correo_proveedor: correo_proveedor,
-          comentario: comentario
-        }),
-        headers:{
-          'Content-Type': 'application/json'
-        }
+        body: data
       })
-      .then(res => res.json())
+      .then(res => res.text())
     }
   })
 }

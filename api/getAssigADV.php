@@ -194,6 +194,8 @@ if(sizeof($rows) > 0){
       if($row[1] == 'EXT'){
         $textoMensajeria = "Enviar correo a ".ucwords($row[12]);
         $envioDisgon = "🏬";
+        if($row[28] != '')
+          $envioDisgon = "✅";
         if($row[2] == 'MADRID'){
           $textoMensajeria = "Enviar correo a ".ucwords($row[12])." y placa de Madrid";
           $btnEnviar = '<span title="Enviar Cesión" id="send'.$row[0].'"></span>';
