@@ -181,14 +181,24 @@ export const createMailProv = (id,cantidad,placaExterna,destino,referencia,clien
     let mensaje = `%0AProveedor: ${placaExterna}
 %0ASolicito 
 ${numero}  ${referencia.toUpperCase()}   %0A${pvp} 
+%0ACIF:A87527800
 %0AEnvío a la placa de ${destino} [${direcciones[destino]}]
 %0ACliente: ${cliente}
 %0A ${comentario}
 %0A⚠️Por favor enviadnos el albarán respondiendo a este correo⚠️`
     window.location.href = `mailto:${correo_proveedor}?cc=${bcc}&subject=Compra externa - PPCR ${destino}&body=${saludo}${mensaje}`
     if($(`disgon${id}`) != null){
+      const fechaEnvio = new Date()
       $(`disgon${id}`).classList.remove("wait")
       $(`disgon${id}`).innerHTML = "✅"
+      $(`disgon${id}`).title += ' ' + fechaEnvio.toLocaleString('es-ES', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      })
       fetch('../api/setMailProv.php',{
         method: 'POST',
         body: data
