@@ -30,3 +30,12 @@ document.getElementsByTagName('form')[0].addEventListener = e => {
         errorText.innerHTML = 'Error:', error
     });
 }
+
+const box = document.getElementsByClassName('mainBox')[0]
+document.addEventListener('mousemove', e => {
+    const x = e.clientX
+    const y = e.clientY
+    box.style.transform = `matrix3d(1, 0, 0, ${x / 1000000}, 0, 1, 0, ${y / 1000000}, 0, 0, 1, 0, 0, 0, -200, 1)`
+    box.style.transition = 'transform 0.1s ease'
+    console.log(x, y)
+})
