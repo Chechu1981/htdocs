@@ -7,8 +7,8 @@
     <meta name="description" content="Sistema de gestión de piezas y componentes de recambio. PPCR.">
     <meta name="keywords" content="PPCR, piezas, componentes, recambio, gestión, sistema, inventario">
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-    <link rel="stylesheet" href="./css/login.css?101">
-    <script type="text/javascript" src="./js/login.js?100" defer></script>   
+    <link rel="stylesheet" href="./css/login.css?102">
+    <script type="text/javascript" src="./js/login.js?101" defer></script>   
     <title>PPCR (Placa de Piezas y Componentes de Recambio)</title>
 </head>
 <body>
