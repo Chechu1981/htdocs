@@ -183,9 +183,10 @@ export const createMailProv = (id,cantidad,placaExterna,destino,referencia,clien
 ${numero}  ${referencia.toUpperCase()}   %0A${pvp} 
 %0ACIF:A87527800
 %0AEnvío a la placa de ${destino} [${direcciones[destino]}]
+%0A⚠️Por favor enviadnos el albarán respondiendo a este correo⚠️
+%0A-----------------------
 %0ACliente: ${cliente}
-%0A ${comentario}
-%0A⚠️Por favor enviadnos el albarán respondiendo a este correo⚠️`
+%0A ${comentario}`
     window.location.href = `mailto:${correo_proveedor}?cc=${bcc}&subject=Compra externa - PPCR ${destino}&body=${saludo}${mensaje}`
     if($(`disgon${id}`) != null){
       const fechaEnvio = new Date()
