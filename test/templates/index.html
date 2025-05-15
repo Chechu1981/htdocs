@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="text" id="id">
+<button id="testApi">Consultar</button>
+<div id="result">Devuelve este fichero</div>
+  <script>
+    
+document.getElementById('testApi').addEventListener("click",()=>{
+  console.log("Clicks clicked")
+  const print = document.getElementById('result')
+  print.innerHTML = "Cargando..."
+  let valor = document.getElementById('id').value
+  fetch(`/ejecutar`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ referencia: valor })
+  })
+  .then(response => response.text())
+  .then(result => {
+    print.innerHTML = result
+  })
+})
+  </script>
+</body>
+</html>

@@ -3,12 +3,9 @@
 document.getElementById('testApi').addEventListener("click",()=>{
   console.log("Clicks clicked")
   let valor = document.getElementById('id').value
-  fetch(`http://www.google.es/search?q=${valor}`,{
-    metthod: 'GET',
-    mode: 'no-cors'
-  })
+  fetch(`/ejecutar`)
   .then(e => {
-    e.text()
+    e.JSON()
   })
   .then(e => console.log(e))
 })
