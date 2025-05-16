@@ -1,5 +1,17 @@
+# Habilitar el módulo de reescritura
 RewriteEngine On
+RewriteBase /test/
 
+# Habilitar uso de proxy para esta ruta
+<IfModule mod_proxy.c>
+    ProxyRequests Off
+    <Proxy *>
+        Require all granted
+    </Proxy>
+</IfModule>
 
-# Redirigir todas las peticiones a /test/api/... hacia localhost:5000
+# Redirige /test/api/ejecutar -> http://127.0.0.1:5000/ejecutar
 RewriteRule ^api/(.*)$ http://127.0.0.1:5000/$1 [P,L]
+
+# Inversión para que los headers de respuesta funcionen bien
+ProxyPassReverse /test/api/ http://127.0.0.1:5000/

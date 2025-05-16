@@ -75,6 +75,7 @@ if(sizeof($rows) > 0){
       $clientName = $row[20];
       //$designacion = getDesignacion($row[4]);
       $designacion = $row[19];
+      $cancelarCesion = "";
       if($_POST['id'] != 'new')
         $agent = "<li title='Agente'>$row[10]</li>";
       $rechazado = '';
@@ -82,8 +83,11 @@ if(sizeof($rows) > 0){
         $rechazado = "<span id='rechazo$row[0]' title='$row[24]' style='cursor:pointer'>🚫</span>";
       if($row[1] == 'MAT')
         $row[1] = "MR AUTO<br /><legend class='legend copy'>$row[12]</legend>";
-      if($row[1] == 'EXT')
+      if($row[1] == 'EXT'){
         $row[1] = "C.EXTERNA<br /><legend class='legend'>$row[12]</legend>";
+        if($user[0][4] == 'ADV')
+          $cancelarCesion = "<span title='Cancelar cesión' id='cancel".$row[0]."'>❌</span>";
+      }
       $nfm = "";
       if($row[14])
           $nfm = "NFM";
@@ -100,11 +104,13 @@ if(sizeof($rows) > 0){
         $disgon = "<em style='background-color:green;color:white'>(DISGON) </em>";
       if($row[25] > '2024-04-11 00:00:00.000000')
         $cadenaFechaEntrada = explode(" ",$fechaS[2])[0] . "/$fechaS[1]/$fechaS[0] $fechaSHora[0]";
-      $li = "<li class='delete' title='Marcar como cesión recibida'><img id='$row[0]' alt='tick' src='../../img/done_FILL0_wght400_GRAD0_opsz24.png'></li>";
+      $li = "<li class='delete'><img id='$row[0]' title='Marcar como cesión recibida' alt='tick' src='../../img/done_FILL0_wght400_GRAD0_opsz24.png'>$cancelarCesion</li>";
       if($fechaD[0] == '0000')
         $li='<li></li>';
       if($fechaR[0] != '0000')
         $li = "<li title='Envío: '>$fechaR[2]/$fechaR[1]/$fechaR[0]</li>";
+      if($rechazado != '')
+        $li = "<li></li>";
       $lists .= "
       <ul id='$row[0]'>
         <li title='Origen: ' style='display:block'>$row[1]</li>

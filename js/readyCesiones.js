@@ -107,3 +107,57 @@ const copyClipboard = (copiar) =>{
   navigator.clipboard.writeText(copiar)
   notify(`${copiar} copiado!`)
 }
+
+$('cesiones').addEventListener('click',e =>{
+  if(e.target.innerHTML == '❌'){
+    const id = e.target.id.split('cancel')[1]
+    const ul = e.target.parentNode.parentNode
+    const usuario = e.target.parentNode.parentNode.childNodes[25].childNodes[0].textContent
+    const origen = e.target.parentNode.parentNode.childNodes[1].childNodes[2].textContent
+    const destino = e.target.parentNode.parentNode.childNodes[3].childNodes[0].textContent
+    const referencia = e.target.parentNode.parentNode.childNodes[7].childNodes[0].textContent.replaceAll(' ','')
+    const data = new FormData()
+    data.append('id',id)
+    data.append('switch',true)
+    data.append('usuario',usuario)
+    data.append('tratado',user.nombre.toUpperCase())
+    fetch('../../helper/formRechazo.php',{
+      method: 'POST',
+      body: data
+    })
+    .then((inp) => inp.text())
+    .then(items => {
+      modal(items,`Rechazar la cesión de ${origen} -> ${destino}`)
+      const texto = document.getElementById("texto")
+      const enviar = document.getElementById("enviar")
+      const cancelar = document.getElementById("cancelar")
+      cancelar.addEventListener("click", () => {
+        $('close').click()
+      })
+      enviar.addEventListener("click", () => {
+        data.append('texto',`(${user.nombre}) ${texto.value}`)
+        const fecha = new Date()
+        const mailSaludo = fecha.getHours() > 14 ? `Buenas tardes: ` : `Buenos días: `
+        const mailTarget = encodeURIComponent(`
+        ${texto.value}
+        
+    
+        Un saludo ${user.nombre}`)
+        fetch('../../api/getEmailByUsername.php',{
+          method: 'POST',
+          body: data
+        })
+        .then(usrAll => usrAll.json())
+        .then(usrSend => {
+          window.open(`mailto:${usrSend.mail}?subject=Cesión de la ${referencia} rechazada&body=${mailSaludo + mailTarget}`)
+        })
+        fetch('../../api/updateRechazo.php',{
+          method: 'POST',
+          body: data
+        })
+        ul.remove()
+        $('close').click()
+      })
+    })
+  }
+})

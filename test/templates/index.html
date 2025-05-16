@@ -21,6 +21,7 @@ document.getElementById('testApi').addEventListener("click",()=>{
     headers: {
       'Content-Type': 'application/json'
     },
+    refererPolicy: 'unsafe-url',
     body: JSON.stringify({ referencia: valor })
   })
   .then(response => response.text())
