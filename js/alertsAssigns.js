@@ -44,8 +44,11 @@ export const cesiones = (origen, destino,nfm,seg) =>{
   .then(response => {
     const numDest = response[cesion]
     let alerta = ""
-    if(origen != 'MAT' || origen != 'EXT'){
+    if(origen != 'MAT' || origen != 'EXT')
       alerta = isAlertRoutes(numDest)
+    if(destino == 'SEVILLA'){
+      pclient.classList.add('important')
+      customAlert("🚫No se pueden hacer cesiones a Sevilla esta semana.")
     }
     numDest != undefined ? pclient.innerText = `${numDest} ${alerta}` : pclient.innerText = ""
   })

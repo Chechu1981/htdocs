@@ -239,6 +239,8 @@ if(sizeof($rows) > 0){
     }elseif($row[1] == 'EXT'){
       $numPie = createOptionProvExt($row[0],$row[12]);
     }
+    if($row[2] == 'SEVILLA')
+      $important = 'important';
     
     $lists .= '
     <ul class="assignPendingAdv" '.$visible.' title="'.++$contador.'" style="'.$rechazadoStyle.'">
