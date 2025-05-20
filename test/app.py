@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request
+from flask_sslify import SSLify
 from playwright.async_api import async_playwright
 import asyncio, queue, time, threading, pathlib, json, os
 from datetime import datetime
 
 app = Flask(__name__)
+sslify = SSLify(app)
 entrada_cola = queue.Queue()
 ruta = pathlib.Path(__file__).parent.resolve()
 ruta = str(ruta).replace('C:','').replace('\\','/')
