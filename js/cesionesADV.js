@@ -239,9 +239,9 @@ const showAssig = () =>{
                 const mailSaludo = fecha.getHours() > 14 ? `Buenas tardes: ` : `Buenos días: `
                 const mailTarget = encodeURIComponent(`
                 ${texto.value}
-                
-            
-                Un saludo ${user.nombre}`)
+                cliente: ${cliente.childNodes[0].textContent} (${cliente.childNodes[1].textContent})
+                referencia: ${referencia.childNodes[0].textContent.replaceAll(' ','')}
+Un saludo ${user.nombre}`)
                 fetch('../api/getEmailByUsername.php',{
                   method: 'POST',
                   body: data
