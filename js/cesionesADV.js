@@ -1,6 +1,6 @@
 'use strict';
-import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?115"
-import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?108"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?116"
+import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?109"
 import contadores from "./updateCounter.js?102"
 
 const setCounters = setInterval(() =>{contadores()},1000)
@@ -633,9 +633,10 @@ $$('form')[0].addEventListener('submit',(e)=>{
     $('units').focus()
     return false
   }
+  /* ALerta de que no se pueden hacer cesiones a Sevilla  
   if(destino == 'SEVILLA'){
     customAlert("🚫No se pueden hacer cesiones a Sevilla esta semana.")
-  }
+  }*/
   disabledForm()
   const divSpinner = document.createElement('div')
   fetch('../api/spinner.php')

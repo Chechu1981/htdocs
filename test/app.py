@@ -1,11 +1,9 @@
 from flask import Flask, render_template, request
-from flask_sslify import SSLify
 from playwright.async_api import async_playwright
 import asyncio, queue, time, threading, pathlib, json, os
 from datetime import datetime
 
 app = Flask(__name__)
-sslify = SSLify(app)
 entrada_cola = queue.Queue()
 ruta = pathlib.Path(__file__).parent.resolve()
 ruta = str(ruta).replace('C:','').replace('\\','/')
@@ -60,11 +58,11 @@ async def run_playwright():
     await page.fill('#focus',referencia)
     await page.click('#keyboard_ok')
     time.sleep(1)
-    await page.screenshot(path = './test/img/' + fecha + '_Villaverde_'+referencia+'.png')
+    await page.screenshot(path = './imagenes/' + fecha + '_Villaverde_'+referencia+'.png')
     parrafos = await page.locator("p").all()
     if(len(parrafos) == 1):
       cadena = "Parts: " + await parrafos[0].inner_text()
-      cadena += '<a href="./test/img/' + fecha + '_Villaverde_'+referencia+'.png' + '"> Ver en Parts</a>'
+      cadena += '<a href="./imagenes/' + fecha + '_Villaverde_'+referencia+'.png' + '"> Ver en Parts</a>'
     else:
       tabla = await page.locator('table').all()
       celdas = await page.locator('td').all()
@@ -84,7 +82,7 @@ async def run_playwright():
           mensaje = await i.inner_text()
           if mensaje != 'Mensajes':
             cadena += "<p> Parts: " + division + "-> " + await i.inner_text()
-            cadena += '<a href="./test/img/' + fecha + '_Villaverde_'+referencia+'.png' + '"> Ver en Parts</a>'
+            cadena += '<a href="http://localhost/imagenes/' + fecha + '_Villaverde_'+referencia+'.png' + '" target="_blank"> Ver en Parts</a>'
       await page.get_by_text("Otro Articulo ").click()
       time.sleep(1)
       await page.fill('#focus',referencia)
@@ -96,7 +94,7 @@ async def run_playwright():
       await btnOptions[1].click()
       await page.get_by_text("Validar destinatario ").click()
       time.sleep(1)
-      await page.screenshot(path = './test/img/' + fecha + '_Vesoul_'+referencia+'.png')
+      await page.screenshot(path = './imagenes/' + fecha + '_Vesoul_'+referencia+'.png')
       tabla = await page.locator('table').all()
       pedido = await tabla[6].locator('td').all()
       division = await pedido[1].inner_text()
@@ -108,8 +106,8 @@ async def run_playwright():
           mensaje = await i.inner_text()
           if mensaje != 'Mensajes':
             cadena += "<p>Parts: " + division + "-> " + await i.inner_text()
-            cadena += '<a href="./test/img/' + fecha + '_Vesoul_'+referencia+'.png' + '" > Ver en Parts</a>'
+            cadena += '<a href="http://localhost/imagenes/' + fecha + '_Vesoul_'+referencia+'.png' + '" target="_blank"> Ver en Parts</a>'
   return cadena
 
 if __name__ == '__main__':
-  app.run(debug=True, host='127.0.0.1', port=5000)
+  app.run(debug=True, host='127.0.0.1', port=8080)

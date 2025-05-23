@@ -9,11 +9,12 @@ $usuario = isset($_POST['user']) ? $_POST['user'] : $user[0][1];
 $origen = @$_POST['origen'];
 $destino = @$_POST['destino'];
 $asegurado = @$_POST['asegurado'];
+$buscar = isset($_POST['buscar']) ? $_POST['buscar'] : false;
 
 if($puesto == 'ADV' || $puesto == 'DESBORDE')
   $puesto = $user[0][1];
 
-$rows = $contacts->getAssig(str_replace(' ','',ltrim($_POST['id'],'0')),$usuario,$puesto,@$origen, @$destino, @$asegurado);
+$rows = $contacts->getAssig(str_replace(' ','',ltrim($_POST['id'],'0')),$usuario,$puesto,@$origen, @$destino, @$asegurado, $buscar);
 
 function getCliente($cliente,$placa){
   $contacts = new Contacts();

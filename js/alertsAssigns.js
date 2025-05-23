@@ -46,10 +46,11 @@ export const cesiones = (origen, destino,nfm,seg) =>{
     let alerta = ""
     if(origen != 'MAT' || origen != 'EXT')
       alerta = isAlertRoutes(numDest)
+    /* Alerta para cesiones a Sevilla
     if(destino == 'SEVILLA'){
       pclient.classList.add('important')
       customAlert("🚫No se pueden hacer cesiones a Sevilla esta semana.")
-    }
+    }*/
     numDest != undefined ? pclient.innerText = `${numDest} ${alerta}` : pclient.innerText = ""
   })
 }

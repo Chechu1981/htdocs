@@ -473,7 +473,7 @@ class Contacts
         return $sql;
     }
 
-    public function getAssig($all,$usr,$puesto = null,$origen,$destino,$asegurado){
+    public function getAssig($all,$usr,$puesto = null,$origen,$destino,$asegurado, $buscar){
         $order = " ORDER BY `id` DESC LIMIT 100";
         $asegurado === 'true' ? $asegurado = "(`disgon` = 1 OR `disgon` = 2) AND ": $asegurado = "";
         $origen != '' ? $origen = "`origen` = '$origen' AND ": $origen = "";
@@ -488,8 +488,20 @@ class Contacts
                 `cliente` LIKE '%$all%' OR
                 `comentario` LIKE '%$all%' OR
                 `pedido` LIKE '%$all%')";
-        if($all == 'all')
-        $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr')";
+        if($buscar){
+            $sql = "SELECT * FROM `cesiones` WHERE (
+                $origen
+                $destino
+                $asegurado
+                `rechazado` = true OR `rechazado` = false) AND (
+                REPLACE(`ref`,' ','') LIKE '%$all%' OR
+                `refClient` LIKE '%$all%' OR
+                `cliente` LIKE '%$all%' OR
+                `comentario` LIKE '%$all%' OR
+                `pedido` LIKE '%$all%')";
+        }
+        elseif($all == 'all')
+            $sql = "SELECT * FROM `cesiones` WHERE `recibido` NOT LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr')";
         elseif($all == 'new'){
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = false AND (`usuario` = '$usr' OR `tratado` = '$usr' OR `puesto` = '$puesto')";            
             if($puesto != $usr)

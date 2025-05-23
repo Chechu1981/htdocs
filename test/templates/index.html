@@ -16,7 +16,7 @@ document.getElementById('testApi').addEventListener("click",()=>{
   const print = document.getElementById('result')
   print.innerHTML = "Cargando..."
   let valor = document.getElementById('id').value
-  fetch(`https://localhost:5000/ejecutar`, {
+  fetch(`/ejecutar`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

@@ -60,6 +60,7 @@ const seacrhRef = e => {
   data.append('destino',destino)
   data.append('asegurado',asegurado)
   data.append('session',id)
+  data.append('buscar',true)
   fetch('./../../api/getAssig.php',{
     method: 'POST',
     body: data
