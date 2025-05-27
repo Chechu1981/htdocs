@@ -32,6 +32,7 @@ $date = date_create($date[0][0]);
     <link rel="manifest" href="../img/favicon/manifest.json" />
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link rel="stylesheet" href="../css/login1.css?101">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=captive_portal" />
     <script type="text/javascript" src="../js/pending.js?100" defer></script>   
     <title>PPCR (Placa de Piezas y Componentes de Recambio) Consulta de pendientes</title>
 </head>

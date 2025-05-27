@@ -429,6 +429,14 @@ footer div a:hover{
     filter: brightness(11);
 }
 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
 @keyframes lds-ring {
     0% {
         transform: rotate(0deg);
