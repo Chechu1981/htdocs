@@ -493,7 +493,7 @@ class Contacts
                 $origen
                 $destino
                 $asegurado
-                `rechazado` = true OR `rechazado` = false) AND (
+                (`rechazado` = true OR `rechazado` = false)) AND (
                 REPLACE(`ref`,' ','') LIKE '%$all%' OR
                 `refClient` LIKE '%$all%' OR
                 `cliente` LIKE '%$all%' OR
@@ -513,6 +513,7 @@ class Contacts
             $sql = "SELECT * FROM `cesiones` WHERE `recibido` LIKE '0000-00-00' AND `rechazado` = true";
         $sql .= $order;
         $query = $this->db->prepare($sql);
+        echo $sql;
         $query->execute();
         return $query->fetchAll();
     }
