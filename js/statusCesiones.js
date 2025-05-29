@@ -228,6 +228,8 @@ window.addEventListener('load',() => {
   const selectDateFinal = document.createElement('input')
   const selectDateInitPiden = document.createElement('input')
   const selectDateFinalPiden = document.createElement('input')
+  const selectDateInitTratado = document.createElement('input')
+  const selectDateFinalTratado = document.createElement('input')
   selectDateFinal.type = "date"
   selectDateFinal.value = value.toISOString().split('T')[0]
   selectDateInit.type = "date"
@@ -238,6 +240,12 @@ window.addEventListener('load',() => {
   selectDateInitPiden.type = "date"
   $('piden').appendChild(selectDateInitPiden)
   $('piden').appendChild(selectDateFinalPiden)
+  selectDateInitTratado.type = "date"
+  selectDateInitTratado.value = `${value.getFullYear()}-01-01`
+  selectDateFinalTratado.type = "date"
+  selectDateFinalTratado.value = value.toISOString().split('T')[0]
+  $('tratados').appendChild(selectDateInitTratado)
+  $('tratados').appendChild(selectDateFinalTratado)
   
   selectDateInit.addEventListener("change", e => {
     cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"chartCeden",{
@@ -267,7 +275,68 @@ window.addEventListener('load',() => {
     },'Los que más piden',chartDestino)
   })
 
+  selectDateInitTratado.addEventListener("change", e => {
+    cargarTratados(e.target.value, selectDateFinalTratado.value)
+  })
+  selectDateFinalTratado.addEventListener('change',e => {
+    cargarTratados(selectDateInitTratado.value, e.target.value)
+  })
+
   cargarGrafico('../../api/getAssigStatusByPlate.php',"chartPiden",{dateIn:'',dateOut:''},'Los que más ceden', chartDestino)
   cargarGrafico('../../api/getAssigStatusByPlateDestination.php',"chartCeden",{dateIn:'2025-01-01',dateOut:'2025-02-21'}, 'Los que más piden',chartOrigen)
   
+  const cargarTratados = (dateIn,dateOut) => {   
+    let chartTratados = Chart.getChart('chartTratados')
+    if(chartTratados != undefined){
+      chartTratados.clear()
+      chartTratados.destroy()
+    }
+    const dataTratados =  new FormData()
+    dataTratados.append('dateIn',dateIn)
+    dataTratados.append('dateOut',dateOut)
+    fetch('../../api/getAssigStatusTratados.php',{
+      method: 'POST',
+      body: dataTratados
+    })
+    .then(e => e.json())
+    .then(res => {
+      let datos = []
+      let etiquetas = []
+      let total = 0
+      res.map(volumen => {
+        total += parseInt(volumen.total)
+        datos.push(volumen.total)
+        etiquetas.push(volumen.tratado)
+      })
+      chartDestino = new Chart("chartTratados", {
+        type: 'doughnut',
+        data: {
+          datasets:[{
+            data: datos,
+            backgroundColor: colorArray,
+          }],
+          labels: etiquetas,
+          hoverOffset: 4
+        },
+        options: {
+          plugins: {
+            title: {
+              display: true,
+              text: `Cesiones tratadas. Total:  ${total}`
+            },
+          },
+          responsive: true,
+          interaction: {
+            intersect: false,
+          },
+          scales: {
+            y: {
+              stacked: true
+            }
+          }
+        },
+      })
+    })
+  }
+  cargarTratados(`${value.getFullYear()}-01-01`, value.toISOString().split('T')[0])
 })

@@ -27,6 +27,10 @@
       <div id="ceden" style="margin: auto;height: calc(70vh - 100px);width: calc(100% - 100px);">
         <canvas id="chartCeden"></canvas>
       </div>
+      <hr style="margin-top: 40px;">
+      <div id="tratados" style="margin: auto;height: calc(70vh - 100px);width: calc(100% - 100px);">
+        <canvas id="chartTratados"></canvas>
+      </div>
     </div>
   </div>
   <?php include('./../../helper/footer.php'); ?>

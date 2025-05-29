@@ -1444,6 +1444,13 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getAssigStatusTratados($dateIn, $dateOut){
+        $sql = "SELECT COUNT(*) AS `total`, `tratado` FROM `cesiones` WHERE `envio` BETWEEN '$dateIn' AND '$dateOut' GROUP BY `tratado` ORDER BY `tratado` DESC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function deleteSelectInmov($id,$calculo){
         $sql = "DELETE FROM `inmstatus` WHERE `id` = '$id'";
         $sql2 = "DELETE FROM `inm_down` WHERE `calculo` = '$calculo'";
