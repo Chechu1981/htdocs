@@ -233,11 +233,13 @@ window.addEventListener('load',() => {
   selectDateFinal.type = "date"
   selectDateFinal.value = value.toISOString().split('T')[0]
   selectDateInit.type = "date"
+  selectDateInit.value = `${value.getFullYear()}-01-01`
   $('ceden').appendChild(selectDateInit)
   $('ceden').appendChild(selectDateFinal)
   selectDateFinalPiden.type = "date"
   selectDateFinalPiden.value = value.toISOString().split('T')[0]
   selectDateInitPiden.type = "date"
+  selectDateInitPiden.value = `${value.getFullYear()}-01-01`
   $('piden').appendChild(selectDateInitPiden)
   $('piden').appendChild(selectDateFinalPiden)
   selectDateInitTratado.type = "date"
@@ -308,7 +310,7 @@ window.addEventListener('load',() => {
         datos.push(volumen.total)
         etiquetas.push(volumen.tratado)
       })
-      chartDestino = new Chart("chartTratados", {
+      chartTratados = new Chart("chartTratados", {
         type: 'doughnut',
         data: {
           datasets:[{
