@@ -98,6 +98,24 @@ const seacrhRef = e => {
         })
       }
     }
+    for(let i = 0; i < refCopy.length;i++){
+      const id = refCopy[i].parentNode.id
+      if(!$(`rechazo${id}`)) continue
+      $(`rechazo${id}`).addEventListener('click',() =>{
+        if(user.puesto != 'ADV')
+          return false
+        const anular = confirm('¿Reanudar la cesión?')
+        if(anular){
+          const data = new FormData()
+          data.append('id',id)
+          fetch('./../../api/updateDeclane.php',{
+            method: 'POST',
+            body: data
+          })
+          window.location.reload()
+        }
+      })
+    }
   })
 }
 

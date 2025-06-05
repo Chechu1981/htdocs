@@ -641,7 +641,7 @@ class Contacts
     }
 
     public function updateAssigDeclane($id){
-        $sql = "UPDATE `cesiones` SET `rechazado`= false WHERE `id`= $id";
+        $sql = "UPDATE `cesiones` SET `rechazado`= false, `envio` = '0000-00-00 00:00:00' WHERE `id`= $id";
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';
