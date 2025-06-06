@@ -78,7 +78,7 @@ if(typeof(href) != "object"){
           data.append('h', colorHSL.h * 360)
           data.append('s', colorHSL.s * 100)
           data.append('l', colorHSL.l * 100)
-          fetch('../api/updateColor.php',{
+          fetch(src + 'api/updateColor.php',{
             method: 'POST',
             body: data
           })
