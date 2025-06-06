@@ -42,6 +42,7 @@ $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
                 <li><a href="<?php echo $src.'/src/assigns/status.php' ?>">Estadísticas</a></li>
             </ul>
         </li>
+        <?php if($puesto == 'ADV'){ ?>
         <li>
             <a href="<?php echo $src.'/src/inmovilizados.php' ?>">Inmovilizados</a>
             <ul>
@@ -53,6 +54,7 @@ $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
                 </li>
             </ul>
         </li>
+        <?php } ?>
         <li>
             <a href="<?php echo $src.'/src/centros.php' ?>">Centros</a>
             <ul>
