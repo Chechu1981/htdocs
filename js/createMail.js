@@ -159,7 +159,7 @@ export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,p
 
 export const createMailProv = (id,cantidad,placaExterna,destino,referencia,cliente,correo_proveedor,bcc,comentario) =>{
   $(`disgon${id}`).className = "wait"
-  comentario == '' ? comentario = '' : comentario = `Referencia cliente: ${comentario}`
+  comentario == '' ? comentario = '' : comentario = `Comentario: ${comentario}`
   const hora = new Date()
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
   const numero = cantidad > 1 ? `${cantidad} unidades de la referencia` : `la referencia`
