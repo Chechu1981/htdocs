@@ -1,12 +1,11 @@
-export const createMail = (cantidad, origen, destino, referencia, cliente, pedido, nfm, fragil, destinoFragil, mailOrigen, mailDestino, bcc, disgon) => {
+export const createMail = (cantidad, origen, destino, referencia, cliente, pedido, nfm, fragil, destinoFragil, mailOrigen, mailDestino, bcc, disgon, comentario) => {
   let mailTarget, asuntoDisgon = '';
   let strDisgon = ``;
   let mailFragil = encodeURIComponent(``);
   let strNfm = 'La entrada en Geode debe ser realizada como entrada esperada 103 y no con el 109. ';
   let strCantidad = 'la referencia';
-  if (cantidad > 1) {
+  if (cantidad > 1)
     strCantidad = `${cantidad} unidades de la referencia`;
-  }
   if (disgon) {
     asuntoDisgon = `DISGON`;
     strDisgon = `🚚🚩🚩ATENCIÓN RECOGE DISGON🚩🚩🚚`;
@@ -19,6 +18,7 @@ export const createMail = (cantidad, origen, destino, referencia, cliente, pedid
       asuntoDisgon = ``;
     }
   }
+  
   if (fragil) {
     mailFragil = encodeURIComponent(`
     *******__‼️ ATENCIÓN ‼️__*******
@@ -39,11 +39,16 @@ export const createMail = (cantidad, origen, destino, referencia, cliente, pedid
     mailDestino += ';dfs1@stellantis.com'
   }
   const fecha = new Date();
-  const mailSub = `${asuntoDisgon} CESION ${origen} -> ${destino}`;
+  let mailSub = `${asuntoDisgon} CESION ${origen} -> ${destino}`;
   const mailSaludo = fecha.getHours() > 14 ? `${strDisgon}${mailFragil}Buenas tardes: ` : `${strDisgon}${mailFragil}Buenos días: `;
+  if (comentario.includes('ROSEVILLA')){
+    comentario = 'ROSEVILLA'
+    mailSub += ` - ROSEVILLA`;
+  }
   mailTarget = encodeURIComponent(`
 Va a llegar de la placa de ${origen} a ${destino} ${strCantidad} ${referencia} para la cuenta ${cliente.replaceAll('&','and')}.
 ${strNfm}
+${comentario}
 Saludos.`);
 
   window.open(`mailto:${destinoFragil};${mailDestino};${mailOrigen}?subject=${mailSub}&cc=${bcc}&body=${mailSaludo + mailTarget}`);
@@ -148,7 +153,7 @@ export const createMailExt = (cantidad,placaExterna,destino,referencia,cliente,p
   }else{
     comentario = ''
   }
-
+  
   const mensaje = `%0ASe va a recibir ${numero} ${referencia.toUpperCase()} ${placas} placa de ${destino} para el cliente ${cliente.replaceAll('&','and')}.
   %0A${strNfm}
   %0A${comentario}

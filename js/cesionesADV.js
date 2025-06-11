@@ -1,5 +1,5 @@
 'use strict';
-import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?117"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?121"
 import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?109"
 import contadores from "./updateCounter.js?102"
 
@@ -415,7 +415,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
             if(fragil){
               destinoFragil = res['fragil']
             }
-            createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],disgon)
+            createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],disgon,comentario)
           }
           $(`send${id}`).parentNode.parentNode.remove()
           updateBubble('-')
