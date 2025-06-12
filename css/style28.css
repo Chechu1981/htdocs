@@ -843,6 +843,7 @@ input[type="color"]::-webkit-color-swatch {
     height: 70px;
     padding-top: 8px;
     padding-bottom: 8px;
+    align-items: center;
 }
 
 #contacts h1{
@@ -892,6 +893,26 @@ input[type="color"]::-webkit-color-swatch {
     font-size: 2em;
     text-transform: uppercase;
     height: fit-content;
+}
+
+.btnheader{
+    a{
+        text-decoration: none;
+        background: var(--cards-border-color);
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid black;
+        box-shadow: 2px 2px 2px black;
+    }
+    a:hover{
+        background: var(--cards-active-color);
+        color: var(--bg-body-color);
+        box-shadow: 2px 2px 2px black;
+    }
+    a:active{
+        box-shadow: none;
+        transform: translate(1px, 1px);
+    }
 }
 
 .libre textarea{

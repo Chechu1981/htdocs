@@ -48,7 +48,8 @@ $scripts = (object)[
   'FORMNEWPROV' => "/../js/formNewProv.js?103",
   'FORMEDITPROV' => "/../js/formNewProv.js?102",
   'FORMNEWUSER' => "/../js/formNewUser.js?103",
-  'FORMEDITUSER' => "/../js/formNewUser.js?103"
+  'FORMEDITUSER' => "/../js/formNewUser.js?103",
+  'EDITREPERE' => "/../js/formEditRepere.js?100"
 ];
 
 $usr = $contacts->getAllUsers();
