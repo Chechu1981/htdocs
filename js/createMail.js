@@ -41,7 +41,7 @@ export const createMail = (cantidad, origen, destino, referencia, cliente, pedid
   const fecha = new Date();
   let mailSub = `${asuntoDisgon} CESION ${origen} -> ${destino}`;
   const mailSaludo = fecha.getHours() > 14 ? `${strDisgon}${mailFragil}Buenas tardes: ` : `${strDisgon}${mailFragil}Buenos días: `;
-  if (comentario.includes('ROSEVILLA')){
+  if (comentario.toUpperCase().includes('ROSEVILLA')){
     comentario = 'ROSEVILLA'
     mailSub += ` - ROSEVILLA`;
   }
