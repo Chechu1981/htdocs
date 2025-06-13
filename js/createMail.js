@@ -1,6 +1,7 @@
 export const createMail = (cantidad, origen, destino, referencia, cliente, pedido, nfm, fragil, destinoFragil, mailOrigen, mailDestino, bcc, disgon, comentario) => {
   let mailTarget, asuntoDisgon = '';
   let strDisgon = ``;
+  let imprimeComentario = '';
   let mailFragil = encodeURIComponent(``);
   let strNfm = 'La entrada en Geode debe ser realizada como entrada esperada 103 y no con el 109. ';
   let strCantidad = 'la referencia';
@@ -42,13 +43,13 @@ export const createMail = (cantidad, origen, destino, referencia, cliente, pedid
   let mailSub = `${asuntoDisgon} CESION ${origen} -> ${destino}`;
   const mailSaludo = fecha.getHours() > 14 ? `${strDisgon}${mailFragil}Buenas tardes: ` : `${strDisgon}${mailFragil}Buenos días: `;
   if (comentario.toUpperCase().includes('ROSEVILLA')){
-    comentario = 'ROSEVILLA'
+    imprimeComentario = 'ROSEVILLA'
     mailSub += ` - ROSEVILLA`;
   }
   mailTarget = encodeURIComponent(`
 Va a llegar de la placa de ${origen} a ${destino} ${strCantidad} ${referencia} para la cuenta ${cliente.replaceAll('&','and')}.
 ${strNfm}
-${comentario}
+${imprimeComentario}
 Saludos.`);
 
   window.open(`mailto:${destinoFragil};${mailDestino};${mailOrigen}?subject=${mailSub}&cc=${bcc}&body=${mailSaludo + mailTarget}`);

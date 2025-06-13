@@ -2405,6 +2405,24 @@ margin: 0 10px;
     grid-template-columns: 30% 60%
 }
 
+#config-repere{
+    list-style: none;
+    display: grid;
+    grid-template-columns: 13% 13% 2% 2%;
+    padding: 2px;
+    align-items: center;
+    gap: 16px;
+    font-size: 1.5em;
+    justify-content: center;
+    font-size: large;
+    span{
+        cursor: pointer;
+    }
+    span:hover{
+        filter: brightness(0.5);
+    }
+}
+
 .config-routes ul{
     list-style: none;
     display: grid;

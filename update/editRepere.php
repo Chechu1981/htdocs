@@ -25,7 +25,7 @@
           </form>
         </div>
       </div>
-      <div class="config-routes"></div>
+      <div id="config-repere"></div>
     </div>
     <?php include('../helper/footer.php'); ?>
 </body>
