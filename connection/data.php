@@ -296,6 +296,23 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function deleteRepere($id){
+        $sql = "DELETE FROM `repere` WHERE id = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->rowCount();
+    }
+
+    public function updateRepere($id,$repere,$ref){
+        $sql = "UPDATE `repere` SET 
+        `Referencia_fabricación` = '$repere', 
+        `Referencia` = '$ref' 
+        WHERE `id` = $id";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return 'Repere modificado con éxito';
+    }
+
     public function getPassHTML($ref, $tipo, $mail){
         $placa = $tipo;
         if($tipo == 'TODOS')
