@@ -99,6 +99,7 @@ if(sizeof($rows) > 0){
       $fechaSHora = explode(".",explode(" ", $row[25])[1]);
       $cadenaFechaEntrada = "";
       $disgon = "";
+      $fechaEnvio = "<li title='Envío: ' style='display:block'>$fechaD[2]/$fechaD[1]/$fechaD[0] $fecha[1]</li>";
       if($row[18] == 2)
         $disgon = "<em style='background-color:green;color:white'>(LOGISTICA) </em>";
       if($row[18] == 1)
@@ -106,10 +107,12 @@ if(sizeof($rows) > 0){
       if($row[25] > '2024-04-11 00:00:00.000000')
         $cadenaFechaEntrada = explode(" ",$fechaS[2])[0] . "/$fechaS[1]/$fechaS[0] $fechaSHora[0]";
       $li = "<li class='delete'><img id='$row[0]' title='Marcar como cesión recibida' alt='tick' src='../../img/done_FILL0_wght400_GRAD0_opsz24.png'>$cancelarCesion</li>";
-      if($fechaD[0] == '0000')
-        $li='<li></li>';
+      if($fechaD[0] == '0000'){
+        $li="<li><img title='Cesión pendiente de envío' alt='espera' src='../../img/pending_24dp_000000_FILL0_wght400_GRAD0_opsz24.png'></li>";
+        $fechaEnvio = "<li title='Envío: ' style='display:block'>Pendiente</li>";
+      }
       if($fechaR[0] != '0000')
-        $li = "<li title='Envío: '>$fechaR[2]/$fechaR[1]/$fechaR[0]</li>";
+        $li = "<li title='$fechaR[2]/$fechaR[1]/$fechaR[0]'><img alt='Recibido' src='../../img/task_alt_24dp_000000_FILL0_wght400_GRAD0_opsz24.png'></li>";
       if($rechazado != '')
         $li = "<li></li>";
       $lists .= "
@@ -123,7 +126,7 @@ if(sizeof($rows) > 0){
         <li title='NFM: '>$nfm</li>
         <li title='Pedido: '>$row[7]</li>
         <li title='Comentario: ' style='display:block'>$disgon $row[11]</li>
-        <li title='Envío: '>$fechaD[2]/$fechaD[1]/$fechaD[0] $fecha[1]</li>
+        $fechaEnvio
         $li
         <li title='Tratado'>$row[17]</li>
         <li title='$row[21]' style='flex-wrap:wrap'>$row[10]$rechazado <br>
