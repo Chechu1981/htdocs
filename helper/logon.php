@@ -1,4 +1,10 @@
 <?php
+$request = trim($_SERVER['REQUEST_URI']);
+echo "<!-- Request: $request -->\n";
+if($request == ''){
+  require 'home.php';
+}
+
 $src = ".";
 $uri = $_SERVER['PHP_SELF'];
 !strstr("$uri",'home') == '/home.php' ? $src = ".." : '';
