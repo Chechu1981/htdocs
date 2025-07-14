@@ -239,6 +239,11 @@ if(sizeof($rows) > 0){
     }elseif($row[1] == 'EXT'){
       $numPie = createOptionProvExt($row[0],$row[12]);
     }
+    // Si el destino es Granada, se añade un icono de prohibido y se marca como importante
+    if($destino == 'GRANADA'){
+      $numPie .= "🚫";
+      $important = 'important';
+    }
     
     $lists .= '
     <ul class="assignPendingAdv" '.$visible.' title="'.++$contador.'" style="'.$rechazadoStyle.'">

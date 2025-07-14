@@ -1,6 +1,7 @@
 const rutasDirectas = ["6251-2","78709-1","12752-1","105252-1","105342-1","14075-1"]
 const rutasPreguntar = ["6254-1","78713-1"]
 const rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"]
+const rutasProhibidas = ["12752-1","14081-1","14103-1","6273-1","13889-1","14131-1","7548-1","105252-1","105561-1","105411-1","78689-1","105354-1","105322-1","78779-1","ZZMAT"]
 
 export function isAlertRoutes(route){
   pclient.classList.remove('important')
@@ -28,6 +29,14 @@ export function isAlertRoutes(route){
       pclient.classList.add('important')
     }
   })
+  rutasProhibidas.filter(rutas => {
+    if(rutas.includes(route)){  
+      encontrado = route
+      mensaje = "🚫Prohibida"
+      pclient.classList.remove('route')
+      pclient.classList.add('important')
+    }
+  })
   return mensaje
 }
 
@@ -46,15 +55,21 @@ export const cesiones = (origen, destino,nfm,seg) =>{
     let alerta = ""
     if(origen != 'MAT' || origen != 'EXT')
       alerta = isAlertRoutes(numDest)
-    /* Alerta para cesiones a Sevilla
-    if(destino == 'SEVILLA'){
+
+    //Alerta para cesiones a Granada
+    if(destino == 'GRANADA'){
       pclient.classList.add('important')
       customAlert("🚫No se pueden hacer cesiones a Sevilla esta semana.")
-    }*/
+    }
     numDest != undefined ? pclient.innerText = `${numDest} ${alerta}` : pclient.innerText = ""
   })
 }
-export const createInputMat = (ref) => {
+export const createInputMat = (ref,destino) => {
+  if(destino == 'GRANADA'){
+    pclient.classList.add('important')
+    customAlert("🚫No se pueden hacer cesiones a Sevilla esta semana.")
+    return `🚫Prohibido`
+  }
   return `
   <input type="text" id="refMat" 
     style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
@@ -63,6 +78,12 @@ export const createInputMat = (ref) => {
 }
 
 export const createInputExt = (placa) => {
+  if(placa == 'GRANADA'){
+      pclient.classList.add('important')
+      customAlert("🚫No se pueden hacer cesiones a Sevilla esta semana.")
+      pclient.innerText = `🚫Prohibido`
+      return
+    }
   let inputs = `<select id="refMat" style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;">
             <option value="Nombre de la placa" label=""></option>`
   fetch('../api/getProvExt.php',{

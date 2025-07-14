@@ -15,7 +15,7 @@ $scripts = (object)[
   'CESIONES1' => "/js/cesiones202312.js?1235",
   'EXTBRAND' => "/../js/extBrand.js?101",
   'CESIONESALL' => "/js/cesionesAll.js?210",
-  'CESIONESADV' => "/js/cesionesADV.js?270",
+  'CESIONESADV' => "/js/cesionesADV.js?271",
   'BUSCAR' => "/../js/buscarCesiones.js?112",
   'READY' => "/../js/readyCesiones.js?110",
   'STATUS' => "/../js/statusCesiones.js?107",
@@ -67,7 +67,7 @@ $style = file_exists("$src/css/" . str_replace(" ","_",strtolower($user)).".css"
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?= $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1314" defer content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1315" defer content="1">
 <link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1011" defer content="1">
 <link rel="stylesheet" href="<?= $style ?>" defer content="0">
 <script type="text/javascript" src="<?= $src; ?>/js/script20.js?1040" defer content='no-cache'></script>

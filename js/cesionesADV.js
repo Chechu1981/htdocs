@@ -1,6 +1,6 @@
 'use strict';
 import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?122"
-import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?109"
+import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?110"
 import contadores from "./updateCounter.js?102"
 
 const setCounters = setInterval(() =>{contadores()},1000)
@@ -14,7 +14,7 @@ $('nfm').addEventListener('change', (e) => {
   const disgon = $('disgonBox') ?? ''
   if(origen == 'MAT'){
     const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
-    pclient.innerHTML = createInputMat(refMat)
+    pclient.innerHTML = createInputMat(refMat,inputDestino.value)
     return null
   }else if(origen == 'EXT'){
     pclient.innerHTML = createInputExt($('destino').value)
@@ -29,7 +29,7 @@ inputOrigen.addEventListener('change',()=>{
   const origen = inputOrigen.value
   if(origen == 'MAT'){
     const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
-    pclient.innerHTML = createInputMat(refMat)
+    pclient.innerHTML = createInputMat(refMat,inputDestino.value)
     return null
   }
   if(origen == 'EXT'){
@@ -53,7 +53,7 @@ inputDestino.addEventListener('change',()=>{
   const origen = inputOrigen.value
   if(origen == 'MAT'){
     const refMat = $('refMat') == null ? 'ZZMAT' : $('refMat').value
-    pclient.innerHTML = createInputMat(refMat)
+    pclient.innerHTML = createInputMat(refMat,inputDestino.value)
     return null
   }
   if(origen == 'EXT'){
