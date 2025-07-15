@@ -59,7 +59,7 @@ export const cesiones = (origen, destino,nfm,seg) =>{
     //Alerta para cesiones a Granada
     if(destino == 'GRANADA'){
       pclient.classList.add('important')
-      customAlert("🚫No se pueden hacer cesiones a Sevilla esta semana.")
+      customAlert("🚫No se pueden hacer cesiones a Granada esta semana.")
     }
     numDest != undefined ? pclient.innerText = `${numDest} ${alerta}` : pclient.innerText = ""
   })
@@ -67,7 +67,7 @@ export const cesiones = (origen, destino,nfm,seg) =>{
 export const createInputMat = (ref,destino) => {
   if(destino == 'GRANADA'){
     pclient.classList.add('important')
-    customAlert("🚫No se pueden hacer cesiones a Sevilla esta semana.")
+    customAlert("🚫No se pueden hacer cesiones a Granada esta semana.")
     return `🚫Prohibido`
   }
   return `
@@ -80,7 +80,7 @@ export const createInputMat = (ref,destino) => {
 export const createInputExt = (placa) => {
   if(placa == 'GRANADA'){
       pclient.classList.add('important')
-      customAlert("🚫No se pueden hacer cesiones a Sevilla esta semana.")
+      customAlert("🚫No se pueden hacer cesiones a Granada esta semana.")
       pclient.innerText = `🚫Prohibido`
       return
     }

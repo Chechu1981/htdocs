@@ -92,23 +92,32 @@ export const enviarMailDisgon = (cantidad,origen,destino,referencia,id) =>{
     const descRef = result.denominacion
     const dirOrigen = direcciones[origen]
     const dirDestino = direcciones[destino]
-    const importe = Math.ceil(result.pvp * ((100 - result.dtoNum) / 100))
-    const asunto = "RECOGIDA PPCR - DISGON"
-    const mail = encodeURIComponent(`${saludo}
-    Necesitamos recoger la referencia ${result.referencia.toUpperCase()} cantidad ${cantidad} ${descRef} en PPCR ${origen}
-    ${dirOrigen}
+    fetch('../api/getDtoByRef.php',{
+      method: 'POST',
+      body: new URLSearchParams({
+        codDto: result.dtoNum
+      })
+    })
+    .then(res => res.json())
+    .then((res) => {
+      const importe = Math.ceil(result.pvp * ((100 - res.descuento) / 100))
+      const asunto = "RECOGIDA PPCR - DISGON"
+      const mail = encodeURIComponent(`${saludo}
+      Necesitamos recoger la referencia ${result.referencia.toUpperCase()} cantidad ${cantidad} ${descRef} en PPCR ${origen}
+      ${dirOrigen}
+      
+      Para enviarlo a PPCR ${destino}
+      ${dirDestino}
     
-    Para enviarlo a PPCR ${destino}
-    ${dirDestino}
-  
-    ENVÍO ASEGURADO EN    ${importe}€
-    
-    
-    Saludos.`)
-    if(confirm(`¿Enviar Correo a Disgón?`)){
-      window.open(`mailto:pedidos@disgon.com; incidencias@disgon.com; info@disgon.com; julio@disgon.com; carlosalberto.fernandez@stellantis.com?subject=${asunto}&body=${mail}`)
-      $(`disgon${id}`).innerHTML = "✅"
-    }
+      ENVÍO ASEGURADO EN    ${importe}€
+      
+      
+      Saludos.`)
+      if(confirm(`¿Enviar Correo a Disgón?`)){
+        window.open(`mailto:pedidos@disgon.com; incidencias@disgon.com; info@disgon.com; julio@disgon.com; carlosalberto.fernandez@stellantis.com?subject=${asunto}&body=${mail}`)
+        $(`disgon${id}`).innerHTML = "✅"
+      }
+    })
   })
 }
 
