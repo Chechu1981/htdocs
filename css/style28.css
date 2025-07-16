@@ -1056,7 +1056,7 @@ input[type="color"]::-webkit-color-swatch {
 
 #cesiones .assignPendingAdv textarea:focus{
     background-color: var(--cards-active-color);
-    color: var(--bg-body-color);
+    color: var(--main-font-color);
     outline-width: 0px;
 }
 
@@ -1179,8 +1179,14 @@ input[type="color"]::-webkit-color-swatch {
     transition: .2s;
 }
 
-#cesiones ul:hover textarea{
-    color: var(--cards-active-color);
+#cesiones ul:nth-child(odd):hover textarea{
+    color: var(--bg-body-color);
+    background-color: var(--main-font-color);
+}
+
+#cesiones ul:nth-child(even):hover textarea{
+    color: var(--bg-body-color);
+    background-color: var(--main-font-color);
 }
 
 #cesiones ul textarea:hover {
