@@ -1,6 +1,6 @@
 'use strict';
-import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?123"
-import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?111"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?124"
+import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?112"
 import contadores from "./updateCounter.js?102"
 
 const setCounters = setInterval(() =>{contadores()},1000)
@@ -377,6 +377,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
   dataName.append('destino', destino)
   dataName.append('destinoC', `${destino}C`)
   dataName.append('origenF', `${origen}F`)
+  dataName.append('mailsOrigen', `${origen}ORIGEN`)
   dataName.append('comentario', comentario)
   dataName.append('misterauto', refCliente)
   dataName.append('correo', correo_proveedor)
@@ -415,7 +416,7 @@ const enviarMail = (pedido, origen, destino, referencia, cliente, fragil, pvp, i
             if(fragil){
               destinoFragil = res['fragil']
             }
-            createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],disgon,comentario)
+            createMail(cantidad,origen,destino,referencia,cliente,pedido,nfm,fragil,destinoFragil,res['origen'],res['destino'],res['conCopia'],res['mailsOrigen'],disgon,comentario)
           }
           $(`send${id}`).parentNode.parentNode.remove()
           updateBubble('-')

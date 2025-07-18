@@ -1,4 +1,4 @@
-export const createMail = (cantidad, origen, destino, referencia, cliente, pedido, nfm, fragil, destinoFragil, mailOrigen, mailDestino, bcc, disgon, comentario) => {
+export const createMail = (cantidad, origen, destino, referencia, cliente, pedido, nfm, fragil, destinoFragil, mailOrigen, mailDestino, bcc, mailsOrigen, disgon, comentario) => {
   let mailTarget, asuntoDisgon = '';
   let strDisgon = ``;
   let imprimeComentario = '';
@@ -52,7 +52,7 @@ ${strNfm}
 ${imprimeComentario}
 Saludos.`);
 
-  window.open(`mailto:${destinoFragil};${mailDestino};${mailOrigen}?subject=${mailSub}&cc=${bcc}&body=${mailSaludo + mailTarget}`);
+  window.open(`mailto:${destinoFragil};${mailDestino};${mailOrigen};${mailsOrigen}?subject=${mailSub}&cc=${bcc}&body=${mailSaludo + mailTarget}`);
 }
 
 const direcciones = {

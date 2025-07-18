@@ -35,6 +35,7 @@ if(typeof(href) != "object"){
       data.append('cc', $('cc').value)
       data.append('bcc', $('bcc').value)
       data.append('fcc', $('fcc').value)
+      data.append('origen', $('origen').value)
       fetch(src + 'api/saveMails.php',{
         method: 'POST',
         body: data
@@ -98,6 +99,8 @@ if(typeof(href) != "object"){
         window.location.href = src + href[e.target.title] + window.location.search
       }else{
         data.append('title',e.target.innerHTML)
+        if(e.target.title == 'mails')
+            document.getElementsByClassName('note-active')[0].style.height = "auto"
         fetch(src + href[e.target.title],{
           method: 'POST',
           body:data

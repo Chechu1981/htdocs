@@ -8,6 +8,7 @@ $pilot = $_POST['origen'];
 $destino = $_POST['destino'];
 $destinoC = $_POST['destinoC'];
 $origenF = $_POST['origenF'];
+$origenOrigen = $_POST['mailsOrigen'];
 if($_POST['origen'] == 'PALMA'){
     $pilot = 'BALEARES';
 }
@@ -18,7 +19,8 @@ if($_POST['origen'] == 'MAT' || $_POST['origen'] == 'EXT'){
 $mails = $products[$destino];
 $mailsC = $products[$destinoC];
 $mailsF = $products[$origenF];
-$arr = ['destino' => $mails,'conCopia' => $mailsC,'fragil' => $mailsF];
+$mailsOrigen = $products[$origenOrigen];
+$arr = ['destino' => $mails,'conCopia' => $mailsC,'fragil' => $mailsF, 'mailsOrigen' => $mailsOrigen];
 
 $rows = $contacts->getCenter('PPCR '.strtoupper($pilot),'PILOTO ECONOMICO');
 
