@@ -11,11 +11,11 @@ $scripts = (object)[
   'PALMA' => "/js/center3.js?100",
   'ZARAGOZA' => "/js/center3.js?101",
   'VIGO' => "/js/center3.js?100",
-  'CENTROS' => "/js/center3.js?102",
+  'CENTROS' => "/js/center3.js?105",
   'CESIONES1' => "/js/cesiones202312.js?1235",
   'EXTBRAND' => "/../js/extBrand.js?101",
   'CESIONESALL' => "/js/cesionesAll.js?210",
-  'CESIONESADV' => "/js/cesionesADV.js?272",
+  'CESIONESADV' => "/js/cesiones.js?101",
   'BUSCAR' => "/../js/buscarCesiones.js?112",
   'READY' => "/../js/readyCesiones.js?110",
   'STATUS' => "/../js/statusCesiones.js?107",
@@ -71,5 +71,5 @@ $style = file_exists("$src/css/" . str_replace(" ","_",strtolower($user)).".css"
 <link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1011" defer content="1">
 <link rel="stylesheet" href="<?= $style ?>" defer content="0">
 <script type="text/javascript" src="<?= $src; ?>/js/script20.js?1040" defer content='no-cache'></script>
-<script type="module" src="<?= $src . $scripts->$page; ?>" defer content="0"></script>
+<script type="module" src="<?= $src . $scripts->$page; ?>" defer content="no-cache"></script>
 <title>Chechu - <?= $page; ?></title>

@@ -1,5 +1,5 @@
 'use strict';
-import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?122"
+import { createMail, enviarMailDisgon, createMailMat, createMailExt, createMailProv} from "./createMail.js?123"
 import { cesiones, createInputMat, createInputExt, eliminarLinea, esDisgon, buscarCliente, buscarDenominacionReferencia, updateCounterAssignment, buscar_ultimo_correo} from "./alertsAssigns.js?111"
 import contadores from "./updateCounter.js?102"
 
@@ -670,9 +670,10 @@ $$('form')[0].addEventListener('submit',(e)=>{
   })
   .then(response => response.text())
   .then(res =>{
-    if(res == 'Error')
-      customAlert("🚫No se pueden hacer cesiones desde Granada de baterías ni de aceite Eurorepar hasta Enero 2025. Consultar en ADV.")
-      res = 'ok'
+    /* NO SE PUEDEN HACER CESIONES EN GRANADA HASTA EL LUNES
+    if(res == 'ErrorOrigen')
+      customAlert("🚫No se pueden hacer cesiones en Granada hasta el lunes.")
+      res = 'ok'*/
     if(res == 'ok'){
       showAssig()
       enabledForm()

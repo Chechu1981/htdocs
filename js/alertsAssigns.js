@@ -1,7 +1,7 @@
 const rutasDirectas = ["6251-2","78709-1","12752-1","105252-1","105342-1","14075-1"]
 const rutasPreguntar = ["6254-1","78713-1"]
 const rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"]
-const rutasProhibidas = ["12752-1","14081-1","14103-1","6273-1","13889-1","14131-1","7548-1","105252-1","105561-1","105411-1","78689-1","105354-1","105322-1","78779-1","ZZMAT"]
+const rutasProhibidas = []
 
 export function isAlertRoutes(route){
   pclient.classList.remove('important')
@@ -46,6 +46,13 @@ export const cesiones = (origen, destino,nfm,seg) =>{
   origen != destino ? cesion = origen + '' + destino:''
   seg ? cesion += 'SEG' :''
   nfm ? cesion += 'NM' :''
+  /* NO SE PUEDEN HACER CESIONES A GRANADA
+  if(origen == 'GRANADA'){
+    pclient.classList.add('important')
+    customAlert("🚫No se pueden hacer cesiones en Granada hasta el lunes.")
+    pclient.innerText = `🚫Prohibido`
+    return
+  }*/
   fetch('../json/cesionesCliente.json?107',
     {cache: "reload"}
   )
@@ -56,20 +63,21 @@ export const cesiones = (origen, destino,nfm,seg) =>{
     if(origen != 'MAT' || origen != 'EXT')
       alerta = isAlertRoutes(numDest)
 
-    //Alerta para cesiones a Granada
+    /*Alerta para cesiones a Granada
     if(destino == 'GRANADA'){
       pclient.classList.add('important')
       customAlert("🚫No se pueden hacer cesiones a Granada esta semana.")
-    }
+    }*/
     numDest != undefined ? pclient.innerText = `${numDest} ${alerta}` : pclient.innerText = ""
   })
 }
 export const createInputMat = (ref,destino) => {
+  /*NO SE PUEDEN HACER CESIONES A GRANADA
   if(destino == 'GRANADA'){
     pclient.classList.add('important')
     customAlert("🚫No se pueden hacer cesiones a Granada esta semana.")
     return `🚫Prohibido`
-  }
+  }*/
   return `
   <input type="text" id="refMat" 
     style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;" 
@@ -78,12 +86,13 @@ export const createInputMat = (ref,destino) => {
 }
 
 export const createInputExt = (placa) => {
+  /* NO SE PUEDEN HACER CESIONES A GRANADA 
   if(placa == 'GRANADA'){
       pclient.classList.add('important')
       customAlert("🚫No se pueden hacer cesiones a Granada esta semana.")
       pclient.innerText = `🚫Prohibido`
       return
-    }
+    }*/
   let inputs = `<select id="refMat" style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;">
             <option value="Nombre de la placa" label=""></option>`
   fetch('../api/getProvExt.php',{
@@ -226,12 +235,12 @@ export const buscarDenominacionReferencia = (refer) =>{
     $('descRef').innerHTML = res.descripcionPrecio
     let pvp = 0
     const stringAlert = ['E:BATERÍA','E:BATERIA','E:LUBRICANTE']
-    if($('origen').value == 'GRANADA'){
+   /* if($('origen').value == 'GRANADA'){
       stringAlert.forEach(e =>{
         if(res.descripcionPrecio.includes(e))
           customAlert("🚫No se pueden hacer cesiones desde Granada de baterías ni de aceite Eurorepar hasta Enero 2025")
       })
-    }
+    }*/
     if(!res.descripcionPrecio.includes('Desconocido'))
       pvp = parseFloat(res.precio.replaceAll(',','.'))
       let dto = parseInt(res.descuento)

@@ -56,9 +56,12 @@ foreach($stringAlert as $str){
     if($encontrado > 0)
         $num++;
 }
-if($num > 0 && $_POST['origen'] == 'GRANADA' && $puesto != 'ADV'){
-    $rows = "Error";
-}*/
+
+CESIONES DE GRANADA INHABILITADAS
+
+if($_POST['origen'] == 'GRANADA' || $_POST['destino'] == 'GRANADA'){
+    $rows = "ErrorOrigen";
+}
 
 /* Busca si hay portes de las cesiones de Zaragoza por Disgon. Emplea mucho tiempo en hacer tres consultas a servidor 
 $pvp = getPvp($_POST['ref']);
@@ -87,6 +90,6 @@ $items = [
     $puesto,
     @$_POST['correo']
 ];
-if($rows != 'Error')
+if($rows != 'ErrorOrigen')
     $rows = $contacts->newAssigADV2023($items);
 echo $rows;
