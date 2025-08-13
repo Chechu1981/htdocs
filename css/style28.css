@@ -597,6 +597,33 @@ select, input{
     color: var(--bg-body-colors);
 }
 
+.split-screen{
+    display: grid;
+    grid-template-columns: 15% 85%;
+}
+
+.barra_lateral{
+    padding: 100px 0 0 10px;
+    font-size: large;
+    .btn{
+        background-color: var(--bg-body-color);
+        color: var(--main-font-color);
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid var(--main-font-color);
+        box-shadow: 2px 2px var(--bg-font-color);
+        cursor: pointer;
+        display: block;
+        margin-bottom: 10px;
+    }
+    .active{
+        background-color: var(--main-font-color);
+        color: var(--bg-body-color);
+        box-shadow: 2px 2px var(--bg-font-color);
+    }
+}
+
+
 .form-control{
     height: 25px;
     display: grid;
@@ -2436,6 +2463,10 @@ margin: 0 10px;
     span:hover{
         filter: brightness(0.5);
     }
+}
+
+.config-routes{
+    padding-left: 35px;
 }
 
 .config-routes ul{

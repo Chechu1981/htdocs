@@ -1,7 +1,18 @@
 <?php
 include_once '../connection/data.php';
 $contacts = new Contacts();
-$rows = $contacts->getRoutesName($_POST['ruta']);
+if($_POST['placa'] != ''){
+    $centro = str_split($_POST['placa'],3)[0];
+    if($centro == 'SAN')
+        $centro = 'VIG';
+    if($centro == 'MÁ')
+        $centro = 'GRA';
+    if($centro == 'PAT')
+        $centro = 'VAL';
+}else{
+    $centro = '%%';
+}
+$rows = $contacts->getRoutesName($_POST['ruta'], $centro);
 foreach($rows as $row){ ?>
     <ul>
         <li><?php echo $row[1]; ?></li>

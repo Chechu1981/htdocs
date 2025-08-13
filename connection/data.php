@@ -897,8 +897,8 @@ class Contacts
         return $color . ' ' . $usr;
     }
 
-    public function getRoutesName($route) {
-        $sql = "SELECT * FROM rutas WHERE `Turn` LIKE '%$route%' ORDER BY 'CENTRO' ASC";
+    public function getRoutesName($route, $plate) {
+        $sql = "SELECT * FROM rutas WHERE `Turn` LIKE '%$route%' AND `CENTRO` LIKE '$plate' ORDER BY 'CENTRO' ASC";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

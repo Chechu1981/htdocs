@@ -9,22 +9,37 @@
     <div id="menu">
         <?php include_once '../helper/menu.php'; ?>
     </div>
-    <div class="search-table">
-        <div id="contacts">
-            <h1>Configuración - rutas</h1>
+    <div id="contacts">
+      <h1>Configuración - rutas</h1>
+      <div></div>
+      <button id="newRoute">Crear nueva ruta</button>
+    </div>
+    <div class="split-screen">
+      <div class="barra_lateral">
+        <div id="buttons_plates">
+          <span class="btn">MADRID</span>
+          <span class="btn">SEVILLA</span>
+          <span class="btn">SANTIAGO</span>
+          <span class="btn">MÁLAGA</span>
+          <span class="btn">ZARAGOZA</span>
+          <span class="btn">PALMA</span>
+          <span class="btn">PATERNA</span>
+          <span class="btn">BARCELONA</span>
         </div>
-        <button id="newRoute">Crear nueva ruta</button>
+      </div>
+      <div class="search-table">
         <div id="search-line" class="nPass search-line search-focused">
         <span class="lupa">
           <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
           </svg>
         </span>
-        <div class="textbox" id="search-box">
-          <input type="search" id="search-route" placeholder="Buscar ruta">
+          <div class="textbox" id="search-box">
+            <input type="search" id="search-route" placeholder="Buscar ruta">
+          </div>
         </div>
+        <div class="config-routes"></div>
       </div>
-      <div class="config-routes"></div>
     </div>
     <?php include('../helper/footer.php'); ?>
 </body>

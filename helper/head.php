@@ -26,12 +26,12 @@ $scripts = (object)[
   'form' => "/js/form1.js",
   'fomrcontacts' => "/js/fomrcontacts1.js?100",
   'HOME' => "/js/pass7.js?102",
-  'ROUTE' => "/js/route.js",
+  'ROUTE' => "/js/route.js?100",
   'ROUTETEST' => "/js/routeTest.js?104",
   'INMOVILIZADOS' => "/js/vi18.js?1237",
   'REFERENCIADOS' => "/js/referenciados.js?1002",
   'INMSTATUS' => "/js/inmStat.js?107",
-  'CONFIGROUTES' => "/js/cfgRutas2.js",
+  'CONFIGROUTES' => "/js/cfgRutas2.js?100",
   'CONFIGREPERE' => "/js/formRepere.js",
   'CONFIGSOC' => "/js/cfgSoc.js",
   'UPDATEPRICE' => "/js/updatePrice.js",
@@ -67,7 +67,7 @@ $style = file_exists("$src/css/" . str_replace(" ","_",strtolower($user)).".css"
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?= $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1318" defer content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1319" defer content="1">
 <link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1011" defer content="1">
 <link rel="stylesheet" href="<?= $style ?>" defer content="0">
 <script type="text/javascript" src="<?= $src; ?>/js/script20.js?1041" defer content='no-cache'></script>

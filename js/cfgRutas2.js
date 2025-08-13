@@ -85,10 +85,10 @@ $('newRoute').addEventListener('click', () =>{
   })
 })
 
-$('search-route').addEventListener('keyup',e =>{
-  const ruta = e.target.value
-  const data = new FormData
-  data.append('ruta', ruta)
+const buscarRutas = (target,placa) => {
+  const data = new FormData()
+  data.append('ruta', target)
+  data.append('placa', placa)
   fetch('../api/getRoutesFilter.php',{
     method: 'POST',
     body: data
@@ -97,4 +97,26 @@ $('search-route').addEventListener('keyup',e =>{
   .then(item => {
     document.getElementsByClassName('config-routes')[0].innerHTML = item
   })
+}
+
+$('search-route').addEventListener('keyup',e =>{
+  let bototnes = $('buttons_plates').children
+  let placa = ''
+  for(let btns of bototnes){
+    if(btns.classList.contains('active')){
+      placa = btns.innerText
+      break
+    }
+  }
+  buscarRutas(e.target.value, placa)
+})
+
+$('buttons_plates').addEventListener('click', e => {
+  let bototnes = $('buttons_plates').children
+  for(let btns of bototnes)
+    btns.classList.remove('active')
+  if(e.target.classList.contains('btn')){
+    e.target.classList.toggle('active')
+    buscarRutas($('search-route').value,e.target.innerText)
+  }
 })
