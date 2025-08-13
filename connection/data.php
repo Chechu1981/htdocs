@@ -491,9 +491,13 @@ class Contacts
     }
 
     public function getAssig($all,$usr,$puesto = null,$origen,$destino,$asegurado, $buscar){
+        if($origen == 'MÁLAGA')
+            $origen = "MÁLAGA' OR `origen` = 'GRANADA";
+        if($destino == 'MÁLAGA')
+            $destino = "MÁLAGA' OR `destino` = 'GRANADA";
         $order = " ORDER BY `id` DESC LIMIT 100";
         $asegurado === 'true' ? $asegurado = "(`disgon` = 1 OR `disgon` = 2) AND ": $asegurado = "";
-        $origen != '' ? $origen = "`origen` = '$origen' AND ": $origen = "";
+        $origen != '' ? $origen = "(`origen` = '$origen') AND ": $origen = "";
         $destino != '' ? $destino = "`destino` = '$destino' AND ": $destino = "";
         $sql = "SELECT * FROM `cesiones` WHERE (
                 $origen

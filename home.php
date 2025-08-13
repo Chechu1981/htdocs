@@ -27,7 +27,7 @@
             <option value="MADRID">MADRID</option>
             <option value="SEVILLA">SEVILLA</option>
             <option value="SANTIAGO">GALICIA</option>
-            <option value="GRANADA">GRANADA</option>
+            <option value="MÁLAGA">MÁLAGA</option>
             <option value="ZARAGOZA">ZARAGOZA</option>
             <option value="PALMA">PALMA</option>
             <option value="VALENCIA">VALENCIA</option>

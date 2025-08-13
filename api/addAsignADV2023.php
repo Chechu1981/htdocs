@@ -12,7 +12,10 @@ if($puesto == 'ADV')
 
 function getCliente($cliente,$placa){
     if($placa == 'SANTIAGO')
-        $placa = "VIGO";    $rows = $GLOBALS['contacts']->getClientNameByPlate(explode('-',$cliente)[0],substr($placa,0,3));
+        $placa = "VIGO";
+    IF($placa == 'MÁLAGA')
+        $placa = "GRANADA";
+    $rows = $GLOBALS['contacts']->getClientNameByPlate(explode('-',$cliente)[0],substr($placa,0,3));
     if(count($rows) > 0)
         return $rows[0][6];
     else

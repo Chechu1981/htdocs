@@ -7,6 +7,8 @@ $contacts = new Contacts();
 $placa = $_POST['placa'];
 if($_POST['placa'] == 'SAN')
     $placa = "VIG";
+if($_POST['placa'] == 'MÁL')
+    $placa = "GRA";
 
 $rows = $contacts->getClientNameByPlate($_POST['search'],$placa);
 

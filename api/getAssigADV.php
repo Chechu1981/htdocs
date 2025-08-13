@@ -66,7 +66,7 @@ if($_POST['id'] != 'new')
 $lists = "<h1>No hay cesiones</h1>";
 
 function createOptions($id,$placa,$proveedor){
-  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','GRANADA','SEVILLA','PALMA','MISTER-AUTO','C. EXTERNA');
+  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','MALAGA','SEVILLA','PALMA','MISTER-AUTO','C. EXTERNA');
   $select = '<select name="origen" id="origen'.$id.'">';
   foreach ($placas as $key) {
     $nombre = $key;
@@ -239,8 +239,8 @@ if(sizeof($rows) > 0){
     }elseif($row[1] == 'EXT'){
       $numPie = createOptionProvExt($row[0],$row[12]);
     }
-    /* Si el destino es Granada, se añade un icono de prohibido y se marca como importante
-    if($destino == 'GRANADA'){
+    /* Si el destino es MALAGA, se añade un icono de prohibido y se marca como importante
+    if($destino == 'MALAGA'){
       $numPie .= "🚫";
       $important = 'important';
     }

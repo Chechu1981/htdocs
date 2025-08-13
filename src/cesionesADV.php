@@ -27,7 +27,7 @@
                   <option value="BARCELONA">Barcelona</option>
                   <option value="ZARAGOZA">Zaragoza</option>
                   <option value="VALENCIA">Valencia</option>
-                  <option value="GRANADA">Granada</option>
+                  <option value="MÁLAGA">Málaga</option>
                   <option value="SEVILLA">Sevilla</option>
                   <option value="PALMA">Palma</option>
                   <option value="MAT">Mister-auto</option>
@@ -39,7 +39,7 @@
                   <option value="BARCELONA">Barcelona</option>
                   <option value="ZARAGOZA">Zaragoza</option>
                   <option value="VALENCIA">Valencia</option>
-                  <option value="GRANADA">Granada</option>
+                  <option value="MÁLAGA">Málaga</option>
                   <option value="SEVILLA">Sevilla</option>
                   <option value="PALMA">Palma</option>
                 </select>

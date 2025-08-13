@@ -25,15 +25,15 @@
         </div>
         <div id="center-items">
             <ul>    
-                <li><a href="<?php echo $src.'/src/center/central.php?id='.$id ?>">Central</a></li>
-                <li><a href="<?php echo $src.'/src/center/madrid.php?id='.$id ?>">Madrid</a></li>
-                <li><a href="<?php echo $src.'/src/center/sevilla.php?id='.$id ?>">Sevilla</a></li>
-                <li><a href="<?php echo $src.'/src/center/vigo.php?id='.$id ?>">Santiago</a></li>
-                <li><a href="<?php echo $src.'/src/center/granada.php?id='.$id ?>">Granada</a></li>
-                <li><a href="<?php echo $src.'/src/center/zaragoza.php?id='.$id ?>">Zaragoza</a></li>
-                <li><a href="<?php echo $src.'/src/center/palma.php?id='.$id ?>">Palma</a></li>
-                <li><a href="<?php echo $src.'/src/center/paterna.php?id='.$id ?>">Paterna</a></li>
-                <li><a href="<?php echo $src.'/src/center/barcelona.php?id='.$id ?>">Barcelona</a></li>
+                <li><a href="<?php echo $src.'/src/center/central.php' ?>">Central</a></li>
+                <li><a href="<?php echo $src.'/src/center/madrid.php' ?>">Madrid</a></li>
+                <li><a href="<?php echo $src.'/src/center/sevilla.php' ?>">Sevilla</a></li>
+                <li><a href="<?php echo $src.'/src/center/vigo.php' ?>">Santiago</a></li>
+                <li><a href="<?php echo $src.'/src/center/granada.php' ?>">Málaga</a></li>
+                <li><a href="<?php echo $src.'/src/center/zaragoza.php' ?>">Zaragoza</a></li>
+                <li><a href="<?php echo $src.'/src/center/palma.php' ?>">Palma</a></li>
+                <li><a href="<?php echo $src.'/src/center/paterna.php' ?>">Paterna</a></li>
+                <li><a href="<?php echo $src.'/src/center/barcelona.php' ?>">Barcelona</a></li>
             </ul>
         </div>
     </div>

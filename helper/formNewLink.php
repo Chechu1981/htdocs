@@ -14,7 +14,7 @@ $PLACAS = [
   "MADRID",
   "SEVILLA",
   "GALICIA",
-  "GRANADA",
+  "MÁLAGA",
   "ZARAGOZA",
   "PALMA",
   "VALENCIA",

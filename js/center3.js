@@ -102,7 +102,7 @@ document.addEventListener('click',(e)=>{
     }
   }else if(e.target.id.includes('edit')){
     const id= e.target.parentNode.id
-    modal(`<iframe src="../../helper/formNewContact.php?id=${id}" style="height: 410px;"></iframe>`,`Editar contacto`)
+    modal(`<iframe src="../../helper/formNewContact.php" style="height: 410px;"></iframe>`,`Editar contacto`)
   }
 })
 

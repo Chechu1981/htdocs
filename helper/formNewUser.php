@@ -28,7 +28,7 @@
                     <option value="BARCELONA">BARCELONA</option>
                     <option value="ZARAGOZA">ZARAGOZA</option>
                     <option value="VALENCIA">VALENCIA</option>
-                    <option value="GRANADA">GRANADA</option>
+                    <option value="MALAGA">MÁLAGA</option>
                     <option value="SEVILLA">SEVILLA</option>
                     <option value="PALMA">PALMA</option>
                     <option value="DESBORDE">DESBORDE</option>

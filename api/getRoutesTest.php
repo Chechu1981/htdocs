@@ -6,13 +6,27 @@ $contacts = new Contacts();
 $search = str_replace("'","",$_POST['search']);
 $rows = $contacts->getRoutesHTMLtest($search.'-');
 
+$PLACAS = [
+    'MAD' => 'MADRID',
+    'SAN' => 'SANTIAGO',
+    'BAR' => 'BARCELONA',
+    'ZAR' => 'ZARAGOZA',
+    'VAL' => 'VALENCIA',
+    'MÁL' => 'MÁLAGA',
+    'PAL' => 'PALMA',
+    'SEV' => 'SEVILLA'
+];
+
 if(sizeof($rows) > 0){
     $lists = '';
     foreach ($rows as $row) { 
+        $row[1] == 'GRA' ?  $placa = 'MÁL' : $placa = $row[1];
+        array_key_exists($placa, $PLACAS) ? $placa = $PLACAS[$placa] : $placa = 'DESCONOCIDO';
+        
         $lists .= '
         <ul>
             <li title="Cliente: ">'.$row[0].'</li>
-            <li title="Placa: ">'.$row[1].'</li>
+            <li title="Placa: ">'.$placa.'</li>
             <li title="Corte: ">'.$row[2].'</li>
             <li title="Salida: ">'.$row[3].'</li>
             <li title="Nombre: " id="'.$row[10].'" class="link">'.$row[4].'</li>
