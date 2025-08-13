@@ -16,7 +16,6 @@ if(strtoupper($_POST['center']) == 'CENTROS'){
     $lists .= "<li>Centro</li>";
 }
 $cabecera ="<ul class='heading'>
-          <li>Entidad</li>
           <li>Equipo</li>
           <li>Nombre</li>
           <li>Puesto</li>
@@ -38,7 +37,7 @@ foreach($rows as $row){
   }
   if($row[2] != $entidad)
     $lists .= '<h2 class="header-title-contacts">'.$row[2].'</h2>'.$cabecera;
-  
+
   $jefes = $row[11] == 1 ? 'class="jefes"' : '';
   $entidad = $row[2];
 
