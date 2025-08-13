@@ -26,6 +26,7 @@ if($id != '') {
   $movil = $contact[0][8]; 
   $ncorto = $contact[0][9]; 
   $correo = $contact[0][10];
+  $jefe = $contact[0][11] == 1 ? 'checked' : '';
   $accion = 'Guardar contacto';
   $titulo = 'update';
 }
@@ -106,8 +107,9 @@ $EQUIPO = [
     <label for="movil"></label><input type='text' placeholder='móvil' id='movil' value="<?= $movil ?>">
     <label for="ncorto"></label><input type='text' placeholder='nº corto' id='ncorto' value="<?= $ncorto ?>">
     <label for="correo"></label><input type='text' placeholder='correo' id='correo' value="<?= $correo ?>">
+    <label for="boss">Jefe/a de equipo</label><input type='checkbox' id='boss' <?= $jefe ?> title="Marcar como jefe/a de equipo">
     <input type='hidden' placeholder='id' id='id' value="<?= $id ?>">
     <label for=""></label>
     <input type='submit' class='note-btn' style="width:150px;justify-content:center" value='<?= $accion ?>'>
 </form>
-<script src="../js/formContacts.js"></script>
+<script src="../js/formContacts.js?100"></script>

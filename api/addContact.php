@@ -12,7 +12,8 @@ $items = [
     $_POST['nlargo'],
     $_POST['movil'],
     $_POST['ncorto'],
-    $_POST['correo']
+    $_POST['correo'],
+    $_POST['boss']
 ];
 
 $rows = $contacts->newContact($items);

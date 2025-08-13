@@ -3,7 +3,7 @@ document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
     e.preventDefault()
     const data = new FormData()
     console.log(e.target.childNodes)
-    data.append('id',e.target.children[21].value)
+    data.append('id',e.target.children[23].value)
     data.append('centro', e.target.children[2].value)
     data.append('entidad', e.target.children[4].value)
     data.append('equipo', e.target.children[6].value)
@@ -14,6 +14,7 @@ document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
     data.append('movil', e.target.children[16].value)
     data.append('ncorto', e.target.children[18].value)
     data.append('correo', e.target.children[20].value)
+    data.append('boss', e.target.children[22].checked)
     fetch(src,{
         method: 'POST',
         body: data

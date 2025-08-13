@@ -11,7 +11,7 @@ $scripts = (object)[
   'PALMA' => "/js/center3.js?100",
   'ZARAGOZA' => "/js/center3.js?101",
   'VIGO' => "/js/center3.js?100",
-  'CENTROS' => "/js/center3.js?107",
+  'CENTROS' => "/js/center3.js?108",
   'CESIONES1' => "/js/cesiones202312.js?1235",
   'EXTBRAND' => "/../js/extBrand.js?101",
   'CESIONESALL' => "/js/cesionesAll.js?211",
@@ -24,7 +24,7 @@ $scripts = (object)[
   'LIBRETA' => "/js/libreta.js?102",
   'contact' => "/js/contact2.js",
   'form' => "/js/form1.js",
-  'fomrcontacts' => "/js/fomrcontacts1.js",
+  'fomrcontacts' => "/js/fomrcontacts1.js?100",
   'HOME' => "/js/pass7.js?102",
   'ROUTE' => "/js/route.js",
   'ROUTETEST' => "/js/routeTest.js?104",
@@ -67,7 +67,7 @@ $style = file_exists("$src/css/" . str_replace(" ","_",strtolower($user)).".css"
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?= $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1316" defer content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1318" defer content="1">
 <link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1011" defer content="1">
 <link rel="stylesheet" href="<?= $style ?>" defer content="0">
 <script type="text/javascript" src="<?= $src; ?>/js/script20.js?1041" defer content='no-cache'></script>

@@ -820,7 +820,7 @@ class Contacts
         REPLACE(H,' ','') LIKE '%$tlf' OR
         `I` LIKE '%$search%' OR
         `J` LIKE '%$search%') 
-        ORDER BY `A`,`B`,`C`,`E`";
+        ORDER BY `A`,`B`,`C` ASC, `K` DESC , `E` ASC";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -841,6 +841,7 @@ class Contacts
     }
 
     public function updateContacts($item){
+        $item[11] == 'true' ? $item[11] = 1 : $item[11] = 0;
         $sql = "UPDATE `centros` SET 
             `A`= '$item[1]',
             `B` = '$item[2]',
@@ -851,7 +852,8 @@ class Contacts
             `G` = '$item[7]',
             `H` = '$item[8]',
             `I` = '$item[9]',
-            `J` = '$item[10]'
+            `J` = '$item[10]',
+            `K` = $item[11]
             WHERE id LIKE $item[0]";
         $query = $this->db->prepare($sql);
         $query->execute();
@@ -859,8 +861,9 @@ class Contacts
     }
 
     public function newContact($item){
-        $sql = "INSERT INTO `centros` (`A`,`B`,`C`,`D`,`E`,`F`,`G`,`H`,`I`,`J`) VALUES 
-        ('$item[0]','$item[1]','$item[2]','$item[3]','$item[4]','$item[5]','$item[6]','$item[7]','$item[8]','$item[9]')";
+        $item[10] == 'true' ? $item[10] = 1 : $item[10] = 0;
+        $sql = "INSERT INTO `centros` (`A`,`B`,`C`,`D`,`E`,`F`,`G`,`H`,`I`,`J`,`K`) VALUES 
+        ('$item[0]','$item[1]','$item[2]','$item[3]','$item[4]','$item[5]','$item[6]','$item[7]','$item[8]','$item[9]',$item[10])";
         $query = $this->db->prepare($sql);
         $query->execute();
         return "ok";

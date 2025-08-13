@@ -987,10 +987,19 @@ input[type="color"]::-webkit-color-swatch {
 }
 
 #center-list-items ul{
-  grid-template-columns: 5% 5% 18% 18% 5% 5% 10% 10% 15% 5%;
+  grid-template-columns: 9% 23% 18% 5% 5% 10% 10% 15% 5%;;
   align-items: center;
   margin: 0;
   padding: 0;
+}
+
+.header-title-contacts{
+    background-color: inherit !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 35px 0 0 0;
+    justify-content: space-around;
 }
 
 .jefes{
