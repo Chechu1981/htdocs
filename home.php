@@ -6,9 +6,7 @@
 </head>
 <body>
   <?php include_once './helper/alert.php'; ?>
-  <menu id="menu">
-    <?php include_once './helper/menu.php'; ?>
-  </menu>
+  <?php include_once './helper/menu.php'; ?>
   <div class="search-table">
     <section id="contacts">
       <h1>Enlaces</h1>

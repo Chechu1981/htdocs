@@ -58,7 +58,7 @@ function createOptons($user){
 }
 
 function createOptionsOrigin($id,$placa){
-  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','MALAGA','SEVILLA','PALMA','MISTER-AUTO','C. EXTERNA');
+  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','MÁLAGA','SEVILLA','PALMA','MISTER-AUTO','C. EXTERNA');
   $select = '<select name="origen" id="origen'.$id.'">';
   foreach ($placas as $key) {
     $nombre = $key;

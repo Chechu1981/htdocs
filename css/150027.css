@@ -82,12 +82,12 @@
     }
 
     #contacts{
-        top: 72px;
+        top: 53px;
         grid-template-columns: 17% 73% 10%;
     }
 
     .heading{
-        top: 157px;
+        top: 139px;
     }
 
     .nPass{

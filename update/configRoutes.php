@@ -6,9 +6,7 @@
 </head>
 <body>
   <?php include_once '../helper/alert.php'; ?>
-    <div id="menu">
-        <?php include_once '../helper/menu.php'; ?>
-    </div>
+  <?php include_once '../helper/menu.php'; ?>
     <div id="contacts">
       <h1>Configuración - rutas</h1>
       <div></div>

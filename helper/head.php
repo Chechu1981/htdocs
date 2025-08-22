@@ -67,9 +67,11 @@ $style = file_exists("$src/css/" . str_replace(" ","_",strtolower($user)).".css"
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?= $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1319" defer content="1">
-<link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1011" defer content="1">
-<link rel="stylesheet" href="<?= $style ?>" defer content="0">
-<script type="text/javascript" src="<?= $src; ?>/js/script20.js?1041" defer content='no-cache'></script>
+<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1320" media="all"  content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1012" media="all"  content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/menu.css?101" media="all"  content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/fontawesome7/css/all.min.css?100" media="all"  content="1">
+<link rel="stylesheet" href="<?= $style ?>" media="all"  content="0">
+<script type="text/javascript" src="<?= $src; ?>/js/script20.js?1042" defer content='no-cache'></script>
 <script type="module" src="<?= $src . $scripts->$page; ?>" defer content="no-cache"></script>
 <title>Chechu - <?= $page; ?></title>

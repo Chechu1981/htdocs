@@ -66,7 +66,7 @@ if($_POST['id'] != 'new')
 $lists = "<h1>No hay cesiones</h1>";
 
 function createOptions($id,$placa,$proveedor){
-  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','MALAGA','SEVILLA','PALMA','MISTER-AUTO','C. EXTERNA');
+  $placas = array('MADRID','SANTIAGO','BARCELONA','ZARAGOZA','VALENCIA','MÁLAGA','SEVILLA','PALMA','MISTER-AUTO','C. EXTERNA');
   $select = '<select name="origen" id="origen'.$id.'">';
   foreach ($placas as $key) {
     $nombre = $key;

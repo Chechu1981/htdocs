@@ -18,9 +18,7 @@ $botones = array(
 </head>
 <body>
   <?php include_once '../helper/alert.php'; ?>
-  <div id="menu">
-    <?php include_once '../helper/menu.php'; ?>
-  </div>
+  <?php include_once '../helper/menu.php'; ?>
   <div class="search-table">
     <div id="contacts" class="contacts">
       <h1>Estadística inmovilizados</h1>

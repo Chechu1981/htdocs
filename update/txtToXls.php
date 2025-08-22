@@ -4,9 +4,7 @@
     <?php include('./../helper/logon.php'); ?>
 </head>
 <body>
-    <div id="menu">
-        <?php include_once '../helper/menu.php'; ?>
-    </div>
+    <?php include_once '../helper/menu.php'; ?>
     <div class="search-table">
         <div id="contacts">
             <h1>Configuración</h1>

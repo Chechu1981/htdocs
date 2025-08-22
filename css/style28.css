@@ -200,65 +200,15 @@ select, input{
     font-size: 12px;
 }
 
-#menu{
-    display: grid;
-    grid-template-columns: 11% 51% 30% 8% 2%;
-    padding: 10px 10px 0px;
-    color: var(--bg-body-color);
-    font-weight: bold;
-    position: sticky;
-    top: 0;
-    background-color: var(--bg-body-color);
-    z-index: 9;
-    margin: 0px;
-}
-
-#menu img{
-    margin: 0 auto;
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-    filter: var(--invert-img-filter);
-}
-
-#menu img:hover{
-    opacity: 0.3;
-}
-
-#menu picture{
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  section{
-      word-break: break-all;
-      font-size: small;
-      padding: 4px 0
-  }
-  img{
-    overflow: auto;
-    display: inline-table;
-    width: 106px;
-    object-fit: cover;
-  }
-  img:hover{
-    opacity: unset;
-    cursor: auto;
-  }
-}
-
-#menu-items{
-    li{
-        width: 55px;
-    }
-}
-
-.submenu{
+.submenu_mostrador{
     position: absolute;
     padding-inline-start: 0;
     font-weight: 500;
     font-size: .8em;
     margin-block: 0;
     z-index: 999;
+    text-align: center;
+    color: var(--main-font-color);
     background-color: var(--bg-body-color);
     border-radius: 8px;
     padding: 8px;
@@ -271,7 +221,7 @@ select, input{
     }
 }
 
-.submenu_hidden{
+.submenu_mostrador_hidden{
     display: none;
 }
 
@@ -310,91 +260,9 @@ select, input{
     100% { text-shadow:0px 0px 0px var(--bg-font-color); }
 }
 
-#menu a{
-    padding-bottom: 15px;
-    text-decoration: none;
-    color: var(--main-font-color);
-    letter-spacing: 2px;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-position: 24% 82%;
-    background-repeat: no-repeat;
-    background-size: 0% 4px;
-    transition: background-size .3s;
-}
-
-#menu ul{
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-    flex-direction: row;
-}
-
-#menu ul li{
-    display: inline;
-    padding: 0 10px;
-    text-transform: uppercase;
-    border-left: 1px solid var(--main-font-color);
-    height: 15px;
-    margin-left: 5%;
-    padding: 7px;
-}
-
-#menu ul li a:hover{
-    color: var(--main-font-color);
-    background-size: 100% 4px;
-}
-
-#menu ul li:hover > ul{
-    display: block;
-    width: max-content;
-}
-
-#menu ul li ul{
-    display: none;
-    margin-left: -21px;
-    background-color: var(--bg-body-color);
-    top: 100%;
-    left: 0;
-    z-index: 1;
-    padding: 9px;
-}
-
-#menu li ul a{
-    transition: .2s;
-}
-
-#menu ul li ul a:hover{
-    position: absolute;
-    color: var(--bg-body-color);
-    padding: 8px 15px;
-    background-color: var(--main-font-color);
-    background-position: 24% 100%;
-    background-image: linear-gradient(grey,grey);
-}
-
-
-#menu ul li ul li{
-    display: block;
-    text-transform: uppercase;
-    height: 15px;
-    padding: 7px;
-}
-
 .filter{
     filter: blur(6px);
     pointer-events: none;
-}
-
-.note{
-    color:var(--main-font-color);
-    cursor: pointer;    
-    transition: .3s;
-    font-size: 1.8em;
-    height: min-content;
 }
 
 .note-active{
@@ -627,7 +495,8 @@ select, input{
 .form-control{
     height: 25px;
     display: grid;
-    grid-template-columns: 60%;
+    grid-template-columns: 80%;
+    justify-content: center;
 }
 
 .form-control label{
@@ -673,6 +542,8 @@ select, input{
 }
 
 .form-control span{
+    padding: 8px;
+    text-align: center;
     display: none;
     background-color: var(--bg-body-color);
     font-size: 1.8em;
@@ -791,11 +662,13 @@ select, input{
     grid-gap: 8px;
 }
 
-#config{
+.btn-config{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
+
+    
 
 .cards{
     padding: 14px;
@@ -866,7 +739,7 @@ input[type="color"]::-webkit-color-swatch {
     position: sticky;
     background-color: var(--bg-body-color);
     z-index: 3;
-    top: 72px;
+    top: 53px;
     height: 70px;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -1529,7 +1402,7 @@ span.button:active{
 
 .heading{
     position: sticky !important;
-    top: 158px;
+    top: 139px;
     background-color: var(--bg-body-color) !important;
     border-bottom: 2px solid var(--main-font-color);
     border-radius: 0  !important;
@@ -1684,17 +1557,18 @@ span.button:active{
 }
 
 .heart{
-    box-shadow: 1px 1px  4px #5a36cf;
+    /*box-shadow: 1px 1px  4px #5a36cf;*/
+    border-radius: 8px;
     animation: heartbeat infinite 4s ease;
 }
 
 @keyframes heartbeat {
-    0% {background-color: #ffffff}
-    59%{background-color:#ffffff}
-    60% {background-color: red}
-    63% {background-color: #ffffff}
-    66% {background-color: red}
-    69% {background-color: #ffffff}
+    0% {background-color: transparent}
+    59%{background-color:transparent}
+    60% {background-color: var(--main-font-color)}
+    63% {background-color: transparent}
+    66% {background-color: var(--main-font-color)}
+    69% {background-color: transparent}
 }
 
 .change{
@@ -1877,9 +1751,11 @@ span.button:active{
         color: var(--main-font-color);
     }
     .deleteLine{
+        height: 25px;
         cursor: pointer;
         filter: brightness(.2);
         transition: .2s;
+        aspect-ratio: 1/1;
     }
     .deleteLine:hover{
         filter: contrast(.2);

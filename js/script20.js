@@ -12,25 +12,8 @@ const ruta = {
 
 const src = ruta[window.location.pathname.split('/').length]
 
-$$('input')[0].addEventListener('keyup', (e) => {
-  $('repere').value != '' ? $('referencia').classList.add('is_repere') : $('referencia').classList.remove('is_repere')
-  $('referencia').classList.add('spinner');
-  let data = new FormData();
-  data.append('search', e.target.value)
-  fetch(`${src}api/getRepere.php`,{
-    method: 'POST',
-    body: data})
-  .then(response => response.text())
-  .then(response => {
-    $('referencia').classList.remove('spinner');
-    $('referencia').innerHTML = response
-  })
-  .catch(functions => console.log("error: "+functions))
-})
-
 const modal = (params,title) =>{
-  $('notes').parentNode.parentNode.parentNode.children[1].classList.toggle('filter')
-  $('notes').parentNode.parentNode.parentNode.children[2].classList.toggle('filter')
+  toggleFilter()
   let box = document.createElement('div')
   box.className = 'note-active'
   let contentBox = document.createElement('div')
@@ -50,8 +33,7 @@ const modal = (params,title) =>{
         window.location.reload()
       }
     }
-    $('notes').parentNode.parentNode.parentNode.children[1].classList.toggle('filter')
-    $('notes').parentNode.parentNode.parentNode.children[2].classList.toggle('filter')
+    toggleFilter()
     setTimeout(()=>box.remove(),350)
   })
 }
@@ -102,8 +84,35 @@ $('mailJumasa').addEventListener('click',(e) => {
   })
 })
 
+$('repere').addEventListener('click', () =>{
+  fetch(src + 'helper/formRepere.php', {
+    method: 'POST'
+  })
+  .then(response => response.text())
+  .then(html => {
+    modal(html,"Consulta de Reperes")
+    $('repereId').focus()
+    $('repereId').addEventListener('keyup', (e) => {
+      $('repereId').value != '' ? $('referencia').classList.add('is_repere') : $('referencia').classList.remove('is_repere')
+      $('referencia').classList.add('spinner');
+      let data = new FormData();
+      data.append('search', e.target.value)
+      fetch(`${src}api/getRepere.php`,{
+        method: 'POST',
+        body: data})
+      .then(response => response.text())
+      .then(response => {
+        $('referencia').classList.remove('spinner');
+        $('referencia').innerHTML = response
+      })
+      .catch(functions => console.log("error: "+functions))
+    })
+  })
+})
+
 $('mailMostrador').addEventListener('click',(e) => {
-  $('submenu').classList.toggle('submenu_hidden')
+  $('submenu_mostrador').classList.toggle('submenu_mostrador_hidden')
+  $('submenu').classList.toggle('hide')
 })
 
 $('madrid').addEventListener('click',(e) => {
@@ -157,34 +166,28 @@ document.addEventListener('click',(e)=>{
 })
 
 let rnd = Math.floor(Math.random() * (100000 - 9000) + 9000)
-
-setInterval(() => {
-  $('menu').children[0].classList.toggle('rotation')
-  $('menu').children[0].classList.toggle('hide')
-},rnd)
   
 
-$('menu').childNodes[7].addEventListener('click',(e) => {
-  if(e.target.title == "Configuración"){
-    let id = getIdByCookie(document.cookie)
-    let data = new FormData()
-    data.append('id',id)
-    fetch(`${src}/helper/modalConfig.php`,{
-      method: 'POST',
-      body: data
-    })
-    .then(response => response.text())
-    .then((res) => {
-      modal(res,"Configuración")
-      const newScript = document.createElement('script')
-      newScript.type = 'text/javascript'
-      newScript.src = '../../js/config11.js?1004'
-      $('contacts').append(newScript)
-    })
-  }
+
+$("configBtn").addEventListener('click', (e) => {
+  let id = getIdByCookie(document.cookie)
+  let data = new FormData()
+  data.append('id',id)
+  fetch(`${src}/helper/modalConfig.php`,{
+    method: 'POST',
+    body: data
+  })
+  .then(response => response.text())
+  .then((res) => {
+    modal(res,"Configuración")
+    const newScript = document.createElement('script')
+    newScript.type = 'text/javascript'
+    newScript.src = '../../js/config11.js?1005'
+    $('contacts').append(newScript)
+  })
 })
 
-menu.childNodes[7].childNodes[13].addEventListener('click',() => {
+$('logout').addEventListener('click',() => {
   document.cookie = 'id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
   document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/'
   document.cookie = 'puesto=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/'
@@ -194,6 +197,16 @@ menu.childNodes[7].childNodes[13].addEventListener('click',() => {
 let titulo = (title) => document.getElementsByClassName('head-img')[0].childNodes[1].innerText = title.toUpperCase()
 let user = ''
 
+$('userName').addEventListener('click', (e) => {
+  e.preventDefault()
+  $('submenu').classList.toggle('hide')
+})
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('#submenu') && !e.target.closest('#userName')) {
+    $('submenu').classList.add('hide')
+    $('submenu_mostrador').classList.add('submenu_mostrador_hidden')
+  }
+})
 
 document.addEventListener('DOMContentLoaded', () => {
   const id = getIdByCookie(document.cookie)
@@ -206,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
   .then(response => response.json())
   .then(res => {
     user = res
-    $('userName').innerText = res.nombre.toUpperCase()
+    //$('userName').innerText = res.nombre.toUpperCase()
     let puesto = res.puesto.toUpperCase()
     if(window.location.pathname.includes('home')){
       const options = $('search-line').childNodes[5].childNodes[1].childNodes
@@ -255,9 +268,15 @@ class notifyStatic {
   }
 }
 
+const toggleFilter = () => {
+  $$('body')[0].childNodes[1].classList.toggle('filter')
+  $$('body')[0].childNodes[3].classList.toggle('filter')
+  $$('body')[0].childNodes[5].classList.toggle('filter')
+  $$('body')[0].childNodes[7].classList.toggle('filter')
+}
+
 const customConfirm = (text,action) => {
-  $('notes').parentNode.parentNode.parentNode.children[1].classList.toggle('filter')
-  $('notes').parentNode.parentNode.parentNode.children[0].classList.toggle('filter')
+  toggleFilter()
   const alertContainer = document.createElement('div')
   const btnContainer = document.createElement('div')
   const textContainer = document.createElement('div')
@@ -275,23 +294,19 @@ const customConfirm = (text,action) => {
   document.body.appendChild(alertContainer)
   buttonCancel.onclick = function(){
     alertContainer.remove()
-    $('notes').parentNode.parentNode.parentNode.children[1].classList.toggle('filter')
-    $('notes').parentNode.parentNode.parentNode.children[0].classList.toggle('filter')
+    toggleFilter()
     action = false
   }
   buttonAcepter.onclick = function(){
     alertContainer.remove()
-    $('notes').parentNode.parentNode.parentNode.children[1].classList.toggle('filter')
-    $('notes').parentNode.parentNode.parentNode.children[0].classList.toggle('filter')
+    toggleFilter()
     action = true
   }
 }
 
 const customAlert = (text) =>{
   if(document.getElementsByClassName('note-active')[0] == undefined){
-    $('notes').parentNode.parentNode.parentNode.children[1].classList.toggle('filter')
-    $('notes').parentNode.parentNode.parentNode.children[0].classList.toggle('filter')
-    $('notes').parentNode.parentNode.parentNode.children[2].classList.toggle('filter')
+    toggleFilter()
   }
   const alertContainer = document.createElement('div')
   const btnContainer = document.createElement('div')
@@ -309,9 +324,7 @@ const customAlert = (text) =>{
   buttonAcepter.addEventListener('click', () => {
     alertContainer.remove()
     if(document.getElementsByClassName('note-active')[0] == undefined){
-      $('notes').parentNode.parentNode.parentNode.children[0].classList.toggle('filter')
-      $('notes').parentNode.parentNode.parentNode.children[1].classList.toggle('filter')
-      $('notes').parentNode.parentNode.parentNode.children[2].classList.toggle('filter')
+      toggleFilter()
     }
   })
 }
@@ -374,7 +387,7 @@ const newAssigns = setInterval(() => {
     $('userAssignsready').className = ''
     if(parseInt(valor) > 0){
       $('userAssignsready').innerHTML = parseInt(valor) > 100 ? '+99' : valor
-      $('userAssignsready').className = 'round heart'
+      $('userAssignsready').className = 'heart'
     }
   })
   if(user.puesto != "ADV")

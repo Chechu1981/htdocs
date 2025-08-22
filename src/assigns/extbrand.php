@@ -6,9 +6,7 @@
 </head>
 <body>
   <?php include_once '../../helper/alert.php'; ?>
-  <div id="menu">
-    <?php include_once '../../helper/menu.php'; ?>
-  </div>
+  <?php include_once '../../helper/menu.php'; ?>
   <div class="search-table">
     <div id="contacts" class="contacts">
     <h1>Compra externa - Otras marcas</h1>
@@ -98,7 +96,7 @@
                 <input type="text" name="cliente" id="client">
               </section>
               <section>
-                <label for="pedido">*Envío</label>
+                <label for="envio">*Envío</label>
                 <input type="text" name="envio" id="envio" class="inputSend"></input>
               </section>
               <section>

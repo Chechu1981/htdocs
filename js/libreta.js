@@ -81,14 +81,14 @@ const loadItems = (search) => {
             setTimeout(function() {
               divImg.parentNode.removeChild(divImg)
             },290)
-            $('menu').classList.remove('filter')
+            toggleFilter()
             document.getElementsByClassName('search-table')[0].classList.remove('filter')
           })
           if(ext == 'jpg' || ext == 'jpeg' || ext == 'png' || ext == 'webp'){
             divImg.style.backgroundImage = `url(../../docs/${target.title})`
             divImg.style.width = '42%'
             divImg.style.height = '80%'
-            $('menu').classList.add('filter')
+            toggleFilter()
             document.getElementsByClassName('search-table')[0].classList.add('filter')
             divImg.appendChild(imgClose)
             document.body.appendChild(divImg)
@@ -105,8 +105,7 @@ const loadItems = (search) => {
             object.data = `../../docs/${target.title}`
             divImg.appendChild(imgClose)
             divImg.appendChild(object)
-            $('menu').classList.add('filter')
-            document.getElementsByClassName('search-table')[0].classList.add('filter')
+            toggleFilter()
             document.body.appendChild(divImg)
           }else{
             window.open(`../../docs/${target.title}`)
