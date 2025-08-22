@@ -17,8 +17,8 @@
         <form>
             <div class="form-extBuy">
               <section>
-                <label for="origen">*Tipo</label>
-                <select name="" id="origen">
+                <label for="tipo">*Tipo</label>
+                <select name="" id="tipo">
                   <option value=""></option>
                   <option value="IAM">Recambio Paralelo</option>
                   <option value="OEM">Recambio Original</option>
@@ -109,14 +109,15 @@
                 <span></span>
                 <label for="ref">*Referencia PR</label>
                 <label for="units">*Cant</label>
-                <label for="comentLine">Descripción</label>
+                <label for="comentLine">*Descripción</label>
+                <label for="familiParts">*Familia</label>
               </section>
               <section>
                 <span>1</span>
-                <input type="text" name="Referencia" id="ref">
-                <input type="text" name="Cantidad" id="units">
-                <input type="text" name="comentline" id="comentLine">
-                <select name="familia" id="familyParts">
+                <input type="text" name="Referencia" id="ref0">
+                <input type="text" name="Cantidad" id="units0">
+                <input type="text" name="comentline" id="comentLine0">
+                <select name="familia" id="familyParts0">
                   <option value=""></option>
                   <option value="CARROCERIA">Carrocería</option>
                   <option value="MECANICA">Mecánica</option>

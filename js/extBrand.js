@@ -47,6 +47,10 @@ $('addLine').addEventListener('click',()=>{
   let span = document.createElement('span')
   let div = document.createElement('div')
   let section = document.createElement('section')
+  inputRef.id = `ref${contadorLineas}`
+  inputUni.id = `units${contadorLineas}`
+  inputDesc.id = `comentLine${contadorLineas}`
+  familySelect.id = `familyParts${contadorLineas}`
   familyOpt1.value = ''
   familyOpt1.innerText = ''
   familyOpt2.innerText = 'Carrocería'
@@ -80,19 +84,88 @@ $('client').addEventListener('blur',(e)=>{
   buscarCliente($('destino').value.substring(0,3),$('client').value.split('-')[0])
 })
 
+const clearImportant = () => {
+  for (const select of $$('select')) {
+    select.classList.remove('important')
+  }
+  for (const input of $$('input')) {
+    input.classList.remove('important')
+  }
+}
+
 $('sendProv').addEventListener('click',(e)=>{
-  e.target.disabled = true
+  clearImportant()
+  const tipo = $('tipo')
+  const marca = $('marca')
+  const destino = $('destino')
+  const cliente = $('client')
+  const envio = $('envio')
+  const coment = $('coment')
+  if(destino.value === ''){
+    customAlert('Debe seleccionar un destino')
+    destino.classList.add('important')
+    return
+  }
+  if(cliente.value === ''){
+    customAlert('Debe seleccionar un cliente')
+    cliente.classList.add('important')
+    return
+  }
+  if(envio.value === ''){
+    customAlert('Debe seleccionar un envío')
+    envio.classList.add('important')
+    return
+  }
+  if(marca.value === ''){
+    customAlert('Debe seleccionar una marca')
+    marca.classList.add('important')
+    return
+  }
+  if(tipo.value === ''){
+    customAlert('Debe seleccionar un tipo de recambio')
+    tipo.classList.add('important')
+    return
+  }
+  const orderExt = new FormData()
+  orderExt.append('id',user.hash)
+  orderExt.append('tipo',tipo.value)
+  orderExt.append('marca',marca.value)
+  orderExt.append('destino',destino.value)
+  orderExt.append('cliente',cliente.value)
+  orderExt.append('envio',envio.value)
+  orderExt.append('comentarios',coment.value)
+  let lineas = []
+  for (let i = 0; i <= contadorLineas - 1; i++) {
+    lineas.push({
+      referencia: $(`ref${i}`).value,
+      cantidad: $(`units${i}`).value,
+      designacion: $(`comentLine${i}`).value,
+      familia: $(`familyParts${i}`).value
+    })
+  }
+
+  orderExt.append('lineas', JSON.stringify(lineas))
+
+  //e.target.disabled = true
   e.preventDefault()
   $('senMail').disabled = false
-  const data = new FormData()
-  data.append('id',id)
-  fetch('../api/insertList.php',{
+  fetch(src + 'api/addListExt.php',{
     method: 'POST',
-    body: data
+    body: orderExt
   })
-  .then(e => e.text())
-  .then(()=>{
-    document.location.reload()
+  .then(e => e.json())
+  .then((csvlineas)=>{
+    //CREA UN FICHERO CSV CON LOS CAMPOS REFERENCIA Y DESIGNACION
+    let csvLineas = ''
+    csvlineas.forEach(element => {
+      csvLineas += `${element}\n`
+    });
+    let csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(csvLineas)
+    const link = document.createElement("a")
+    link.setAttribute("href", csvContent)
+    link.setAttribute("download", "contacts.csv")
+    document.body.appendChild(link)
+    link.click()
   })
 })
 
