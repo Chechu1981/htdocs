@@ -147,7 +147,7 @@ if(sizeof($rows) > 0){
     if($agente == '')
       $libre = 'libre';
     if($row[23] == 1){
-      $rechazado = "🚫";
+      $rechazado = "<i class='fa-solid fa-ban'></i>";
     }
     if($row[15]== 1)
       $btnOrigenPress = 'ledOn';
@@ -209,7 +209,7 @@ if(sizeof($rows) > 0){
         '.$opctions.'
         </select>
       </li>
-      <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar"></li>
+      <li title="Eliminar: '.$row[4].'" class="delete" id="'.$row[0].'"><i class="fa-solid fa-trash" alt="eliminar"></i></li>
       <li title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuario.'<br>('.$puesto.')</li>
       <li class="delete" ><span id="rechazo'.$row[0].'" title="'.$row[24].'">'.$rechazado.'</span></li>
     </ul>';

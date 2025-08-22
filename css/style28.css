@@ -1009,12 +1009,15 @@ input[type="color"]::-webkit-color-swatch {
     box-shadow: #000000 1px 1px 4px 0px;
     padding: 2px;
     border: 2px solid black;
-}
-
-.send span{
-    cursor: pointer;
-    padding: 1px;
-    border-radius: 8px;
+    span{
+        cursor: pointer;
+        padding: 1px;
+        border-radius: 8px;
+        color: var(--font-color);
+    }
+    span:hover{
+        color: var(--cards-active-color);
+    }
 }
 
 .send span:hover{
@@ -1293,12 +1296,22 @@ span.button:active{
     font-weight: 600;
 }
 
-.delete img{
-    width: 24px;
-    height: 24px;
+.delete {
+    img{
+        width: 24px;
+        height: 24px;
+    }
+    i{
+        font-size: 24px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
+    }
 }
 
 .delete img:hover,
+.delete i:hover,
 .delete span:hover{
     cursor: pointer;
     filter: invert(100)!important;
@@ -1632,14 +1645,14 @@ span.button:active{
 }
 
 .pause{
-    background-color: var(--bg-body-color);
     color: var(--main-font-color);
     animation: pause_tilt .6s infinite alternate;
+    color: var(--bg-font-color);
 }
 
 @keyframes pause_tilt{
     0%{transform: scale(1);}
-    100%{transform: scale(1.1);background-color: #12ff00;}
+    100%{transform: scale(1.1);color: var(--cards-active-color);}
 }
 
 .important{
@@ -1812,6 +1825,11 @@ span.button:active{
     border: 2px solid var(--main-font-color);
     color: var(--main-font-color);
 }
+
+#cesiones ul>li>i{
+    font-size: 24px;
+}
+
 
 .form-group input[type="submit"]{
     cursor: pointer;

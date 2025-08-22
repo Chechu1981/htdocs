@@ -1223,6 +1223,7 @@ class Contacts
             $sql = "UPDATE `cesiones` SET `pause`=0 WHERE `id`='$id'";
         else
             $sql = "UPDATE `cesiones` SET `pause`=1 WHERE `id`='$id'";
+        echo $sql;
         $query = $this->db->prepare($sql);
         $query->execute();
         echo "OK";

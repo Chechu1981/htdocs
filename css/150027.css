@@ -99,7 +99,7 @@
     }
 
     #cesiones .assignPendingAdv{
-      grid-template-columns: 3% 12% 12% 10% 14% 4% 8% 4% 4% 4% 9% 4% 5% 7%;
+      grid-template-columns: 3% 12% 12% 10% 14% 4% 8% 4% 4% 4% 8% 6% 4% 7%;
       padding-inline-start: 0;
     }
 

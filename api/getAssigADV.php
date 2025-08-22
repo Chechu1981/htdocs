@@ -189,7 +189,7 @@ if(sizeof($rows) > 0){
       $destinoSpan = '<span id="destinoBtn'.$row[0].'" class="active-city '.$btnDestinoPress.'" >'.$destino.'</span>';
       $classSend = 'class="send"';
       $classDelete = 'class="delete"';
-      $btnEnviar = '<span title="Enviar Cesión" id="send'.$row[0].'">📩</span>';
+      $btnEnviar = '<span title="Enviar Cesión" id="send'.$row[0].'"><i class="fa-solid fa-envelope"></i></span>';
       $cursor = 'style="cursor:pointer"';
       if($row[1] == 'EXT'){
         $textoMensajeria = "Enviar correo a ".ucwords($row[12]);
@@ -209,9 +209,9 @@ if(sizeof($rows) > 0){
       $origen = createOptions($row[0],$row[1],$row[12]);
     }
     if($row[10] != $user[0][1])
-      $usuarioCesion = $row[10].'<span id="rechazo'.$row[0].'">❌</span>';
+      $usuarioCesion = $row[10].'<span id="rechazo'.$row[0].'"><i class="fa-solid fa-ban"></i></span>';
     if($row[23] == 1){
-      $rechazado = "🚫";
+      $rechazado = "<i class='fa-solid fa-ban'></i>";
       $rechazadoStyle = 'background-color:#ff000073';
     }
     if($row[15] == 1)
@@ -241,7 +241,7 @@ if(sizeof($rows) > 0){
     }
     /* Si el destino es MALAGA, se añade un icono de prohibido y se marca como importante
     if($destino == 'MALAGA'){
-      $numPie .= "🚫";
+      $numPie .= "<i class='fa-solid fa-ban'></i>";
       $important = 'important';
     }
     */
@@ -266,7 +266,7 @@ if(sizeof($rows) > 0){
       <li title="agente">
         '.$options.'
       </li>
-      <li title="Acciones: '.$row[4].'" class="delete" id="'.$row[0].'"><img src="../img/delete_FILL0_wght400_GRAD0_opsz24.png" alt="eliminar" title="Eliminar"><img src="../img/pause24x24.png" class="'.$pauseClass.'" alt="Detener" title="Detener la cesión. No se envía a ADV."><span title="'.$row[24].'">'.$rechazado.'</span></li>
+      <li title="Acciones: '.$row[4].'" class="delete" id="'.$row[0].'"><i class="fa-solid fa-trash" alt="eliminar" title="Eliminar"></i><i class="fa-solid fa-pause '.$pauseClass.'" alt="Detener" title="Detener la cesión. No se envía a ADV."></i><span title="'.$row[24].'">'.$rechazado.'</span></li>
       <li '.$classSend.' >'.$btnEnviar.'<span title="'.$textoMensajeria.'" id="disgon'.$row[0].'">'.$envioDisgon.'</span></li>
       <li '.$classDelete.' style="text-align:center;font-size:small" title="'.explode(" ",$fechaS[2])[0]."/".$fechaS[1]."/".$fechaS[0]." ".$fechaSHora[0].'">'.$usuarioCesion.'</li>
     </ul>';

@@ -78,13 +78,13 @@ const seacrhRef = e => {
         e.target.parentNode.style.backgroundColor = 'aquamarine'
         copyClipboard(e.target.textContent.replaceAll(' ',''))
     })
-    const btnTik = cesiones.getElementsByTagName('img')
+    const btnTik = $$('i')
     for(let i = 0;i < btnTik.length; i++){
-      if(btnTik[i].alt == 'tick'){
+      if(btnTik[i].getAttribute('alt') == 'Marcar como recibido'){
         btnTik[i].addEventListener('click',e=>{
           if(confirm("Se ha recibido esta cesion?") == true){
             const data = new FormData()
-            data.append('id',e.target.id)
+            data.append('id',e.target.parentNode.parentNode.id)
             fetch('../../api/updateAssig.php',{
               method: 'POST',
               body: data
