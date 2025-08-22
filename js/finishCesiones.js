@@ -1,4 +1,4 @@
-import contadores from "./updateCounter.js"
+import contadores from "./updateCounter.js?101"
 
 setInterval(() =>{contadores()},1000)
 

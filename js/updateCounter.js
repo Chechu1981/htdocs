@@ -2,13 +2,13 @@
 
 export default function updateCounterAssignment(){
   const googles = document.getElementsByClassName('round')
-    let CesUser = googles[0]
-    let CesNew = googles[1]
-    let CesReady = googles[2] == undefined ? googles[1] : googles[2]
+    let CesUser = $('userAssignsready')
+    let CesNew = googles[0]
+    let CesReady = googles[1] == undefined ? googles[0] : googles[1]
     let CesAll = ''
-  if(googles.length > 3){
-    CesAll = googles[2]
-    CesReady = googles[3]
+  if(googles.length > 2){
+    CesAll = googles[1]
+    CesReady = googles[2]
   }
   const data = new FormData()
   data.append('id', getIdByCookie(document.cookie))
@@ -20,7 +20,7 @@ export default function updateCounterAssignment(){
   .then(itemsNumbers =>{
     CesNew.innerHTML = itemsNumbers.nuevas > 99 ? '+99' : itemsNumbers.nuevas
     CesReady.innerHTML = itemsNumbers.enCurso > 99 ? '+99' : itemsNumbers.enCurso
-    if(googles.length > 3)
+    if(googles.length > 2)
       CesAll.innerHTML = itemsNumbers.todas
   })
 }

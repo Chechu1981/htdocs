@@ -1,6 +1,6 @@
 "use strict";
 import { createMail, enviarMailDisgon, createMailMat } from "./createMail.js?100";
-import contadores from "./updateCounter.js?100";
+import contadores from "./updateCounter.js?102";
 
 setInterval(() =>{contadores()},1200)
 
