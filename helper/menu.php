@@ -22,13 +22,7 @@ $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
         <img src="<?php echo $src.'/img/Logo-PPCR-2022.png'; ?>" alt="logo" id="logo">
     </section>
     <nav id="modern-nav">
-        <input type="checkbox" id="menu-toggle" class="menu-toggle">
-        <label for="menu-toggle" class="menu-icon">
-            <span class="menu-line"></span>
-            <span class="menu-line"></span>
-            <span class="menu-line"></span>
-        </label>
-        
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">        
         <ul class="nav-menu">
             <li class="nav-item">
                 <a href="<?php echo $src.'/home.php'?>" class="nav-link">
@@ -85,13 +79,13 @@ $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
                     <li><a href="<?php echo $src.'/src/center/barcelona.php' ?>" class="dropdown-link"><i class="fas fa-warehouse"></i> Barcelona</a></li>
                 </ul>
             </li>
+            <li><span class="nav-link" style="cursor:pointer" id="btnRepere"><i class="fa-solid fa-asterisk"></i> Repere</span></li>
         </ul>
     </nav>
     <div id="userName" class="username" title="Menú de usuario"><?php echo $user ?><i class="fa-solid fa-bars"></i>
         <div id="submenu" class="note hide">
             <span class="boutons"><img alt="Enviar correo de B-parts a la placa de Madrid" src="<?php echo $src."/img/b-parts-brand-logo.png"; ?>" id="mailBParts" title="Enviar un correo a la placa de Madrid indicando que llega un B-Parts">B-Parts</span>
             <span class="boutons"><img alt="Enviar correo de Jumasa a la placa de Madrid" src="<?php echo $src."/img/jumasa.png"; ?>" id="mailJumasa" title="Enviar un correo a la placa de Madrid indicando que llega un recambio de Jumasa">Jumasa</span>
-            <span class="boutons" alt="Repere" id="repere" title="Localizar una referencia demiante un repere"><i class="fa-solid fa-arrow-down-up-across-line" style="font-size: x-large;"></i>Reperes</span>
             <span id="mailMostrador" class="boutons" alt="Enviar correo al mostrador" id="mailMostrador">
                 <i class="fa-solid fa-store" style="font-size: x-large;"></i>
                 Mostrador

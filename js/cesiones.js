@@ -466,11 +466,6 @@ const refreshInputs = (id,fragil,pedido,tratado,origen,destino) => {
   updateChkbx(id,nfm,fragil,pedido,tratado,destino)
 }
 
-const copyClipboard = (copiar) =>{
-  navigator.clipboard.writeText(copiar)
-  notify(`${copiar} copiado!`)
-}
-
 const updateBubble = (operador) =>{
   const bubble = $('contacts').childNodes[3].childNodes[1].childNodes[0]
   const bubbleAll = $('contacts').childNodes[3].childNodes[3].childNodes[0]

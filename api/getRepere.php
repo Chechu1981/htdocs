@@ -6,7 +6,7 @@ $htmlList = '';
 $rows = $contacts->getRepereHTML($_POST['search']);
 if(count($rows) > 0){
     foreach ($rows as $row) {
-        $htmlList .= $row[2] .'</br>';
+        $htmlList .= '<div class="copy">'.$row[2] .'</div></br>';
     }
 }else{
     $htmlList .= "No hay coincidencias";

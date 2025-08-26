@@ -84,15 +84,20 @@ $('mailJumasa').addEventListener('click',(e) => {
   })
 })
 
-$('repere').addEventListener('click', () =>{
+$('btnRepere').addEventListener('click', () =>{
   fetch(src + 'helper/formRepere.php', {
     method: 'POST'
   })
   .then(response => response.text())
   .then(html => {
     modal(html,"Consulta de Reperes")
-    $('repereId').focus()
     $('repereId').addEventListener('keyup', (e) => {
+      e.preventDefault()
+      let buscar = false
+      if(e.key === "Enter" || e.key === 'NumpadEnter')
+        buscar = true
+      else
+        return false
       $('repereId').value != '' ? $('referencia').classList.add('is_repere') : $('referencia').classList.remove('is_repere')
       $('referencia').classList.add('spinner');
       let data = new FormData();
@@ -100,13 +105,18 @@ $('repere').addEventListener('click', () =>{
       fetch(`${src}api/getRepere.php`,{
         method: 'POST',
         body: data})
-      .then(response => response.text())
-      .then(response => {
-        $('referencia').classList.remove('spinner');
-        $('referencia').innerHTML = response
+        .then(response => response.text())
+        .then(response => {
+          $('referencia').classList.remove('spinner');
+          $('referencia').innerHTML = response
+          document.getElementsByClassName('is_repere')[0].addEventListener('click', (e) => {
+            const text = e.target.innerText;
+            copyClipboard(text);
+          });
+        })
+        .catch(functions => console.log("error: "+functions))
       })
-      .catch(functions => console.log("error: "+functions))
-    })
+      setTimeout(() => $('repereId').focus(), 1000);
   })
 })
 
@@ -422,3 +432,8 @@ const newAssigns = setInterval(() => {
       $('cesionesActivas').childNodes[1].title = `${valor}`
   })
 },10000)
+
+const copyClipboard = (copiar) =>{
+  navigator.clipboard.writeText(copiar)
+  notify(`${copiar} copiado!`)
+}

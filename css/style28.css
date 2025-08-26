@@ -519,7 +519,7 @@ select, input{
     transition: .3s;
 }
 
-.form-control input:focus{
+.form-control input {
     outline: none;
     color: var(--main-font-color);
     border-width: 2px;
@@ -528,7 +528,7 @@ select, input{
     transition: .3s;
 }
 
-.form-control input:focus ~ label{
+.form-control label{
     display: block;
     opacity: 1;
     transition: .3s;
