@@ -179,7 +179,7 @@ const showAssig = () =>{
           refCliente.addEventListener('click', () => {
               let texto = `Cliente: ${cliente.childNodes[0].textContent}`
               if(origen.value == 'MAT'){
-                texto = $(`origen${id}`).parentNode.childNodes[6].innerText
+                texto = $(`origen${id}`).parentNode.childNodes[4].innerText
                 clearRowsMark(ul, texto)
               }else{
                 clearRowsMark(ul, texto)
@@ -274,8 +274,10 @@ Un saludo ${user.nombre}`)
                 dataName.append('destino', destino.textContent)
                 dataName.append('destinoC', `${destino.textContent}C`)
                 dataName.append('origenF', `${origen.value}F`)
-                if(origen.value === 'EXT')
+                if(origen.value === 'EXT'){
                   refCliente = $(`proveedorExterno${id}`).value
+                  dataName.append('mailsOrigen', 'EXT')
+                }
                 fetch('../api/getBccMails.php',{
                   method: 'POST',
                   body: dataName

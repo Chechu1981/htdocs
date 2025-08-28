@@ -209,7 +209,7 @@ if(sizeof($rows) > 0){
       $origen = createOptions($row[0],$row[1],$row[12]);
     }
     if($row[10] != $user[0][1])
-      $usuarioCesion = $row[10].'<span id="rechazo'.$row[0].'"><i class="fa-solid fa-ban"></i></span>';
+      $usuarioCesion = $row[10].'<span id="rechazo'.$row[0].'">❌</span>';
     if($row[23] == 1){
       $rechazado = "<i class='fa-solid fa-ban'></i>";
       $rechazadoStyle = 'background-color:#ff000073';

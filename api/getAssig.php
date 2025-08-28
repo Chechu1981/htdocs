@@ -64,7 +64,7 @@ $lists = "<ul class='heading'>
         <li>Pedido</li>
         <li>Comentario</li>
         $imgDate
-        <li>Recibido</li>
+        <li>Estado</li>
         <li>Tratado</li>
         <li>Agente</li>
         </ul>"; 

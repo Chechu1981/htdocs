@@ -137,7 +137,7 @@ button{
   font-family: nunito, arial;
   background-color: var(--cards-border-color);
   color: var(--main-font-color);
-  padding: 10px;
+  padding: 6px 8px;
   border-radius: 8px;
   border: 1px solid var(--cards-active-color);
   cursor: pointer;
@@ -270,7 +270,8 @@ select, input{
     position: fixed;
     margin-left: calc((100% / 2) - 280px);
     width: 500px;
-    height: 500px;
+    min-height: 500px;
+    height: auto;
     top: 15%;
     align-items: center;
     border: 1px solid var(--bg-font-color);
@@ -1216,6 +1217,15 @@ span.button:active{
     overflow-wrap: normal;
 }
 
+.delete span i{
+    font-size: 16px;
+    color: red;
+}
+
+.delete span:hover i{
+    filter: invert(100%);
+}
+
 #contacts-items li img,
 #route-items li img,
 .pass-items li img,
@@ -1733,11 +1743,11 @@ span.button:active{
 
 .form-extBuy{
     display: grid;
-    grid-template-columns: 12% 12% 12% 10% 5% 15%;
+    grid-template-columns: 12% 12% 12% 30%;
     justify-content: space-around;
     align-items: center;
     margin: 0 auto;
-    input,select, textarea{
+    input,select,textarea{
         width: 100%;
         text-align: center;
         border-radius: 8px;
@@ -1746,10 +1756,19 @@ span.button:active{
     }
 }
 
-.form-extLine section{
+.form-extLine{
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    background: var(--font-color);
+    text-align: end;
+}
+
+.formLine section{
     display: grid;
     grid-gap: 4px;
-    grid-template-columns: 2% 25% 6% 35% 14% 5%;
+    grid-template-columns: 1% 25% 5% 32% 11% 7% 5% 5% 1%;
     align-items: center;
     justify-content: center;
     margin-top: 2px;
@@ -1773,6 +1792,25 @@ span.button:active{
     .deleteLine:hover{
         filter: contrast(.2);
     }
+}
+.provHeader {
+    display: flex;
+    justify-content: space-evenly;
+    input,select, textarea{
+        border-radius: 8px;
+        padding: 5px;
+        border: 2px solid var(--main-font-color);
+        color: var(--main-font-color);
+    }
+}
+
+.addLine{
+    margin-top: 15px;
+}
+
+.submitOrder{
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .clientNameExt{
@@ -1827,7 +1865,7 @@ span.button:active{
 }
 
 #cesiones ul>li>i{
-    font-size: 24px;
+    font-size: 16px;
 }
 
 

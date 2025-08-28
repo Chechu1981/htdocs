@@ -13,9 +13,9 @@ $scripts = (object)[
   'VIGO' => "/js/center3.js?100",
   'CENTROS' => "/js/center3.js?108",
   'CESIONES1' => "/js/cesiones202312.js?10825",
-  'EXTBRAND' => "/../js/extBrand.js?0825",
+  'EXTBRAND' => "/../js/extBrand.js?0828",
   'CESIONESALL' => "/js/cesionesAll.js?0825",
-  'CESIONESADV' => "/js/cesiones.js?0825",
+  'CESIONESADV' => "/js/cesiones.js?0828",
   'BUSCAR' => "/../js/buscarCesiones.js?0825",
   'READY' => "/../js/readyCesiones.js?0825",
   'STATUS' => "/../js/statusCesiones.js?0825",
@@ -67,11 +67,11 @@ $style = file_exists("$src/css/" . str_replace(" ","_",strtolower($user)).".css"
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?= $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1322" media="all"  content="1">
-<link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1013" media="all"  content="1">
-<link rel="stylesheet" href="<?= $src; ?>/css/menu.css?104" media="all"  content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1323" media="all"  content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1014" media="all"  content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/menu.css?105" media="all"  content="1">
 <link rel="stylesheet" href="<?= $src; ?>/css/fontawesome7/css/all.min.css?101" media="all"  content="1">
 <link rel="stylesheet" href="<?= $style ?>" media="all"  content="0">
-<script type="text/javascript" src="<?= $src; ?>/js/script20.js?1045" defer content='no-cache'></script>
+<script type="text/javascript" src="<?= $src; ?>/js/script20.js?1046" defer content='no-cache'></script>
 <script type="module" src="<?= $src . $scripts->$page; ?>" defer content="no-cache"></script>
 <title>Chechu - <?= $page; ?></title>

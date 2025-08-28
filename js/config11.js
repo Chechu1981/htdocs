@@ -35,6 +35,7 @@ if(typeof(href) != "object"){
       modalWindow.innerHTML = html  
       $$('h2')[0].innerText = 'Configuración de Correos'
       $('config').addEventListener('click', centroBtn =>{
+        if(centroBtn.target.title != 'Centros') return
         const centroData = new FormData()
         centroData.append('title', centroBtn.target.innerText)
         fetch(src + href['Centros'], {
