@@ -1,4 +1,4 @@
-document.getElementsByTagName('section')[3].addEventListener('click',e =>{
+document.getElementsByTagName('section')[2].addEventListener('click',e =>{
   if(e.target.nodeName.toLowerCase() == 'button'){
     const data = new FormData()
     data.append('placa', e.target.value)
@@ -8,7 +8,7 @@ document.getElementsByTagName('section')[3].addEventListener('click',e =>{
     })
     .then(inm => inm.text())
     .then(status => {
-      document.getElementsByTagName('section')[4].innerHTML = status
+      document.getElementsByTagName('section')[3].innerHTML = status
       const btnEliminar = document.getElementsByClassName('erase')
       for (let i = 0; i < btnEliminar.length; i++) {
         btnEliminar[i].addEventListener('click', (e) =>{
