@@ -80,7 +80,7 @@ const seacrhRef = e => {
     })
     const btnTik = $$('i')
     for(let i = 0;i < btnTik.length; i++){
-      if(btnTik[i].getAttribute('alt') == 'Marcar como recibido'){
+      if(btnTik[i].getAttribute('alt') == 'tick'){
         btnTik[i].addEventListener('click',e=>{
           if(confirm("Se ha recibido esta cesion?") == true){
             const data = new FormData()

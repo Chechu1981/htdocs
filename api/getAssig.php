@@ -106,7 +106,7 @@ if(sizeof($rows) > 0){
         $disgon = "<em style='background-color:green;color:white'>(DISGON) </em>";
       if($row[25] > '2024-04-11 00:00:00.000000')
         $cadenaFechaEntrada = explode(" ",$fechaS[2])[0] . "/$fechaS[1]/$fechaS[0] $fechaSHora[0]";
-      $li = "<li class='delete' ><i class='fa-solid fa-truck' alt='Marcar como recibido'></i>$cancelarCesion</li>";
+      $li = "<li class='delete' ><i class='fa-solid fa-truck' alt='tick' title='Marcar como recibido'></i>$cancelarCesion</li>";
       if($fechaD[0] == '0000'){
         $li="<li><i class='fa-solid fa-hourglass-start' title='Cesión pendiente de envío'></i></li>";
         $fechaEnvio = "<li title='Envío: ' style='display:block'>Pendiente</li>";
