@@ -6,7 +6,7 @@ $user = $contacts->getUserBySessid($_COOKIE['id']);
 $puesto = $user[0][4];
 
 $rows = $contacts->getAssigPending($_POST['id'],$user[0][1]);
-$proveedores = $contacts->getProvExt();
+$proveedores = $contacts->getProvExt('','','');
 $allUsers = $contacts->getAllUsers();
 
 function formatRef($referencia){

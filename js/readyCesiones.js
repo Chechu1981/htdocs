@@ -31,10 +31,6 @@ document.getElementById('status').addEventListener('click',()=>{
   document.location = `./status.php`
 })
 
-document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./extbrand.php`
-})
-
 window.addEventListener('load',()=>{
   const id = getIdByCookie(document.cookie)
   const user = document.getElementById('filterAssiigns').value

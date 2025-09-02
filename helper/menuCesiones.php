@@ -20,10 +20,9 @@ else
   $allAdvAssigns = "<span class='round'>0</span>";
 
 $btnAll = '';
-$btnOthersBrands = '<button id="extBrand" disabled="disabled">Otras Marcas</button>';
+
 if($puesto == 'ADV'){
   $btnAll = '<button id="all">'.$allAdvAssigns.' Todas</button>';
-  $btnOthersBrands = '<button id="extBrand" disabled="disabled">Otras Marcas</button>';
 }
 
 if($enCurso > 0 && $enCurso < 100)
@@ -37,7 +36,7 @@ $titulo = "Cesiones de " . $usuario;
 ?>
 <section class="subButtons">
   <button id="new"><?php echo $nuevas; ?> Nuevas Cesiones</button>
-  <?=  $btnAll . $btnOthersBrands; ?>
+  <?=  $btnAll ?>
   <button id="find">Buscar</button>
   <button id="ready"><?php echo $enCurso; ?> En curso</button>
   <button id="finish">Rechazadas</button>

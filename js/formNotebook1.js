@@ -3,6 +3,7 @@ let success = {
   delete:"../api/deleteNotebook.php",
   new:"../api/addNotebook.php"
 }
+
 document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
   const src = success[e.target.title]
   e.preventDefault()
@@ -30,10 +31,7 @@ document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
   })
   .then(res => res.text())
   .then(response =>{
-      window.parent.document.getElementById('menu').classList.remove('filter')
-      window.parent.document.getElementById('contacts').parentNode.classList.remove('filter')
-      window.parent.location.href = `../src/libreta.php?id=${hash}`
-      window.parent.document.getElementsByClassName('note-active')[0].remove()
+      window.parent.location.href = `../src/libreta.php?target=${document.location.search.split('target=')[1]}`
   })
 })
 

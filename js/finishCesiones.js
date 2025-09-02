@@ -30,10 +30,6 @@ document.getElementById('status').addEventListener('click',()=>{
   document.location = `./status.php`
 })
 
-document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./extbrand.php`
-})
-
 setTimeout(()=>{
     const id = document.cookie.split('id=')[1]
     const uriData = new FormData()

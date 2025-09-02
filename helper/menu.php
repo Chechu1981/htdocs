@@ -56,6 +56,9 @@ $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
                     <li><a href="<?php echo $src.'/src/assigns/status.php' ?>" class="dropdown-link"><i class="fas fa-chart-line"></i> Estadísticas</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="<?= $src.'/src/extbrand.php' ?>" class="nav-link" title="Compra externa"><i class="fa-solid fa-cart-shopping"></i>Compra externa</a>
+            </li>
             <?php if($puesto == 'ADV'){ ?>
             <li class="nav-item dropdown">
                 <a href="<?php echo $src.'/src/inmovilizados.php' ?>" class="nav-link"><i class="fas fa-ban"></i> Inmovilizados</a>

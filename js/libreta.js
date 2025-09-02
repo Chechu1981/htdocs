@@ -16,7 +16,7 @@ for(let input = 0;input < $$('input').length; input++) {
 const createScript = () => {
   const newScript = document.createElement('script')
   newScript.type = 'text/javascript'
-  newScript.src = './../js/formNotebook1.js'
+  newScript.src = './../js/formNotebook1.js?100'
   $('contacts').append(newScript)
 }
 
@@ -60,8 +60,9 @@ const loadItems = (search) => {
           const data = new FormData()
           data.append('id',id)
           const iframe = document.createElement('iframe')
+          const target = $('search-contacts').value
           iframe.src = '../../helper/modalNotebook.php?id='+id
-          modal('<iframe src="../../helper/modalNotebook.php?id='+id+'" class="libreta"></iframe>','Editar nota')
+          modal('<iframe src="../../helper/modalNotebook.php?id='+id+'&target='+target+'" class="libreta"></iframe>','Editar nota')
         }
         if(e.target.classList.value === 'openFile' || e.target.parentNode.classList.value === 'openFile'){
           let target
@@ -138,4 +139,11 @@ $('center-items-pass').addEventListener('click',e =>{
     location.href = `./baterias.php${location.search}`
   else
     loadItems(e.target.title)
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+ if (document.location.search.split('target=')[1] != undefined) {
+   loadItems(document.location.search.split('target=')[1])
+   $('search-contacts').value = document.location.search.split('target=')[1]
+ } 
 })

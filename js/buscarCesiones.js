@@ -31,10 +31,6 @@ document.getElementById('status').addEventListener('click',()=>{
   document.location = `./status.php`
 })
 
-document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./extbrand.php`
-})
-
 //Código de la búsqueda  
 const seacrhRef = e => {
   e.preventDefault()

@@ -63,7 +63,7 @@ const direcciones = {
   BARCELONA: 'Calle D, nº 41 - Polig. Ind. Zona Franca - 08040 BARCELONA',
   ZARAGOZA: 'C/ Río de Janeiro, 3 Polígono Industrial Centrovia 50198 - La Muela - ZARAGOZA',
   GRANADA: 'Calle Ronda 4 (P.I. Santa Teresa), 29004 Málaga',
-  MALAGA: 'Calle Ronda 4 (P.I. Santa Teresa), 29004 Málaga',
+  MÁLAGA: 'Calle Ronda 4 (P.I. Santa Teresa), 29004 Málaga',
   SEVILLA: 'Carretera de la Esclusa S/N Polígono Industrial ZAL del Puerto de Sevilla, 41011 Sevilla',
   PALMA:'Avda. 16 de Julio, 5 - 07009 SON CASTELLO- PALMA DE MALLORCA'
 }

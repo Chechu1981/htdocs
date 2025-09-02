@@ -349,7 +349,3 @@ document.getElementById('finish').addEventListener('click',()=>{
 document.getElementById('status').addEventListener('click',()=>{
   document.location = `./assigns/status.php`
 })
-
-document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./assigns/extbrand.php`
-})

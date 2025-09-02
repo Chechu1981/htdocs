@@ -722,10 +722,6 @@ document.getElementById('status').addEventListener('click',()=>{
   document.location = `./assigns/status.php`
 })
 
-document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location = `./assigns/extbrand.php`
-})
-
 /* Se colorea los fondos de los input cuando hay algo escrito */
 $$('form')[0].addEventListener('keyup',(e)=>{
   if(!$$('form')[0].childNodes[1] == false && !$$('form')[0].childNodes[1].className != 'form-group'){
