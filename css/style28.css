@@ -1801,6 +1801,7 @@ span.button:active{
         padding: 5px;
         border: 2px solid var(--main-font-color);
         color: var(--main-font-color);
+        width: 200px;
     }
 }
 
@@ -2684,7 +2685,86 @@ margin: 0 10px;
     cursor: pointer;
 }
 
+.header{
+    background-color:var(--bg-font-color) !important;
+    color:var(--bg-body-color) !important;
+}
+
+.listOrderExt{
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
     .header{
-        background-color:var(--bg-font-color) !important;
-        color:var(--bg-body-color) !important;
+        font-weight: bold;
+        cursor: auto;
     }
+    ul{
+        list-style: none;
+        display: grid;
+        grid-template-columns: 5% 20% 25% 15% 20% 10%;
+        align-items: center;
+        justify-items: center;
+        margin: 0;
+        padding: 5px 0;
+        cursor: pointer;
+    }
+    ul:nth-child(odd){
+        background-color: var(--font-color);
+        color: var(--bg-main-color);
+    }
+    ul:nth-child(even){
+        background-color: var(--bg-font-color);
+        color: var(--bg-body-color);
+    }
+    ul:hover{
+        background-color: var(--cards-active-color);
+        color: var(--bg-body-color);
+        font-weight: bold;
+    }
+    li{
+        border-bottom: 1px solid var(--bg-border-color);
+    }
+    i{
+        margin: 0 10px;
+        font-size: large;
+    }
+    i:hover{
+        opacity: .6;
+        cursor: pointer;
+    }
+}
+
+/* el UL anidado ocupa toda la fila del grid del UL padre */
+.listOrderExt > ul > ul.order-list { grid-column: 1 / -1; }
+
+/* dentro, su único li llena su propio grid */
+.order-item { display: grid; }
+.order-item > span { grid-column: 1 / -1; }
+
+.row-full { 
+    grid-column: 1 / -1; 
+    width: 90%;
+    text-align: center;
+}
+
+
+.order-list {
+    display: grid;
+    grid-template-columns: 10% 5% 30% 20% 10% 10% 10%;
+}
+
+.order-list:hover {
+    background-color: var(--bg-body-color);
+    color: var(--bg-font-color);
+    font-weight: bold;
+}
+
+.order-headers {
+    font-weight: bold;
+    background-color: var(--bg-header-color);
+}
+
+.order-headers:hover {
+    background-color: var(--bg-header-color);
+    color: var(--bg-body-color);
+}

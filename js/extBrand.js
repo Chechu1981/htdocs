@@ -1,113 +1,67 @@
 'use strict'
 import { buscarCliente } from "./alertsAssigns.js?106"
+import { cargarProveedor, crearLineas, actualizarPedido } from "./ExtApi.js?106"
+
+//Botones del menú
+
 const btnAll = document.getElementById('all') ?? 0
+let contadorLineas = 1
 
 if(btnAll){
   btnAll.addEventListener('click',()=>{
-    document.location = `../cesionesAll.php`
+    document.location = `./ext/orderList.php`
   })
 }
 
 document.getElementById('new').addEventListener('click',()=>{
-  document.location = `../cesionesADV.php`
-})
-
-document.getElementById('extBrand').addEventListener('click',()=>{
-  document.location.reload()
+  document.location = `./extBrand.php`
 })
 
 document.getElementById('find').addEventListener('click',()=>{
-  document.location = `./buscar.php`
+  document.location = `./ext/extbuscar.php`
 })
 
 document.getElementById('ready').addEventListener('click',()=>{
-  document.location = `./ready.php`
+  document.location = `./ext/extready.php`
 })
 
 document.getElementById('finish').addEventListener('click',()=>{
-  document.location = `./finish.php`
+  document.location = `./ext/extfinish.php`
 })
 
 document.getElementById('status').addEventListener('click',()=>{
-  document.location = `./status.php`
+  document.location = `./ext/extstatus.php`
 })
 
-$('dtoVenta0').addEventListener('keydown',(e)=>{
-  if(e.key === 'Tab'){
-    e.preventDefault()
-    crearLineas(0)
-  }
-})
-
-let contadorLineas = 1
-
-const crearLineas = (id) =>{
-  let inputRef = document.createElement('input')
-  let inputUni = document.createElement('input')
-  let inputDesc = document.createElement('input')
-  let inputPvp = document.createElement('input')
-  let inputDtoCompra = document.createElement('input')
-  let inputDtoVenta = document.createElement('input')
-  let familySelect = document.createElement('select')
-  let familyOpt1 = document.createElement('option')
-  let familyOpt2 = document.createElement('option')
-  let familyOpt3 = document.createElement('option')
-  let familyOpt4 = document.createElement('option')
-  let img = document.createElement('img')
-  let span = document.createElement('span')
-  let section = document.createElement('section')
-  inputRef.id = `ref${contadorLineas}`
-  inputUni.id = `units${contadorLineas}`
-  inputDesc.id = `comentLine${contadorLineas}`
-  familySelect.id = `familyParts${contadorLineas}`
-  inputPvp.id = `pvp${contadorLineas}`
-  inputDtoCompra.id = `dtoCompra${contadorLineas}`
-  inputDtoVenta.id = `dtoVenta${contadorLineas}`
-  inputDtoVenta.addEventListener('keydown',(e)=>{
-    if(e.key === 'Tab'){
-      e.preventDefault()
-      crearLineas(id)
-    }
+const crearPedido = () =>{
+  const idUsuario = user.hash
+  const placa = `${$('destino').value}`
+  const cliente = `${$('client').value}-${$('envio').value}`
+  const envio = `${$('envio').value}`
+  const coment = `${$('coment').value}`
+  fetch('../api/addOrderExtBrand.php',{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      'idUsuario': idUsuario,
+      'placa': placa,
+      'cliente': cliente,
+      'destino': envio,
+      'comentario': coment
+    })
   })
-  familyOpt1.value = ''
-  familyOpt1.innerText = ''
-  familyOpt2.innerText = 'Carrocería'
-  familyOpt3.innerText = 'Mecánica'
-  familyOpt4.innerText = 'Reman'
-  familyOpt2.value = 'CARROCERIA'
-  familyOpt3.value = 'MECANICA'
-  familyOpt4.value = 'REMAN'
-  familySelect.appendChild(familyOpt1)
-  familySelect.appendChild(familyOpt2)
-  familySelect.appendChild(familyOpt3)
-  familySelect.appendChild(familyOpt4)
-  img.src = '../../img/delete_FILL0_wght400_GRAD0_opsz24.png'
-  img.alt = 'Eliminar'
-  img.title = 'Eliminar'
-  img.className = 'deleteLine'
-  span.innerText = ++contadorLineas
-  img.id = `delete${contadorLineas}`
-  section.appendChild(span)
-  section.appendChild(inputRef)
-  section.appendChild(inputUni)
-  section.appendChild(inputDesc)
-  section.appendChild(familySelect)
-  section.appendChild(inputPvp)
-  section.appendChild(inputDtoCompra)
-  section.appendChild(inputDtoVenta)
-  section.appendChild(img)
-  
-  $(`formLine${id}`).appendChild(section)
-  inputRef.focus()
+  .then(res => res.text())
+  .then(num => {
+    $('numPedido').innerText = num
+    crearLineas(0,contadorLineas)
+  })
 }
 
 $('addLine').addEventListener('click',(e)=>{
   e.preventDefault()
-  crearLineas(e.target.parentNode.parentNode.childNodes[3].id.split('formLine')[1])
-})
-
-$('client').addEventListener('blur',(e)=>{
-  buscarCliente($('destino').value.substring(0,3),$('client').value.split('-')[0])
+  crearLineas(e.target.parentNode.parentNode.childNodes[3].id.split('formLine')[1],contadorLineas)
 })
 
 const clearImportant = () => {
@@ -119,14 +73,15 @@ const clearImportant = () => {
   }
 }
 
-/*$('sendProv').addEventListener('click',(e)=>{
+$('addOrder').addEventListener('click',(e)=>{
   clearImportant()
-  const tipo = $('tipo')
-  const marca = $('marca')
-  const destino = $('destino')
-  const cliente = $('client')
-  const envio = $('envio')
-  const coment = $('coment')
+  const divProvNumber = e.target.parentNode.parentNode.id.split('prov')[1]
+  const tipo = $(`tipo${divProvNumber}`)
+  const marca = $(`marca${divProvNumber}`)
+  const destino = $(`destino`)
+  const cliente = $(`client`)
+  const envio = $(`envio`)
+  const coment = $(`coment`)
   if(destino.value === ''){
     customAlert('Debe seleccionar un destino')
     destino.classList.add('important')
@@ -193,11 +148,6 @@ const clearImportant = () => {
     document.body.appendChild(link)
     link.click()
   })
-})*/
-
-$('addOrder').addEventListener('click',(e)=>{
-  e.preventDefault()
-  customAlert('Funcionalidad en desarrollo')
 })
 
 $('selectProv').addEventListener('click',(e)=>{
@@ -259,10 +209,10 @@ $('addProvider').addEventListener('click',(e)=>{
   let btnNewLine = document.createElement('button')
   let btnPpo = document.createElement('button')
   let btnOrder = document.createElement('button')
-  // Aquí puedes añadir las opciones a los select
-  let options = ['DirIberica', 'Proveedor 2 Hyundai', 'Proveedor 3 BMW']
-  let optTipo = ['Recambio Original', 'Recambio Paralelo']
-  let optMarcas = ['Ford', 'Toyota', 'Honda','Chevrolet','Nissan','Volkswagen','Hyundai','Kia','Renault','Peugeot','Citroën','Fiat','Jeep','Mazda','Subaru','Dacia','Seat','Skoda','Opel','Mini','BMW','Mercedes-Benz','Audi']
+
+  // Aquí añade las opciones a los select
+  cargarProveedor('','','',selectTipo, selectMarca, selectProveedor) //['DirIberica', 'Proveedor 2 Hyundai', 'Proveedor 3 BMW']
+
   lblReferencia.textContent = '*Referencia PR'
   lblCantidad.textContent = '*Cantidad'
   lblDesignacion.textContent = '*Descripción'
@@ -282,7 +232,7 @@ $('addProvider').addEventListener('click',(e)=>{
   btnNewLine.id = 'addLine'
   btnNewLine.addEventListener('click',(e)=>{
     e.preventDefault()
-    crearLineas(countProv)
+    crearLineas(countProv,contadorLineas)
   })
   btnPpo.textContent = 'Solicitar presupuesto al proveedor'
   btnPpo.addEventListener('click',(e)=>{
@@ -296,29 +246,19 @@ $('addProvider').addEventListener('click',(e)=>{
     customAlert('Funcionalidad en desarrollo')
   })
   btnOrder.id = 'addOrder'
-  options.forEach(option => {
-    let opt = document.createElement('option')
-    opt.value = option
-    opt.textContent = option
-    selectMarca.appendChild(opt)
-    selectProveedor.appendChild(opt)
-  })
-  optTipo.forEach(option => {
-    let opt = document.createElement('option')
-    opt.value = option
-    opt.textContent = option
-    selectTipo.appendChild(opt)
-  })
-  optMarcas.forEach(option => {
-    let opt = document.createElement('option')
-    opt.value = option
-    opt.textContent = option
-    selectMarca.appendChild(opt)
-  })
   selectTipo.id = `tipo${contadorLineas}`
   selectMarca.id = `marca${contadorLineas}`
   selectProveedor.id = `proveedor${contadorLineas}`
-  
+  selectTipo.addEventListener('change',(e)=>{
+    cargarProveedor(e.target.value, '', '', selectTipo, selectMarca, selectProveedor)
+  })
+  selectMarca.addEventListener('change',(e)=>{
+    cargarProveedor(selectTipo.value, e.target.value, selectProveedor.value, selectTipo, selectMarca, selectProveedor)
+  })
+  selectProveedor.addEventListener('change',(e)=>{
+    cargarProveedor(selectTipo.value, selectMarca.value, e.target.value, selectTipo, selectMarca, selectProveedor)
+  })
+
   $('contacts-items').appendChild(selectTipo)
   $('contacts-items').appendChild(selectMarca)
   $('contacts-items').appendChild(selectProveedor)
@@ -342,7 +282,8 @@ $('addProvider').addEventListener('click',(e)=>{
   divContainer.appendChild(btnNewLine)
   divContainer.appendChild(divSumnitOrder)
   $$('form')[0].appendChild(divContainer)
-  crearLineas(countProv)
+  crearLineas(countProv,contadorLineas)
+  contadorLineas++
 })
 
 // Elimina la fila creada al hacer click sobre la imagen de eliminar
@@ -350,7 +291,46 @@ $('contacts-items').addEventListener('click',(e)=>{
   if(e.target.tagName === 'IMG'){
     let id = e.target.id.substring(6)
     let div = document.getElementById(`delete${id}`)
-    div.parentNode.remove()
-    contadorLineas--
+    fetch(`../api/deleteLineExt.php?id=${id}&user=${user.hash}`)
+    .then(res => res.text())
+    .then(res => {
+      if(res === 'ok')  {
+        div.parentNode.remove()
+        contadorLineas--
+        customAlert('Línea eliminada correctamente')
+      }else customAlert('Error al eliminar la línea') 
+      })
   }
+})
+
+$('destino').addEventListener('change',()=>{
+  const cliente = $('client').value.split('-')[0]
+  const destino = $('destino').value.substring(0,3)
+  buscarCliente(destino,cliente)
+  const numPedido = $('numPedido').innerText
+  numPedido === '' ? crearPedido() : actualizarPedido($('numPedido').innerText)
+})
+
+$('client').addEventListener('blur',(e)=>{
+  const cliente = $('client').value.split('-')[0]
+  const destino = $('destino').value.substring(0,3)
+  buscarCliente(destino,cliente)
+  const numPedido = $('numPedido').innerText
+  numPedido === '' ? crearPedido() : actualizarPedido($('numPedido').innerText)
+})
+
+$('envio').addEventListener('blur',()=>{
+  actualizarPedido($('numPedido').innerText)
+})
+
+$('coment').addEventListener('blur',()=>{
+  actualizarPedido($('numPedido').innerText)
+})
+
+$('marca0').addEventListener('change',e=>{
+  cargarProveedor($('tipo0').value, e.target.value, $('proveedor0').value, $('tipo0'), $('marca0'), $('proveedor0'))
+})
+
+$('tipo0').addEventListener('change',e=>{
+  cargarProveedor(e.target.value, '', '', $('tipo0'), $('marca0'), $('proveedor0'))
 })

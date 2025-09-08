@@ -1,12 +1,4 @@
 <?php
-
-$uri = $_SERVER['PHP_SELF'];
-$src = ".";
-!strstr("$uri",'home') == '/home.php' ? $src = ".." : '';
-strpos($uri,'center') > 0 ? $src = "../.." : '';
-strpos($uri,'assigns') > 0 ? $src = "../.." : '';
-include_once $src . '/connection/data.php';
-
 $menuTodas = '';
 $menuOtrasMarcas = '';
 if($puesto == 'ADV'){

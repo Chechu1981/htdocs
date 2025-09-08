@@ -608,6 +608,182 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getExtCountNew($usr,$puesto,$state){
+        $sql = "SELECT COUNT(*) FROM `extlineas` WHERE `fechaenvio` LIKE '0000-00-00 00:00:00' AND `fecharecibido` LIKE '0000-00-00' AND `usuario` = '$usr'";
+        if($puesto == 'ADV')
+            $sql = "SELECT COUNT(*) FROM `extlineas` WHERE `fechaenvio` LIKE '0000-00-00 00:00:00' AND `fecharecibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
+        if($state == 'ready')
+            $sql = "SELECT COUNT(*) FROM `extlineas` WHERE `fecharecibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `puesto` = '$puesto')";
+        if($state == 'all')
+            $sql = "SELECT COUNT(*) FROM `extlineas` WHERE `fechaenvio` LIKE '0000-00-00 00:00:00' AND `fecharecibido` LIKE '0000-00-00'";
+        if($state == 'ready' AND $puesto == 'ADV')
+            $sql = "SELECT COUNT(*) FROM `extlineas` WHERE `fecharecibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
+        if($puesto == 'DESBORDE')
+            $sql = "SELECT COUNT(*) FROM `extlineas` WHERE `fechaenvio` LIKE '0000-00-00 00:00:00' AND `fecharecibido` LIKE '0000-00-00' AND (`usuario` = '$usr' OR `tratado` = '$usr')";
+        if($puesto == 'DESBORDE' AND $state == 'ready')
+            $sql = "SELECT COUNT(*) FROM `extlineas` WHERE `fecharecibido` LIKE '0000-00-00' AND (`usuario` = '$usr')";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function updateConfirmOrderExtBrand($id){
+        $sql = "UPDATE `extPedidos` SET `conf_pedido` = CURRENT_TIMESTAMP WHERE `id` = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
+
+    public function addExtBrandLine($lineas){
+        $sql = "INSERT INTO `extlineas` (`usuario`, `fecha`, `referencia`, `cantidad`, `designacion`, `familia`, `tipo`, `pvp`, `dto_compra`, `dto_venta`, `proveedor`, `cliente`, `id_pedido`, `placa`, `comentario`) 
+        VALUES ('".$lineas['user']."','".$lineas['fecha']."','".$lineas['ref']."','".$lineas['units']."','".$lineas['coment']."','".$lineas['family']."','".$lineas['tipo']."','".$lineas['pvp']."','".$lineas['dtoCompra']."','".$lineas['dtoVenta']."','".$lineas['proveedor']."','".$lineas['cliente']."','".$lineas['id_pedido']."','".$lineas['placa']."','".$lineas['comentario']."')";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        echo $sql;
+        return $this->db->lastInsertId();
+    }
+
+    public function addOrderExtBrand($cliente, $placa, $entrega, $comentario){
+        $sql = "INSERT INTO `extPedidos` (`placa`, `cliente`, `entrega`, `comentario`) VALUES ('$placa', '$cliente', '$entrega', '$comentario')";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        echo $this->db->lastInsertId();
+    }
+
+    public function updateOrderExtBrand($id, $cliente, $placa, $comentario){
+        $sql = "UPDATE `extPedidos` SET `cliente` = '$cliente', `placa` = '$placa', `comentario` = '$comentario' WHERE `id` = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
+
+    public function updateExtLine($id, $cliente, $nombre_cliente, $comentario, $tipo, $marca, $ref, $units, $designacion, $family, $proveedor, $pvp, $dtoCompra, $dtoVenta){
+        $sql = "UPDATE `extlineas` SET  
+        `comentario` = '$comentario',
+        `cliente` = '$cliente',
+        `nombre_cliente` = '$nombre_cliente',
+        `tipo` = '$tipo',
+        `marca` = '$marca',
+        `referencia` = '$ref',
+        `cantidad` = '$units',
+        `designacion` = '$designacion',
+        `familia` = '$family',
+        `proveedor` = '$proveedor',
+        `pvp` = '$pvp',
+        `dto_compra` = '$dtoCompra',
+        `dto_venta` = '$dtoVenta' 
+        WHERE `id` = $id";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
+
+    public function getExtAllOrders(){
+        $sql = "SELECT * FROM `extPedidos` ORDER BY `id` DESC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getExtListByOrder($id_pedido){
+        $sql = "SELECT * FROM `extlineas` WHERE `id_pedido` = $id_pedido ORDER BY `id` DESC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_NUM);
+    }
+
+    public function getExtOrderById($id){
+        $sql = "SELECT * FROM `extlineas` WHERE `id_pedido` = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function deleteExtOrder($id){
+        $sql = "DELETE FROM `extPedidos` WHERE `id` = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return 'ok';
+    }
+
+    public function deleteExtLine($id){
+        $sql = "DELETE FROM `extlineas` WHERE `id` = '$id'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return 'ok';
+    }
+
+    public function create_csv($id_pedido){        
+        $FAMILIA = ['CARROCERIAOEM'=>'01M','MECANICAOEM'=>'03M','REMANOEM'=>'40M','CARROCERIAIAM'=>'01Z0','MECANICAIAM'=>'01ZS','REMANIAM'=>'40Z0'];
+        $TRIGRAMA = ['IAM'=>'Z','OEM'=>'M'];
+        $data = $this->getExtListByOrder($id_pedido);
+        
+        // Crear archivo temporal
+        $temp_file = tempnam(sys_get_temp_dir(), 'CompraExterna_' . $id_pedido . '_');
+        $csv = fopen($temp_file, 'w');
+        
+        for($i = 0; $i < count($data); $i++){
+            $referencia = $data[$i][3];
+            $referenciaIcar = "Z".$TRIGRAMA[$data[$i][7]].strtoupper(substr($data[$i][8], 0, 3)).strtoupper($data[$i][3]);
+            $designacion = strtoupper($data[$i][5]);
+            $designacion2 = '';
+            $iva = '4';
+            $date = '';
+            $familia = $FAMILIA[$data[$i][6].$data[$i][7]];
+            $famInt = '006';
+            $od_remise = 'OJ';
+            $volume = '1000';
+            $poids = '1';
+            $uv = '';
+            $price = str_replace('.', '', $data[$i][9]);
+            $class_pdt = '';
+            $cat = '';
+            $unitedachat = '';
+            $rempl = '';
+            $code_cnst = '';
+            $seg_ref = '';
+            $long = '100';
+            $larg = '100';
+            $haut = '100';
+            $key_code = '';
+            $cont = '';
+            fputcsv($csv, [$referenciaIcar, $designacion, $designacion2, $iva, $date, $familia, $famInt, $od_remise, $volume, $poids, $uv, $price, $class_pdt, $cat, $unitedachat, $rempl, $code_cnst, $seg_ref, $long, $larg, $haut, $key_code, $cont],';');
+        }
+
+        fclose($csv);
+
+        // Subir archivo por FTP
+        $ftp_server = "ppcr.es";
+        $ftp_conn = ftp_connect($ftp_server);
+        
+        if (!$ftp_conn) {
+            echo "Error: No se pudo conectar al servidor FTP\n";
+            unlink($temp_file);
+            return;
+        }
+        
+        $ftp_login = ftp_login($ftp_conn, 'ppcr.es_7vz2vsrh522', 'nYm%340z5');
+        
+        if (!$ftp_login) {
+            echo "Error: No se pudo autenticar en el servidor FTP\n";
+            ftp_close($ftp_conn);
+            unlink($temp_file);
+            return;
+        }
+        
+        // Cambiar a modo pasivo
+        ftp_pasv($ftp_conn, true);
+        
+        // Subir archivo en modo ASCII
+        if (ftp_put($ftp_conn, "/httpdocs/csv/CompraExterna".$id_pedido.".csv", $temp_file, FTP_ASCII)) {
+            echo "Fichero creado correctamente\n";
+        } else {
+            echo "Error al crear el fichero\n";
+        }
+        
+        ftp_close($ftp_conn);
+        
+        // Eliminar archivo temporal
+        unlink($temp_file);
+    }
+
     public function newSelectPending($ip,$placa,$cliente,$referencia,$envio,$nombre){
         $sql = "INSERT INTO `statusPending` (`ip`,`plate`,`NumClient`,`ref`,`dirClient`,`date`,`free1`) 
         VALUES ('$ip','$placa','$cliente','$referencia','$envio',CURRENT_TIMESTAMP(),'$nombre')";
@@ -876,15 +1052,19 @@ class Contacts
         return $query->fetchAll();
     }
 
-    public function getProvExt(){
-        $src = "SELECT * FROM `proveedores` ORDER BY `nombre` ASC";
-        $query = $this->db->prepare($src);
+    public function getProvExt($marca,$tipo,$proveedor){
+        $sql = "SELECT * FROM `extproveedores` WHERE 1=1";
+        if($marca != '') $sql .= " AND `marca` = '$marca'";
+        if($tipo != '') $sql .= " AND `tipo` = '$tipo'";
+        if($proveedor != '') $sql .= " AND `id` = '$proveedor'";
+        $sql .= " ORDER BY `nombre` ASC";
+        $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
 
     public function getProvList(){
-        $sql = "SELECT * FROM `proveedores` ORDER BY `nombre` ASC";
+        $sql = "SELECT * FROM `extproveedores` ORDER BY `nombre` ASC";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
