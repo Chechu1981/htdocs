@@ -206,6 +206,7 @@ export const buscarCliente = (placa,cliente) => {
       const inputEnvio = document.createElement('input')
       inputEnvio.setAttribute('id','envio')
       section.appendChild(inputEnvio)
+      return '0'
     }else{
       $('clientName').innerHTML = res[0].cliente
       const selected = document.createElement('select')

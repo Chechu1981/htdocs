@@ -1,6 +1,6 @@
 'use strict'
 import { buscarCliente } from "../../js/alertsAssigns.js?106"
-import { cargarProveedor, crearLineas, actualizarPedido } from "./ExtApi.js?106"
+import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor } from "./ExtApi.js?106"
 
 const numPedido = document.location.search.split('=')[1]
 let contadorLineas = 1
@@ -14,14 +14,24 @@ $('new').addEventListener('click',()=>{
   document.location.href = '../extbrand.php'
 })
 
-//Cargo las lineas del  pedido
-fetch(`../../api/getExtOrderLines.php?id=${numPedido}`)
+//Cargo la cabecera del pedido
+fetch(`../../api/getExtAllOrdersById.php?id=${numPedido}`)
 .then(response => response.json())
 .then(data => {
   $('client').value = data[0].cliente.split('-')[0] ?? ''
   $('coment').innerText = data[0].comentario
-  $('envio').value = data[0].cliente.split('-')[1] ?? ''
-  $('clientName').innerText = data[0].nombre_cliente
+  let envio = data[0]['cliente'].split('-')[1].split(' ')[0] ?? ''
+  if(envio != ''){
+    $('envio').innerHTML = `<option value="${envio}">${envio}</option>`
+    $('envio').value = envio
+  }
+  $('clientName').innerText = data[0].cliente.split(' (')[1].split(')')[0]
+})
+
+//Cargo las lineas del  pedido
+fetch(`../../api/getExtOrderLines.php?id=${numPedido}`)
+.then(response => response.json())
+.then(data => {
   cargarProveedor(data[0].tipo, data[0].marca, data[0].proveedor, $('tipo0'), $('marca0'), $('proveedor0'))
   for(let tipos of $('tipo0').childNodes){
     if(tipos.value == data[0].tipo)
@@ -61,11 +71,12 @@ $('client').addEventListener('blur',(e)=>{
   actualizarPedido(numPedido)
 })
 
-$('envio').addEventListener('blur',()=>{
+$('envio').addEventListener('change',()=>{
   actualizarPedido(numPedido)
 })
 
-$('coment').addEventListener('blur',()=>{
+$('coment').addEventListener('blur',e =>{
+  e.target.value = e.target.value.toUpperCase()
   actualizarPedido(numPedido)
 })
 
@@ -89,13 +100,14 @@ $('formLine0').addEventListener('click',(e)=>{
     let id = e.target.id.substring(6)
     let div = document.getElementById(`delete${id}`)
     let idLine = $(`ref${id}`).title
+    if(!confirm("¿Quieres eliminra la línea?"))
+      return true
     fetch(`${src}/api/deleteLineExt.php?id=${idLine}&user=${user.hash}`)
     .then(res => res.text())
     .then(res => {
       if(res === 'ok')  {
         div.parentNode.remove()
         contadorLineas--
-        customAlert('Línea eliminada correctamente')
       }else customAlert('Error al eliminar la línea') 
       })
   }
@@ -104,7 +116,8 @@ $('formLine0').addEventListener('click',(e)=>{
 //Doy funcionalidad a los botones de Solicitar presupuesto y Enviar pedido
 
 $('selectProv').addEventListener('click',(e)=>{
-  customAlert('Funcionalidad en desarrollo')
+  e.preventDefault()
+  enviarCorreoAlProveedor()
 })
 
 $('addOrder').addEventListener('click', (e) =>{

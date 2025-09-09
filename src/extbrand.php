@@ -37,7 +37,11 @@
               </section>
               <section>
                 <label for="envio">*Dirección de entrega</label>
-                <input type="text" name="envio" id="envio" class="inputSend"></input>
+                <select name="envio" id="envio" >
+                  <option value=""></option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                </select>
               </section>
               <section>
                 <label for="coment">Comentario del pedido</label>

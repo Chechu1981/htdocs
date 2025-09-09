@@ -1,11 +1,11 @@
 'use strict'
 import { buscarCliente } from "./alertsAssigns.js?106"
-import { cargarProveedor, crearLineas, actualizarPedido } from "./ExtApi.js?106"
+import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor } from "./ExtApi.js?106"
 
 //Botones del menú
 
 const btnAll = document.getElementById('all') ?? 0
-let contadorLineas = 1
+let contadorLineas = $('formLine0').childNodes.length / 2
 
 if(btnAll){
   btnAll.addEventListener('click',()=>{
@@ -17,28 +17,14 @@ document.getElementById('new').addEventListener('click',()=>{
   document.location = `./extBrand.php`
 })
 
-document.getElementById('find').addEventListener('click',()=>{
-  document.location = `./ext/extbuscar.php`
-})
-
-document.getElementById('ready').addEventListener('click',()=>{
-  document.location = `./ext/extready.php`
-})
-
-document.getElementById('finish').addEventListener('click',()=>{
-  document.location = `./ext/extfinish.php`
-})
-
-document.getElementById('status').addEventListener('click',()=>{
-  document.location = `./ext/extstatus.php`
-})
-
 const crearPedido = () =>{
   const idUsuario = user.hash
   const placa = `${$('destino').value}`
   const cliente = `${$('client').value}-${$('envio').value}`
   const envio = `${$('envio').value}`
   const coment = `${$('coment').value}`
+  if(placa == '' || $('client').value == '')
+    return true
   fetch('../api/addOrderExtBrand.php',{
     method: 'POST',
     headers: {
@@ -151,38 +137,8 @@ $('addOrder').addEventListener('click',(e)=>{
 })
 
 $('selectProv').addEventListener('click',(e)=>{
-  let date = new Date()
   e.preventDefault()
-  let lineas = []
-  let lineasPedidoEnCurso = $('prov0').childNodes[3].childNodes
-  for (let i = 3; i < lineasPedidoEnCurso.length; i = i + 2) {
-    lineas.push({
-      referencia: lineasPedidoEnCurso[i].getElementsByTagName('input')[0].value,
-      cantidad: lineasPedidoEnCurso[i].getElementsByTagName('input')[1].value,
-      designacion: lineasPedidoEnCurso[i].getElementsByTagName('input')[2].value,
-      pvp: lineasPedidoEnCurso[i].getElementsByTagName('input')[3].value,
-      dtoCompra: lineasPedidoEnCurso[i].getElementsByTagName('input')[4].value
-    })
-  }
-  if(lineas.length === 0){
-    customAlert('Debe añadir al menos una línea de recambio')
-    return
-  }
-  let saludo = date.getHours() < 13 ? 'Buenos días' : 'Buenas tardes'
-  let mail = {
-    to: $('client').value,
-    subject: 'Nueva pedido PPCR Otras Marcas',
-    body: `${saludo}: 
-      %0ASolicito el siguiente listado de piezas de recambio:
-
-      ${lineas.map(linea => `%0A
-        ${linea.cantidad} ${linea.cantidad > 1 ? 'unidades de la referencia' : 'unidad de la referencia'} ${linea.referencia}(${linea.designacion})
-        PVP: ${linea.pvp}€ - ${linea.dtoCompra}%
-      `).join('')}
-      %0A%0APor favor, adjuntar el albarán en este mismo hilo de correos.
-      %0AMuchas gracias.`
-  }
-  window.location.href = `mailto:destinatarioProveedor?subject=${mail.subject}&body=${mail.body}` //
+  enviarCorreoAlProveedor()
 })
 
 $('addProvider').addEventListener('click',(e)=>{

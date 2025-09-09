@@ -638,12 +638,11 @@ class Contacts
         VALUES ('".$lineas['user']."','".$lineas['fecha']."','".$lineas['ref']."','".$lineas['units']."','".$lineas['coment']."','".$lineas['family']."','".$lineas['tipo']."','".$lineas['pvp']."','".$lineas['dtoCompra']."','".$lineas['dtoVenta']."','".$lineas['proveedor']."','".$lineas['cliente']."','".$lineas['id_pedido']."','".$lineas['placa']."','".$lineas['comentario']."')";
         $query = $this->db->prepare($sql);
         $query->execute();
-        echo $sql;
         return $this->db->lastInsertId();
     }
 
-    public function addOrderExtBrand($cliente, $placa, $entrega, $comentario){
-        $sql = "INSERT INTO `extPedidos` (`placa`, `cliente`, `entrega`, `comentario`) VALUES ('$placa', '$cliente', '$entrega', '$comentario')";
+    public function addOrderExtBrand($cliente, $placa, $entrega, $comentario, $user){
+        $sql = "INSERT INTO `extPedidos` (`placa`, `cliente`, `entrega`, `comentario`, `usuario`) VALUES ('$placa', '$cliente', '$entrega', '$comentario', '$user')";
         $query = $this->db->prepare($sql);
         $query->execute();
         echo $this->db->lastInsertId();
@@ -675,18 +674,25 @@ class Contacts
         $query->execute();
     }
 
-    public function getExtAllOrders(){
-        $sql = "SELECT * FROM `extPedidos` ORDER BY `id` DESC";
+    public function getExtAllOrders($usuario){
+        $sql = "SELECT * FROM `extPedidos` WHERE `usuario` = '$usuario' ORDER BY `id` DESC";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getExtAllOrdersById($id){
+        $sql = "SELECT * FROM `extPedidos` WHERE `id` = $id";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
 
     public function getExtListByOrder($id_pedido){
-        $sql = "SELECT * FROM `extlineas` WHERE `id_pedido` = $id_pedido ORDER BY `id` DESC";
+        $sql = "SELECT * FROM `extlineas` WHERE `id_pedido` = $id_pedido ORDER BY `id` ASC";
         $query = $this->db->prepare($sql);
         $query->execute();
-        return $query->fetchAll(PDO::FETCH_NUM);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getExtOrderById($id){
@@ -720,31 +726,34 @@ class Contacts
         $csv = fopen($temp_file, 'w');
         
         for($i = 0; $i < count($data); $i++){
-            $referencia = $data[$i][3];
-            $referenciaIcar = "Z".$TRIGRAMA[$data[$i][7]].strtoupper(substr($data[$i][8], 0, 3)).strtoupper($data[$i][3]);
-            $designacion = strtoupper($data[$i][5]);
-            $designacion2 = '';
-            $iva = '4';
-            $date = '';
-            $familia = $FAMILIA[$data[$i][6].$data[$i][7]];
-            $famInt = '006';
-            $od_remise = 'OJ';
-            $volume = '1000';
-            $poids = '1';
-            $uv = '';
-            $price = str_replace('.', '', $data[$i][9]);
-            $class_pdt = '';
-            $cat = '';
-            $unitedachat = '';
-            $rempl = '';
-            $code_cnst = '';
-            $seg_ref = '';
-            $long = '100';
-            $larg = '100';
-            $haut = '100';
-            $key_code = '';
-            $cont = '';
-            fputcsv($csv, [$referenciaIcar, $designacion, $designacion2, $iva, $date, $familia, $famInt, $od_remise, $volume, $poids, $uv, $price, $class_pdt, $cat, $unitedachat, $rempl, $code_cnst, $seg_ref, $long, $larg, $haut, $key_code, $cont],';');
+            $arrayRow = [];
+            $referencia = strtoupper($data[$i]['referencia']); //referencia
+            if($referencia == '')
+                break;
+            array_push($arrayRow,"Z".$TRIGRAMA[$data[$i]['tipo']].strtoupper(substr($data[$i]['marca'], 0, 3)).$referencia); //referencia icar
+            array_push($arrayRow,strtoupper($data[$i]['designacion'])); //designacion
+            array_push($arrayRow,''); //designacion2
+            array_push($arrayRow,'4'); //iva
+            array_push($arrayRow,''); //date
+            array_push($arrayRow,$FAMILIA[$data[$i]['familia'].$data[$i]['tipo']]); //familia
+            array_push($arrayRow,'006'); //famInt
+            array_push($arrayRow,"X".str_replace('.00','',$data[$i]['dto_venta'])); //od_remise
+            array_push($arrayRow,'1000'); //volume
+            array_push($arrayRow,'1'); //poids
+            array_push($arrayRow,''); //uv
+            array_push($arrayRow,str_replace('.', '', $data[$i]['pvp'])); //price
+            array_push($arrayRow,''); //class_pdt
+            array_push($arrayRow,''); //cat
+            array_push($arrayRow,'100'); //unitedachat
+            array_push($arrayRow,''); //rempl
+            array_push($arrayRow,''); //code_cnst
+            array_push($arrayRow,$referencia); //seg_ref
+            array_push($arrayRow,'100'); //long
+            array_push($arrayRow,'100'); //larg
+            array_push($arrayRow,'100'); //haut
+            array_push($arrayRow,''); //key_code
+            array_push($arrayRow,''); //cont
+            fputcsv($csv, $arrayRow, ';');
         }
 
         fclose($csv);
@@ -1078,7 +1087,7 @@ class Contacts
     }
 
     public function getRoutesName($route, $plate) {
-        $sql = "SELECT * FROM rutas WHERE `Turn` LIKE '%$route%' AND `CENTRO` LIKE '$plate' ORDER BY 'CENTRO' ASC";
+        $sql = "SELECT * FROM rutas WHERE `Turn` LIKE '%$route%' AND `CENTRO` LIKE '$plate' ORDER BY 'CENTRO', 'Turn' ASC";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

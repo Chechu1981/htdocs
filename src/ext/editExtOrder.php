@@ -22,7 +22,7 @@
     <div>
       <div class="listOrderExt" id="search-results">
         <div id="clientName" class="clientNameExt"></div>
-      <div id="numPedido" style="display:none"></div>
+      <div id="numPedido" style="display:none"><?= $_GET['id'] ?></div>
         <form>
             <div class="form-extBuy">
               <section>
@@ -45,7 +45,20 @@
               </section>
               <section>
                 <label for="envio">*Dirección de entrega</label>
-                <input type="text" name="envio" id="envio" class="inputSend"></input>
+                <select name="envio" id="envio" >
+                  <option value=""></option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
               </section>
               <section>
                 <label for="coment">Comentario del pedido</label>

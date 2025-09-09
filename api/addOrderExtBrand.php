@@ -8,6 +8,6 @@ $conexion = new Contacts();
 $userFilds = $conexion->getUserBySessid($datos['idUsuario']);
 $user = $userFilds[0][1];
 $entrega = date("Y-m-d H:i:s");
-$conexion->addOrderExtBrand($datos['cliente'], $datos['placa'], $entrega, $datos['comentario']);  
+$conexion->addOrderExtBrand($datos['cliente'], $datos['placa'], $entrega, $datos['comentario'], $user);  
 
 

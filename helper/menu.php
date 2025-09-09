@@ -49,7 +49,7 @@ $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
                 </ul>
             </li>
             <li>
-                <a href="<?= $src.'/src/extbrand.php' ?>" class="nav-link" title="Compra externa"><i class="fa-solid fa-cart-shopping"></i>Compra externa</a>
+                <a href="<?= $src.'/src/ext/orderList.php' ?>" class="nav-link" title="Compra externa"><i class="fa-solid fa-cart-shopping"></i>Compra externa</a>
             </li>
             <?php if($puesto == 'ADV'){ ?>
             <li class="nav-item dropdown">

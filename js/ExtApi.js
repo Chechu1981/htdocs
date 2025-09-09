@@ -101,13 +101,17 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
   let span = document.createElement('span')
   let section = document.createElement('section')
   inputRef.id = `ref${contadorLineas}`
+  inputUni.type = 'number'
+  inputPvp.type = 'number'
+  inputDtoCompra.type = 'number'
+  inputDtoVenta.type = 'number'
   inputUni.id = `units${contadorLineas}`
   inputDesc.id = `comentLine${contadorLineas}`
   familySelect.id = `familyParts${contadorLineas}`
   inputPvp.id = `pvp${contadorLineas}`
   inputDtoCompra.id = `dtoCompra${contadorLineas}`
   inputDtoVenta.id = `dtoVenta${contadorLineas}`
-  if(linea.id){
+  if(linea.id != undefined){
     inputRef.value = linea.referencia
     inputRef.title = linea.id
   }
@@ -126,6 +130,7 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
     inputRef.addEventListener(evento,(e)=>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
+        e.target.value = e.target.value.toUpperCase()
         actualizarLinea(idLinea, contadorLineas, prov)
       }, 500)
     })
@@ -144,6 +149,7 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
     inputDesc.addEventListener(evento,(e)=>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
+      e.target.value = e.target.value.toUpperCase()
       actualizarLinea(idLinea, contadorLineas, prov)
       }, 500)
     })
@@ -202,7 +208,6 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
   section.appendChild(inputDtoCompra)
   section.appendChild(inputDtoVenta)
   section.appendChild(img)
-  
   $(`formLine${id}`).appendChild(section)
   inputRef.focus()
 }
@@ -223,6 +228,8 @@ export const grabarExtLinea = (contadorLineas, prov) => {
   const cliente = `${$('client').value}-${$('envio').value}`
   const placa = `${$('destino').value}`
   const comentario = `${$('coment').value}`
+  if(placa == '' || $('client').value =='')
+    return true
   let datos = new FormData()
   datos.append('idUsuario',idUsuario)
   // Aquí puedes agregar la lógica para crear una nueva línea
@@ -295,4 +302,51 @@ export const actualizarLinea = (id, contadorLineas) => {
       'dto_venta': dto_venta
     })
   })
+}
+
+export const enviarCorreoAlProveedor = e =>{
+  let date = new Date()
+  let lineas = []
+  let lineasPedidoEnCurso = $('prov0').childNodes[3].childNodes
+  for (let i = 3; i < lineasPedidoEnCurso.length; i++) {
+    lineas.push({
+      referencia: lineasPedidoEnCurso[i].getElementsByTagName('input')[0].value,
+      cantidad: lineasPedidoEnCurso[i].getElementsByTagName('input')[1].value,
+      designacion: lineasPedidoEnCurso[i].getElementsByTagName('input')[2].value,
+      pvp: lineasPedidoEnCurso[i].getElementsByTagName('input')[3].value,
+      dtoCompra: lineasPedidoEnCurso[i].getElementsByTagName('input')[4].value
+    })
+  }
+  if(lineas.length === 0){
+    customAlert('Debe añadir al menos una línea de recambio')
+    return
+  }
+  let saludo = date.getHours() < 13 ? 'Buenos días' : 'Buenas tardes'
+  let mail = {
+    to: $('client').value,
+    subject: 'Nueva pedido PPCR Otras Marcas',
+    body: `${saludo}: 
+      %0ASolicito el siguiente listado de piezas de recambio:
+
+      ${lineas.map(linea => `%0A
+        ${linea.cantidad} ${linea.cantidad > 1 ? 'unidades de la referencia ' : 'unidad de la referencia '}${linea.referencia}(${linea.designacion})
+        PVP: ${linea.pvp}€ - ${linea.dtoCompra}%
+      `).join('')}
+      %0A%0APor favor, adjuntar el albarán en este mismo hilo de correos.
+      %0AMuchas gracias.`
+  }
+  fetch(`${src}/api/sendMail.php`,{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(mail)
+  })
+  .then(res => res.text())
+  .then(res => {
+    if(res === 'ok')  {
+      window.location.href = `mailto:${res}?subject=${mail.subject}&body=${mail.body}` //
+      customAlert('Correo enviado correctamente')
+    }else customAlert('Error al enviar el correo') 
+    })
 }

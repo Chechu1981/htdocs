@@ -9,8 +9,9 @@ $htmlList = '<ul class="heading">
 <li>Fecha</li>
 <li>Comentario</li>
 </ul>';
+$_cookie = $_COOKIE['user'];
 
-$rows = $conexion->getExtAllOrders();
+$rows = $conexion->getExtAllOrders($_cookie);
 
 foreach ($rows as $row) {
     if($enviado = $row[6]){
