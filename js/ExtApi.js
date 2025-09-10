@@ -88,8 +88,9 @@ export const actualizarPedido = (id) =>{
   })
 }
 
-export const crearLineas = (id,contadorLineas,linea = {}) =>{
+export const crearLineas = (id,linea = {}) =>{
   const prov = '0' //pendiente de selecionar el proveedor
+  const contadorLineas = $('formLine0').querySelectorAll('section').length - 1
   let inputRef = document.createElement('input')
   let inputUni = document.createElement('input')
   let inputDesc = document.createElement('input')
@@ -122,7 +123,7 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
   if(linea.dto_venta) inputDtoVenta.value = linea.dto_venta
   let idLinea = linea.id
   if(!linea.id) {
-    grabarExtLinea(contadorLineas, prov)
+    grabarExtLinea(prov)
   }
   let timeout;
   let eventos = ["keydown", "blur"]
@@ -131,7 +132,7 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
         e.target.value = e.target.value.toUpperCase()
-        actualizarLinea(idLinea, contadorLineas, prov)
+        actualizarLinea(idLinea, prov)
       }, 500)
     })
   })
@@ -140,7 +141,7 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
     inputUni.addEventListener(evento,(e)=>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
-        actualizarLinea(idLinea, contadorLineas, prov)
+        actualizarLinea(idLinea, prov)
       }, 500)
     })
   })
@@ -150,7 +151,7 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
       e.target.value = e.target.value.toUpperCase()
-      actualizarLinea(idLinea, contadorLineas, prov)
+      actualizarLinea(idLinea, prov)
       }, 500)
     })
   })
@@ -159,7 +160,7 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
     inputPvp.addEventListener(evento,(e)=>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
-        actualizarLinea(idLinea, contadorLineas, prov)
+        actualizarLinea(idLinea, prov)
       }, 500)
     })
   })
@@ -168,7 +169,7 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
     inputDtoCompra.addEventListener(evento,(e)=>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
-      actualizarLinea(idLinea, contadorLineas, prov)
+      actualizarLinea(idLinea, prov)
       }, 500)
     })
   })
@@ -177,13 +178,13 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
     inputDtoVenta.addEventListener(evento,(e)=>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
-        actualizarLinea(idLinea, contadorLineas, prov)
+        actualizarLinea(idLinea, prov)
       }, 1000)
     })
   })
 
   familySelect.addEventListener('change',(e)=>{
-    actualizarLinea(idLinea, contadorLineas, prov)
+    actualizarLinea(idLinea, prov)
   })
   const familyOptions = ['','CARROCERIA','MECANICA','REMAN']
   familyOptions.forEach(fam => {
@@ -212,7 +213,8 @@ export const crearLineas = (id,contadorLineas,linea = {}) =>{
   inputRef.focus()
 }
 
-export const grabarExtLinea = (contadorLineas, prov) => {
+export const grabarExtLinea = (prov) => {
+  const contadorLineas = $('formLine0').querySelectorAll('section').length - 1
   const idUsuario = user.hash
   const numPedido = $('numPedido').innerText
   const tipo = $(`tipo${prov}`).value
@@ -261,9 +263,9 @@ export const grabarExtLinea = (contadorLineas, prov) => {
   })
 }
 
-export const actualizarLinea = (id, contadorLineas) => {
+export const actualizarLinea = (id, numlinea) => {
   if (id === undefined)
-    id = $(`ref${contadorLineas}`) != null ? $(`ref${contadorLineas}`).title : contadorLineas--
+    id = $(`ref${numlinea}`) != null ? $(`ref${numlinea}`).title : numlinea--
   const idLinea = id
   const idUsuario = user.hash
   const cliente = `${$('client').value}-${$('envio').value}`
@@ -272,13 +274,13 @@ export const actualizarLinea = (id, contadorLineas) => {
   const tipo = $(`tipo0`).value
   const marca = $(`marca0`).value
   const proveedor = $(`proveedor0`).value
-  const referencia = $(`ref${contadorLineas}`).value
-  const cantidad = $(`units${contadorLineas}`).value
-  const designacion = $(`comentLine${contadorLineas}`).value
-  const familia = $(`familyParts${contadorLineas}`).value
-  const pvp = $(`pvp${contadorLineas}`).value
-  const dto_compra = $(`dtoCompra${contadorLineas}`).value
-  const dto_venta = $(`dtoVenta${contadorLineas}`).value
+  const referencia = $(`ref${numlinea}`).value
+  const cantidad = $(`units${numlinea}`).value
+  const designacion = $(`comentLine${numlinea}`).value
+  const familia = $(`familyParts${numlinea}`).value
+  const pvp = $(`pvp${numlinea}`).value
+  const dto_compra = $(`dtoCompra${numlinea}`).value
+  const dto_venta = $(`dtoVenta${numlinea}`).value
   fetch(`${src}/api/updateExtLine.php`,{
     method: 'POST',
     headers: {
@@ -348,5 +350,5 @@ export const enviarCorreoAlProveedor = e =>{
       window.location.href = `mailto:${res}?subject=${mail.subject}&body=${mail.body}` //
       customAlert('Correo enviado correctamente')
     }else customAlert('Error al enviar el correo') 
-    })
+  })
 }

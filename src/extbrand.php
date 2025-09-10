@@ -74,17 +74,17 @@
               <div id="formLine0" class="formLine">
                 <section>
                   <span></span>
-                  <label for="ref">*Referencia PR</label>
-                  <label for="units">*Cant</label>
-                  <label for="comentLine">*Descripción</label>
-                  <label for="familiParts">*Familia</label>
-                  <label for="precio">*PVP</label>
-                  <label for="dtoCompra">*Dto Compra</label>
-                  <label for="dtoVenta">*Dto Venta</label>
+                  <label>*Referencia PR</label>
+                  <label>*Cant</label>
+                  <label>*Descripción</label>
+                  <label>*Familia</label>
+                  <label>*PVP</label>
+                  <label>*Dto Compra</label>
+                  <label>*Dto Venta</label>
                 </section>
               </div>
               <div class="addLine">
-                <button id="addLine">Añadir línea</button>
+                <button id="addLine" disabled>Añadir línea</button>
               </div>
               <div class="submitOrder">
                 <button id="selectProv">Confirmar al proveedor</button>
@@ -93,7 +93,7 @@
             </div>
           </form>
           <div style="text-align:right">
-            <button id="addProvider">Añadir proveedor</button>
+            <button id="addProvider" style="display: none;">Añadir proveedor</button>
           </div>
     </div>
   </div>

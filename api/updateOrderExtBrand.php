@@ -8,5 +8,9 @@ $conexion = new Contacts();
 $userFilds = $conexion->getUserBySessid($datos['idUsuario']);
 $user = $userFilds[0][1];
 $conexion->updateOrderExtBrand($datos['id'], $datos['cliente'], $datos['placa'], $datos['comentario']);  
-
+$conexion->updateExtLineByOrderId(
+  $datos['id'],
+  $datos['cliente'],
+  $datos['placa'],
+  $datos['comentario']);
 

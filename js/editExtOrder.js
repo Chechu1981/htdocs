@@ -3,7 +3,6 @@ import { buscarCliente } from "../../js/alertsAssigns.js?106"
 import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor } from "./ExtApi.js?106"
 
 const numPedido = document.location.search.split('=')[1]
-let contadorLineas = 1
 
 // Botones del menú Compras exteriores
 $('all').addEventListener('click',()=>{
@@ -51,8 +50,7 @@ fetch(`../../api/getExtOrderLines.php?id=${numPedido}`)
       if (element.value == linea.placa)
         element.selected = true
     }
-    crearLineas('0',contadorLineas,linea)
-    contadorLineas++
+    crearLineas('0',linea)
   })
 })
 
@@ -90,8 +88,7 @@ $('tipo0').addEventListener('change',e=>{
 
 $('addLine').addEventListener('click',(e)=>{
   e.preventDefault()
-  crearLineas(e.target.parentNode.parentNode.childNodes[3].id.split('formLine')[1],contadorLineas)
-  contadorLineas++
+  crearLineas(e.target.parentNode.parentNode.childNodes[3].id.split('formLine')[1])
 })
 
 // Elimina la fila creada al hacer click sobre la imagen de eliminar
@@ -107,7 +104,6 @@ $('formLine0').addEventListener('click',(e)=>{
     .then(res => {
       if(res === 'ok')  {
         div.parentNode.remove()
-        contadorLineas--
       }else customAlert('Error al eliminar la línea') 
       })
   }
@@ -131,7 +127,7 @@ $('addOrder').addEventListener('click', (e) =>{
   })
   .then(res => res.text())
   .then(res => {
-    if(res === 'ok'){
+    if(res === 'Fichero creado correctamente\nok'){
       customAlert('Pedido creado correctamente')
     }else{
       customAlert('Error al crear el pedido')

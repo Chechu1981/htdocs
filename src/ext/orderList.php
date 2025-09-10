@@ -13,16 +13,24 @@
       <?php include_once '../../helper/menuExt.php'; ?>
     </div>
     <div>
-      <div id="clientName" class="clientName">
-        <label for="placa"></label>
-        <input type="text" placeholder="Buscar pedido...">
-        <label for="proveedor"></label>
-        <input type="text" placeholder="Buscar proveedor...">
+      <div id="clientName" class="clientName form-extBuy" style="grid-template-columns: 20% 70%;">
+        <label for="placa" style="display: none;"></label>
+        <select type="text" id="placa" placeholder="Buscar pedido...">
+          <option value="">Selecciona una placa</option>
+          <option value="MADRID">MADRID</option>
+          <option value="SANTIAGO">SANTIAGO</option>
+          <option value="BARCELONA">BARCELONA</option>
+          <option value="ZARAGOZA">ZARAGOZA</option>
+          <option value="VALENCIA">VALENCIA</option>
+          <option value="MÁLAGA">MÁLAGA</option>
+          <option value="SEVILLA">SEVILLA</option>
+          <option value="PALMA">PALMA</option>
+        </select>
+        <label for="busqueda" style="display: none;"></label>
+        <input type="text" id="busqueda" style="text-align: left;" placeholder="Buscar pedido...">
       </div>
       <div class="listOrderExt" id="search-results">
-        <?php
-        include_once '../../api/getExtAllOrders.php';
-        ?>
+        <?php include_once '../../api/getExtAllOrders.php'; ?>
       </div>
     </div>
   </div>

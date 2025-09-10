@@ -10,6 +10,7 @@ $('new').addEventListener('click',()=>{
 $('search-results').addEventListener('click',e =>{
   const id = e.target.closest('ul').id
   const eliminar = e.target.id.split('-')[0]
+  const consultar = e.target.closest('ul').classList.contains('order-list-search')
   const desplegado = document.getElementsByClassName('order-list').length
   if(id == '')
     return
@@ -20,6 +21,8 @@ $('search-results').addEventListener('click',e =>{
         e.target.closest('ul').remove()
       })
   }else if(eliminar === 'edit'){
+    document.location.href = `./editExtOrder.php?id=${id}`
+  }else if(consultar){
     document.location.href = `./editExtOrder.php?id=${id}`
   }else{
     fetch(`../../api/getExtOrder.php?id=${id}`)
@@ -32,3 +35,22 @@ $('search-results').addEventListener('click',e =>{
       })
   }
 })
+
+const buscarPedido = (placa, busqueda) => {
+  fetch(`../../api/getExtAllOrdersSearch.php?placa=${placa}&busqueda=${busqueda}`)
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('search-results').innerHTML = data
+    })
+}
+
+// Funcionalidad de búsqueda
+$('placa').addEventListener('change',e =>{
+  buscarPedido(e.target.value, $('busqueda').value)
+})
+
+$('busqueda').addEventListener('input',e =>{
+  buscarPedido($('placa').value, e.target.value)
+})
+
+$('busqueda').focus()

@@ -2701,7 +2701,7 @@ margin: 0 10px;
     ul{
         list-style: none;
         display: grid;
-        grid-template-columns: 5% 20% 25% 15% 20% 10%;
+        grid-template-columns: 4% 10% 10% 10% 22% 12% 20% 9%;
         align-items: center;
         justify-items: center;
         margin: 0;
@@ -2738,8 +2738,8 @@ margin: 0 10px;
 .listOrderExt > ul > ul.order-list { grid-column: 1 / -1; }
 
 /* dentro, su único li llena su propio grid */
-.order-item { display: grid; }
-.order-item > span { grid-column: 1 / -1; }
+.order-item { display: grid;}
+.order-item > span { grid-column: 1 / -1;}
 
 .row-full { 
     grid-column: 1 / -1; 
@@ -2751,6 +2751,9 @@ margin: 0 10px;
 .order-list {
     display: grid;
     grid-template-columns: 10% 5% 30% 20% 10% 10% 10%;
+    span{
+        cursor: default;
+    }
 }
 
 .order-list:hover {
@@ -2767,4 +2770,28 @@ margin: 0 10px;
 .order-headers:hover {
     background-color: var(--bg-header-color);
     color: var(--bg-body-color);
+}
+
+.order-list-search {
+    display: grid;
+    grid-template-columns:  6% 7% 7% 13% 9% 14% 3% 4% 3% 14% 11% 5% !important;
+    padding: 5px 0 5px 13px;
+    cursor: pointer;
+}
+
+
+.order-list-search:nth-child(odd){
+    background-color: var(--font-color);
+    color: var(--bg-main-color);
+}
+
+.order-list-search:nth-child(even){
+    background-color: var(--bg-font-color);
+    color: var(--bg-body-color);
+}
+
+.order-list-search:hover {
+    background-color: var(--cards-active-color);
+    color: var(--bg-body-color);
+    font-weight: bold;
 }

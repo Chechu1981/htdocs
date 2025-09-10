@@ -5,6 +5,7 @@ $conexion = new Contacts();
 $htmlList = '';
 
 $rows = $conexion->getExtOrderById($_GET['id']);
+
 $htmlList .= '<div class="order-list order-headers">
     <span class="order-header">Referencia</span>
     <span class="order-header">Cantidad</span>

@@ -629,8 +629,11 @@ class Contacts
 
     public function updateConfirmOrderExtBrand($id){
         $sql = "UPDATE `extPedidos` SET `conf_pedido` = CURRENT_TIMESTAMP WHERE `id` = '$id'";
+        $sql2 = "UPDATE `extlineas` SET `fechaenvio` = CURRENT_TIMESTAMP WHERE `id_pedido` = '$id'";
         $query = $this->db->prepare($sql);
+        $query2 = $this->db->prepare($sql2);
         $query->execute();
+        $query2->execute();
     }
 
     public function addExtBrandLine($lineas){
@@ -683,6 +686,22 @@ class Contacts
 
     public function getExtAllOrdersById($id){
         $sql = "SELECT * FROM `extPedidos` WHERE `id` = $id";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function getExtAllOrdersSearch($placa,$busqueda){
+        $sql = "SELECT * FROM `extlineas` WHERE 
+        (`referencia` LIKE '%$busqueda%' OR
+        `designacion` LIKE '%$busqueda%' OR
+        `proveedor` LIKE '%$busqueda%' OR
+        `cliente` LIKE '%$busqueda%' OR
+        `marca` LIKE '%$busqueda%' OR
+        `nombre_cliente` LIKE '%$busqueda%' OR
+        `comentario` LIKE '%$busqueda%')";
+        if($placa != '')
+            $sql .= " AND `placa` LIKE '$placa'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

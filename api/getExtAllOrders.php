@@ -5,6 +5,8 @@ $conexion = new Contacts();
 $htmlList = '<ul class="heading">
 <li>Pedido</li>
 <li>Placa</li>
+<li>Marca</li>
+<li>Proveedor</li>
 <li>Cliente</li>
 <li>Fecha</li>
 <li>Comentario</li>
@@ -20,9 +22,15 @@ foreach ($rows as $row) {
     }else{
         $enviado = '<i class="fa-solid fa-pen-to-square" id="edit-'.htmlspecialchars($row[0]).'"></i><i class="fa-solid fa-trash-can" id="delete-'.htmlspecialchars($row[0]).'"></i>';
     }
+
+    $primeraLinea = $conexion->getExtOrderById($row[0]);
+    $proveedor = $primeraLinea[0][12];
+    $marca = $primeraLinea[0][8];
             
     $htmlList .= '<ul id="'.htmlspecialchars($row[0]).'"><li class="order-item">' . htmlspecialchars($row[0]) . '</li>';
     $htmlList .= '<li class="order-details">' . htmlspecialchars($row[1]) . '</li>';
+    $htmlList .= '<li class="order-details">' . htmlspecialchars($marca) . '</li>';
+    $htmlList .= '<li class="order-details">' . htmlspecialchars($proveedor) . '</li>';
     $htmlList .= '<li class="order-details">' . htmlspecialchars($row[2]) . '</li>';
     $htmlList .= '<li class="order-details">' . htmlspecialchars($row[3]) . '</li>';
     $htmlList .= '<li class="order-details">' . htmlspecialchars($row[4]) . '</li>';

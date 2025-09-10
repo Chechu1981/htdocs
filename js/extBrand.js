@@ -3,9 +3,7 @@ import { buscarCliente } from "./alertsAssigns.js?106"
 import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor } from "./ExtApi.js?106"
 
 //Botones del menú
-
 const btnAll = document.getElementById('all') ?? 0
-let contadorLineas = $('formLine0').childNodes.length / 2
 
 if(btnAll){
   btnAll.addEventListener('click',()=>{
@@ -41,13 +39,14 @@ const crearPedido = () =>{
   .then(res => res.text())
   .then(num => {
     $('numPedido').innerText = num
-    crearLineas(0,contadorLineas)
+    $('addLine').disabled = false
+    crearLineas(0)
   })
 }
 
 $('addLine').addEventListener('click',(e)=>{
   e.preventDefault()
-  crearLineas(e.target.parentNode.parentNode.childNodes[3].id.split('formLine')[1],contadorLineas)
+  crearLineas(e.target.parentNode.parentNode.childNodes[3].id.split('formLine')[1])
 })
 
 const clearImportant = () => {
@@ -231,7 +230,6 @@ $('addProvider').addEventListener('click',(e)=>{
   divHeader.appendChild(selectProveedor)
   divSumnitOrder.appendChild(btnPpo)
   divSumnitOrder.appendChild(btnOrder)
-
   divContainer.appendChild(divHeader)
   divLine.appendChild(sectionHeader)
   divContainer.appendChild(divLine)
@@ -245,14 +243,13 @@ $('addProvider').addEventListener('click',(e)=>{
 // Elimina la fila creada al hacer click sobre la imagen de eliminar
 $('contacts-items').addEventListener('click',(e)=>{
   if(e.target.tagName === 'IMG'){
-    let id = e.target.id.substring(6)
+    let id = e.target.id.split('delete')[1]
     let div = document.getElementById(`delete${id}`)
     fetch(`../api/deleteLineExt.php?id=${id}&user=${user.hash}`)
     .then(res => res.text())
     .then(res => {
       if(res === 'ok')  {
         div.parentNode.remove()
-        contadorLineas--
         customAlert('Línea eliminada correctamente')
       }else customAlert('Error al eliminar la línea') 
       })
