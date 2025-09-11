@@ -677,6 +677,18 @@ class Contacts
         $query->execute();
     }
 
+    public function updateExtLineByOrderId($id_pedido, $cliente, $placa, $comentario){
+        $sql = "UPDATE `extlineas` SET  `cliente` = '$cliente', `placa` = '$placa', `comentario` = '$comentario' WHERE `id_pedido` = '$id_pedido'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
+
+    public function updateExtProvLinesByOrderId($tipo, $marca, $proveedor, $id_pedido){
+        $sql = "UPDATE `extlineas` SET  `tipo` = '$tipo', `marca` = '$marca', `proveedor` = '$proveedor' WHERE `id_pedido` = '$id_pedido'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
+
     public function getExtAllOrders($usuario){
         $sql = "SELECT * FROM `extPedidos` WHERE `usuario` = '$usuario' ORDER BY `id` DESC";
         $query = $this->db->prepare($sql);

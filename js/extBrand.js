@@ -1,6 +1,6 @@
 'use strict'
 import { buscarCliente } from "./alertsAssigns.js?106"
-import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor } from "./ExtApi.js?106"
+import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor, actualizarPedidoLineas } from "./ExtApi.js?106"
 
 //Botones del menú
 const btnAll = document.getElementById('all') ?? 0
@@ -243,16 +243,16 @@ $('addProvider').addEventListener('click',(e)=>{
 // Elimina la fila creada al hacer click sobre la imagen de eliminar
 $('contacts-items').addEventListener('click',(e)=>{
   if(e.target.tagName === 'IMG'){
-    let id = e.target.id.split('delete')[1]
+    let id = e.target.id.substring(6)
     let div = document.getElementById(`delete${id}`)
-    fetch(`../api/deleteLineExt.php?id=${id}&user=${user.hash}`)
+    let idLine = $(`ref${id}`).title
+    if(!confirm("¿Quieres eliminra la línea?"))
+      return true
+    fetch(`${src}/api/deleteLineExt.php?id=${idLine}&user=${user.hash}`)
     .then(res => res.text())
     .then(res => {
-      if(res === 'ok')  {
-        div.parentNode.remove()
-        customAlert('Línea eliminada correctamente')
-      }else customAlert('Error al eliminar la línea') 
-      })
+      res === 'ok' ? div.parentNode.remove() : customAlert('Error al eliminar la línea') 
+    })
   }
 })
 
@@ -277,13 +277,19 @@ $('envio').addEventListener('blur',()=>{
 })
 
 $('coment').addEventListener('blur',()=>{
-  actualizarPedido($('numPedido').innerText)
+  actualizarPedido($('numPedido').innerText).toUpperCase()
 })
 
 $('marca0').addEventListener('change',e=>{
   cargarProveedor($('tipo0').value, e.target.value, $('proveedor0').value, $('tipo0'), $('marca0'), $('proveedor0'))
+  setTimeout(() => actualizarPedidoLineas(numPedido), 500)
 })
 
 $('tipo0').addEventListener('change',e=>{
   cargarProveedor(e.target.value, '', '', $('tipo0'), $('marca0'), $('proveedor0'))
+  setTimeout(() => actualizarPedidoLineas(numPedido), 500)
+})
+
+$('proveedor0').addEventListener('change',e=>{
+  actualizarPedidoLineas(numPedido)
 })

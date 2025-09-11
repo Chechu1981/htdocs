@@ -1,5 +1,13 @@
 'use strict'
 const src = location.href.split('/').length > 4 ? '../..' : '..'
+const caracteresEspeciales = "'\"[`¡!@#$%&*()_+/=|<>¿?{}\\[\\]~-] .,Ç^·%ºª"
+
+export const limpiarReferencia = (referencia) => {
+  for(let i = 0; i < caracteresEspeciales.length; i++){
+    referencia.includes(caracteresEspeciales[i]) ? referencia = referencia.replaceAll(caracteresEspeciales[i],'') : null
+  }
+  return referencia
+}
 
 export const cargarProveedor = (tipo = '', marca = '', proveedor = '', selectTipo, selectMarca, selectProveedor) =>{
   for(let i = 0; selectTipo.options.length > 0; i++){
@@ -115,6 +123,8 @@ export const crearLineas = (id,linea = {}) =>{
   if(linea.id != undefined){
     inputRef.value = linea.referencia
     inputRef.title = linea.id
+  }else{
+    grabarExtLinea(prov)
   }
   if(linea.cantidad) inputUni.value = linea.cantidad
   if(linea.designacion) inputDesc.value = linea.designacion
@@ -122,17 +132,17 @@ export const crearLineas = (id,linea = {}) =>{
   if(linea.dto_compra) inputDtoCompra.value = linea.dto_compra
   if(linea.dto_venta) inputDtoVenta.value = linea.dto_venta
   let idLinea = linea.id
-  if(!linea.id) {
-    grabarExtLinea(prov)
-  }
+  if ($('destino').value == '' || $('client').value == '') 
+    return
+
   let timeout;
   let eventos = ["keydown", "blur"]
   eventos.forEach(evento =>{
     inputRef.addEventListener(evento,(e)=>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
-        e.target.value = e.target.value.toUpperCase()
-        actualizarLinea(idLinea, prov)
+        e.target.value = limpiarReferencia(e.target.value.toUpperCase())
+        actualizarLinea(idLinea, contadorLineas)
       }, 500)
     })
   })
@@ -141,7 +151,7 @@ export const crearLineas = (id,linea = {}) =>{
     inputUni.addEventListener(evento,(e)=>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
-        actualizarLinea(idLinea, prov)
+        actualizarLinea(idLinea, contadorLineas)
       }, 500)
     })
   })
@@ -151,7 +161,7 @@ export const crearLineas = (id,linea = {}) =>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
       e.target.value = e.target.value.toUpperCase()
-      actualizarLinea(idLinea, prov)
+      actualizarLinea(idLinea, contadorLineas)
       }, 500)
     })
   })
@@ -160,7 +170,7 @@ export const crearLineas = (id,linea = {}) =>{
     inputPvp.addEventListener(evento,(e)=>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
-        actualizarLinea(idLinea, prov)
+        actualizarLinea(idLinea, contadorLineas)
       }, 500)
     })
   })
@@ -169,7 +179,7 @@ export const crearLineas = (id,linea = {}) =>{
     inputDtoCompra.addEventListener(evento,(e)=>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
-      actualizarLinea(idLinea, prov)
+      actualizarLinea(idLinea, contadorLineas)
       }, 500)
     })
   })
@@ -178,13 +188,13 @@ export const crearLineas = (id,linea = {}) =>{
     inputDtoVenta.addEventListener(evento,(e)=>{
       clearTimeout(timeout);
       timeout = setTimeout(()=>{
-        actualizarLinea(idLinea, prov)
+        actualizarLinea(idLinea, contadorLineas)
       }, 1000)
     })
   })
 
   familySelect.addEventListener('change',(e)=>{
-    actualizarLinea(idLinea, prov)
+    actualizarLinea(idLinea, contadorLineas)
   })
   const familyOptions = ['','CARROCERIA','MECANICA','REMAN']
   familyOptions.forEach(fam => {
@@ -220,7 +230,7 @@ export const grabarExtLinea = (prov) => {
   const tipo = $(`tipo${prov}`).value
   const marca = $(`marca${prov}`).value
   const proveedor = $(`proveedor${prov}`).value
-  const ref = $(`ref${contadorLineas}`) == null ? '' : $(`ref${contadorLineas}`).value
+  const ref = $(`ref${contadorLineas}`) == null ? '' : limpiarReferencia($(`ref${contadorLineas}`).value)
   const units = $(`units${contadorLineas}`) == null ? '' : $(`units${contadorLineas}`).value
   const coment = $(`coment`).value
   const family = $(`familyParts${contadorLineas}`) == null ? '' : $(`familyParts${contadorLineas}`).value
@@ -274,7 +284,7 @@ export const actualizarLinea = (id, numlinea) => {
   const tipo = $(`tipo0`).value
   const marca = $(`marca0`).value
   const proveedor = $(`proveedor0`).value
-  const referencia = $(`ref${numlinea}`).value
+  const referencia = limpiarReferencia($(`ref${numlinea}`).value)
   const cantidad = $(`units${numlinea}`).value
   const designacion = $(`comentLine${numlinea}`).value
   const familia = $(`familyParts${numlinea}`).value
@@ -302,6 +312,24 @@ export const actualizarLinea = (id, numlinea) => {
       'pvp': pvp,
       'dto_compra': dto_compra,
       'dto_venta': dto_venta
+    })
+  })
+}
+
+export const actualizarPedidoLineas = numpedido =>{
+  const tipo = $('tipo0').value
+  const marca = $('marca0').value
+  const proveedor = $('proveedor0').value
+  const idUsuario = user.hash
+  
+  fetch(`${src}/api/updateOrderDataByLine.php`,{
+    method: 'POST',
+    body: JSON.stringify({
+      'tipo': tipo,
+      'marca': marca,
+      'proveedor': proveedor,
+      'idUsuario': idUsuario,
+      'numpedido': numpedido
     })
   })
 }

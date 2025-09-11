@@ -28,11 +28,13 @@ $('search-results').addEventListener('click',e =>{
     fetch(`../../api/getExtOrder.php?id=${id}`)
     .then(response => response.text())
     .then(data => {
-        for(let i = 0; i < desplegado; i++){
-          document.getElementsByClassName('order-list')[0].remove()
-        }
-        $(`lineas${id}`).innerHTML = data
-      })
+      for(let i = 0; i < desplegado; i++)
+        document.getElementsByClassName('order-list')[0].remove()
+      for(let i = 0; i < document.getElementsByClassName('selected').length; i++)
+        document.getElementsByClassName('selected')[i].classList.remove('selected')
+      $(`${id}`).classList.add('selected')
+      $(`lineas${id}`).innerHTML = data
+    })
   }
 })
 

@@ -14,6 +14,8 @@ $htmlList = '<ul class="heading">
 $_cookie = $_COOKIE['user'];
 
 $rows = $conexion->getExtAllOrders($_cookie);
+$proveedor = '';
+$marca = '';
 
 foreach ($rows as $row) {
     if($enviado = $row[6]){
@@ -24,9 +26,10 @@ foreach ($rows as $row) {
     }
 
     $primeraLinea = $conexion->getExtOrderById($row[0]);
-    $proveedor = $primeraLinea[0][12];
-    $marca = $primeraLinea[0][8];
-            
+    if(count($primeraLinea) > 0){
+        $proveedor = $primeraLinea[0][12];
+        $marca = $primeraLinea[0][8];
+    }
     $htmlList .= '<ul id="'.htmlspecialchars($row[0]).'"><li class="order-item">' . htmlspecialchars($row[0]) . '</li>';
     $htmlList .= '<li class="order-details">' . htmlspecialchars($row[1]) . '</li>';
     $htmlList .= '<li class="order-details">' . htmlspecialchars($marca) . '</li>';
