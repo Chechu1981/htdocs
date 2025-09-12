@@ -87,7 +87,7 @@
                 <button id="addLine" disabled>Añadir línea</button>
               </div>
               <div class="submitOrder">
-                <button id="selectProv">Confirmar al proveedor</button>
+                <button id="selectProv" style="display: none;">Confirmar al proveedor</button>
                 <button id="addOrder">Confirmar pedido</button>
               </div>
             </div>

@@ -627,6 +627,27 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getExtMails($placa){
+        $sql = "SELECT * FROM `extmail` WHERE `placa` = '$placa'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function addExtMail($placa, $gestion1, $gestion2, $gestion3, $almacen1, $almacen2, $almacen3, $transporte1, $transporte2, $transporte3){
+        $sql = "INSERT INTO `extmail` (`placa`, `gestion1`, `gestion2`, `gestion3`, `almacen1`, `almacen2`, `almacen3`, `transporte1`, `transporte2`, `transporte3`) VALUES ('$placa', '$gestion1', '$gestion2', '$gestion3', '$almacen1', '$almacen2', '$almacen3', '$transporte1', '$transporte2', '$transporte3')";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function updateExtMail($placa, $gestion1, $gestion2, $gestion3, $almacen1, $almacen2, $almacen3, $transporte1, $transporte2, $transporte3){
+        $sql = "UPDATE `extmail` SET `gestion1` = '$gestion1', `gestion2` = '$gestion2', `gestion3` = '$gestion3', `almacen1` = '$almacen1', `almacen2` = '$almacen2', `almacen3` = '$almacen3', `transporte1` = '$transporte1', `transporte2` = '$transporte2', `transporte3` = '$transporte3' WHERE `placa` = '$placa'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function updateConfirmOrderExtBrand($id){
         $sql = "UPDATE `extPedidos` SET `conf_pedido` = CURRENT_TIMESTAMP WHERE `id` = '$id'";
         $sql2 = "UPDATE `extlineas` SET `fechaenvio` = CURRENT_TIMESTAMP WHERE `id_pedido` = '$id'";

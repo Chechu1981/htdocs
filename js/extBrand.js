@@ -1,6 +1,6 @@
 'use strict'
 import { buscarCliente } from "./alertsAssigns.js?106"
-import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor, actualizarPedidoLineas } from "./ExtApi.js?106"
+import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor, actualizarPedidoLineas, validarFormulario } from "./ExtApi.js?106"
 
 //Botones del menú
 const btnAll = document.getElementById('all') ?? 0
@@ -49,96 +49,32 @@ $('addLine').addEventListener('click',(e)=>{
   crearLineas(e.target.parentNode.parentNode.childNodes[3].id.split('formLine')[1])
 })
 
-const clearImportant = () => {
-  for (const select of $$('select')) {
-    select.classList.remove('important')
-  }
-  for (const input of $$('input')) {
-    input.classList.remove('important')
-  }
-}
-
-$('addOrder').addEventListener('click',(e)=>{
-  clearImportant()
-  const divProvNumber = e.target.parentNode.parentNode.id.split('prov')[1]
-  const tipo = $(`tipo${divProvNumber}`)
-  const marca = $(`marca${divProvNumber}`)
-  const destino = $(`destino`)
-  const cliente = $(`client`)
-  const envio = $(`envio`)
-  const coment = $(`coment`)
-  if(destino.value === ''){
-    customAlert('Debe seleccionar un destino')
-    destino.classList.add('important')
-    return
-  }
-  if(cliente.value === ''){
-    customAlert('Debe seleccionar un cliente')
-    cliente.classList.add('important')
-    return
-  }
-  if(envio.value === ''){
-    customAlert('Debe seleccionar un envío')
-    envio.classList.add('important')
-    return
-  }
-  if(marca.value === ''){
-    customAlert('Debe seleccionar una marca')
-    marca.classList.add('important')
-    return
-  }
-  if(tipo.value === ''){
-    customAlert('Debe seleccionar un tipo de recambio')
-    tipo.classList.add('important')
-    return
-  }
-  const orderExt = new FormData()
-  orderExt.append('id',user.hash)
-  orderExt.append('tipo',tipo.value)
-  orderExt.append('marca',marca.value)
-  orderExt.append('destino',destino.value)
-  orderExt.append('cliente',cliente.value)
-  orderExt.append('envio',envio.value)
-  orderExt.append('comentarios',coment.value)
-  let lineas = []
-  for (let i = 0; i <= contadorLineas - 1; i++) {
-    lineas.push({
-      referencia: $(`ref${i}`).value,
-      cantidad: $(`units${i}`).value,
-      designacion: $(`comentLine${i}`).value,
-      familia: $(`familyParts${i}`).value
-    })
-  }
-
-  orderExt.append('lineas', JSON.stringify(lineas))
-
-  //e.target.disabled = true
+$('addOrder').addEventListener('click', e =>{
   e.preventDefault()
-  $('senMail').disabled = false
-  fetch(src + 'api/addListExt.php',{
+  if(!validarFormulario(e))
+    return
+  let datos = new FormData()
+  datos.append('id', numPedido)
+  
+  fetch(`${src}/api/updateConfirmOrder.php`,{
     method: 'POST',
-    body: orderExt
+    body: datos
   })
-  .then(e => e.json())
-  .then((csvlineas)=>{
-    //CREA UN FICHERO CSV CON LOS CAMPOS REFERENCIA Y DESIGNACION
-    let csvLineas = ''
-    csvlineas.forEach(element => {
-      csvLineas += `${element}\n`
-    });
-    let csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(csvLineas)
-    const link = document.createElement("a")
-    link.setAttribute("href", csvContent)
-    link.setAttribute("download", "contacts.csv")
-    document.body.appendChild(link)
-    link.click()
+  .then(res => res.text())
+  .then(res => {
+    if(res === 'Fichero creado correctamente\nok'){
+      customAlert('Pedido creado correctamente')
+      enviarCorreoAlProveedor()
+    }else{
+      customAlert('Error al crear el pedido')
+    }
   })
 })
-
+/*
 $('selectProv').addEventListener('click',(e)=>{
   e.preventDefault()
   enviarCorreoAlProveedor()
-})
+})*/
 
 $('addProvider').addEventListener('click',(e)=>{
   let countProv = document.getElementsByClassName('form-extLine').length
@@ -276,8 +212,9 @@ $('envio').addEventListener('blur',()=>{
   actualizarPedido($('numPedido').innerText)
 })
 
-$('coment').addEventListener('blur',()=>{
-  actualizarPedido($('numPedido').innerText).toUpperCase()
+$('coment').addEventListener('blur',e =>{
+  e.target.value = e.target.value.toUpperCase()
+  actualizarPedido($('numPedido').innerText)
 })
 
 $('marca0').addEventListener('change',e=>{

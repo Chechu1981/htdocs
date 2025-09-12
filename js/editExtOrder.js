@@ -1,6 +1,6 @@
 'use strict'
 import { buscarCliente } from "../../js/alertsAssigns.js?106"
-import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor, actualizarPedidoLineas } from "./ExtApi.js?106"
+import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor, actualizarPedidoLineas, validarFormulario } from "./ExtApi.js?106"
 
 const numPedido = document.location.search.split('=')[1]
 
@@ -117,17 +117,18 @@ $('formLine0').addEventListener('click',(e)=>{
 })
 
 //Doy funcionalidad a los botones de Solicitar presupuesto y Enviar pedido
-
+/*
 $('selectProv').addEventListener('click',(e)=>{
   e.preventDefault()
-  enviarCorreoAlProveedor()
-})
+})*/
 
-$('addOrder').addEventListener('click', (e) =>{
+$('addOrder').addEventListener('click', e =>{
   e.preventDefault()
+  if(!validarFormulario(e))
+    return
   let datos = new FormData()
   datos.append('id', numPedido)
-
+  
   fetch(`${src}/api/updateConfirmOrder.php`,{
     method: 'POST',
     body: datos
@@ -136,6 +137,7 @@ $('addOrder').addEventListener('click', (e) =>{
   .then(res => {
     if(res === 'Fichero creado correctamente\nok'){
       customAlert('Pedido creado correctamente')
+      enviarCorreoAlProveedor()
     }else{
       customAlert('Error al crear el pedido')
     }

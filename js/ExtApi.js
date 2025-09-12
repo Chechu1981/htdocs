@@ -116,6 +116,7 @@ export const crearLineas = (id,linea = {}) =>{
   inputDtoVenta.type = 'number'
   inputUni.id = `units${contadorLineas}`
   inputDesc.id = `comentLine${contadorLineas}`
+  inputDesc.maxLength = 35
   familySelect.id = `familyParts${contadorLineas}`
   inputPvp.id = `pvp${contadorLineas}`
   inputDtoCompra.id = `dtoCompra${contadorLineas}`
@@ -334,6 +335,49 @@ export const actualizarPedidoLineas = numpedido =>{
   })
 }
 
+export const validarFormulario = e =>{
+  //Limpiar avisos
+  for (const select of $$('select')) {
+    select.classList.remove('important')
+  }
+  for (const input of $$('input')) {
+    input.classList.remove('important')
+  }
+
+  const divProvNumber = e.target.parentNode.parentNode.id.split('prov')[1]
+  const tipo = $(`tipo${divProvNumber}`)
+  const marca = $(`marca${divProvNumber}`)
+  const destino = $(`destino`)
+  const cliente = $(`client`)
+  const envio = $(`envio`)
+  if(destino.value === ''){
+    customAlert('Debe seleccionar una placa de destino')
+    destino.classList.add('important')
+    return false
+  }
+  if(cliente.value === ''){
+    customAlert('Debe seleccionar un cliente')
+    cliente.classList.add('important')
+    return false
+  }
+  if(envio.value === ''){
+    customAlert('Debe seleccionar un envío')
+    envio.classList.add('important')
+    return false
+  }
+  if(marca.value === ''){
+    customAlert('Debe seleccionar una marca')
+    marca.classList.add('important')
+    return false
+  }
+  if(tipo.value === ''){
+    customAlert('Debe seleccionar un tipo de recambio')
+    tipo.classList.add('important')
+    return
+  } 
+  return true
+}
+
 export const enviarCorreoAlProveedor = e =>{
   let date = new Date()
   let lineas = []
@@ -365,18 +409,16 @@ export const enviarCorreoAlProveedor = e =>{
       %0A%0APor favor, adjuntar el albarán en este mismo hilo de correos.
       %0AMuchas gracias.`
   }
-  fetch(`${src}/api/sendMail.php`,{
+  fetch(`${src}/api/getExtMail.php`,{
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(mail)
+    body: JSON.stringify({
+      'placa': $('destino').value,
+      'proveedor': $('proveedor0').value,
+      'usuario': user.hash
+    })
   })
   .then(res => res.text())
   .then(res => {
-    if(res === 'ok')  {
-      window.location.href = `mailto:${res}?subject=${mail.subject}&body=${mail.body}` //
-      customAlert('Correo enviado correctamente')
-    }else customAlert('Error al enviar el correo') 
+    window.location.href = `mailto:${res}?subject=${mail.subject}&body=${mail.body}`
   })
 }

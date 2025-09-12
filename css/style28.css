@@ -2756,6 +2756,11 @@ margin: 0 10px;
     border: 4px solid black;
     border-radius: 4px;
     padding: 15px 5px !important;
+    .row-full{
+        padding: 8px 2px;
+        border: 1px solid var(--bg-font-color);
+        border-radius: 4px;
+    }
 }
 
 .row-full { 
@@ -2765,7 +2770,6 @@ margin: 0 10px;
     background-color: var(--second-bg-color);
     color: var(--bg-body-color);
 }
-
 
 .order-list {
     display: grid;
@@ -2813,4 +2817,21 @@ margin: 0 10px;
     background-color: var(--cards-active-color);
     color: var(--bg-body-color);
     font-weight: bold;
+}
+
+.sections-container{
+    display: flex;
+    justify-content: center;
+    .form-section{
+        display: flex;
+        flex-direction: column;
+        div{
+            display: flex;
+            flex-direction: row;
+        }
+    }
+    label{
+        width: 20%;
+        font-size: small;
+    }
 }
