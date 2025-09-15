@@ -3,17 +3,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const placaSelect = document.getElementById('placa');
     const resultMessage = document.getElementById('result-message');
     
-    // Referencias a todos los inputs de email
-    const emailInputs = {
-        gestion1: document.getElementById('gestion1'),
-        gestion2: document.getElementById('gestion2'),
-        gestion3: document.getElementById('gestion3'),
-        almacen1: document.getElementById('almacen1'),
-        almacen2: document.getElementById('almacen2'),
-        almacen3: document.getElementById('almacen3'),
-        transporte1: document.getElementById('transporte1'),
-        transporte2: document.getElementById('transporte2'),
-        transporte3: document.getElementById('transporte3')
+    // Referencias a las cajas de texto de email
+    const emailTextareas = {
+        gestion: document.getElementById('gestion'),
+        almacen: document.getElementById('almacen'),
+        transporte: document.getElementById('transporte')
     };
     
     // Auto-cargar datos al cambiar la placa
@@ -40,22 +34,21 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'placa=' + encodeURIComponent(placa)
+            body: JSON.stringify({
+                'placa': placa,
+                'proveedor': '',
+                'usuario': user.hash
+            })
         })
         .then(response => response.json())
         .then(data => {
             if (data && data.length > 0) {
                 const extMail = data[0];
-                // Cargar datos en todos los campos
-                emailInputs.gestion1.value = extMail.gestion1 || '';
-                emailInputs.gestion2.value = extMail.gestion2 || '';
-                emailInputs.gestion3.value = extMail.gestion3 || '';
-                emailInputs.almacen1.value = extMail.almacen1 || '';
-                emailInputs.almacen2.value = extMail.almacen2 || '';
-                emailInputs.almacen3.value = extMail.almacen3 || '';
-                emailInputs.transporte1.value = extMail.transporte1 || '';
-                emailInputs.transporte2.value = extMail.transporte2 || '';
-                emailInputs.transporte3.value = extMail.transporte3 || '';
+                // Cargar datos en las cajas de texto, combinando los campos individuales
+                
+                emailTextareas.gestion.value = extMail.gestion1;
+                emailTextareas.almacen.value = extMail.almacen1;
+                emailTextareas.transporte.value = extMail.transporte1;
                 showMessage('Datos cargados para ' + placa, 'success');
             } else {
                 // Limpiar todos los campos si no hay datos
@@ -80,7 +73,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // Mostrar indicador de guardado
         showMessage('Guardando...', 'info');
         
-        const formData = new FormData(form);
+        // Procesar las cajas de texto para extraer emails individuales
+        const gestionEmails = emailTextareas.gestion.value
+        const almacenEmails = emailTextareas.almacen.value
+        const transporteEmails = emailTextareas.transporte.value
+        
+        // Crear FormData con los campos individuales para mantener compatibilidad con el backend
+        const formData = new FormData();
+        formData.append('placa', placaSelect.value);
+        
+        // Agregar emails de gestión
+        formData.append('gestion', gestionEmails || '');
+        
+        // Agregar emails de almacén
+        formData.append('almacen', almacenEmails || '');
+        
+        // Agregar emails de transporte
+        formData.append('transporte', transporteEmails || '');
         
         fetch('saveExtMail.php', {
             method: 'POST',
@@ -107,9 +116,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function clearFormFields() {
-        // Limpiar todos los campos de email
-        Object.values(emailInputs).forEach(input => {
-            input.value = '';
+        // Limpiar todas las cajas de texto de email
+        Object.values(emailTextareas).forEach(textarea => {
+            textarea.value = '';
         });
     }
     

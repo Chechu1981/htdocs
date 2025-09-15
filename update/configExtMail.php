@@ -33,48 +33,33 @@
                     <div class="form-section">
                         <h3>Gestión</h3>
                         <div class="form-group">
-                            <label for="gestion1" style="display: none">Gestión 1:</label>
-                            <input type="email" id="gestion1" name="gestion1" placeholder="correo1@gestion.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="gestion2" style="display: none">Gestión 2:</label>
-                            <input type="email" id="gestion2" name="gestion2" placeholder="correo2@gestion.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="gestion3" style="display: none">Gestión 3:</label>
-                            <input type="email" id="gestion3" name="gestion3" placeholder="correo3@gestion.com">
+                            <label for="gestion" style="display: none">Gestión:</label>
+                            <textarea id="gestion" name="gestion" placeholder="Ingresa los correos de gestión, uno por línea:
+correo1@gestion.com
+correo2@gestion.com
+correo3@gestion.com" rows="4"></textarea>
                         </div>
                     </div>
 
                     <div class="form-section">
                         <h3>Almacén</h3>
                         <div class="form-group">
-                            <label for="almacen1" style="display: none">Almacén 1:</label>
-                            <input type="email" id="almacen1" name="almacen1" placeholder="correo1@almacen.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="almacen2" style="display: none">Almacén 2:</label>
-                            <input type="email" id="almacen2" name="almacen2" placeholder="correo2@almacen.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="almacen3" style="display: none">Almacén 3:</label>
-                            <input type="email" id="almacen3" name="almacen3" placeholder="correo3@almacen.com">
+                            <label for="almacen" style="display: none">Almacén:</label>
+                            <textarea id="almacen" name="almacen" placeholder="Ingresa los correos de almacén, uno por línea:
+correo1@almacen.com
+correo2@almacen.com
+correo3@almacen.com" rows="4"></textarea>
                         </div>
                     </div>
 
                     <div class="form-section">
                         <h3>Transporte</h3>
                         <div class="form-group">
-                            <label for="transporte1" style="display: none">Transporte 1:</label>
-                            <input type="email" id="transporte1" name="transporte1" placeholder="correo1@transporte.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="transporte2" style="display: none">Transporte 2:</label>
-                            <input type="email" id="transporte2" name="transporte2" placeholder="correo2@transporte.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="transporte3" style="display: none">Transporte 3:</label>
-                            <input type="email" id="transporte3" name="transporte3" placeholder="correo3@transporte.com">
+                            <label for="transporte" style="display: none">Transporte:</label>
+                            <textarea id="transporte" name="transporte" placeholder="Ingresa los correos de transporte, uno por línea:
+correo1@transporte.com
+correo2@transporte.com
+correo3@transporte.com" rows="4"></textarea>
                         </div>
                     </div>
                 </div>
@@ -176,17 +161,21 @@
         }
         
         .form-group input,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
             font-size: 16px;
             box-sizing: border-box;
+            resize: vertical;
+            font-family: inherit;
         }
         
         .form-group input:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: #317EFB;
             box-shadow: 0 0 5px rgba(49, 126, 251, 0.3);

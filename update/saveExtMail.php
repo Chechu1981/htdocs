@@ -16,32 +16,30 @@ try {
     }
 
     // Obtener todos los campos de email
-    $gestion1 = trim($_POST['gestion1'] ?? '');
-    $gestion2 = trim($_POST['gestion2'] ?? '');
-    $gestion3 = trim($_POST['gestion3'] ?? '');
-    $almacen1 = trim($_POST['almacen1'] ?? '');
-    $almacen2 = trim($_POST['almacen2'] ?? '');
-    $almacen3 = trim($_POST['almacen3'] ?? '');
-    $transporte1 = trim($_POST['transporte1'] ?? '');
-    $transporte2 = trim($_POST['transporte2'] ?? '');
-    $transporte3 = trim($_POST['transporte3'] ?? '');
-
-    // Validar formato de emails (solo si no están vacíos)
+    $gestion = array();
+    $almacen = array();
+    $transporte = array();
+    foreach(explode("\n",trim(strtolower($_POST['gestion']))) as $mailGestion){
+        array_push($gestion,$mailGestion);
+    }
+    foreach(explode("\n",trim(strtolower($_POST['almacen']))) as $mailAlmacen){
+        array_push($almacen,$mailAlmacen);
+    }
+    foreach(explode("\n",trim(strtolower($_POST['transporte']))) as $mailTransporte){
+        array_push($transporte,$mailTransporte);
+    }
     $emails = [
-        'gestion1' => $gestion1,
-        'gestion2' => $gestion2,
-        'gestion3' => $gestion3,
-        'almacen1' => $almacen1,
-        'almacen2' => $almacen2,
-        'almacen3' => $almacen3,
-        'transporte1' => $transporte1,
-        'transporte2' => $transporte2,
-        'transporte3' => $transporte3
+        'gestion' => $gestion,
+        'almacen' => $almacen,
+        'transporte' => $transporte
     ];
     
+    // Validar formato de emails (solo si no están vacíos)
     foreach ($emails as $field => $email) {
-        if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new Exception('El email en el campo ' . $field . ' no es válido');
+        foreach($email as $mail){
+            if (empty($mail) && filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+                throw new Exception('El email ' . $mail . ' en el campo ' . $field . ' no es válido');
+            }
         }
     }
 
@@ -52,11 +50,11 @@ try {
     
     if (!empty($existingData)) {
         // Actualizar registro existente
-        $result = $conexion->updateExtMail($placa, $gestion1, $gestion2, $gestion3, $almacen1, $almacen2, $almacen3, $transporte1, $transporte2, $transporte3);
+        $result = $conexion->updateExtMail($placa, implode("\n", $gestion), implode("\n", $almacen), implode("\n", $transporte));
         $message = 'Datos actualizados correctamente para la placa ' . $placa;
     } else {
         // Crear nuevo registro
-        $result = $conexion->addExtMail($placa, $gestion1, $gestion2, $gestion3, $almacen1, $almacen2, $almacen3, $transporte1, $transporte2, $transporte3);
+        $result = $conexion->addExtMail($placa, implode("\n", $gestion), implode("\n", $almacen), implode("\n", $transporte));
         $message = 'Datos guardados correctamente para la placa ' . $placa;
     }
 

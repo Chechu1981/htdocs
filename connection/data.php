@@ -634,15 +634,22 @@ class Contacts
         return $query->fetchAll();
     }
 
-    public function addExtMail($placa, $gestion1, $gestion2, $gestion3, $almacen1, $almacen2, $almacen3, $transporte1, $transporte2, $transporte3){
-        $sql = "INSERT INTO `extmail` (`placa`, `gestion1`, `gestion2`, `gestion3`, `almacen1`, `almacen2`, `almacen3`, `transporte1`, `transporte2`, `transporte3`) VALUES ('$placa', '$gestion1', '$gestion2', '$gestion3', '$almacen1', '$almacen2', '$almacen3', '$transporte1', '$transporte2', '$transporte3')";
+    public function getExtMailProv($placa,$proveedor){
+        $sql = "SELECT `mail` FROM `extproveedores` WHERE `placa` = '$placa' AND `nombre` = '$proveedor'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
 
-    public function updateExtMail($placa, $gestion1, $gestion2, $gestion3, $almacen1, $almacen2, $almacen3, $transporte1, $transporte2, $transporte3){
-        $sql = "UPDATE `extmail` SET `gestion1` = '$gestion1', `gestion2` = '$gestion2', `gestion3` = '$gestion3', `almacen1` = '$almacen1', `almacen2` = '$almacen2', `almacen3` = '$almacen3', `transporte1` = '$transporte1', `transporte2` = '$transporte2', `transporte3` = '$transporte3' WHERE `placa` = '$placa'";
+    public function addExtMail($placa, $gestion, $almacen, $transporte){
+        $sql = "INSERT INTO `extmail` (`placa`, `gestion1`, `almacen1`, `transporte1`) VALUES ('$placa', '$gestion', '$almacen', '$transporte')";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
+    public function updateExtMail($placa, $gestion, $almacen, $transporte){
+        $sql = "UPDATE `extmail` SET `gestion1` = '$gestion', `almacen1` = '$almacen', `transporte1` = '$transporte' WHERE `placa` = '$placa'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

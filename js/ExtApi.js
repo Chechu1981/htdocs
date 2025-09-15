@@ -1,6 +1,16 @@
 'use strict'
 const src = location.href.split('/').length > 4 ? '../..' : '..'
 const caracteresEspeciales = "'\"[`¡!@#$%&*()_+/=|<>¿?{}\\[\\]~-] .,Ç^·%ºª"
+const correosCorporativos = {
+  'MADRID': 'recambios-ppcr@stellantis.com',
+  'BARCELONA': 'pcr-bcn-recambios@stellantis.com',
+  'VALENCIA': 'recambios-paterna-ppcr@stellantis.com',
+  'ZARAGOZA': 'recambios-ebro-ppcr@stellantis.com',
+  'GALICIA': 'recambios-galicia-ppcr@stellantis.com',
+  'SEVILLA': 'recambios-sevilla-ppcr@stellantis.com',
+  'MÁLAGA': 'recambios-granada-ppcr@stellantis.com',
+  'PALMA': 'recambios-baleares-ppcr@stellantis.com',
+}
 
 export const limpiarReferencia = (referencia) => {
   for(let i = 0; i < caracteresEspeciales.length; i++){
@@ -374,7 +384,53 @@ export const validarFormulario = e =>{
     customAlert('Debe seleccionar un tipo de recambio')
     tipo.classList.add('important')
     return
-  } 
+  }
+
+  //valida que todos los campos esten completos
+  for (let i = 0; i < $('prov0').getElementsByTagName('input').length / 6; i++) {
+    if($(`ref${i}`).value === ''){
+      customAlert('Debe completar todos los campos')
+      $(`ref${i}`).classList.add('important')
+      $(`ref${i}`).focus()
+      return false
+    }
+    if($(`units${i}`).value === '' || $(`units${i}`).value < 1){
+      customAlert('Debe completar todos los campos')
+      $(`units${i}`).classList.add('important')
+      $(`units${i}`).focus()
+      return false
+    }
+    if($(`comentLine${i}`).value === ''){
+      customAlert('Debe completar todos los campos')
+      $(`comentLine${i}`).classList.add('important')
+      $(`comentLine${i}`).focus()
+      return false
+    }
+    if($(`pvp${i}`).value === '' || $(`pvp${i}`).value < 0){
+      customAlert('Debe completar todos los campos')
+      $(`pvp${i}`).classList.add('important')
+      $(`pvp${i}`).focus()
+      return false
+    }
+    if($(`dtoCompra${i}`).value === '' || $(`dtoCompra${i}`).value < 0){
+      customAlert('Debe completar todos los campos')
+      $(`dtoCompra${i}`).classList.add('important')
+      $(`dtoCompra${i}`).focus()
+      return false
+    }
+    if($(`dtoVenta${i}`).value === '' || $(`dtoVenta${i}`).value < 0){
+      customAlert('Debe completar todos los campos')
+      $(`dtoVenta${i}`).classList.add('important')
+      $(`dtoVenta${i}`).focus()
+      return false
+    }
+    if($(`familyParts${i}`).value === ''){
+      customAlert('Debe completar todos los campos')
+      $(`familyParts${i}`).classList.add('important')
+      $(`familyParts${i}`).focus()
+      return false
+    }
+  }
   return true
 }
 
@@ -417,8 +473,13 @@ export const enviarCorreoAlProveedor = e =>{
       'usuario': user.hash
     })
   })
-  .then(res => res.text())
+  .then(res => res.json())
   .then(res => {
-    window.location.href = `mailto:${res}?subject=${mail.subject}&body=${mail.body}`
+    res[0]['gestion1'] = res[0]['gestion1'].replaceAll('\r\n',';')
+    res[0]['almacen1'] = res[0]['almacen1'].replaceAll('\r\n',';')
+    res[0]['transporte1'] = res[0]['transporte1'].replaceAll('\r\n',';')
+    let proveedor = res[1]['mail']
+    let cc = correosCorporativos[$('destino').value]
+    window.location.href = `mailto:${proveedor};${res[0]['gestion1']};${res[0]['almacen1']};${res[0]['transporte1']}?subject=${mail.subject}&body=${mail.body}&cc=${cc};${user.mail}`
   })
 }
