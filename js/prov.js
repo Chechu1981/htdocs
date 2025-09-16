@@ -2,7 +2,7 @@
 
 const recargar = (destino,idUser = 0) =>{
   const id = getIdByCookie(document.cookie)
-  window.location.href = `${destino}?id=${id}&userId=${idUser}`
+  window.location.href = `${destino}?userId=${idUser}`
 }
 
 document.getElementById('newUser').addEventListener('click',e =>{

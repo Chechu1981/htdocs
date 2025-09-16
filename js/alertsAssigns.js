@@ -95,7 +95,7 @@ export const createInputExt = (placa) => {
     }*/
   let inputs = `<select id="refMat" style="margin-bottom: -25px;width:141px;margin-top:0;position:absolute;font-size:15px;">
             <option value="Nombre de la placa" label=""></option>`
-  fetch('../api/getProvExt.php',{
+  fetch('./../api/getProvExt.php',{
     method: 'POST'
   })
   .then(e => e.json())

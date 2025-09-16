@@ -85,7 +85,7 @@ class Contacts
     }
 
     public function getProvById($id){
-        $sql = "SELECT * FROM `proveedores` WHERE `id` LIKE '$id'";
+        $sql = "SELECT * FROM `extproveedores` WHERE `id` LIKE '$id'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -120,15 +120,15 @@ class Contacts
     }
 
     public function deleteProv($id){
-        $sql = "DELETE FROM `proveedores` WHERE id = '$id'";
+        $sql = "DELETE FROM `extproveedores` WHERE id = '$id'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';
     }
 
-    public function addNewProv($name,$addres,$nprov,$email){
-        $sql = "INSERT INTO `proveedores` (`nombre`, `direccion`, `mail`,`nprov`) VALUES 
-            ('$name', '$addres', '$email','$nprov')";
+    public function addNewProv($name,$addres,$email){
+        $sql = "INSERT INTO `extproveedores` (`nombre`, `direccion`, `mail`) VALUES 
+            ('$name', '$addres', '$email')";
         $query = $this->db->prepare($sql);
         $query->execute();
     }
@@ -150,10 +150,9 @@ class Contacts
         $query->execute();
     }
 
-    public function updateProv($id,$name,$addres,$nprov,$email){
-        $sql = "UPDATE `proveedores` SET 
+    public function updateProv($id,$name,$addres,$email){
+        $sql = "UPDATE `extproveedores` SET 
         `nombre` = '$name', 
-        `nprov` = '$nprov', 
         `direccion` = '$addres',
         `mail` = '$email' 
         WHERE `id` = $id";
@@ -718,14 +717,14 @@ class Contacts
     }
 
     public function getExtAllOrders($usuario){
-        $sql = "SELECT * FROM `extPedidos` WHERE `usuario` = '$usuario' ORDER BY `id` DESC";
+        $sql = "SELECT * FROM `extpedidos` WHERE `usuario` = '$usuario' ORDER BY `id` DESC";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
 
     public function getExtAllOrdersById($id){
-        $sql = "SELECT * FROM `extPedidos` WHERE `id` = $id";
+        $sql = "SELECT * FROM `extpedidos` WHERE `id` = $id";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -762,7 +761,7 @@ class Contacts
     }
 
     public function deleteExtOrder($id){
-        $sql = "DELETE FROM `extPedidos` WHERE `id` = '$id'";
+        $sql = "DELETE FROM `extpedidos` WHERE `id` = '$id'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return 'ok';

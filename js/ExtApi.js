@@ -29,7 +29,7 @@ export const cargarProveedor = (tipo = '', marca = '', proveedor = '', selectTip
   for(let i = 0; selectProveedor.options.length > 0; i++){
     selectProveedor.remove(0)
   }
-  fetch('../../api/getProvExt.php',{
+  fetch('./../api/getProvExt.php',{
     method: 'POST',
     body: JSON.stringify({tipo: tipo, marca: marca, proveedor: proveedor}),
     headers: {

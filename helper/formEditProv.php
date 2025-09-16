@@ -27,19 +27,17 @@
   </div>
   <div class="search-table">
     <div id="contacts" class="contacts">
-      <h1>Usuarios - Configuración</h1>
-      <button id="userList">Lista de Usuarios</button>
+      <h1>Proveedores - Configuración</h1>
+      <button id="userList">Lista de Proveedores</button>
     </div>
     <div class="note-body">
         <form action="" method="post" title="update">
-            <label for="nombre">NOMBRE DE USUARIO</label>
-              <input type="username" id="nombre" placeholder="Nombre de proveedor" value="<?= $userData[0][2] ?>">
+            <label for="nombre">NOMBRE DE PROVEEDOR</label>
+              <input type="username" id="nombre" placeholder="Nombre de proveedor" value="<?= $userData[0][1] ?>">
             <label for="email">CORREO ELECTRÓNICO</label>
-              <input type="text" id="email" placeholder="Correo electrónico" value="<?= $userData[0][4] ?>" autocomplete="off">
+              <input type="text" id="email" placeholder="Correo electrónico" value="<?= $userData[0][5] ?>" autocomplete="off">
             <label for="direccion">DIRECCIÓN</label>
-                <input name="direccion" id="direccion" value="<?= $userData[0][3] ?>">
-            <label for="nprov">Número de proveedor</label>
-              <input type="nprov" id="nprov" placeholder="Número de proveedor" value="<?= $userData[0][1] ?>" autocomplete="off">
+                <input name="direccion" id="direccion" value="<?= $userData[0][6] ?>">
             <label for="btnform"></label><input type="submit" value="Modificar" id="btnform">
         </form>
     </div>

@@ -12,7 +12,7 @@ if(btnAll){
 }
 
 document.getElementById('new').addEventListener('click',()=>{
-  document.location = `./extBrand.php`
+  document.location = `./extbrand.php`
 })
 
 const crearPedido = () =>{

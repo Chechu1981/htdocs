@@ -14,44 +14,46 @@ $('new').addEventListener('click',()=>{
 })
 
 //Cargo la cabecera del pedido
-fetch(`../../api/getExtAllOrdersById.php?id=${numPedido}`)
-.then(response => response.json())
-.then(data => {
-  $('client').value = data[0].cliente.split('-')[0] ?? ''
-  $('coment').innerText = data[0].comentario
-  let envio = data[0]['cliente'].split('-')[1] == "" ? '0' : data[0]['cliente'].split('-')[1].split(' ')[0] ?? ''
-  if(envio != ''){
-    $('envio').innerHTML = `<option value="${envio}">${envio}</option>`
-    $('envio').value = envio
-  }
-  $('clientName').innerText = data[0]['cliente'].split('-')[1] == '' ? '' : data[0].cliente.split(' (')[1].split(')')[0]
-  //Cargo las lineas del  pedido
-  fetch(`../../api/getExtOrderLines.php?id=${numPedido}`)
+document.addEventListener('DOMContentLoaded', () => {
+  fetch(`../../api/getExtAllOrdersById.php?id=${numPedido}`)
   .then(response => response.json())
   .then(data => {
-    if(data.length <= 0)
-      return
-    
-    cargarProveedor(data[0].tipo, data[0].marca, data[0].proveedor, $('tipo0'), $('marca0'), $('proveedor0'))
-    for(let tipos of $('tipo0').childNodes){
-      if(tipos.value == data[0].tipo)
-        tipos.selected = true
+    $('client').value = data[0].cliente.split('-')[0] ?? ''
+    $('coment').innerText = data[0].comentario
+    let envio = data[0]['cliente'].split('-')[1] == "" ? '0' : data[0]['cliente'].split('-')[1].split(' ')[0] ?? ''
+    if(envio != ''){
+      $('envio').innerHTML = `<option value="${envio}">${envio}</option>`
+      $('envio').value = envio
     }
-    for(let marcas of $('marca0').childNodes){
-      if(marcas.value == data[0].marca)
-        marcas.selected = true
-    }
-    for(let proveedores of $('proveedor0').childNodes){
-      if(proveedores.value == data[0].proveedor)
-        proveedores.selected = true
-    }
-    $('tipo0').value = data[0].tipo
-    data.forEach(linea => {
-      for (let element of $('destino').childNodes) {
-        if (element.value == linea.placa)
-          element.selected = true
+    $('clientName').innerText = data[0]['cliente'].split('-')[1] == '' ? '' : data[0].cliente.split(' (')[1].split(')')[0]
+    //Cargo las lineas del  pedido
+    fetch(`../../api/getExtOrderLines.php?id=${numPedido}`)
+    .then(response => response.json())
+    .then(data => {
+      if(data.length <= 0)
+        return
+      
+      cargarProveedor(data[0].tipo, data[0].marca, data[0].proveedor, $('tipo0'), $('marca0'), $('proveedor0'))
+      for(let tipos of $('tipo0').childNodes){
+        if(tipos.value == data[0].tipo)
+          tipos.selected = true
       }
-      crearLineas('0',linea)
+      for(let marcas of $('marca0').childNodes){
+        if(marcas.value == data[0].marca)
+          marcas.selected = true
+      }
+      for(let proveedores of $('proveedor0').childNodes){
+        if(proveedores.value == data[0].proveedor)
+          proveedores.selected = true
+      }
+      $('tipo0').value = data[0].tipo
+      data.forEach(linea => {
+        for (let element of $('destino').childNodes) {
+          if (element.value == linea.placa)
+            element.selected = true
+        }
+        crearLineas('0',linea)
+      })
     })
   })
 })
