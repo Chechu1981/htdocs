@@ -1130,6 +1130,16 @@ class Contacts
         return $query->fetchAll();
     }
 
+    public function getMarcaExt($marca, $tipo, $proveedor){
+        $sql = "SELECT DISTINCT `marca` FROM `extproveedores` WHERE 1=1";
+        if($marca != '') $sql .= " AND `marca` = '$marca'";
+        if($tipo != '') $sql .= " AND `tipo` = '$tipo'";
+        if($proveedor != '') $sql .= " AND `id` = '$proveedor'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
+
     public function getProvList(){
         $sql = "SELECT * FROM `extproveedores` ORDER BY `nombre` ASC";
         $query = $this->db->prepare($sql);

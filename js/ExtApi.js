@@ -29,7 +29,7 @@ export const cargarProveedor = (tipo = '', marca = '', proveedor = '', selectTip
   for(let i = 0; selectProveedor.options.length > 0; i++){
     selectProveedor.remove(0)
   }
-  fetch('./../api/getProvExt.php',{
+  fetch('../../api/getProvExt.php',{
     method: 'POST',
     body: JSON.stringify({tipo: tipo, marca: marca, proveedor: proveedor}),
     headers: {
@@ -54,7 +54,7 @@ export const cargarProveedor = (tipo = '', marca = '', proveedor = '', selectTip
       optTipo.textContent = text
       selectTipo.appendChild(optTipo)
     })
-    if(data.length === 0){
+    if(data[0].length === 0){
       let optMarcaSelected = document.createElement('option')
       optMarcaSelected.value = marca
       optMarcaSelected.textContent = marca
@@ -68,13 +68,20 @@ export const cargarProveedor = (tipo = '', marca = '', proveedor = '', selectTip
       selectProveedor.appendChild(optProvSelected)
 
     }else{    
-      data.forEach(option => {
+      data[0].forEach(option => {
         let optMarca = document.createElement('option')
         let optProv = document.createElement('option')
         if( marca === option.marca ) optMarca.selected = true
         optMarca.value = option.marca
         optMarca.textContent = option.marca
         selectMarca.appendChild(optMarca)
+        if(parseInt(proveedor) === option.id ) optProv.selected = true
+        optProv.value = option.nombre
+        optProv.textContent = option.nombre
+        selectProveedor.appendChild(optProv)
+      })
+      data[1].forEach(option => {
+        let optProv = document.createElement('option')
         if(parseInt(proveedor) === option.id ) optProv.selected = true
         optProv.value = option.nombre
         optProv.textContent = option.nombre

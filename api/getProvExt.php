@@ -6,6 +6,16 @@ $marca = $data['marca'] ?? '';
 $tipo = $data['tipo'] ?? '';
 $proveedor = $data['proveedor'] ?? '';
 
-$rows = $contacts->getProvExt($marca, $tipo, $proveedor);
+$proveedores = $contacts->getProvExt($marca, $tipo, $proveedor);
+$marca = $contacts->getMarcaExt($marca, $tipo, $proveedor);
 
-echo json_encode($rows);
+$arrayProv = [];
+$arrayMarca = [];
+
+foreach ($proveedores as $proveedor) {
+    $arrayProv[] = $proveedor;
+}
+foreach ($marca as $marca) {
+    $arrayMarca[] = $marca;
+}
+echo json_encode([$arrayMarca,$arrayProv]);
