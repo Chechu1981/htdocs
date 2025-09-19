@@ -1,11 +1,20 @@
 
 
 document.getElementById('testApi').addEventListener("click",()=>{
-  console.log("Clicks clicked")
   let valor = document.getElementById('id').value
-  fetch(`/ejecutar`)
-  .then(e => {
-    e.JSON()
+  let result = document.getElementById('result')
+  result.innerHTML = `Buscando la referencia ${valor} en PowerSupply...`
+  fetch(`https://ppcr.es:3001/ejecutar`,{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      referencia: valor
+    })
   })
-  .then(e => console.log(e))
+  .then(response => response.text())
+  .then(data => {
+    result.innerHTML = data
+  })
 })
