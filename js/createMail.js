@@ -228,7 +228,7 @@ ${numero}  ${referencia.toUpperCase()}   %0A${pvp}
 export const createMailBparts = (client) => {
   const hora = new Date()
   console.log(client)
-  const destinatarios = "placamadridadministracion@stellantis.com;recambios-ppcr@stellantis.com;juanantonio.palomo@external.stellantis.com;ppcrmadrid@gecoinsa.es"
+  const destinatarios = "placamadridadministracion@stellantis.com;recambios-ppcr@stellantis.com;juanantonio.palomo@external.stellantis.com;ppcrmadrid@tri-wall.es"
   const cc = ""
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
   const asunto = `Pedido de B-Parts que llega a Seseña para el cliente ${client.code}`
@@ -242,7 +242,7 @@ export const createMailBparts = (client) => {
 export const createMailJumasa = (client) => {
   const hora = new Date()
   console.log(client)
-  const destinatarios = "placamadridcalldesplazado@stellantis.com;recambios-ppcr@stellantis.com;juanantonio.palomo@external.stellantis.com;ppcrmadrid@gecoinsa.es"
+  const destinatarios = "placamadridcalldesplazado@stellantis.com;recambios-ppcr@stellantis.com;juanantonio.palomo@external.stellantis.com;ppcrmadrid@tri-wall.es"
   const cc = ""
   const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
   const asunto = `Pedido de Jumasa para el cliente ${client.code}`
