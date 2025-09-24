@@ -79,8 +79,9 @@ $nuevas = $contacts->getAssigCountNew($user,$user,'ready')[0][0];
     </nav>
     <div id="userName" class="username" title="Menú de usuario"><?php echo $user ?><i class="fa-solid fa-bars"></i>
         <div id="submenu" class="note hide">
-            <span class="boutons"><img alt="Enviar correo de B-parts a la placa de Madrid" src="<?php echo $src."/img/b-parts-brand-logo.png"; ?>" id="mailBParts" title="Enviar un correo a la placa de Madrid indicando que llega un B-Parts">B-Parts</span>
-            <span class="boutons"><img alt="Enviar correo de Jumasa a la placa de Madrid" src="<?php echo $src."/img/jumasa.png"; ?>" id="mailJumasa" title="Enviar un correo a la placa de Madrid indicando que llega un recambio de Jumasa">Jumasa</span>
+            <span class="boutons" id="mailBParts" title="Enviar correo de B-parts a la placa de Madrid"><img alt="Enviar correo de B-parts a la placa de Madrid" src="<?php echo $src."/img/b-parts-brand-logo.png"; ?>" title="Enviar un correo a la placa de Madrid indicando que llega un B-Parts">B-Parts</span>
+            <span class="boutons" id="mailJumasa" title="Enviar correo de Jumasa a la placa de Madrid"><img alt="Enviar correo de Jumasa a la placa de Madrid" src="<?php echo $src."/img/jumasa.png"; ?>" title="Enviar un correo a la placa de Madrid indicando que llega un recambio de Jumasa">Jumasa</span>
+            <span class="boutons" id="mailWiuse" title="Enviar correo de WIUSE a la placa de Madrid"><img alt="Enviar correo de WIUSE a la placa de Madrid" src="<?php echo $src."/img/wiuse.svg"; ?>" style="width: 50px;" title="Enviar un correo a la placa de Madrid indicando que llega un recambio de Wiuse">Wiuse</span>
             <span id="mailMostrador" class="boutons" alt="Enviar correo al mostrador" id="mailMostrador">
                 <i class="fa-solid fa-store" style="font-size: x-large;"></i>
                 Mostrador

@@ -1,6 +1,11 @@
 'use strict';
-import { createMailBparts, createMailJumasa } from "./createMail.js?101"
+import { createMailBparts, createMailJumasa, createMailWiuse } from "./createMail.js?240925"
 const btnBuscar = document.getElementById("btnBuscar")
+const proveedores = {
+  'B-Parts': createMailBparts,
+  'Jumasa': createMailJumasa,
+  'Wiuse': createMailWiuse
+}
 
 btnBuscar.addEventListener('click', e => {
   e.preventDefault()
@@ -41,7 +46,13 @@ $('resultado').addEventListener('click', e => {
       body: data
     }).then(response => response.json())
     .then(client => {
-      proveedor == 'B-Parts' ? createMailBparts(client[0]) : createMailJumasa(client[0])
+      if(proveedor === 'WIUSE'){
+        createMailWiuse(client[0])
+      }else if(proveedor === 'JUMASA'){
+        createMailJumasa(client[0])
+      }else if(proveedor === 'B-PARTS'){
+        createMailBparts(client[0])
+      }
       location.reload()
     })
   }

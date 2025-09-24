@@ -252,3 +252,19 @@ export const createMailJumasa = (client) => {
 `
   window.location.href = `mailto:${destinatarios}?subject=${asunto}&body=${saludo}${mensaje}` //
 }
+
+export const createMailWiuse = (client) => {
+  const hora = new Date()
+  console.log(client)
+  const destinatarios = "placamadridadministracion@stellantis.com;recambios-ppcr@stellantis.com;juanantonio.palomo@external.stellantis.com;ppcrmadrid@tri-wall.es"
+  const cc = ""
+  const saludo = hora.getHours() > 14 ? `Buenas tardes:` : `Buenos días:`
+  const asunto = `Pedido de Wiuse que llega a Seseña para el cliente ${client.code}`
+  const mensaje = `%0AVa a llegar a la placa de Seseña este pedido de WIUSE para facturar y enviar al cliente ${client.code} (${client.cliente.replaceAll('&',' and ')}).
+  %0AHACER UN 10% MENOS.
+ 
+  %0A%0A%0A%0A
+  Muchas gracias.
+`
+  window.location.href = `mailto:${destinatarios}?subject=${asunto}&body=${saludo}${mensaje}` //
+}

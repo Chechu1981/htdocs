@@ -67,7 +67,7 @@ $('mailBParts').addEventListener('click',(e) => {
     const ventana = modal(response,"B-Parts")
     const script = document.createElement('script')
     script.type = 'module'
-    script.src = `${src}js/formSearchClient.js?101`
+    script.src = `${src}js/formSearchClient.js?240925`
     document.head.appendChild(script)
   })
 })
@@ -79,7 +79,19 @@ $('mailJumasa').addEventListener('click',(e) => {
     const ventana = modal(response,"JUMASA")
     const script = document.createElement('script')
     script.type = 'module'
-    script.src = `${src}js/formSearchClient.js?101`
+    script.src = `${src}js/formSearchClient.js?240925`
+    document.head.appendChild(script)
+  })
+})
+
+$('mailWiuse').addEventListener('click',(e) => {
+  fetch(`${src}helper/sendMailClient.php`)
+  .then(response => response.text())
+  .then(response => {
+    const ventana = modal(response,"WIUSE")
+    const script = document.createElement('script')
+    script.type = 'module'
+    script.src = `${src}js/formSearchClient.js?240925`
     document.head.appendChild(script)
   })
 })
