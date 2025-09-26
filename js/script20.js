@@ -40,7 +40,7 @@ const modal = (params,title) =>{
 
 const sendMail = (placa) =>{
   const destino = {
-    'madrid' : ["armando.sanz@external.stellantis.com;placamadridcalldesplazado@stellantis.com;recambios-ppcr@stellantis.com;ppcrmadrid@tri-wall.es"],
+    'madrid' : ["armando.sanz@external.stellantis.com;placamadridcalldesplazado@stellantis.com;recambios-ppcr@stellantis.com;ppcr.madrid@tri-wall.es"],
     'santiago' : ["marcos.rodriguez@stellantis.com;jorge.ferreiro@stellantis.com;damian.bello@stellantis.com;ivan.huertas@stellantis.com;"],
     'malaga' : ["Isabel.villalon@stellantis.com;Alejandro.bujalance@stellantis.com;Javier.cespedes@stellantis.com;Arielhernan.agulenca@stellantis.com;"],
     'zaragoza' : ["sandra.burriel-marteles@cevalogistics.com;EXT.antonio.miralles@cevalogistics.com;EXT.pedro.gracia-serrano@cevalogistics.com;joseluis.fernandez2@stellantis.com;luis.dominguez@stellantis.com"]

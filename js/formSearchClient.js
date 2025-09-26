@@ -1,5 +1,5 @@
 'use strict';
-import { createMailBparts, createMailJumasa, createMailWiuse } from "./createMail.js?240925"
+import { createMailBparts, createMailJumasa, createMailWiuse } from "./createMail.js?240927"
 const btnBuscar = document.getElementById("btnBuscar")
 const proveedores = {
   'B-Parts': createMailBparts,
