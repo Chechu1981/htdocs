@@ -11,8 +11,11 @@
     <title>PPCR (Placa de Piezas y Componentes de Recambio)</title>
 </head>
 <body>
-    <input type="text" id="id">
-    <button id="testApi">Consultar</button>
+    <form action="">
+        <input type="text" id="id">
+        <button type="submit" id="testApi">Consultar</button>
+    </form>
+    <div id="progressBar"></div>
     <div id="result"></div>
 </body>
 </html>
