@@ -41,12 +41,14 @@ if($yaHayFichero)
     $items[5] = $_POST['file'];
 else if(isset($_FILES['file']) && !$yaHayFichero){
     $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
-    $namefile  = md5($_FILES['file']['name'].rand()).'.'.$ext;
-    $items[5] =$namefile;
+    $namefile = md5($_FILES['file']['name'].rand()).'.'.$ext;
+    $items[5] = $namefile;
     move_uploaded_file($_FILES['file']['tmp_name'], '../docs/'.$namefile.'');
     if($ext != 'pdf'){
         miniatura("../docs/".$namefile, explode('.',$namefile)[0], 100, 100);
     }
 }
+var_dump($items);
+
 $rows = $contacts->updateNotebook($items);
 echo $rows;
