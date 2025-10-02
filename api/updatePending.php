@@ -36,7 +36,7 @@ while(($data = fgetcsv($handle, 0,";")) !== FALSE ){
     'fiabilidad' => $data[11],
     'placa' => $data[13],
     'aviso' => $data[16],
-    'vin' => $data[34],
+    'vin' => $data[35],
     'cantidad' => $data[8],
     'npedido' => $data[19],
     'fentrega' => $data[9],
