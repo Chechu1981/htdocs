@@ -18,17 +18,14 @@ document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
   e.stopImmediatePropagation()
   const fileTarget = e.target.children[8].files[0] ? e.target.children[8].files[0] : document.getElementById('dropContainer').innerText
   document.getElementById('dropContainer').innerText == "Arrastra aqui algún fichero" ? fileTarget = "" : null
-
-  let id = e.target.children[11].value
-  const hash = window.parent.location.search.split('=')[1]
-  if(e.target.children[11] != undefined)
-    id = id
-
-  const marca = e.target.children[1].value
-  const modelo = e.target.children[3].value
-  const descripcion = e.target.children[5].value
-  const referencia = e.target.children[7].value
-  const file = fileTarget
+  const data = new FormData()
+  data.append('id',e.target.children[11].value)
+  data.append('hash',window.parent.location.search.split('=')[1])
+  data.append('marca',e.target.children[1].value)
+  data.append('modelo',e.target.children[3].value)
+  data.append('descripcion',e.target.children[5].value)
+  data.append('referencia',e.target.children[7].value)
+  data.append('file',fileTarget)
 
   //check for empty inputs
   if(e.target.children[1].value+e.target.children[3].value+e.target.children[5].value+e.target.children[7].value == '')
@@ -64,7 +61,7 @@ document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
       document.getElementById('progressText').textContent = '100% - Completado'
       setTimeout(() => {
         document.body.removeChild(progressContainer)
-        //window.parent.location.href = `../src/libreta.php?target=${document.location.search.split('target=')[1]}`
+        window.parent.location.href = `../src/libreta.php?target=${document.location.search.split('target=')[1]}`
       }, 500)
     } else {
       document.getElementById('progressText').textContent = 'Error en la subida'
@@ -84,8 +81,7 @@ document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
   
   // Configurar y enviar la petición
   xhr.open('POST', src, true)
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-  xhr.send('id='+id+'&hash='+hash+'&marca='+marca+'&modelo='+modelo+'&descripcion='+descripcion+'&referencia='+referencia+'&file='+file.name)
+  xhr.send(data)
 })
 
 document.getElementById('dropContainer').ondragover = function(evt) {

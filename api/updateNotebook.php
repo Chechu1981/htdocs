@@ -48,7 +48,6 @@ else if(isset($_FILES['file']) && !$yaHayFichero){
         miniatura("../docs/".$namefile, explode('.',$namefile)[0], 100, 100);
     }
 }
-var_dump($items);
 
 $rows = $contacts->updateNotebook($items);
 echo $rows;
