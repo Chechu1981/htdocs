@@ -31,7 +31,7 @@ export const cargarProveedor = (tipo = '', marca = '', proveedor = '', selectTip
   }
   fetch('../../api/getProvExt.php',{
     method: 'POST',
-    body: JSON.stringify({tipo: tipo, marca: marca, proveedor: proveedor}),
+    body: JSON.stringify({tipo: tipo, marca: marca, proveedor: proveedor, placa: $('destino').value}),
     headers: {
       'Content-Type': 'application/json'
     }

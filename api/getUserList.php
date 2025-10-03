@@ -8,7 +8,7 @@ $charsetExtract = array("'");
 $count = 1;
 
 ?>
-<ul class="user_list header">
+<ul class="list user_list header">
     <li></li>
     <li>USUARIO</li>
     <li>PUESTO</li>
@@ -19,7 +19,7 @@ $count = 1;
 </ul>
 
 <?php for ($i = 0;count($rows) > $i;$i++) { ?>
-    <ul class="user_list">
+    <ul class="list user_list">
         <li><?= $count++ ?></li>
         <li id="<?= $rows[$i][0] ?>"><?= strtoupper($rows[$i]['nombre']) ?></li>
         <li><?= strtoupper($rows[$i]['puesto']) ?></li>

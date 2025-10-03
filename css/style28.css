@@ -152,7 +152,7 @@ iframe{
     top: 0;
     height: 100%;
     width: 6px;
-    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(180deg, var(--main-font-color) 0%, var(--cards-active-color) 100%);
     transform: scaleY(0);
     transition: transform .3s ease;
 }
@@ -532,6 +532,12 @@ select, input{
         color: var(--bg-body-color);
         box-shadow: 2px 2px var(--bg-font-color);
     }
+}
+
+.btn:hover{
+    background-color: var(--second-bg-color);
+    color: var(--bg-font-color);
+    box-shadow: 2px 2px var(--bg-font-color);
 }
 
 
@@ -2693,13 +2699,12 @@ margin: 0 10px;
 }
 
 .users{
-    width: 80%;
+    width: 95%;
     margin: 5% auto;
 }
 
-.user_list{
+.list{
     display: grid;
-    grid-template-columns: 4% 19% 10% 25% 10% 15% 11%;
     justify-items: center;
     list-style-type: none;
     align-items: center;
@@ -2707,7 +2712,11 @@ margin: 0 10px;
     margin: 0;
 }
 
-.user_list:nth-child(odd){
+.user_list{
+    grid-template-columns: 4% 19% 10% 25% 10% 15% 11%;
+}
+
+.list:nth-child(odd){
     background-color: var(--main-font-color);
     color: var(--bg-body-color);
     img{
@@ -2715,7 +2724,7 @@ margin: 0 10px;
     }
 }
 
-.user_list:hover{
+.list:hover{
     background-color: var(--search-line);
     color: var(--bg-font-color);
     img{
@@ -2723,9 +2732,13 @@ margin: 0 10px;
     }
 }
 
-.user_list img:hover{
+.list img:hover{
     opacity: .6;
     cursor: pointer;
+}
+
+.prov_list{
+    grid-template-columns: 4% 10% 14% 5% 25% 10% 15% 11%;
 }
 
 .header{

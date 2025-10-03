@@ -1119,29 +1119,31 @@ class Contacts
         return $query->fetchAll();
     }
 
-    public function getProvExt($marca,$tipo,$proveedor){
+    public function getProvExt($marca,$tipo,$proveedor,$placa){
         $sql = "SELECT * FROM `extproveedores` WHERE 1=1";
         if($marca != '') $sql .= " AND `marca` = '$marca'";
         if($tipo != '') $sql .= " AND `tipo` = '$tipo'";
         if($proveedor != '') $sql .= " AND `id` = '$proveedor'";
+        if($placa != '') $sql .= " AND `placa` = '$placa'";
         $sql .= " ORDER BY `nombre` ASC";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
 
-    public function getMarcaExt($marca, $tipo, $proveedor){
+    public function getMarcaExt($marca, $tipo, $proveedor, $placa){
         $sql = "SELECT DISTINCT `marca` FROM `extproveedores` WHERE 1=1";
         if($marca != '') $sql .= " AND `marca` = '$marca'";
         if($tipo != '') $sql .= " AND `tipo` = '$tipo'";
         if($proveedor != '') $sql .= " AND `id` = '$proveedor'";
+        if($placa != '') $sql .= " AND `placa` = '$placa'";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
 
-    public function getProvList(){
-        $sql = "SELECT * FROM `extproveedores` ORDER BY `nombre` ASC";
+    public function getProvList($placa){
+        $sql = "SELECT * FROM `extproveedores` WHERE `placa` = '$placa' ORDER BY `nombre` ASC";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

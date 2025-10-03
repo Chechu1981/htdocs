@@ -5,9 +5,10 @@ $data = json_decode(file_get_contents('php://input'), true);
 $marca = $data['marca'] ?? '';
 $tipo = $data['tipo'] ?? '';
 $proveedor = $data['proveedor'] ?? '';
+$placa = $data['placa'] ?? '';
 
-$proveedores = $contacts->getProvExt($marca, $tipo, $proveedor);
-$marca = $contacts->getMarcaExt($marca, $tipo, $proveedor);
+$proveedores = $contacts->getProvExt($marca, $tipo, $proveedor, $placa);
+$marca = $contacts->getMarcaExt($marca, $tipo, $proveedor, $placa);
 
 $arrayProv = [];
 $arrayMarca = [];

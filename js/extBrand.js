@@ -192,12 +192,13 @@ $('contacts-items').addEventListener('click',(e)=>{
   }
 })
 
-$('destino').addEventListener('change',()=>{
+$('destino').addEventListener('change',e =>{
   const cliente = $('client').value.split('-')[0]
   const destino = $('destino').value.substring(0,3)
   buscarCliente(destino,cliente)
   const numPedido = $('numPedido').innerText
   numPedido === '' ? crearPedido() : actualizarPedido($('numPedido').innerText)
+  cargarProveedor($('tipo0').value, $('marca0').value, $('proveedor0').value, $('tipo0'), $('marca0'), $('proveedor0'))
 })
 
 $('client').addEventListener('blur',(e)=>{

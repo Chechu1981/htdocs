@@ -2,23 +2,31 @@
 include_once '../connection/data.php';
 
 $contacts = new Contacts();
-$rows = $contacts->getProvList();
+$json = file_get_contents('php://input');
+$data = json_decode($json, true);
+$placa = $data['placa'] ?? '';
+$rows = $contacts->getProvList($placa);
 
 $charsetExtract = array("'");
 $count = 1;
 
 ?>
-<ul class="user_list header">
+<ul class="list prov_list header">
     <li></li>
     <li>NOMBRE</li>
+    <li>MARCA</li>
+    <li>TIPO</li>
     <li>DIRECCIÓN</li>
     <li>CORREO</li>
 </ul>
 
 <?php for ($i = 0;count($rows) > $i;$i++) { ?>
-    <ul class="user_list">
+    <ul class="list prov_list">
         <li><?= $count++ ?></li>
         <li id="<?= $rows[$i][0] ?>"><?= strtoupper($rows[$i]['nombre']) ?></li>
+        <li><?= strtoupper($rows[$i]['marca']) ?></li>
+        <li><?= strtoupper($rows[$i]['tipo']) ?></li>
+        <li><?= strtoupper($rows[$i]['tlf']) ?></li>
         <li><?= strtolower($rows[$i]['direccion']) ?></li>
         <li><?= strtolower($rows[$i]['mail']) ?></li>
         <li>
