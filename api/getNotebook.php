@@ -3,7 +3,6 @@ include_once '../connection/data.php';
 $contacts = new Contacts();
 $search = str_replace("'","",$_POST['search']);
 $rows = $contacts->getNotebook($search);
-$style = "style='grid-template-columns:10% 15% 15% 25% 15% 10%;padding: 0;'";
 
 function formatRef($referencia){
   $contacts = new Contacts();
@@ -42,7 +41,8 @@ $icons->zip = "./../img/zip.png";
 $htmlList = "
 
 <div class='notebook-list-container'>
-<ul class='heading'".$style.">
+<ul class='heading heading-notebook-row'>
+  <li></li>
   <li>Marca</li>
   <li>Fichero</li>
   <li>Modelo</li>
@@ -77,7 +77,7 @@ foreach ($rows as $row) {
   if($row[5] != "")
     $file = '<div class="openFile" title="'.$row[5].'" ><img alt="'.substr($row[5], -10).'" src="'.$icono.'" loading="lazy"></div>';
   $htmlList .='
-    <ul class="notebook-row" '.$style.'>
+    <ul class="notebook-row">
       <li data-label="Marca"><img src="../img/'.$imgs->$marca.'" alt="'.$row[1].'" '.$invert.' class="iconBrand" loading="lazy"></li>
       <li data-label="Fichero">'.$file.'</li>
       <li data-label="Modelo">'.strtoupper($row[2]).'</li>

@@ -70,7 +70,7 @@ $style = file_exists("$src/css/" . str_replace(" ","_",strtolower($user)).".css"
 <meta name="theme-color" content="#317EFB"/>
 <meta name="description" content="Agenda de contactos y claves para empleados de PPCR del call center">
 <link rel="icon" href="<?= $src . '/img/icons8-coche-64.png'; ?>" type="image/x-icon">
-<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?1324" media="all"  content="1">
+<link rel="stylesheet" href="<?= $src; ?>/css/style28.css?251003" media="all"  content="1">
 <link rel="stylesheet" href="<?= $src; ?>/css/150027.css?1015" media="all"  content="1">
 <link rel="stylesheet" href="<?= $src; ?>/css/menu.css?106" media="all"  content="1">
 <link rel="stylesheet" href="<?= $src; ?>/css/fontawesome7/css/all.min.css?101" media="all"  content="1">

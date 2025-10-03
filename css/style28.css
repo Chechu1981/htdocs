@@ -133,6 +133,48 @@ iframe{
     }
 }
 
+ul.notebook-row{
+    display: grid;
+    grid-template-columns: 2% 10% 15% 15% 25% 15% 10%;
+    padding: 2px 0;
+}
+
+.heading-notebook-row{
+    grid-template-columns: 2% 10% 15% 15% 25% 15% 10%;
+    font-weight: bold;
+}
+
+.notebook-list-container ul.notebook-row::before {
+    content: '';
+    position: relative;
+    left: -40px;
+    top: 0;
+    height: 100%;
+    width: 6px;
+    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+    transform: scaleY(0);
+    transition: transform .3s ease;
+}
+  
+.notebook-list-container ul.notebook-row:hover::before {
+    transform: scaleY(1);
+    position: relative;
+}
+
+.notebook-list-container ul.notebook-row:hover {
+    transform: translateX(2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-color: #667eea;
+}
+
+.notebook-list-container ul.notebook-row:nth-child(even) {
+    animation-delay: 0.05s;
+}
+
+.notebook-list-container ul.notebook-row:nth-child(odd) {
+    animation-delay: 0.1s;
+}
+
 button{
   font-family: nunito, arial;
   background-color: var(--cards-border-color);
