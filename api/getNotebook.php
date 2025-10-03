@@ -42,7 +42,6 @@ $htmlList = "
 
 <div class='notebook-list-container'>
 <ul class='heading heading-notebook-row'>
-  <li></li>
   <li>Marca</li>
   <li>Fichero</li>
   <li>Modelo</li>
