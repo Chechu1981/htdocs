@@ -7,17 +7,13 @@
   $userData = $contacts->getProvById($_GET['userId']);
   $tipo = ['IAM', 'OEM'];
   $lista = [
-    'ADV',
     'MADRID',
     'SANTIAGO',
     'BARCELONA',
     'ZARAGOZA',
     'VALENCIA',
-    'GRANADA',
-    'BARCELONA',
+    'MÁLAGA',
     'PALMA',
-    'DESBORDE',
-    'PLATAFORMAS',
     'SEVILLA'
     ]
   ?>
@@ -44,11 +40,23 @@
           <label for="marca">MARCA</label>
               <input name="marca" id="marca" placeholder="Marca" value="<?= $userData[0][2] ?>">
           <label for="tipo">TIPO</label>
-              <select name="tipo" id="tipo">
-                <?php foreach($tipo as $item): ?>
-                  <option value="<?= $item ?>" <?= ($userData[0][3] == $item) ? 'selected' : '' ?>><?= $item ?></option>
-                <?php endforeach; ?>
-              </select>
+            <select name="tipo" id="tipo">
+              <?php foreach($tipo as $item): ?>
+                <option value="<?= $item ?>" <?= ($userData[0][3] == $item) ? 'selected' : '' ?>><?= $item ?></option>
+              <?php endforeach; ?>
+            </select>
+          <label for="placa">PLACA</label>
+            <select name="placa" id="placa">
+              <?php foreach ($lista as $equipo) { ?>
+                <?php if ($equipo == $userData[0]['placa']) { ?>
+                  <option value="<?= $equipo ?>" selected ><?= $equipo ?></option>
+                  <?php } else { ?>
+                    <option value="<?= $equipo ?>"><?= $equipo ?></option>
+                  <?php } ?>
+              <?php } ?>
+            </select>
+          <label for="recogida">RECOGIDA</label>
+              <input type="checkbox" name="recogida" id="recogida" <?= ($userData[0]['recogida'] == 'S') ? 'checked' : '' ?>>
           <label for="btnform"></label><input type="submit" value="Modificar" id="btnform">
       </form>
     </div>

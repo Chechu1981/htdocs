@@ -3,7 +3,7 @@ $$('input')[1].focus()
 
 //Show Contacts
 $$('input')[1].addEventListener('keyup', (e) => {
-  e.target.value == '' ? window.location = window.location : loadItems(e.target.value)
+  loadItems(e.target.value)
 });
 
 //Focus on the input when load page

@@ -458,35 +458,20 @@ export const enviarCorreoAlProveedor = e =>{
     customAlert('Debe añadir al menos una línea de recambio')
     return
   }
-  let saludo = date.getHours() < 13 ? 'Buenos días' : 'Buenas tardes'
-  let mail = {
-    to: $('client').value,
-    subject: 'Nueva pedido PPCR Otras Marcas',
-    body: `${saludo}: 
-      %0ASolicito el siguiente listado de piezas de recambio:
-
-      ${lineas.map(linea => `%0A
-        ${linea.cantidad} ${linea.cantidad > 1 ? 'unidades de la referencia ' : 'unidad de la referencia '}${linea.referencia}(${linea.designacion})
-        PVP: ${linea.pvp}€ - ${linea.dtoCompra}%
-      `).join('')}
-      %0A%0APor favor, adjuntar el albarán en este mismo hilo de correos.
-      %0AMuchas gracias.`
-  }
-  fetch(`${src}/api/getExtMail.php`,{
+  
+  fetch(`${src}/src/ext/mail/createMailProv.php`,{
     method: 'POST',
     body: JSON.stringify({
       'placa': $('destino').value,
       'proveedor': $('proveedor0').value,
-      'usuario': user.hash
+      'usuario': user.hash,
+      'pedido': $('numPedido').innerText,
+      'marca': $('marca0').value,
+      'tipo': $('tipo0').value
     })
   })
-  .then(res => res.json())
+  .then(res => res.text())
   .then(res => {
-    res[0]['gestion1'] = res[0]['gestion1'].replaceAll('\r\n',';')
-    res[0]['almacen1'] = res[0]['almacen1'].replaceAll('\r\n',';')
-    res[0]['transporte1'] = res[0]['transporte1'].replaceAll('\r\n',';')
-    let proveedor = res[1]['mail']
-    let cc = correosCorporativos[$('destino').value]
-    window.location.href = `mailto:${proveedor};${res[0]['gestion1']};${res[0]['almacen1']};${res[0]['transporte1']}?subject=${mail.subject}&body=${mail.body}&cc=${cc};${user.mail}`
+    customAlert('Correo enviado correctamente')
   })
 }

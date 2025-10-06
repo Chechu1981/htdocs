@@ -34,4 +34,4 @@ if($_GET['id'] != 'new'){
     <input type="hidden" id="<?= @$_GET['id']; ?>" value="<?= @$_GET['id']; ?>">
     <label></label><input type="submit" value="Modificar">
 </form>
-<script src="../js/formNotebook1.js?251002"></script>
+<script src="../js/formNotebook1.js?251006"></script>

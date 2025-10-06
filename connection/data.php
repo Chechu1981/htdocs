@@ -170,7 +170,7 @@ class Contacts
         $sql = "SELECT * FROM `route`, `rutas` WHERE route.TURN = rutas.TURN AND route.name LIKE '%$search%'";
         $query = $this->db->prepare($sql);
         $query->execute();
-        return json_encode($query->fetchAll());
+        return $query->fetchAll();
     }
 
     public function getContactsHTML($search){
@@ -235,7 +235,7 @@ class Contacts
             WHERE CONCAT_WS('',`ANCHO`,`PERFIL`,`RADIO`,`CODCARGA`,`INDICE VELOCIDAD`) LIKE '%$search%'";
         $query = $this->db->prepare($sql);
         $query->execute();
-        return json_encode($query->fetchAll());
+        return $query->fetchAll();
     }
 
     public function getTyresHTML($width,$height,$diameter,$load_code,$speed_index){
@@ -782,6 +782,32 @@ class Contacts
         // Crear archivo temporal
         $temp_file = tempnam(sys_get_temp_dir(), 'CompraExterna_' . $id_pedido . '_');
         $csv = fopen($temp_file, 'w');
+        $cabeceras = [
+            'référence  / part number (15 caracteres)',
+            'description / désignation (35 caracteres)',
+            'des comp / 2nd designation (35 caracteres)',
+            'code tva / VAT code',
+            'date appli',
+            'code famille / marketing family code',
+            'code famille interne / creneau code',
+            'code remise / discount code',
+            'volume (in cm3 non decimals)',
+            'poids / weight (in grams, no decimals)',
+            'uv / selling unit of measure (to be multiplied by 100 -> 1 will be 100)',
+            'PVP (no decimals to a  price with 2 decimals will need to be multiplied by 100. example 11,36 will be 1136)',
+            'classe pdt / index code',
+            'cat  / segment code',
+            'unite d\'achat / purchase unit (to be multiplied by 100 -> 1 will be 100)',
+            'rempl / superseeding part',
+            'code const',
+            '2nd part number in ICAR (max 15 caracteres)',
+            'long / length (in mm)',
+            'larg / width (in mm)',
+            'haut / height (in mm)',
+            'key code',
+            'cont'
+        ];
+        fputcsv($csv, array_map('utf8_decode', $cabeceras), ';');
         
         for($i = 0; $i < count($data); $i++){
             $arrayRow = [];
@@ -795,7 +821,7 @@ class Contacts
             array_push($arrayRow,''); //date
             array_push($arrayRow,$FAMILIA[$data[$i]['familia'].$data[$i]['tipo']]); //familia
             array_push($arrayRow,'006'); //famInt
-            array_push($arrayRow,"X".str_replace('.00','',$data[$i]['dto_venta'])); //od_remise
+            array_push($arrayRow,"X".str_replace('.00','',$data[$i]['dto_compra'])); //od_remise
             array_push($arrayRow,'1000'); //volume
             array_push($arrayRow,'1'); //poids
             array_push($arrayRow,''); //uv
@@ -826,7 +852,7 @@ class Contacts
             return;
         }
         
-        $ftp_login = ftp_login($ftp_conn, 'ppcr.es_7vz2vsrh522', 'nYm%340z5');
+        $ftp_login = ftp_login($ftp_conn, 'icar', 'l3fi7_2A3');
         
         if (!$ftp_login) {
             echo "Error: No se pudo autenticar en el servidor FTP\n";
@@ -839,7 +865,7 @@ class Contacts
         ftp_pasv($ftp_conn, true);
         
         // Subir archivo en modo ASCII
-        if (ftp_put($ftp_conn, "/httpdocs/csv/CompraExterna".$id_pedido.".csv", $temp_file, FTP_ASCII)) {
+        if (ftp_put($ftp_conn, "/ESP_TARIF_MANUEL_AUT_".$id_pedido.".csv", $temp_file, FTP_ASCII)) {
             echo "Fichero creado correctamente\n";
         } else {
             echo "Error al crear el fichero\n";
@@ -1123,7 +1149,6 @@ class Contacts
         $sql = "SELECT * FROM `extproveedores` WHERE 1=1";
         if($marca != '') $sql .= " AND `marca` = '$marca'";
         if($tipo != '') $sql .= " AND `tipo` = '$tipo'";
-        if($proveedor != '') $sql .= " AND `id` = '$proveedor'";
         if($placa != '') $sql .= " AND `placa` = '$placa'";
         $sql .= " ORDER BY `nombre` ASC";
         $query = $this->db->prepare($sql);

@@ -2741,7 +2741,7 @@ margin: 0 10px;
 }
 
 .prov_list{
-    grid-template-columns: 4% 10% 14% 5% 25% 10% 15% 11%;
+    grid-template-columns: 4% 10% 14% 5% 25% 10% 15% 11% 5% 5%;
 }
 
 .header{
