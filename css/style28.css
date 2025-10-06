@@ -433,6 +433,9 @@ select, input{
     font-size: medium;
     align-items: center;
     overflow-y: scroll;
+    label{
+        color: var(--bg-font-color);
+    }
 }
 
 .note-body input,
