@@ -16,7 +16,7 @@ document.getElementsByTagName('form')[0].addEventListener('submit',(e) =>{
   const src = success[e.target.title]
   e.preventDefault()
   e.stopImmediatePropagation()
-  const fileTarget = e.target.children[8].files[0] ? e.target.children[8].files[0] : document.getElementById('dropContainer').innerText
+  let fileTarget = e.target.children[8].files[0] ? e.target.children[8].files[0] : document.getElementById('dropContainer').innerText
   document.getElementById('dropContainer').innerText == "Arrastra aqui algún fichero" ? fileTarget = "" : null
   const data = new FormData()
   data.append('id',e.target.children[11].value)

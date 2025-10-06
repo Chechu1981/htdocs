@@ -16,7 +16,7 @@ for(let input = 0;input < $$('input').length; input++) {
 const createScript = () => {
   const newScript = document.createElement('script')
   newScript.type = 'text/javascript'
-  newScript.src = './../js/formNotebook1.js?251002'
+  newScript.src = './../js/formNotebook1.js?251006'
   $('contacts').append(newScript)
 }
 
