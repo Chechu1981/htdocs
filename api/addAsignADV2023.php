@@ -1,7 +1,8 @@
 <?php
 include_once '../connection/data.php';
 $contacts = new Contacts();
-$userFilds = $contacts->getUserBySessid($_POST['session']);
+$idSesion = $_POST['session'];
+$userFilds = $contacts->getUserBySessid($idSesion);
 $user = $userFilds[0][1];
 $puesto = $userFilds[0][4];
 $tratado = "";
@@ -93,6 +94,10 @@ $items = [
     $puesto,
     @$_POST['correo']
 ];
-if($rows != 'ErrorOrigen')
+if($rows != 'ErrorOrigen' && $idSesion != "undefined"){
     $rows = $contacts->newAssigADV2023($items);
-echo $rows;
+    echo $rows;
+}else{
+    if($idSesion == "undefined")
+        header('location: ../index.php');
+}
