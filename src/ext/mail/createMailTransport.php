@@ -25,28 +25,49 @@ $id_pedido = $data['pedido'];
 $marca = $data['marca'];
 $tipo = $data['tipo'];
 $proveedor = $data['proveedor'];
-$placa = $data['placa'];
+$placa = $data['placa'];//Trigrama de la marca
 
 $proveedor = $conexion->getProvExt($marca, $tipo, $proveedor, $placa);
 $correoProveedor = $proveedor[0]['mail'] ?? 'sin correo';
 $recogidaProveedor = $proveedor[0]['recogida'] ?? 'N';
+$direccionProveedor = $proveedor[0]['direccion'] ?? 'desconocido';
 
 $direccionDestino = $DIRECCIONES[$placa] ?? '';
 
+$recogidaProveedor = "<p>Se va ha recibir el siguiente listado de piezas de recambio:</p>";
 if($recogidaProveedor == 'S') {
     $direccionDestino = 'Pasaremos a recoger una vez nos hayan cofirmado que el pedido se encuentre en sus instalaciones';
-    exit;
+    $recogidaProveedor = "<p>Por favor pasad a recoger este pedido a </p><p><strong>$direccionProveedor</strong></p>";
 }
 
 $lineasPedido = $conexion->getExtListByOrder($id_pedido);
+$nombreCliente = $lineasPedido[0]['nombre_cliente'].' ('.$lineasPedido[0]['cliente'].')' ?? 'desconocido';
+$nombreProveedor = $lineasPedido[0]['proveedor'] ?? 'desconocido';
+
 $pedido = '';
 if(count($lineasPedido) == 0) {
     echo 'error';
     exit;
 }
-$pedido .= "<table><tr><td><strong>Referencia</strong></td><td><strong>Descripción:</strong></td><td><strong>Cantidad:</strong></td><td><strong>Precio sin IVA:</strong></td><td><strong>Descuento</strong></td></tr>";
+$pedido .= "<table>
+    <tr>
+        <td><strong>Referencia</strong></td>
+        <td><strong>Descripción:</strong></td>
+        <td><strong>Cantidad:</strong></td>
+        <td><strong>Precio sin IVA:</strong></td>
+        <td><strong>Descuento de compra</strong></td>
+        <td><strong>Descuento de venta</strong></td>
+    </tr>";
 foreach ($lineasPedido as $linea) {
-    $pedido .= "<tr><td>".$linea['referencia']."</td><td>".$linea['designacion']."</td><td>".$linea['cantidad']."</td><td>".number_format($linea['pvp'],2,',','.')." €</td><td>".number_format($linea['dto_compra'],2,',','.')." %</td></tr>";
+    $trigrama = $conexion->crearTrigrama($tipo, $marca, $linea['referencia']); 
+    $pedido .= "<tr>
+            <td>".$trigrama."</td>
+            <td>".$linea['designacion']."</td>
+            <td>".$linea['cantidad']."</td>
+            <td>".number_format($linea['pvp'],2,',','.')." €</td>
+            <td>".number_format($linea['dto_compra'],2,',','.')." %</td>
+            <td>".number_format($linea['dto_venta'],2,',','.')." %</td>
+        </tr>";
 }
 $pedido .= "</table>";
 
@@ -70,7 +91,7 @@ $head = "<head>
             border-bottom: 1px solid #ddd;
         }
         .container {
-            max-width: 600px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
             background-color: #fff;
@@ -135,13 +156,11 @@ $body = "<body>
     </div>
     <div class='content'>
       $saludo
-      <p>Solicito el siguiente listado de piezas de recambio:</p>
+      $recogidaProveedor
       <p><strong>Número de pedido:</strong> $id_pedido</p>
+      <p><strong>Cliente:</strong> $nombreCliente</p>
+      <p><strong>Proveedor:</strong> $nombreProveedor</p>
       $pedido
-      <p><strong>El correo del proveedor es:</strong> $correoProveedor</p>
-      <p><strong>Dirección de envío / recogida:</strong> $direccionDestino</p>
-      <p>Por favor, adjuntar el albarán en este mismo hilo de correos.</p>
-      <p>Quedamos a la espera de su confirmación de pedido y plazo de entrega.</p>
       <p>Gracias y un saludo.</p>
     </div>
     <div class='footer'>

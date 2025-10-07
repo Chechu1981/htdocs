@@ -780,9 +780,13 @@ class Contacts
         return 'ok';
     }
 
+    public function crearTrigrama($tipo, $marca, $referencia){
+        $TRIGRAMA = ['IAM'=>'Z','OEM'=>'M'];
+        return "Z".$TRIGRAMA[$tipo].strtoupper(substr($marca, 0, 3)).strtoupper($referencia);
+    }
+    
     public function create_csv($id_pedido){        
         $FAMILIA = ['CARROCERIAOEM'=>'01M','MECANICAOEM'=>'03M','REMANOEM'=>'40M','CARROCERIAIAM'=>'01Z0','MECANICAIAM'=>'01ZS','REMANIAM'=>'40Z0'];
-        $TRIGRAMA = ['IAM'=>'Z','OEM'=>'M'];
         $data = $this->getExtListByOrder($id_pedido);
         
         // Crear archivo temporal
@@ -820,7 +824,8 @@ class Contacts
             $referencia = strtoupper($data[$i]['referencia']); //referencia
             if($referencia == '')
                 break;
-            array_push($arrayRow,"Z".$TRIGRAMA[$data[$i]['tipo']].strtoupper(substr($data[$i]['marca'], 0, 3)).$referencia); //referencia icar
+            $trigrama = $this->crearTrigrama($data[$i]['tipo'],$data[$i]['marca'],$referencia);
+            array_push($arrayRow,$trigrama); //referencia icar
             array_push($arrayRow,strtoupper($data[$i]['designacion'])); //designacion
             array_push($arrayRow,''); //designacion2
             array_push($arrayRow,'4'); //iva

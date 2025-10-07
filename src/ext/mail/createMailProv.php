@@ -70,7 +70,7 @@ $head = "<head>
             border-bottom: 1px solid #ddd;
         }
         .container {
-            max-width: 600px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
             background-color: #fff;
@@ -138,9 +138,8 @@ $body = "<body>
       <p>Solicito el siguiente listado de piezas de recambio:</p>
       <p><strong>Número de pedido:</strong> $id_pedido</p>
       $pedido
-      <p><strong>El correo del proveedor es:</strong> $correoProveedor</p>
-      <p><strong>Dirección de envío / recogida:</strong> $direccionDestino</p>
-      <p>Por favor, adjuntar el albarán en este mismo hilo de correos.</p>
+      <p><strong>Dirección de envío:</strong> $direccionDestino</p>
+      <p><b>⚠️Por favor, adjuntar el albarán en este mismo hilo de correos.</b></p>
       <p>Quedamos a la espera de su confirmación de pedido y plazo de entrega.</p>
       <p>Gracias y un saludo.</p>
     </div>

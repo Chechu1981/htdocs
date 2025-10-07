@@ -441,7 +441,7 @@ export const validarFormulario = e =>{
   return true
 }
 
-export const enviarCorreoAlProveedor = e =>{
+export const enviarCorreoAlProveedor = () =>{
   let date = new Date()
   let lineas = []
   let lineasPedidoEnCurso = $('prov0').childNodes[3].childNodes
@@ -470,8 +470,32 @@ export const enviarCorreoAlProveedor = e =>{
       'tipo': $('tipo0').value
     })
   })
-  .then(res => res.text())
-  .then(res => {
-    customAlert('Correo enviado correctamente')
+}
+
+export const enviarCorreoGestion = () =>{
+  fetch(`${src}/src/ext/mail/createMailGestion.php`,{
+    method: 'POST',
+    body: JSON.stringify({
+      'placa': $('destino').value,
+      'proveedor': $('proveedor0').value,
+      'usuario': user.hash,
+      'pedido': $('numPedido').innerText,
+      'marca': $('marca0').value,
+      'tipo': $('tipo0').value
+    })
+  })
+}
+
+
+export const enviarCorreoTransporte = () =>{
+  fetch(`${src}/src/ext/mail/createMailTransport.php`,{
+    method: 'POST',
+    body: JSON.stringify({
+      'placa': $('destino').value,
+      'usuario': user.hash,
+      'pedido': $('numPedido').innerText,
+      'marca': $('marca0').value,
+      'tipo': $('tipo0').value
+    })
   })
 }

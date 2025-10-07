@@ -1,6 +1,6 @@
 'use strict'
 import { buscarCliente } from "../../js/alertsAssigns.js?106"
-import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor, actualizarPedidoLineas, validarFormulario } from "./ExtApi.js?106"
+import { cargarProveedor, crearLineas, actualizarPedido, enviarCorreoAlProveedor, enviarCorreoGestion, enviarCorreoTransporte, actualizarPedidoLineas, validarFormulario } from "./ExtApi.js?106"
 
 const numPedido = document.location.search.split('=')[1]
 
@@ -13,13 +13,44 @@ $('new').addEventListener('click',()=>{
   document.location.href = '../extbrand.php'
 })
 
+const bloquearPedido = (lineas) => {
+  $('addOrder').style.display = 'none'
+  $('addLine').style.display = 'none'
+  $('selectProv').style.display = 'none'
+  $('coment').setAttribute('disabled','true')
+  $('client').setAttribute('disabled','true')
+  $('destino').setAttribute('disabled','true')
+  $('envio').setAttribute('disabled','true')
+  $('marca0').setAttribute('disabled','true')
+  $('tipo0').setAttribute('disabled','true')
+  $('proveedor0').setAttribute('disabled','true')
+  for(let i = 0; i < lineas; i++){
+    $(`ref${i}`).setAttribute('disabled','true')
+    $(`comentLine${i}`).setAttribute('disabled','true')
+    $(`units${i}`).setAttribute('disabled','true')
+    $(`familyParts${i}`).setAttribute('disabled','true')
+    $(`pvp${i}`).setAttribute('disabled','true')
+    $(`dtoCompra${i}`).setAttribute('disabled','true')
+    $(`dtoVenta${i}`).setAttribute('disabled','true')
+  }
+  for(let img of document.querySelectorAll('img')){
+    if(img.id.substring(0,6) == 'delete')
+      img.style.display = 'none'
+  }
+}
+
 //Cargo la cabecera del pedido
 document.addEventListener('DOMContentLoaded', () => {
+  let numLineas = 0
   fetch(`../../api/getExtAllOrdersById.php?id=${numPedido}`)
   .then(response => response.json())
   .then(data => {
     $('client').value = data[0].cliente.split('-')[0] ?? ''
     $('coment').innerText = data[0].comentario
+    let enviado = false
+    if(data[0].conf_pedido != null)
+      enviado = true
+    
     let envio = data[0]['cliente'].split('-')[1] == "" ? '0' : data[0]['cliente'].split('-')[1].split(' ')[0] ?? ''
     if(envio != ''){
       $('envio').innerHTML = `<option value="${envio}">${envio}</option>`
@@ -29,31 +60,33 @@ document.addEventListener('DOMContentLoaded', () => {
     //Cargo las lineas del  pedido
     fetch(`../../api/getExtOrderLines.php?id=${numPedido}`)
     .then(response => response.json())
-    .then(data => {
-      if(data.length <= 0)
+    .then(dataLinea => {
+      numLineas = dataLinea.length
+      if(dataLinea.length <= 0)
         return
-      
-      cargarProveedor(data[0].tipo, data[0].marca, data[0].proveedor, $('tipo0'), $('marca0'), $('proveedor0'))
+      cargarProveedor(dataLinea[0].tipo, dataLinea[0].marca, dataLinea[0].proveedor, $('tipo0'), $('marca0'), $('proveedor0'))
       for(let tipos of $('tipo0').childNodes){
-        if(tipos.value == data[0].tipo)
+        if(tipos.value == dataLinea[0].tipo)
           tipos.selected = true
       }
       for(let marcas of $('marca0').childNodes){
-        if(marcas.value == data[0].marca)
+        if(marcas.value == dataLinea[0].marca)
           marcas.selected = true
       }
       for(let proveedores of $('proveedor0').childNodes){
-        if(proveedores.value == data[0].proveedor)
+        if(proveedores.value == dataLinea[0].proveedor)
           proveedores.selected = true
       }
-      $('tipo0').value = data[0].tipo
-      data.forEach(linea => {
+      $('tipo0').value = dataLinea[0].tipo
+      dataLinea.forEach(linea => {
         for (let element of $('destino').childNodes) {
           if (element.value == linea.placa)
             element.selected = true
         }
         crearLineas('0',linea)
       })
+      if(enviado)
+        bloquearPedido(numLineas)
     })
   })
 })
@@ -139,7 +172,11 @@ $('addOrder').addEventListener('click', e =>{
   .then(res => {
     if(res === 'Fichero creado correctamente\nok'){
       customAlert('Pedido creado correctamente')
-      enviarCorreoAlProveedor()
+      if($('proveedor0').value != 'AUTOPARTS')
+        enviarCorreoAlProveedor()
+      enviarCorreoGestion()
+      enviarCorreoTransporte()
+      bloquearPedido(document.querySelectorAll('[id^="ref"]').length)
     }else{
       customAlert('Error al crear el pedido')
     }
