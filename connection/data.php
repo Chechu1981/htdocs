@@ -126,9 +126,9 @@ class Contacts
         return 'ok';
     }
 
-    public function addNewProv($name,$addres,$email){
-        $sql = "INSERT INTO `extproveedores` (`nombre`, `direccion`, `mail`) VALUES 
-            ('$name', '$addres', '$email')";
+    public function addNewProv($name,$addres,$email,$placa,$id_prov,$marca,$tipo,$telefono,$entrega){
+        $sql = "INSERT INTO `extproveedores` (`nombre`, `direccion`, `mail`, `placa`, `id_prov`, `marca`, `tipo`, `tlf`, `recogida`) VALUES 
+            ('$name', '$addres', '$email', '$placa', '$id_prov', '$marca', '$tipo', '$telefono', '$entrega')";
         $query = $this->db->prepare($sql);
         $query->execute();
     }
@@ -150,11 +150,17 @@ class Contacts
         $query->execute();
     }
 
-    public function updateProv($id,$name,$addres,$email){
+    public function updateProv($id,$name,$addres,$email,$placa,$id_prov,$marca,$tipo,$telefono,$entrega){
         $sql = "UPDATE `extproveedores` SET 
         `nombre` = '$name', 
         `direccion` = '$addres',
-        `mail` = '$email' 
+        `mail` = '$email',
+        `placa` = '$placa',
+        `id_prov` = '$id_prov',
+        `marca` = '$marca',
+        `tipo` = '$tipo',
+        `tlf` = '$telefono',
+        `recogida` = '$entrega'
         WHERE `id` = $id";
         $query = $this->db->prepare($sql);
         $query->execute();

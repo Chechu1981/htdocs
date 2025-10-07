@@ -13,9 +13,15 @@ document.getElementsByTagName('form')[0].addEventListener('submit', (event) => {
     return null
   }
   const datos = new FormData()
+    datos.append('placa', $('placa').value)
     datos.append('nombre', nombre)
+    datos.append('id_prov', $('nprov').value)
+    datos.append('marca', $('marca').value)
+    datos.append('tipo', $('tipo').value)
     datos.append('email', email)
+    datos.append('telefono', $('tlf').value)
     datos.append('direccion', direccion)
+    datos.append('entrega', $('entrega').checked ? 'S' : 'N')
     if(method == 'new'){
       fetch('/../api/addNewProv.php',{
         method: 'POST',
