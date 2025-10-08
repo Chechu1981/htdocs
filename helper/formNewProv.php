@@ -249,6 +249,7 @@
                 <option value="PONTIAC">Pontiac</option>
                 <option value="PORSCHE">Porsche</option>
                 <option value="PROTON">Proton</option>
+                <option value="PSAG">Stellantis</option>
                 <option value="PUCH">Puch</option>
                 <option value="RAM">RAM</option>
                 <option value="REGIS">Regis</option>
