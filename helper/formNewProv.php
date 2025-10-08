@@ -50,7 +50,7 @@
               <optgroup label="Otras Marcas">
                 <option value="9FF">9ff</option>
                 <option value="ABARTH">Abarth</option>
-                <option value="AC">AC</option>
+                <option value="ACA">AC</option>
                 <option value="ACM">ACM</option>
                 <option value="ACURA">Acura</option>
                 <option value="AIWAYS">Aiways</option>
@@ -191,7 +191,7 @@
                 <option value="LEAPMOTOR">Leapmotor</option>
                 <option value="LEVC">LEVC</option>
                 <option value="LEXUS">Lexus</option>
-                <option value="LI">Li</option>
+                <option value="LIA">Li</option>
                 <option value="LIFAN">Lifan</option>
                 <option value="LIGIER">Ligier</option>
                 <option value="LINCOLN">Lincoln</option>
@@ -201,7 +201,7 @@
                 <option value="LOTUS">Lotus</option>
                 <option value="LUCID">Lucid</option>
                 <option value="LYNK_CO">Lynk &amp; Co</option>
-                <option value="M_ERO">M-Ero</option>
+                <option value="MERO">M-Ero</option>
                 <option value="MAHINDRA">Mahindra</option>
                 <option value="MAN">MAN</option>
                 <option value="MANSORY">Mansory</option>
@@ -217,7 +217,7 @@
                 <option value="MELEX">Melex</option>
                 <option value="MERCEDES_BENZ">Mercedes-Benz</option>
                 <option value="MERCURY">Mercury</option>
-                <option value="MG">MG</option>
+                <option value="MGA">MG</option>
                 <option value="MICRO">Micro</option>
                 <option value="MICROCAR">Microcar</option>
                 <option value="MILITEM">Militem</option>
@@ -229,7 +229,7 @@
                 <option value="MOBILIZE">MOBILIZE</option>
                 <option value="MORGAN">MORGAN</option>
                 <option value="MOSKVICH">Moskvich</option>
-                <option value="MP_LAFER">MP Lafer</option>
+                <option value="MPLAFER">MP Lafer</option>
                 <option value="MPM_MOTORS">MPM Motors</option>
                 <option value="NIO">NIO</option>
                 <option value="NISSAN">Nissan</option>

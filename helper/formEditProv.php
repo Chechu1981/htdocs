@@ -51,10 +51,13 @@
                 } ?>
               </optgroup>
               <optgroup label="Otras Marcas">
-                <?php foreach($marcas as $marca){ 
+                <?php foreach($marcas as $marca){
+                  $marca_value = str_replace('-','',str_replace('.','',str_replace(" ", "", $marca)));
+                  if(strlen($marca) < 3)
+                    $marca_value = $marca.'A';
                   if(!in_array($marca, $marcasTop)){
                     $selected = ($userData[0][2] == $marca) ? 'selected' : '';
-                    echo "<option value='$marca' $selected>$marca</option>";
+                    echo "<option value='$marca_value' $selected>$marca</option>";
                   }
                 } ?>
               </optgroup>
