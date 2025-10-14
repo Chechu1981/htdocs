@@ -204,7 +204,7 @@ $("configBtn").addEventListener('click', (e) => {
     modal(res,"Configuración")
     const newScript = document.createElement('script')
     newScript.type = 'text/javascript'
-    newScript.src = '../../js/config11.js?1005'
+    newScript.src = '../../js/config11.js?251014'
     $('contacts').append(newScript)
   })
 })

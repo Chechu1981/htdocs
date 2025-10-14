@@ -26,104 +26,100 @@ if(typeof(href) != "object"){
     window.location.href = src + href[pagina] + window.location.search
   }
 
-  $('mails').addEventListener('click', () => {
-    fetch(src + href['mails'], {
-      method: 'GET'
-    })
-    .then(response => response.text())
-    .then(html => {
-      modalWindow.innerHTML = html  
-      $$('h2')[0].innerText = 'Configuración de Correos'
-      $('config').addEventListener('click', centroBtn =>{
-        if(centroBtn.target.title != 'Centros') return
-        const centroData = new FormData()
-        centroData.append('title', centroBtn.target.innerText)
-        fetch(src + href['Centros'], {
-          method: 'POST',
-          body: centroData
-        })
-        .then(response => response.text())
-        .then(html => {
-          modalWindow.innerHTML = html
-          $("save").addEventListener('click', e => {
-            const data = new FormData()
-            data.append('center', $$('H2')[1].innerText)
-            data.append('cc', $('cc').value)
-            data.append('bcc', $('bcc').value)
-            data.append('fcc', $('fcc').value)
-            data.append('origen', $('origen').value)
-            fetch(src + 'api/saveMails.php',{
-              method: 'POST',
-              body: data
-            })
-            .then(response => response.text())
-            .then(res =>{
-              window.location.reload()
+  const privilegio = $('mails') == null ? 1 : 100
+
+  if(privilegio == 100){
+    $('mails').addEventListener('click', () => {
+      fetch(src + href['mails'], {
+        method: 'GET'
+      })
+      .then(response => response.text())
+      .then(html => {
+        modalWindow.innerHTML = html  
+        $$('h2')[0].innerText = 'Configuración de Correos'
+        $('config').addEventListener('click', centroBtn =>{
+          if(centroBtn.target.title != 'Centros') return
+          const centroData = new FormData()
+          centroData.append('title', centroBtn.target.innerText)
+          fetch(src + href['Centros'], {
+            method: 'POST',
+            body: centroData
+          })
+          .then(response => response.text())
+          .then(html => {
+            modalWindow.innerHTML = html
+            $("save").addEventListener('click', e => {
+              const data = new FormData()
+              data.append('center', $$('H2')[1].innerText)
+              data.append('cc', $('cc').value)
+              data.append('bcc', $('bcc').value)
+              data.append('fcc', $('fcc').value)
+              data.append('origen', $('origen').value)
+              fetch(src + 'api/saveMails.php',{
+                method: 'POST',
+                body: data
+              })
+              .then(response => response.text())
+              .then(res =>{
+                window.location.reload()
+              })
             })
           })
         })
       })
     })
-  })
 
-  $('alertas').addEventListener('click', e =>{
-    fetch(src + href['alertas'], {
-        method: 'POST'
-    })
-    .then(response => response.text())
-    .then(html => {
-      modalWindow.innerHTML = html
-      $$('h2')[0].innerText = 'Configuración de Alertas'
-      if($('swhBtn')!=null){
-        $('saveAlert').addEventListener('click',() => {
-          const data = new FormData()
-          data.append('active',$('chkBtn').checked == true ? "1" : "0")
-          data.append('coment',$('txtNotes').value)
-          fetch(src + 'api/updateStatusSwitch.php',{
-            method: 'POST',
-            body: data
+    $('alertas').addEventListener('click', e =>{
+      fetch(src + href['alertas'], {
+          method: 'POST'
+      })
+      .then(response => response.text())
+      .then(html => {
+        modalWindow.innerHTML = html
+        $$('h2')[0].innerText = 'Configuración de Alertas'
+        if($('swhBtn')!=null){
+          $('saveAlert').addEventListener('click',() => {
+            const data = new FormData()
+            data.append('active',$('chkBtn').checked == true ? "1" : "0")
+            data.append('coment',$('txtNotes').value)
+            fetch(src + 'api/updateStatusSwitch.php',{
+              method: 'POST',
+              body: data
+            })
+            .then(response =>{
+              window.location.reload()
+            })
           })
-          .then(response =>{
-            window.location.reload()
+          $('swhBtn').addEventListener('click',() => {
+            $('swhBtn').classList.toggle('switchOn')
+            $('swhBtn').classList.toggle('switchOff')
+            $('alertRibon').classList.toggle('alertHiden')
+            $('chkBtn').click()
           })
-        })
-        $('swhBtn').addEventListener('click',() => {
-          $('swhBtn').classList.toggle('switchOn')
-          $('swhBtn').classList.toggle('switchOff')
-          $('alertRibon').classList.toggle('alertHiden')
-          $('chkBtn').click()
-        })
-      }
+        }
+      })
     })
-  })
-    
-  $('usuarios').addEventListener('click', () => {
-    cargar_pagina('usuarios')
-  })
+      
+    $('usuarios').addEventListener('click', () => {
+      cargar_pagina('usuarios')
+    })
 
-  $('rutas').addEventListener('click', () => {
-    cargar_pagina('rutas')
-  })
+    $('tarifa').addEventListener('click', () => {
+      cargar_pagina('tarifa')
+    })
 
-  $('tarifa').addEventListener('click', () => {
-    cargar_pagina('tarifa')
-  })
+    $('proveedores').addEventListener('click', () => {
+      cargar_pagina('proveedores')
+    })
 
-  $('proveedores').addEventListener('click', () => {
-    cargar_pagina('proveedores')
-  })
+    $('clientes').addEventListener('click', () => {
+      cargar_pagina('clientes')
+    })
 
-  $('clientes').addEventListener('click', () => {
-    cargar_pagina('clientes')
-  })
-
-  $('pending').addEventListener('click', () => {
-    cargar_pagina('pending')
-  })
-
-  $('update_repere').addEventListener('click', () => {
-    cargar_pagina('repere')
-  })
+    $('pending').addEventListener('click', () => {
+      cargar_pagina('pending')
+    })
+  }
 
   // Personalizar colores del tema
   $('changeColor').addEventListener('click',(e) => {
@@ -177,46 +173,54 @@ if(typeof(href) != "object"){
       })
     })
   })
-}
 
-function componentToHex(c) {
-  let num = parseInt(c)
-  let hex = num.toString(16);
-  return hex.length == 1 ? "0" + hex : hex;
-}
+  $('rutas').addEventListener('click', () => {
+    cargar_pagina('rutas')
+  })
 
-function rgbToHex(rgb) {
-  let color = rgb.replace('rgb(','')
-  color = color.replace(')','')
-  let r = color.split(',')[0]
-  let g = color.split(',')[1]
-  let b = color.split(',')[2]
-  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
+  $('update_repere').addEventListener('click', () => {
+    cargar_pagina('repere')
+  })
 
-function hexToHSL(hex) {
-  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-    r = parseInt(result[1], 16)
-    g = parseInt(result[2], 16)
-    b = parseInt(result[3], 16)
-    r /= 255, g /= 255, b /= 255
-    var max = Math.max(r, g, b), min = Math.min(r, g, b)
-    var h, s, l = (max + min) / 2
-    if(max == min){
-      h = s = 0; // achromatic
-    }else{
-      var d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-      switch(max){
-        case r: h = (g - b) / d + (g < b ? 6 : 0); break
-        case g: h = (b - r) / d + 2; break
-        case b: h = (r - g) / d + 4; break
+  function componentToHex(c) {
+    let num = parseInt(c)
+    let hex = num.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+
+  function rgbToHex(rgb) {
+    let color = rgb.replace('rgb(','')
+    color = color.replace(')','')
+    let r = color.split(',')[0]
+    let g = color.split(',')[1]
+    let b = color.split(',')[2]
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+  }
+
+  function hexToHSL(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+      r = parseInt(result[1], 16)
+      g = parseInt(result[2], 16)
+      b = parseInt(result[3], 16)
+      r /= 255, g /= 255, b /= 255
+      var max = Math.max(r, g, b), min = Math.min(r, g, b)
+      var h, s, l = (max + min) / 2
+      if(max == min){
+        h = s = 0; // achromatic
+      }else{
+        var d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+        switch(max){
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break
+          case g: h = (b - r) / d + 2; break
+          case b: h = (r - g) / d + 4; break
+        }
+        h /= 6
       }
-      h /= 6
-    }
-  var HSL = new Object()
-  HSL['h']=h
-  HSL['s']=s
-  HSL['l']=l
-  return HSL
+    var HSL = new Object()
+    HSL['h']=h
+    HSL['s']=s
+    HSL['l']=l
+    return HSL
+  }
 }
