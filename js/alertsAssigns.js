@@ -1,4 +1,13 @@
-const rutasDirectas = ["12753","12753-5","105250","105250-2"]
+const rutasDirectas = [
+  {code:"12753", hours:"14:00 y 17:00 --> 4:00"},
+  {"code":"105250", hours:"14:00 y 17:00 --> 4:00"},
+  {"code":"12754-1", hours:"13:00 y 17:00 --> 3:30"},
+  {"code":"105253-1", hours:"13:00 y 17:00 --> 3:30"},
+  {"code":"12750-1", hours:"18:00 --> 9:00"},
+  {"code":"105249-1", hours:"18:00 --> 9:00"},
+  {"code":"12849-1", hours:"19:00 --> 3:30"},
+  {"code":"105228-1", hours:"19:00 --> 3:30"}
+]
 const rutasPreguntar = ["6254-1","78713-1"]
 const rutasPortes = ["12874","14079-1","14101-1","6280-1","14086-1","105247-1","105511-1","105400-1","78665-1","78713-1","105311-1"]
 const rutasProhibidas = []
@@ -8,8 +17,8 @@ export function isAlertRoutes(route){
   pclient.classList.remove('route')
   let encontrado
   let mensaje = ''
-  rutasDirectas.filter(rutas => {
-    if(rutas.includes(route)){
+  rutasDirectas.map(rutas => {
+    if(rutas.code.includes(route)){  
       encontrado = route
       mensaje = "Ruta"
       pclient.classList.add('route')
@@ -41,7 +50,6 @@ export function isAlertRoutes(route){
 }
 
 export const cesiones = (origen, destino,nfm,seg) =>{
-  $('newTitle').innerText = `${origen}>${destino}`
   let cesion = null
   origen != destino ? cesion = origen + '' + destino:''
   seg ? cesion += 'SEG' :''
@@ -52,13 +60,20 @@ export const cesiones = (origen, destino,nfm,seg) =>{
     customAlert("🚫No se pueden hacer cesiones en Granada hasta el lunes.")
     pclient.innerText = `🚫Prohibido`
     return
-  }*/
-  fetch('../json/cesionesCliente.json?107',
+    }*/
+   fetch('../json/cesionesCliente.json?107',
     {cache: "reload"}
   )
   .then(response => response.json())
   .then(response => {
     const numDest = response[cesion]
+    $('newTitle').innerText = `${origen} → ${destino}`
+    rutasDirectas.map(ruta => {
+      if(ruta.code.includes(numDest)){
+        $('newTitle').innerText = `${ruta.hours}`
+        return
+      }
+    })
     let alerta = ""
     if(origen != 'MAT' || origen != 'EXT')
       alerta = isAlertRoutes(numDest)
