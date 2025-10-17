@@ -34,10 +34,11 @@ $direccionProveedor = $proveedor[0]['direccion'] ?? 'desconocido';
 
 $direccionDestino = $DIRECCIONES[$placa] ?? '';
 
-$recogidaProveedor = "<p>Se va ha recibir el siguiente listado de piezas de recambio:</p>";
+$recogidaProveedor = "<p>Se va a recibir el siguiente listado de piezas de recambio enviadas por el proveedor $proveedor:</p>";
 if($recogidaProveedor == 'S') {
-    $direccionDestino = 'Pasaremos a recoger una vez nos hayan cofirmado que el pedido se encuentre en sus instalaciones';
-    $recogidaProveedor = "<p>Por favor pasad a recoger este pedido a </p><p><strong>$direccionProveedor</strong></p>";
+    $direccionDestino = '<p>Le agradecemos que procedan a recoger las piezas de recambio del siguiente listado el próximo día '.$data['fechaRecogida'].' en el proveedor 
+    <strong>'.$proveedor.'</strong> en la dirección: <strong>'.$direccionProveedor.'</strong>';
+    $recogidaProveedor = "en la dirección <strong>$direccionProveedor</strong></p>";
 }
 
 $lineasPedido = $conexion->getExtListByOrder($id_pedido);
@@ -157,7 +158,6 @@ $body = "<body>
     <div class='content'>
       $saludo
       $recogidaProveedor
-      <p><strong>Número de pedido:</strong> $id_pedido</p>
       <p><strong>Cliente:</strong> $nombreCliente</p>
       <p><strong>Proveedor:</strong> $nombreProveedor</p>
       $pedido

@@ -153,12 +153,12 @@ $body = "<body>
     </div>
     <div class='content'>
       $saludo
-      <p>Se va ha recibir el siguiente listado de piezas de recambio:</p>
-      <p><strong>Número de pedido:</strong> $id_pedido</p>
-      <p><strong>Cliente:</strong> $nombreCliente</p>
+      <p>Se ha realizado la siguiente compra de piezas locales:</p>
       <p><strong>Proveedor:</strong> $nombreProveedor</p>
+      <p><strong>Marca:</strong> $marca</p>
       $pedido
-      <p>Por favor, cread el pedido una vez las referencias estén disponibles en ICAR.</p>
+      <p><strong>Cliente:</strong> $nombreCliente</p>
+      <p>Ya hemos procedido a la creación de las referencias. Por favor, cread el pedido, una vez que las referencias estén ya disponibles en ICAR.</p>
       <p>Gracias y un saludo.</p>
     </div>
     <div class='footer'>
