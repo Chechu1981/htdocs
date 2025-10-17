@@ -33,8 +33,9 @@ $recogidaProveedor = $proveedor[0]['recogida'] ?? 'N';
 
 $direccionDestino = $DIRECCIONES[$placa] ?? '';
 
+$mensajeRecogida = 'Quedamos a la espera del envío del pedido.';
 if($recogidaProveedor == 'S') {
-    $direccionDestino = 'Pasaremos a recoger una vez nos hayan cofirmado que el pedido se encuentre en sus instalaciones';
+    $mensajeRecogida = 'Le agradecemos que proceda a la preparación del pedido para su recogida por PPCR en sus instalaciones.';
     exit;
 }
 
@@ -44,9 +45,23 @@ if(count($lineasPedido) == 0) {
     echo 'error';
     exit;
 }
-$pedido .= "<table><tr><td><strong>Referencia</strong></td><td><strong>Descripción:</strong></td><td><strong>Cantidad:</strong></td><td><strong>Precio sin IVA:</strong></td><td><strong>Descuento</strong></td></tr>";
+$pedido .= "<table>
+    <tr>
+        <td><strong>Referencia</strong></td>
+        <td><strong>Descripción</strong></td>
+        <td><strong>Cantidad</strong></td>
+        <td><strong>Precio sin IVA</strong></td>
+        <td><strong>Descuento</strong></td>
+    </tr>";    
 foreach ($lineasPedido as $linea) {
-    $pedido .= "<tr><td>".$linea['referencia']."</td><td>".$linea['designacion']."</td><td>".$linea['cantidad']."</td><td>".number_format($linea['pvp'],2,',','.')." €</td><td>".number_format($linea['dto_compra'],2,',','.')." %</td></tr>";
+    $pedido .= "
+    <tr>
+        <td>".$linea['referencia']."</td>
+        <td>".$linea['designacion']."</td>
+        <td>".$linea['cantidad']."</td>
+        <td>".number_format($linea['pvp'],2,',','.')." €</td>
+        <td>".number_format($linea['dto_compra'],2,',','.')." %</td>
+    </tr>";
 }
 $pedido .= "</table>";
 
@@ -134,14 +149,15 @@ $body = "<body>
       <img src='https://ppcr.es/img/Logo-PPCR-2022.png' width='100' alt='ChechuParts'>
     </div>
     <div class='content'>
-      $saludo
-      <p>Solicito el siguiente listado de piezas de recambio:</p>
-      <p><strong>Número de pedido:</strong> $id_pedido</p>
-      $pedido
-      <p><strong>Dirección de envío:</strong> $direccionDestino</p>
-      <p><b>⚠️Por favor, adjuntar el albarán en este mismo hilo de correos.</b></p>
-      <p>Quedamos a la espera de su confirmación de pedido y plazo de entrega.</p>
-      <p>Gracias y un saludo.</p>
+        $saludo
+        <p>Le confirmo el pedido de las siguientes piezas de recambio:</p>
+        $pedido
+        <p><strong>Razón Social:</strong> Placa de Piezas y Componentes de Recambio (PPCR)  $placa</p>
+        <p><strong>CIF:</strong> A87527800</p>
+        <p><strong>Dirección de facturación:</strong> $direccionDestino</p>
+        <p><b>⚠️Por favor, adjuntar el albarán en este mismo hilo de correos.</b></p>
+        <p>$mensajeRecogida</p>
+        <p>Gracias y un saludo.</p>
     </div>
     <div class='footer'>
       ChechuParts &copy; 2022
@@ -169,6 +185,6 @@ $mail->Subject    = 'Nuevo pedido PPCR Otras Marcas'; //$_POST['asunto'];
 $mail->MsgHTML($head.$body);
 
 $mail->AddAddress('jesusjulian.martin@stellantis.com', 'NewUser'); //Colocar el correo del proveedor
-$mail->AddCC('otro@ejemplo.com', 'Otro Usuario');
+$mail->AddCC('joseantonio.melchor@stellantis.com', 'Otro Usuario');
 $mail->send();
 ?>

@@ -41,6 +41,7 @@ if($recogidaProveedor == 'S') {
 $lineasPedido = $conexion->getExtListByOrder($id_pedido);
 $nombreCliente = $lineasPedido[0]['nombre_cliente'].' ('.$lineasPedido[0]['cliente'].')';
 $nombreProveedor = $lineasPedido[0]['proveedor'] ?? 'desconocido';
+$marcaProveedor = $lineasPedido[0]['marca'] ?? 'desconocido';
 $pedido = '';
 if(count($lineasPedido) == 0) {
     echo 'error';
@@ -153,9 +154,9 @@ $body = "<body>
     </div>
     <div class='content'>
       $saludo
-      <p>Se ha realizado la siguiente compra de piezas locales:</p>
+      <p>Se ha realizado la siguiente compra de piezas locales.</p>
       <p><strong>Proveedor:</strong> $nombreProveedor</p>
-      <p><strong>Marca:</strong> $marca</p>
+      <p><strong>Marca:</strong> $marcaProveedor</p>
       $pedido
       <p><strong>Cliente:</strong> $nombreCliente</p>
       <p>Ya hemos procedido a la creación de las referencias. Por favor, cread el pedido, una vez que las referencias estén ya disponibles en ICAR.</p>
@@ -187,6 +188,6 @@ $mail->Subject    = 'Nuevo pedido PPCR Otras Marcas'; //$_POST['asunto'];
 $mail->MsgHTML($head.$body);
 
 $mail->AddAddress('jesusjulian.martin@stellantis.com', 'NewUser'); //Colocar el correo del proveedor
-$mail->AddCC('otro@ejemplo.com', 'Otro Usuario');
+$mail->AddCC('joseantonio.melchor@stellantis.com', 'Otro Usuario');
 $mail->send();
 ?>

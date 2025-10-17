@@ -10,7 +10,7 @@
     .nav-menu{
         display: grid !important;
         gap: 0 !important;
-        grid-template-columns: 11% 10% 11% 14% 16% 15% 11% 11% !important;
+        grid-template-columns: 11% 10% 11% 14% 17% 16% 11% 11% !important;
     }
 
     .head-img section{

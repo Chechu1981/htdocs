@@ -24,21 +24,21 @@ $usuario = $data['usuario'];
 $id_pedido = $data['pedido'];
 $marca = $data['marca'];
 $tipo = $data['tipo'];
-$proveedor = $data['proveedor'];
+$proveedorForm = $data['proveedor'];
 $placa = $data['placa'];//Trigrama de la marca
 
-$proveedor = $conexion->getProvExt($marca, $tipo, $proveedor, $placa);
+$proveedor = $conexion->getProvExt($marca, $tipo, $proveedorForm, $placa);
+$nombreProveedor = $proveedor[0]['nombre'] ?? 'desconocido';
 $correoProveedor = $proveedor[0]['mail'] ?? 'sin correo';
 $recogidaProveedor = $proveedor[0]['recogida'] ?? 'N';
 $direccionProveedor = $proveedor[0]['direccion'] ?? 'desconocido';
 
 $direccionDestino = $DIRECCIONES[$placa] ?? '';
 
-$recogidaProveedor = "<p>Se va a recibir el siguiente listado de piezas de recambio enviadas por el proveedor $proveedor:</p>";
+$mensajeProveedor = "<p>Se va a recibir el siguiente listado de piezas de recambio enviadas por el proveedor $nombreProveedor:</p>";
 if($recogidaProveedor == 'S') {
-    $direccionDestino = '<p>Le agradecemos que procedan a recoger las piezas de recambio del siguiente listado el próximo día '.$data['fechaRecogida'].' en el proveedor 
-    <strong>'.$proveedor.'</strong> en la dirección: <strong>'.$direccionProveedor.'</strong>';
-    $recogidaProveedor = "en la dirección <strong>$direccionProveedor</strong></p>";
+    $mensajeProveedor = '<p>Le agradecemos que procedan a recoger las piezas de recambio del siguiente listado el próximo día '.$data['fechaRecogida'].' en el proveedor 
+    <strong>'.$nombreProveedor.'</strong> en la dirección: <strong>'.$direccionProveedor.'</strong>';
 }
 
 $lineasPedido = $conexion->getExtListByOrder($id_pedido);
@@ -52,12 +52,10 @@ if(count($lineasPedido) == 0) {
 }
 $pedido .= "<table>
     <tr>
-        <td><strong>Referencia</strong></td>
-        <td><strong>Descripción:</strong></td>
-        <td><strong>Cantidad:</strong></td>
-        <td><strong>Precio sin IVA:</strong></td>
-        <td><strong>Descuento de compra</strong></td>
-        <td><strong>Descuento de venta</strong></td>
+        <td><strong>Referencia PPCR</strong></td>
+        <td><strong>Descripción</strong></td>
+        <td><strong>Cantidad</strong></td>
+        <td><strong>Referencia Proveedor</strong></td>
     </tr>";
 foreach ($lineasPedido as $linea) {
     $trigrama = $conexion->crearTrigrama($tipo, $marca, $linea['referencia']); 
@@ -65,9 +63,7 @@ foreach ($lineasPedido as $linea) {
             <td>".$trigrama."</td>
             <td>".$linea['designacion']."</td>
             <td>".$linea['cantidad']."</td>
-            <td>".number_format($linea['pvp'],2,',','.')." €</td>
-            <td>".number_format($linea['dto_compra'],2,',','.')." %</td>
-            <td>".number_format($linea['dto_venta'],2,',','.')." %</td>
+            <td>".$linea['referencia']."</td>
         </tr>";
 }
 $pedido .= "</table>";
@@ -157,7 +153,7 @@ $body = "<body>
     </div>
     <div class='content'>
       $saludo
-      $recogidaProveedor
+      $mensajeProveedor
       <p><strong>Cliente:</strong> $nombreCliente</p>
       <p><strong>Proveedor:</strong> $nombreProveedor</p>
       $pedido
@@ -189,6 +185,6 @@ $mail->Subject    = 'Nuevo pedido PPCR Otras Marcas'; //$_POST['asunto'];
 $mail->MsgHTML($head.$body);
 
 $mail->AddAddress('jesusjulian.martin@stellantis.com', 'NewUser'); //Colocar el correo del proveedor
-$mail->AddCC('otro@ejemplo.com', 'Otro Usuario');
+$mail->AddCC('joseantonio.melchor@stellantis.com', 'Otro Usuario');
 $mail->send();
 ?>
