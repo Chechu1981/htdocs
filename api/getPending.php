@@ -3,7 +3,7 @@ include_once '../connection/data.php';
 $fileCsvName = md5(date("U"));
 $fp = fopen('../csv/'.$fileCsvName.'.csv', 'w');
 $list = array(['Fecha Pedido','Referencia','Cantidad','Descripcion','Fiabilidad','N reclamacion','VIN','Comentario','Fentrega','D. Entrega']);
-$listFive = array(['Fecha Pedido','Referencia','Cantidad','Descripcion','Fiabilidad','N reclamacion','VIN','Comentario','Fentrega','D. Entrega','N_Cuenta','Razon','Placa']);
+$listFive = array(['Fecha Pedido','Referencia','Cantidad','Descripcion','Fiabilidad','N reclamacion','VIN','Comentario','Tipo de solucion','Fentrega','D. Entrega','N_Cuenta','Razon','Placa']);
 $charsetClear = array("'",'"',"#","-");
 $NPLACAS = array(
     "027130L"=>"PALMA",
@@ -48,7 +48,7 @@ if(count($rows) > 0){
             $placaNum = explode('SPD ',$row[14]);
             $placaCesion = $NPLACAS[$placaNum[1]];
         }
-        if($_POST['cliente'] == '5000'){
+        if($_POST['cliente'] == '5000' || $_POST['cliente'] == 1000){
             array_push($listFive,['fecha_Pedido'=>$row[1],
                 'referencia'=>$row[4],
                 'cantidad'=>$row[10],
@@ -57,6 +57,7 @@ if(count($rows) > 0){
                 'nreclamacion'=>$row[8],
                 'vin'=>$row[9],
                 'comentario'=>$row[13],
+                'solucion'=>$row[14],
                 'fentrega'=>$fentrega,
                 'cuenta'=>@$ncliente[1],
                 'n_cliente'=>$row[2],
@@ -97,7 +98,7 @@ if(count($rows) > 0){
 }else{
     $htmlList .= "No hay coincidencias";
 }
-if($_POST['cliente'] == '5000'){
+if($_POST['cliente'] == '5000' || $_POST['cliente'] == 1000){
     foreach ($listFive as $fields) {
         fputcsv($fp, $fields,";");
     }

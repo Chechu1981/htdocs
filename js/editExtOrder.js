@@ -116,17 +116,17 @@ $('coment').addEventListener('blur',e =>{
   actualizarPedido(numPedido)
 })
 
-$('marca0').addEventListener('change',e=>{
+$('marca0').addEventListener('change',e =>{
   cargarProveedor($('tipo0').value, e.target.value, $('proveedor0').value, $('tipo0'), $('marca0'), $('proveedor0'))
   setTimeout(() => actualizarPedidoLineas(numPedido), 500)
 })
 
-$('tipo0').addEventListener('change',e=>{
+$('tipo0').addEventListener('change',e =>{
   cargarProveedor(e.target.value, '', '', $('tipo0'), $('marca0'), $('proveedor0'))
   setTimeout(() => actualizarPedidoLineas(numPedido), 500)
 })
 
-$('proveedor0').addEventListener('change',e=>{
+$('proveedor0').addEventListener('change',() =>{
   actualizarPedidoLineas(numPedido)
 })
 

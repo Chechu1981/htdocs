@@ -7,6 +7,12 @@
         letter-spacing: 0;
     }
 
+    .nav-menu{
+        display: grid !important;
+        gap: 0 !important;
+        grid-template-columns: 11% 10% 11% 14% 16% 15% 11% 11% !important;
+    }
+
     .head-img section{
         font-size: xx-large;
     }

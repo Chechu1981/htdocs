@@ -43,5 +43,5 @@ $rows = $contacts->newSelectPending(
     $_POST['cliente'],
     $_POST['referencia'],
     $_POST['envio'],
-    $client[0][6]);
+    $client[6]);
 ?>

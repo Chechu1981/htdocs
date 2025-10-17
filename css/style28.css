@@ -134,6 +134,7 @@ iframe{
 }
 
 .notebook-list-container ul.notebook-row{
+    border: 1px solid var(--cards-border-color);
     display: grid;
     grid-template-columns: 5% 15% 20% 30% 15% 5%;
     padding-left: 20px;

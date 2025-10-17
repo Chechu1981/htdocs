@@ -44,6 +44,7 @@ $PLACAS = [
 $ENTIDAD = [
   "PPCR",
   "GECOINSA",
+  "TRI-WALL",
   "CEVA",
   "TRANSPORTE",
   "NORTEMPO",
